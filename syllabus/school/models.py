@@ -39,11 +39,17 @@ class MajorRequirement(models.Model):
 class Major(models.Model):
     name = models.CharField(max_length=1020)
     type = models.CharField(max_length=10)
-    preMajor = models.ManyToManyField(MajorRequirement, related_name="pre", blank=True)
+    preMajor = models.ManyToManyField(MajorRequirement, related_name="pre", blank=True)             a
     major = models.ManyToManyField(MajorRequirement, related_name="major", blank=True)
 
 # school structure
 
+# the University object to set school wide standards
+class University(models.Model):
+    name = models.CharField(max_length=1020)
+    minGradeToPass = models.IntegerField(default=50)
+    
+    
 # a term groups classes taken simulatenously for a given time period
 class Term(models.Model):
     name = models.CharField(max_length=50)
@@ -54,7 +60,16 @@ class Term(models.Model):
     def __unicode__(self):
         return  self.name + ' - ' + str(self.start.year)
 
-# sub category of classes like chicano studies under the anthro deptartment
+# the {college} of a {university} has many {departments} and some {requirements}
+# requirements at this level are most likely GEs
+class College(models.Model):
+    name = models.CharField(max_length=1020)
+    requirements = models.ManyToManyField(MajorRequirement, related_name="colleges", blank=True)
+    majors = models.ManyToManyField(Major, related_name="college", blank=True)
+    departments = models.ManyToManyField(Department, related_name="college", blank=True)
+    university = models.ForeignKey(University, related_name="colleges")
+
+# an {interest} is a subsection of a {department} used to filter {classProfiles}
 class Interest(models.Model):
     name  = models.CharField(max_length=1020)
     abbrv  = models.CharField(max_length=10)
@@ -73,7 +88,7 @@ class Interest(models.Model):
             return other + self.abbrv
         raise NotImplemented
 
-# a department of the school
+# a {department} of a {college} with some {interests}
 class Department(models.Model):
     name = models.CharField(max_length=1020)
     interests = models.ManyToManyField(Interest, related_name="department") 
@@ -81,3 +96,8 @@ class Department(models.Model):
     def __unicode__(self):
         return self.name   
 
+# the membership of a student in a section is handled a manager to associate a grade
+class Enrollment(models.Model):
+    student = models.ForeignKey(SyllUser, null=True, related_name="enrollments")
+    section = models.ForeignKey(Section) 
+    grade = models.CharField(max_length=3, blank=True)
