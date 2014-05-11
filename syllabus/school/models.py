@@ -38,10 +38,11 @@ class MajorRequirement(models.Model):
 class Major(models.Model):
     name = models.CharField(max_length=1020)
     type = models.CharField(max_length=10)
-    preMajor = models.ManyToManyField(MajorRequirement, related_name="pre", blank=True)             a
+    preMajor = models.ManyToManyField(MajorRequirement, related_name="pre", blank=True)
     major = models.ManyToManyField(MajorRequirement, related_name="major", blank=True)
 
-# School Structure
+
+# School structure
 # -----------------------------
 
 # the University object to set school wide standards
@@ -107,12 +108,13 @@ class ClassProfile(models.Model):
     books = models.ManyToManyField(Book, related_name="books", blank=True)
     prerequisites = models.ManyToManyField('PreRequisiteGroup', related_name="prereqs", symmetrical=False, blank=True)
     interest = models.ForeignKey('Interest', related_name="courses")
-    
+       
 # the membership of a student in a section is handled a manager to associate a grade
 class Enrollment(models.Model):
     student = models.ForeignKey(SyllUser, null=True, related_name="enrollments")
     section = models.ForeignKey(Section) 
     grade = models.CharField(max_length=3, blank=True)
+
 
 # Registration
 # -----------------------------
