@@ -197,7 +197,17 @@ class WeightCategory(models.Model):
 class Weight(models.Model):
     name = models.CharField(max_length=1020, blank=True)
     categories = models.ManyToManyField(WeightCategory, related_name="weights")
-
+ 
+# a {students} grade for a particular {event} - teacher can associate a {comment}
+class Grade(models.Model):
+    student = models.ForeignKey(SyllUser, related_name='student')
+    event = models.ForeignKey(Event, related_name='event')
+    score = models.FloatField()
+    comment = models.CharField(max_length=1020, default='')
+    
+    def __unicode__(self):
+        return self.score 
+ 
 
 # Class profile
 # -----------------------------
