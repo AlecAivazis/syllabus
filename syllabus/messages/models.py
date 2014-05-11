@@ -1,6 +1,11 @@
 from django.db import models
 
-# this schema handles the various message board aspects
+# this schema handles most of the inter user communication
+# either through message boards (two-way, multiple message conversations)
+# or through announcements (single message, no reply)
+
+# Messageboard
+# --------------------
 
 # a reply to a {topic}
 class Post (models.Model):
@@ -24,3 +29,27 @@ class Topic(models.Model):
     def __unicode__(self):
         return self.body
   
+
+# Announcements
+# --------------------
+
+# a group of {syllabus.classes} to use as a target group
+class Group(models.Model):
+    qlass = models.ManyToManyField(Class, related_name='groups', blank=True)
+    name = models.CharField(max_length=1020)
+
+# a group of {users} to use as the target
+class UserGroup(models.Model):
+    managers = models.ManyToManyField(SyllUser, related_name="managed_groups")
+    name = models.CharField(max_length=1020)
+    users = models.ManyToManyField(SyllUser)
+    
+# a single message that tracks who reads it - no option of reply
+class Announcement(models.Model):
+    title = models.CharField(max_length=1020)
+    author = models.ForeignKey(SyllUser)
+    datePosted = models.DateTimeField(auto_now=True)
+    sections = models.ManyToManyField(Section, related_name="announcements", blank=True)
+    userGroups = models.ManyToManyField(UserGroup, blank=True)
+    message = models.CharField(max_length=1020)
+    read = models.ManyToManyField(SyllUser, related_name="read_announcements")
