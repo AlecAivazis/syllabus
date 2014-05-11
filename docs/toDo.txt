@@ -1,0 +1,73 @@
+Syllabus To-Do List
+
+Catalog:
+    
+    clock widget for time select
+    add codes
+    exemptions codes
+    
+    
+    filter by
+        instructor
+        level (uppder division, etc)
+        Apply to GE requirement (include generic 'unsatisfied')
+    
+    toggles:
+        open sections only
+        w/o restriction
+        w/o prereqs
+        
+Registrar:
+    set school-wide dates
+        countdown to assign classrooms (only check classes with assigned teachers)
+    hide/show catalog
+    add class profile
+    add sections
+    if current term, add/remove users from class
+        
+    End of Term stuff (collect grades, drop students who didn't pass, etc)
+    
+    classes: 
+        finish classProfileForm (preReq form similar to GradReq)
+        finish newClassForm  
+        major as a prereq for class
+        Add Codes (unique to person)
+        
+    users:
+        paginate userlist
+ 
+My Profile page:
+    alert me of notifacations via email
+    delcare major
+    transcripts
+    make avatar private (make checkbox work, add preference to syllUser)
+    send e-mail alert when e-mail changes
+    
+Grades Page:
+    request transcript
+    Unit summary above grades (tranferred, completed, total)
+    declare graduation
+    assignment summary
+
+Graduation Requirements
+    add user specific exemptions
+
+Gradebook
+    download user submission 
+
+WishList  
+    
+
+View registration dates (link somewhere in catalog tab)
+
+Add nextTerm() to term object
+
+add flags for assignments that need grading
+check javasript form submits before submit
+Access Middleware (add links into a list via a series of if statements)
+waitlist
+help overlay as guide
+add announcements to class pages (maybe first view)
+tutors (GradesFirst)aisolate grade row (so teachers can show students)
+templates for school year (anchored on beginning and end of term)
+inline assignment editing/grading
