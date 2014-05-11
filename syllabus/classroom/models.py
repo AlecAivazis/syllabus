@@ -74,6 +74,7 @@ class Event(models.Model):
             else:   
                 return 0
 
+# the main connection between the teacher and the student
 class Class(models.Model):
     professor = models.ManyToManyField(SyllUser, related_name="classesTeaching")
     profile = models.ForeignKey(ClassProfile, related_name="classes")
@@ -152,6 +153,39 @@ class Class(models.Model):
             
         return eligible
 
+
+# Gradebook 
+# -----------------------------
+
+# the range over which to call a certain {value}
+class GradingCategory(models.Model):
+    lower = models.FloatField()
+    value = models.CharField(max_length=1020)
+    
+    # string behavior is to return {lower} = {value} ie 40 = B+
+    def __unicode__(self):
+        return str(self.lower) + ' = ' + self.value
+
+# a group of {GradingCategories} to reuse across various {Classes}
+class GradingScale(models.Model):
+    name = models.CharField(max_length=1020, blank=True)
+    gradingCategories = models.ManyToManyField(GradingCategory, related_name='gradingCategories')
+    
+    # string behavior is to return {name}
+    def __unicode__(self):
+        return self.name
+
+# gives a weight to {events} with a {event.category} equal to {category}
+class WeightCategory(models.Model):
+    category = models.CharField(max_length=1020)
+    percentage = models.IntegerField()
+
+# a group of weights by category
+class Weight(models.Model):
+    name = models.CharField(max_length=1020, blank=True)
+    categories = models.ManyToManyField(WeightCategory, related_name="weights")
+
+
 # Class profile
 # -----------------------------
 
@@ -160,3 +194,4 @@ class Book(models.Model):
     title = models.CharField(max_length=1020)
     author = models.CharField(max_length = 1020)
     isbn = models.CharField(max_length = 1020)
+
