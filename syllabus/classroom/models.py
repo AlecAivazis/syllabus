@@ -153,6 +153,19 @@ class Class(models.Model):
             
         return eligible
 
+# the {sections} of a particular {class} to add more user based organization
+class Section(models.Model):
+    name = models.CharField(max_length=508)
+    students = models.ManyToManyField(SyllUser, related_name='students', through='Enrollment')
+    tas = models.ManyToManyField(SyllUser, related_name='tas', blank=True)
+    qlass = models.ForeignKey(Class, related_name='sections')
+    times = models.ManyToManyField(Timeslot, related_name="sections", blank=True)
+    location= models.CharField(max_length=1020, blank=True)
+    maxOccupancy = models.IntegerField()
+    
+    def __unicode__(self):
+        return self.name
+     
 
 # Gradebook 
 # -----------------------------
