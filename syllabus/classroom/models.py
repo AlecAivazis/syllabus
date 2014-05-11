@@ -2,6 +2,8 @@ from django.db import models
 
 # these models encapsulate the day to day interactions between the student and teacher
 
+# Classroom
+# -----------------------------
 
 # the fundamental element of a teachers syllabus
 # can be one of assignment, lecture, test, meeting
@@ -19,9 +21,11 @@ class Event(models.Model):
         ('meeting','meeting'),
     ))
     
+    # string behavior is to return the title
     def __unicode__(self):
         return self.title
     
+    # calculate the individual worth of this event based on the weight
     def calculateWorth(self):
         qlass = self.classes.all()[0]
 
@@ -70,9 +74,8 @@ class Event(models.Model):
             else:   
                 return 0
 
-
-# Class Profile
-
+# Class profile
+# -----------------------------
 
 # the required reading for a given class
 class Book(models.Model):

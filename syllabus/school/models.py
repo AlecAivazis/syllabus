@@ -117,7 +117,6 @@ class Enrollment(models.Model):
 # Registration
 # -----------------------------
 
-
 # the preRequesite class for a certain class
 class PreRequisite(models.Model):
     course = models.ForeignKey(ClassProfile)
