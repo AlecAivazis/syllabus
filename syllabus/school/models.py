@@ -44,7 +44,6 @@ class Major(models.Model):
 # School Structure
 # -----------------------------
 
-
 # the University object to set school wide standards
 class University(models.Model):
     name = models.CharField(max_length=1020)
@@ -98,8 +97,40 @@ class Department(models.Model):
     def __unicode__(self):
         return self.name   
 
+# the profile of a given class - separated from a particular class because it changes every 5 yrs
+class ClassProfile(models.Model):
+    name = models.CharField(max_length=1020)
+    fullName = models.CharField(max_length=1020)
+    units = models.IntegerField()
+    description = models.CharField(max_length=1020)
+    number = models.IntegerField()
+    books = models.ManyToManyField(Book, related_name="books", blank=True)
+    prerequisites = models.ManyToManyField('PreRequisiteGroup', related_name="prereqs", symmetrical=False, blank=True)
+    interest = models.ForeignKey('Interest', related_name="courses")
+    
 # the membership of a student in a section is handled a manager to associate a grade
 class Enrollment(models.Model):
     student = models.ForeignKey(SyllUser, null=True, related_name="enrollments")
     section = models.ForeignKey(Section) 
     grade = models.CharField(max_length=3, blank=True)
+
+# Registration
+# -----------------------------
+
+
+# the preRequesite class for a certain class
+class PreRequisite(models.Model):
+    course = models.ForeignKey(ClassProfile)
+    minGrade = models.IntegerField()
+
+# in order to satisfy a {preReq} for a {classProfile} you must do so for one in the group
+class PreRequisiteGroup(models.Model):
+    courses = models.ManyToManyField(PreRequisite)
+
+# defines when it is okay for groups of users to register for classes
+class RegistrationGroup(models.Model):
+    students = models.ManyToManyField(SyllUser, related_name="passGroups")
+    start = models.DateField(null=True)
+    end = models.DateField(null=True)
+    name = models.CharField(max_length=1020)
+    term = models.ForeignKey(Term, related_name="registrationGroups")
