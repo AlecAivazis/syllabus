@@ -3,9 +3,8 @@ from django.db import models
 # these models handle the school wide operations
 # most of these models are handled by "registrar"
 
-
-# school-wide requirements
-
+# Requirements
+# -----------------------------
 
 # degree requirements
 class Requirement(models.Model):
@@ -42,7 +41,9 @@ class Major(models.Model):
     preMajor = models.ManyToManyField(MajorRequirement, related_name="pre", blank=True)             a
     major = models.ManyToManyField(MajorRequirement, related_name="major", blank=True)
 
-# school structure
+# School Structure
+# -----------------------------
+
 
 # the University object to set school wide standards
 class University(models.Model):
