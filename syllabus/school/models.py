@@ -93,6 +93,7 @@ class Department(models.Model):
     name = models.CharField(max_length=1020)
     interests = models.ManyToManyField(Interest, related_name="department") 
     
+    # string behavior is to return the name
     def __unicode__(self):
         return self.name   
 
