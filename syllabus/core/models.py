@@ -3,6 +3,9 @@ from django.db import models
 # syllabus core models
 # most of these are misc models used throughout the application
 
+# Core
+# --------------------
+
 # encapsulates generic metaDeta about an object as a key value pair
 class MetaData(models.Model):
     key = models.CharField(max_length=1020)
@@ -19,6 +22,43 @@ class Upload(models.Model):
     user = models.ForeignKey(SyllUser)
     file = models.CharField(max_length=4096)
     date = models.DateField(auto_now_add=True)    
+
+
+# a {timeslot} is a {start} and {end} time on a particular {day}
+class Timeslot (models.Model):
+    day = models.CharField(max_length=10)
+    start = models.TimeField()
+    end = models.TimeField()
+    
+    def __unicode__(self):
+        return str(self.day + ": " + self.start.strftime('%I:%M')) + ' - ' + str(self.end.strftime('%I:%M %p'))
+    
+    # return the abbreviation for the requested part of the timeslot
+    def abrreviation(self, char):
+        if char == 1 :
+            if self.day.lower() == 'monday':
+                return 'M'
+            if self.day.lower() == 'tuesday':
+                return 'T'
+            if self.day.lower() == 'wednesday':
+                return 'W'
+            if self.day.lower() == 'thursday':
+                return 'R'
+            if self.day.lower() == 'friday':
+                return 'F'
+            if self.day.lower() == 'saturday':
+                return 'Sat'
+            if self.day.lower() == 'sunday':
+                return 'Sun'
+
+# a generic adjective to associate with an object at a particular time
+class State(models.Model):
+    user = models.ForeignKey(SyllUser)
+    owner = models.ForeignKey(SyllUser, related_name="owner")
+    event = models.ForeignKey(Event, related_name="state")
+    status = models.CharField(max_length=100)
+    date = models.DateTimeField(auto_now_add=True)
+
 
 # User
 # --------------------
@@ -111,31 +151,3 @@ class Contact(models.Model):
     name = models.CharField(max_length=1020, blank=True)
     phone = models.CharField(max_length=10, blank=True)
     address = models.ForeignKey(Address, null=True)
-    
-
-# a {timeslot} is a {start} and {end} time on a particular {day}
-class Timeslot (models.Model):
-    day = models.CharField(max_length=10)
-    start = models.TimeField()
-    end = models.TimeField()
-    
-    def __unicode__(self):
-        return str(self.day + ": " + self.start.strftime('%I:%M')) + ' - ' + str(self.end.strftime('%I:%M %p'))
-    
-    
-    def abrreviation(self, char):
-        if char == 1 :
-            if self.day.lower() == 'monday':
-                return 'M'
-            if self.day.lower() == 'tuesday':
-                return 'T'
-            if self.day.lower() == 'wednesday':
-                return 'W'
-            if self.day.lower() == 'thursday':
-                return 'R'
-            if self.day.lower() == 'friday':
-                return 'F'
-            if self.day.lower() == 'saturday':
-                return 'Sat'
-            if self.day.lower() == 'sunday':
-                return 'Sun'
