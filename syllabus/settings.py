@@ -43,7 +43,7 @@ THIRD_PARTY = (
 # syllabus is just a collection of apps... whoa... meta
 SYLLABUS = (
     'syllabus.core',
-    'syllabus.school',
+    'syllabus.academia',
     'syllabus.classroom',
     'syllabus.messages',
     'syllabus.wishlist',
