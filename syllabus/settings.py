@@ -44,6 +44,7 @@ THIRD_PARTY = (
 SYLLABUS = (
     'syllabus.core',
     'syllabus.school',
+    'syllabus.classroom',
 )
 
 # Application definition
