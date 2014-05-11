@@ -45,6 +45,7 @@ SYLLABUS = (
     'syllabus.core',
     'syllabus.school',
     'syllabus.classroom',
+    'syllabus.messages',
 )
 
 # Application definition
