@@ -74,6 +74,84 @@ class Event(models.Model):
             else:   
                 return 0
 
+class Class(models.Model):
+    professor = models.ManyToManyField(SyllUser, related_name="classesTeaching")
+    profile = models.ForeignKey(ClassProfile, related_name="classes")
+    times = models.ManyToManyField(Timeslot)
+    location = models.CharField(max_length=1020)
+    syllabus = models.CharField(max_length=100000, blank=True)
+    lectures = models.ManyToManyField(Event, blank=True, related_name="lecture_classes")
+    events = models.ManyToManyField(Event, blank=True, related_name="classes")
+    gradingScale = models.ForeignKey(GradingScale, related_name='gradingSchema')
+    weights = models.ForeignKey(Weight, related_name='sections', null=True, blank=True)
+    messageBoard = models.ManyToManyField(Topic, related_name="qlass", blank=True)
+    maxOccupancy = models.IntegerField()
+    term = models.ForeignKey(Term)
+    
+    # string behavior is to return {interest}-{number} ie PHYS-21
+    def __unicode__(self):
+        return self.profile.interest + '-' + str(self.profile.number)  
+
+    # return the grade of the user with the given is
+    def totalGrade(self, id):
+        totalPossible = 0
+        pointsEarned = 0
+        
+        for grade in Grade.objects.filter(student = get_user_model().objects.get(id = int(id))).filter(event__in = self.events.all()):
+            if grade.event.metaData.filter(key = 'possiblePoints'):
+                if grade.event.classes.all()[0].weights:
+                    
+                    if grade.event.calculateWorth():
+                        weight = grade.event.calculateWorth()
+                        totalPossible = totalPossible + (weight * int(grade.event.metaData.get(key = 'possiblePoints').value))
+                        pointsEarned = pointsEarned + (weight * grade.score)
+                else:
+                    totalPossible = totalPossible + int(grade.event.metaData.get(key = 'possiblePoints').value)
+                    pointsEarned = pointsEarned + grade.score
+        
+        if totalPossible == 0:        
+            return 'n/a',
+        else:
+            score = pointsEarned/totalPossible * 100
+            letter = self.gradingScale.gradingCategories.filter(lower__lte = score).order_by('-lower')[0].value
+            
+            return letter,"%.1f" % (score)
+
+    # check if the user can register for the class
+    def isEligible(self, user, includeCurrent):
+        enrolled = 0
+        for section in self.sections.all():
+            enrolled =+ section.students.all().count()
+        
+        eligible = False
+
+        for group in self.profile.prerequisites.all():
+            
+            # if any of these are eligible, we're good to go
+            for preReq in group.courses.all():
+                # preReq is an invdividual course and minimum grade
+                sections = []
+                for qlass in preReq.course.classes.all():
+                    for section in qlass.sections.all():
+                        sections.append(section)
+                
+                enrollment = Enrollment.objects.filter(student = user).filter(section__in = sections)
+                
+                if enrollment:
+                    if (includeCurrent and not enrollment.grade):
+                        eligible = True
+                        break;
+                    else:
+                        if (enrollment.grade > preReq.minimumGrade):
+                            eligible = True
+                            break;
+
+        else:
+            eligible = True
+                        
+            
+        return eligible
+
 # Class profile
 # -----------------------------
 
