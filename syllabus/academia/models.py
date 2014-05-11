@@ -1,7 +1,7 @@
 from django.db import models
 
 # these models handle the school wide operation and general organization
-# most of these models are handled by "registrar"
+# much of this schema is handled by a "registrar"
 
 # Requirements
 # -----------------------------
