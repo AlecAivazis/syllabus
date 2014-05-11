@@ -59,7 +59,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'syllabus.urls'
 
-WSGI_APPLICATION = 'syllabus.wsgi.application'
+WSGI_APPLICATION = 'apache.wsgi.application'
 
 
 # Database
