@@ -26,10 +26,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
-INSTALLED_APPS = (
+# django apps
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +35,18 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+# third party apps
+THIRD_PARTY = (
+    'django_extensions',
+)
+
+# syllabus is just a collection of apps... whoa... meta
+SYLLABUS = (
+    'syllabus.core',
+)
+
+# Application definition
+INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY + SYLLABUS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
