@@ -12,6 +12,17 @@ class MetaData(models.Model):
 class File(models.Model):
     fileName = models.CharField(max_length=4096)    
 
+# encapsulates an uploaded document
+# this should eventually be implemented as a django file instead of a filepath
+class Upload(models.Model):
+    event = models.ForeignKey(Event)
+    user = models.ForeignKey(SyllUser)
+    file = models.CharField(max_length=4096)
+    date = models.DateField(auto_now_add=True)    
+
+# User
+# --------------------
+
 # the generic syllabus user can be a teacher, reigstrar, or student
 class SyllUser(AbstractUser): 
     avatar = models.ForeignKey(File, null=True)
@@ -22,7 +33,7 @@ class SyllUser(AbstractUser):
     phone = models.CharField(max_length=20)
     unitsTransfered = models.IntegerField(null=True)
     wishList = models.ManyToManyField(ClassProfile, through="WishList")
- 
+
     # calculate how many units this user has completed
     def unitsCompleted(self):
         units = 0
@@ -85,11 +96,46 @@ class SyllUser(AbstractUser):
 
         if registrationGroup:
             return registrationGroup
+
+# a generic address schema
+class Address(models.Model):
+    line1 = models.CharField(max_length=1020)
+    line2 = models.CharField(max_length=1020)
+    city = models.CharField(max_length=1020)
+    state = models.CharField(max_length=1020)
+    zipCode = models.CharField(max_length=1020)
+    country = models.CharField(max_length=1020)
+
+# a contact for the user
+class Contact(models.Model):
+    name = models.CharField(max_length=1020, blank=True)
+    phone = models.CharField(max_length=10, blank=True)
+    address = models.ForeignKey(Address, null=True)
     
-# encapsulates an uploaded document
-# this should eventually be implemented as a django file instead of a filepath
-class Upload(models.Model):
-    event = models.ForeignKey(Event)
-    user = models.ForeignKey(SyllUser)
-    file = models.CharField(max_length=4096)
-    date = models.DateField(auto_now_add=True)    
+
+# a {timeslot} is a {start} and {end} time on a particular {day}
+class Timeslot (models.Model):
+    day = models.CharField(max_length=10)
+    start = models.TimeField()
+    end = models.TimeField()
+    
+    def __unicode__(self):
+        return str(self.day + ": " + self.start.strftime('%I:%M')) + ' - ' + str(self.end.strftime('%I:%M %p'))
+    
+    
+    def abrreviation(self, char):
+        if char == 1 :
+            if self.day.lower() == 'monday':
+                return 'M'
+            if self.day.lower() == 'tuesday':
+                return 'T'
+            if self.day.lower() == 'wednesday':
+                return 'W'
+            if self.day.lower() == 'thursday':
+                return 'R'
+            if self.day.lower() == 'friday':
+                return 'F'
+            if self.day.lower() == 'saturday':
+                return 'Sat'
+            if self.day.lower() == 'sunday':
+                return 'Sun'
