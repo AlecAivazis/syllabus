@@ -1,4 +1,4 @@
-from common import *
+from syllabus import *
 
 dayDict={
     '1':'M',
@@ -222,7 +222,6 @@ def filterCatalog(request):
         timeInfo = request.GET['timeStart'].split(':')
         time = datetime.time(int(timeInfo[0]), int(timeInfo[1]))
         timez = timez.filter(start__gte = time)
-        print timez
         
     if 'timeEnd' in request.GET:
         timeInfo = request.GET['timeEnd'].split(':')

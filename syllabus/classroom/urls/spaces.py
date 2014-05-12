@@ -1,12 +1,11 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, include
 
-from ..views.spacesViews import *
+from ..views.spaces import *
 
 # calendar urls
 urlpatterns = [
     url(r'(?i)^viewTimeline/$', viewTimeline),
     url(r'(?i)^viewAnnouncements/$', viewAnnouncements),
-    url(r'(?i)^viewMessageBoard/$', messageBoard),
     url(r'(?i)^setSyllabus/$', setSyllabus),
     url(r'(?i)^viewSyllabus/$', viewSyllabus),
 

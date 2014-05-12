@@ -1,4 +1,5 @@
-from common import *
+from syllabus import *
+
 from django.db.models import Count
 
 def gradebookHome(request):

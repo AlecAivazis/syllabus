@@ -1,6 +1,6 @@
 from django.conf.urls import  url
 
-from ..views.gradebookViews import *
+from ..views.gradebook import *
 
 # calendar urls
 urlpatterns = [

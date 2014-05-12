@@ -1,4 +1,4 @@
-from common import *
+from syllabus import *
 
 def editEventForm(request):
     
@@ -524,7 +524,6 @@ def endRegistrationForm(request):
     date = request.GET['date']
     terms = Term.objects.all()
     groups = RegistrationGroup.objects.all()
-    print groups
 
     return render_to_response('/calendar/registrationEndForm.html', locals())
 

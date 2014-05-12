@@ -1,6 +1,6 @@
 from django.conf.urls import  url
 
-from ..views.myClassesViews import *
+from ..views.myClasses import *
 
 urlpatterns = [
     url(r'(?i)^classPage/$', classPage),
