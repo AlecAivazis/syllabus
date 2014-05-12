@@ -1,5 +1,18 @@
 from django.db import models
 
+# local imports defined as string references
+File = 'core.File'
+MetaData = 'core.MetaData'
+User = 'core.User'
+Timeslot = 'core.Timeslot'
+GradingScale = 'classroom.GradingScale'
+Weight = 'classroom.Weight'
+Topic = 'messages.Topic'
+Term = 'academia.Term'
+User = 'core.SyllUser'
+Enrollment = 'academia.Enrollment'
+ClassProfile = 'academia.ClassProfile'
+
 # these models encapsulate the day to day interactions between the student and teacher
 
 # Classroom
@@ -76,7 +89,7 @@ class Event(models.Model):
 
 # the main connection between the teacher and the student
 class Class(models.Model):
-    professor = models.ManyToManyField(SyllUser, related_name="classesTeaching")
+    professor = models.ManyToManyField(User, related_name="classesTeaching")
     profile = models.ForeignKey(ClassProfile, related_name="classes")
     times = models.ManyToManyField(Timeslot)
     location = models.CharField(max_length=1020)
@@ -156,8 +169,8 @@ class Class(models.Model):
 # the {sections} of a particular {class} to add more user based organization
 class Section(models.Model):
     name = models.CharField(max_length=508)
-    students = models.ManyToManyField(SyllUser, related_name='students', through='Enrollment')
-    tas = models.ManyToManyField(SyllUser, related_name='tas', blank=True)
+    students = models.ManyToManyField(User, related_name='students', through='Enrollment')
+    tas = models.ManyToManyField(User, related_name='tas', blank=True)
     qlass = models.ForeignKey(Class, related_name='sections')
     times = models.ManyToManyField(Timeslot, related_name="sections", blank=True)
     location= models.CharField(max_length=1020, blank=True)
@@ -200,7 +213,7 @@ class Weight(models.Model):
  
 # a {students} grade for a particular {event} - teacher can associate a {comment}
 class Grade(models.Model):
-    student = models.ForeignKey(SyllUser, related_name='student')
+    student = models.ForeignKey(User, related_name='student')
     event = models.ForeignKey(Event, related_name='event')
     score = models.FloatField()
     comment = models.CharField(max_length=1020, default='')

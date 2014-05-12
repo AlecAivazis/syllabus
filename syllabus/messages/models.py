@@ -1,5 +1,11 @@
 from django.db import models
 
+from syllabus.core.models import SyllUser as User
+
+File = 'core.File'
+Class = 'classroom.Class'
+Section = 'classroom.Section'
+
 # this schema handles most of the inter user communication
 # either through message boards (two-way, multiple message conversations)
 # or through announcements (single message, no reply)
@@ -9,7 +15,7 @@ from django.db import models
 
 # a reply to a {topic}
 class Post (models.Model):
-    author = models.ForeignKey(SyllUser)
+    author = models.ForeignKey(User)
     body = models.TextField(max_length=5000, blank=True)
     datePosted = models.DateTimeField(auto_now_add=True)
     files = models.ManyToManyField(File, related_name='posts', blank=True)
@@ -23,9 +29,9 @@ class Topic(models.Model):
     title = models.CharField(max_length=1020)
     body = models.TextField(max_length = 5000)
     datePosted = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(SyllUser)
+    author = models.ForeignKey(User)
     replies = models.ManyToManyField(Post, related_name="replys", blank=True)
-    read = models.ManyToManyField(SyllUser, related_name="readThreads", blank=True) 
+    read = models.ManyToManyField(User, related_name="readThreads", blank=True) 
     def __unicode__(self):
         return self.body
   
@@ -40,16 +46,16 @@ class Group(models.Model):
 
 # a group of {users} to use as the target
 class UserGroup(models.Model):
-    managers = models.ManyToManyField(SyllUser, related_name="managed_groups")
+    managers = models.ManyToManyField(User, related_name="managed_groups")
     name = models.CharField(max_length=1020)
-    users = models.ManyToManyField(SyllUser)
+    users = models.ManyToManyField(User)
     
 # a single message that tracks who reads it - no option of reply
 class Announcement(models.Model):
     title = models.CharField(max_length=1020)
-    author = models.ForeignKey(SyllUser)
+    author = models.ForeignKey(User)
     datePosted = models.DateTimeField(auto_now=True)
     sections = models.ManyToManyField(Section, related_name="announcements", blank=True)
     userGroups = models.ManyToManyField(UserGroup, blank=True)
     message = models.CharField(max_length=1020)
-    read = models.ManyToManyField(SyllUser, related_name="read_announcements")
+    read = models.ManyToManyField(User, related_name="read_announcements")

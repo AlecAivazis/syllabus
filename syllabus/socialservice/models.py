@@ -1,11 +1,15 @@
 from django.db import models
 
+User = 'core.SyllUser'
+Timeslot = 'core.TimeSlot'
+ClassProfile = 'classroom.ClassProfile'
+
 # this application handles interactions between users where one has a service and is rated
 # using aggregate thumbs up and downs (normalized a la reddit) 
 
 # represents the user as a service
 class Tutor(models.Model):
-    user = models.ForeignKey(SyllUser)
+    user = models.ForeignKey(User)
     available = models.ManyToManyField(Timeslot, related_name="tutors")
     up = models.IntegerField(default=0)
     down = models.IntegerField(default=0)
@@ -15,5 +19,5 @@ class Tutor(models.Model):
 
 # appointment associated with this service
 class TutorAppointment(models.Model):
-    student = models.ForeignKey(SyllUser)
+    student = models.ForeignKey(User)
     time = models.ForeignKey(Timeslot)

@@ -1,7 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# syllabus core models
-# most of these are misc models used throughout the application
+from syllabus.classroom.models import Event
+Major = 'academia.Major'
+Address = 'core.address'
+Contact = 'core.contact'
+ClassProfile = 'classroom.ClassProfile'
+File = 'core.File'
+
+# most of these are random models used throughout the application
 
 # Core
 # --------------------
@@ -19,7 +26,7 @@ class File(models.Model):
 # this should eventually be implemented as a django file instead of a filepath
 class Upload(models.Model):
     event = models.ForeignKey(Event)
-    user = models.ForeignKey(SyllUser)
+    user = models.ForeignKey('SyllUser')
     file = models.CharField(max_length=4096)
     date = models.DateField(auto_now_add=True)    
 
@@ -53,8 +60,8 @@ class Timeslot (models.Model):
 
 # a generic adjective to associate with an object at a particular time
 class State(models.Model):
-    user = models.ForeignKey(SyllUser)
-    owner = models.ForeignKey(SyllUser, related_name="owner")
+    user = models.ForeignKey('SyllUser')
+    owner = models.ForeignKey('SyllUser', related_name="owner")
     event = models.ForeignKey(Event, related_name="state")
     status = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)
@@ -67,9 +74,9 @@ class State(models.Model):
 class SyllUser(AbstractUser): 
     avatar = models.ForeignKey(File, null=True)
     major = models.ManyToManyField(Major, blank=True, related_name="students")
-    residential =  models.ForeignKey(Address, null=True, related_name="residential")
-    permanent = models.ForeignKey(Address, null=True, related_name="permanent")
-    emergency = models.ForeignKey(Contact, null=True)
+    residential =  models.ForeignKey('Address', null=True, related_name="residential")
+    permanent = models.ForeignKey('Address', null=True, related_name="permanent")
+    emergency = models.ForeignKey('Contact', null=True)
     phone = models.CharField(max_length=20)
     unitsTransfered = models.IntegerField(null=True)
     wishList = models.ManyToManyField(ClassProfile, through="WishList")
