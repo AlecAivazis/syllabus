@@ -34,6 +34,7 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+
 # third party apps
 THIRD_PARTY = (
     'django_extensions',
@@ -49,15 +50,15 @@ SYLLABUS = (
     'syllabus.socialservice',
 )
 
+# Application definition
+INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY + SYLLABUS
+
 # the url permissions of the various user groups (to be moved somewhere else)
 PERMS = {
     'student': ['uploadify', 'gradebook', 'viewevent', 'calendar', 'calendarajax', 'admin','login', 'logout', 'viewclass', '', 'resources', 'myhomework','messageboard'],
     'teacher' : ['','viewevent','uploadify',  'login', 'logout', 'viewclass', 'resources', 'calendar', 'calendarajax', 'gradebook', 'messageboard'],
     'registrar' : ['','login', 'viewevent', 'uploadify', 'logout', 'viewclass', 'resources', 'registrar', 'messageboard']
 }
-
-# Application definition
-INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY + SYLLABUS
 
 
 # load the appropriate base user class
