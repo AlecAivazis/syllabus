@@ -50,14 +50,14 @@ def run():
         return the_obj    
 
     #Processing model: University
-    from syllabus.Syllabus.models import University
+    from syllabus.academia.models import University
 
     university = University()
     university.name = "Stevenson School"
     university.save()
     
     #Processing model: College
-    from syllabus.Syllabus.models import College
+    from syllabus.academia.models import College
     
     college_1 = College()
     college_1.name = "College of Letters and Sciences"
@@ -65,7 +65,7 @@ def run():
     college_1.save()
     
     #Processing model: MajorRequirement
-    from syllabus.Syllabus.models import MajorRequirement
+    from syllabus.academia.models import MajorRequirement
     
     major_requirement_1 = MajorRequirement()
     major_requirement_1.number = 1
@@ -81,7 +81,7 @@ def run():
     major_requirement_2.save()
 
     #Processing model: Major
-    from syllabus.Syllabus.models import Major
+    from syllabus.academia.models import Major
     
     major_1 = Major()
     major_1.name = "Undeclared"
@@ -114,7 +114,7 @@ def run():
 
     #Processing model: User
 
-    from syllabus.Syllabus.models import SyllUser
+    from syllabus.core.models import SyllUser
 
     auth_user_1 = SyllUser()
     auth_user_1.username = u'admin'
@@ -132,7 +132,7 @@ def run():
     auth_user_1.major.add(major_1)
     auth_user_1.groups.add(auth_group_1)
 
-    from syllabus.Syllabus.models import Tutor
+    from syllabus.socialservice.models import Tutor
 
     tutor1 = Tutor()
     tutor1.user = auth_user_1
@@ -143,7 +143,7 @@ def run():
 
     #Processing model: MetaData
 
-    from syllabus.Syllabus.models import MetaData
+    from syllabus.core.models import MetaData
 
     Syllabus_metadata_1 = MetaData()
     Syllabus_metadata_1.key = u'possiblePoints'
@@ -177,7 +177,7 @@ def run():
 
     #Processing model: File
 
-    from syllabus.Syllabus.models import File
+    from syllabus.core.models import File
 
     Syllabus_file_1 = File()
     Syllabus_file_1.fileName = u'/Users/alec/dv/syllabus/resources/uploads/GEN PHYSICS-assignments/IMG_0068.jpg'
@@ -205,7 +205,7 @@ def run():
 
     #Processing model: Event
 
-    from syllabus.Syllabus.models import Event
+    from syllabus.classroom.models import Event
 
     Syllabus_event_1 = Event()
     Syllabus_event_1.title = u'Problem Set 16'
@@ -274,7 +274,7 @@ def run():
 
     #Processing model: Term
 
-    from syllabus.Syllabus.models import Term
+    from syllabus.academia.models import Term
 
     Syllabus_term_1 = Term()
     Syllabus_term_1.name = u'Winter'
@@ -290,7 +290,7 @@ def run():
 
     #Processing model: Timeslot
 
-    from syllabus.Syllabus.models import Timeslot
+    from syllabus.core.models import Timeslot
 
     Syllabus_timeslot_1 = Timeslot()
     Syllabus_timeslot_1.day = u'1'
@@ -340,7 +340,7 @@ def run():
 
     #Processing model: GradingCategory
 
-    from syllabus.Syllabus.models import GradingCategory
+    from syllabus.classroom.models import GradingCategory
 
     Syllabus_gradingcategory_1 = GradingCategory()
     Syllabus_gradingcategory_1.lower = 0.0
@@ -399,7 +399,7 @@ def run():
 
     #Processing model: GradingScale
 
-    from syllabus.Syllabus.models import GradingScale
+    from syllabus.classroom.models import GradingScale
 
     Syllabus_gradingscale_1 = GradingScale()
     Syllabus_gradingscale_1.name = u'tens'
@@ -438,7 +438,7 @@ def run():
 
     #Processing model: WeightCategory
 
-    from syllabus.Syllabus.models import WeightCategory
+    from syllabus.classroom.models import WeightCategory
 
     Syllabus_weightcategory_1 = WeightCategory()
     Syllabus_weightcategory_1.category = u'assignment'
@@ -452,7 +452,7 @@ def run():
 
     #Processing model: Weight
 
-    from syllabus.Syllabus.models import Weight
+    from syllabus.classroom.models import Weight
 
     Syllabus_weight_1 = Weight()
     Syllabus_weight_1.name = u''
@@ -463,7 +463,7 @@ def run():
 
     #Processing model: Post
 
-    from syllabus.Syllabus.models import Post
+    from syllabus.messages.models import Post
 
     Syllabus_post_1 = Post()
     Syllabus_post_1.author = auth_user_1
@@ -476,7 +476,7 @@ def run():
 
     #Processing model: Topic
 
-    from syllabus.Syllabus.models import Topic
+    from syllabus.messages.models import Topic
 
     Syllabus_topic_1 = Topic()
     Syllabus_topic_1.title = u'Does this work?'
@@ -490,7 +490,7 @@ def run():
 
     #Processing model: Grade
 
-    from syllabus.Syllabus.models import Grade
+    from syllabus.classroom.models import Grade
 
     Syllabus_grade_1 = Grade()
     Syllabus_grade_1.student = auth_user_1
@@ -512,7 +512,7 @@ def run():
 
     #Processing model: Interest
 
-    from syllabus.Syllabus.models import Interest
+    from syllabus.academia.models import Interest
     
     interest1 = Interest()
     interest1.name = 'Physics'
@@ -526,7 +526,7 @@ def run():
     
     #Processing model: ClassProfile
 
-    from syllabus.Syllabus.models import ClassProfile
+    from syllabus.academia.models import ClassProfile
 
     Syllabus_classprofile_1 = ClassProfile()
     Syllabus_classprofile_1.name = u'GEN PHYSICS'
@@ -552,7 +552,7 @@ def run():
 
     #Processing model: Class
 
-    from syllabus.Syllabus.models import Class
+    from syllabus.classroom.models import Class
 
     Syllabus_class_1 = Class()
     Syllabus_class_1.location = u'Broida 1640'
@@ -594,7 +594,7 @@ def run():
 
     #Processing model: Section
 
-    from syllabus.Syllabus.models import Section
+    from syllabus.classroom.models import Section
 
     Syllabus_section_1 = Section()
     Syllabus_section_1.name = u'234'
@@ -628,7 +628,7 @@ def run():
 
     #Processing model: Enrollment
 
-    from syllabus.Syllabus.models import Enrollment
+    from syllabus.academia.models import Enrollment
 
     Syllabus_enrollment_1 = Enrollment()
     Syllabus_enrollment_1.student = auth_user_1
@@ -640,7 +640,7 @@ def run():
 
     #Processing model: Department
 
-    from syllabus.Syllabus.models import Department
+    from syllabus.academia.models import Department
 
     Syllabus_department_1 = Department()
     Syllabus_department_1.name = u'Phsyics'
