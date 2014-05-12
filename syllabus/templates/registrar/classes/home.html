@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link type="text/scss" rel="stylesheet" href="/static/styles/registrar/classes.scss" ></link>
+{% endblock %}
+{% block js %}
+    <script type='text/javascript' src='/static/scripts/registrar/classes.js'></script>    
+{% endblock %}
+
+
+{% block content %}
+<div id="content">
+    {# 
+    <ul id="colleges" class="navTier1">
+        {% include "/registrar/classes/collegeList.html" %}
+    </ul>
+    #} 
+    <ul id="departments" class="navTier1">
+        {% if departments %}
+        {% include "/registrar/classes/departmentList.html" %}
+        {% else %}
+        <li class="addLink" onclick="newDepartment({{colleges.all().order_by('name')[0].id}})">Add Department...</li>
+        {% endif %}
+    </ul>
+    <ul id="profiles" class="navTier2">
+        {% if profiles %}
+        {% include "/registrar/classes/profileList.html" %}
+        {% else %}
+        <li class="addLink" onclick="newProfile()">Add Class Profile...</li>
+        {% endif %}
+    </ul>
+    <div id="classes" class="classes_content"> 
+        {% if profile %}
+        {% include "/registrar/classes/classesList.html" %}
+        {% else %}
+        Please Add a Class Profile to this department to view classes
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

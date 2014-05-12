@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script src="/static/scripts/myProfile.js"></script>
+{% endblock %}
+{% block css %}
+    <link type="text/scss" rel="stylesheet" href="/static/styles/myProfile.scss" ></link>
+{% endblock %}
+
+{% block content %}
+    <span id="myProfileSelect">
+        <ul class="sidebar">
+            <li class="current"><div class="liContainer"><img src="/resources/images/myProfile/myProfile.png"> My Profile</div></li>
+            <li><div class="liContainer"><img src="/resources/images/myProfile/gear.png"> Settings</div></li>
+        </ul>
+    </span>
+    <div id="profileContainer">
+        
+        {% include "myProfile/profile.html" %}
+        
+        <span id="avatar">
+            <div id="avatarTitle">my avatar</div>
+            <div id="avatarPreview">
+                {% if request.user.avatar %}<img class="avatar" src="{{request.user.avatar.fileName}}"> {% else %} <img class="avatar"  width="140px" src="/resources/images/emptyAvatar.png">{%endif%}
+            </div>
+            <div id="avatarDescription">
+                This will be shown next to your forum posts and other mesages from you
+            </div>
+            <div id="avatarPrivacy">
+                <input type="checkbox" onclick="toggleAvatarDisplaySettings()"> Make my avatar private     
+            </div>
+            
+        </span>
+    </div>
+{% endblock %}

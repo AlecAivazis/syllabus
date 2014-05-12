@@ -1,0 +1,39 @@
+<div id="classViewGutter">
+    <div id="body">
+        <div id="classViewContent">
+            <div id="className">
+                {{profile.interest}} {{profile.number}} - {{profile.name}}
+            </div>
+            <span id="classInfo">
+                <div id="classDescription">
+                    {{profile.description}}
+                </div>
+                {% if profile.books.all() %}
+                <div id="books">
+                    <div id="booksHeader">
+                        Texts:
+                    </div>
+                    {% for book in profile.books.all() %}
+                    <div class="book">
+                        <span class="bookTitle">{{book.title}} - </span> <span class="bookAuthor">{{book.author}}</span><br><span class="bookIsbn">ISBN: {{book.isbn}}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if profile.prerequisites.all() %}
+                <div id="prerequisites" >
+                    <div id="prerequisitesHeader">
+                        Prerequisites:
+                    </div>
+                    {% for class in profile.prerequisites.all()%}
+                    <div class="prerequisite">
+                        {{class.profile.interest}} {{class.profile.number}} - {{class.profile.name}}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif%}
+                
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+{%if sections.all() %}
+<span style="float: left;">&nbsp;-&nbsp;</span><select id="sectionId" name="sectionId" >
+<option value="0">All Sections</option>
+{% for section in sections.all() %}
+<option value="{{section.id}}">{{section.name}}</option>
+{% endfor %}
+</select>
+{% else %}none{% endif %}

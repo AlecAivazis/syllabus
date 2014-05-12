@@ -1,0 +1,4 @@
+<option>Choose a class</option>
+{% for profile in profiles %}
+<option value="{{profile.id}}">{{profile.number}} - {{profile.name}}</option>
+{% endfor %}

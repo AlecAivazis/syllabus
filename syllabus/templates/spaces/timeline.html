@@ -1,0 +1,37 @@
+{% if request.user in qlass.professor.all() %}<div id="timelineNotice">Changes to text will be saved automatically...</div>{%endif%}
+
+<div id="timelineFilter">Show:
+    <select>
+        <option onclick="filterTimeline('all')">All</option>
+        <option onclick="filterTimeline('lecture')">Lectures</option>
+        <option onclick="filterTimeline('assignment')">Assignments</option>
+        <option onclick="filterTimeline('test')">Tests</option>
+    </select>
+</div>
+
+<div id="timeline">
+    {% for date, events in timeline.items() %}
+        <div class="timelineDate">
+            <div class="timelineDateLabel"><div class="timelineDateLabelMonth">{{date.strftime('%b')}}</div><div class="timelineDateLabelDay">{{date.day}}</div></div>
+            {% for event in events %}
+            <div class="timelineEvent timeline_{{event.category}}" id="{{event.id}}">
+                <div class="timelineEventTitle"><span class="eventTitle {% if event.category =='assignment' %} highlighted{% endif %}" {% if request.user in qlass.professor.all() %}contentEditable="True"{% endif %}>{{event.title}} {% if event.category=='assignment' %} due{% endif %}</span></div>
+                <div class="timelineEventDescription" {% if request.user in qlass.professor.all() %}contentEditable="True"{% endif %}>{{event.description}}</div>
+                {% if event.metaData.filter(key = 'associatedReading')%}
+                    <span class="timelineEventAssociatedReading">
+                        Associated Reading: <span class="associatedReading" {% if request.user in qlass.professor.all() %}contentEditable="True"{% endif %}>{{event.metaData.get(key = 'associatedReading').value}}</span>
+                    </span>
+                {% endif %}
+                {% if event.files.all() %}
+                <span class="timelineEventFileContainer">
+                    <img src="/resources/images/smallPaperClipIcon.png">
+                    {% for file in event.files.all() %}
+                    <span class="timeineEventFile"><a href="/{{oz.path.relpath(file.fileName, fileRoot)}}">{{oz.path.basename(file.fileName)}}</a></span> {% if not loop.last %},{% endif %} 
+                    {% endfor %}
+                </span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,319 @@
+@import "../mixins.scss";
+@import "../base.scss";
+
+#registrarContent {
+  margin: 15px;
+}
+
+#userFilter {
+  margin-top: 15px;
+  width: 220px;
+  display: inline-block;
+  background: #fffae1;
+  color: #beb171;
+  border-radius: 5px;
+}
+
+#title {
+  padding: 15px 15px 5px 15px;
+  color: #beb171;
+  border-bottom: 1px solid #efe8c6;
+}
+
+input {
+  width: 190px;
+  border: 1px solid #bdb8a0;
+  line-height: 25px;
+  font-size: 16px;
+  height: 25px;
+  color: #999999;
+  border-radius: 4px;
+  padding-top: 3px;
+  padding-left: 3px;
+}
+
+select {
+  width: 190px;
+  border: 1px solid #bdb8a0;
+  line-height: 25px;
+  font-size: 16px;
+  height: 25px;
+  color: #999999;
+  border-radius: 3px;
+  padding-top: 5px;
+  padding-left: 3px;
+  background: white;
+}
+
+.filterCategory {
+  padding: 10px 15px 15px 15px;
+  color: #6d5f1b;
+  border-bottom: 1px solid #efe8c6;
+  &:last-child {
+    padding-bottom: 15px;
+  }
+}
+
+.categoryTitle {
+  font-size: 12px;
+  margin-bottom: 5px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+#userList {
+  position: absolute;
+  top: 95px;
+  left: 255px;
+  right: 15px;
+  border-radius: 5px;
+  background: white;
+}
+
+table {
+  font-size: 12px;
+}
+
+th {
+  padding: 15px 10px;
+  color: #333333;
+  width: 205px;
+  border-right: 1px solid #f4e0e0;
+  text-align: left;
+  &:last-child {
+    text-align: right;
+  }
+}
+
+td {
+  border-right: 1px solid #f4e0e0;
+  border-top: 1px solid #e4e9ee;
+  padding: 7px 10px;
+}
+
+.user {
+  cursor: pointer;
+  &:hover {
+    background: #fffcf0;
+  }
+}
+
+#newUser {
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 7px;
+  border: 1px solid #199424;
+  color: white;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #62d573;
+  -moz-box-shadow: inset 0 1px 0 #62d573;
+  -webkit-box-shadow: inset 0 1px 0 #62d573;
+  background: #30bd40;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #30bd40), color-stop(100%, #22a12e));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #30bd40 0%, #22a12e 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#30bd40', endColorstr='#22a12e',GradientType=0 );
+  /* IE6-9 */
+}
+
+.userTools {
+  text-align: left;
+}
+
+.editUser {
+  color: #c17d08;
+  display: none;
+}
+
+.deleteUser {
+  color: #c10808;
+  display: none;
+  margin-left: 25px;
+}
+
+#userForm {
+  background: url("/resources/images/redline.png") repeat-y 30px white;
+  width: 525px;
+  line-height: 24px;
+  border-radius: 10px;
+}
+
+#formTitle {
+  padding: 10px 35px;
+  padding-right: 0;
+  width: 475px;
+}
+
+.formLine {
+  border-top: 1px solid #e4e9ee;
+  padding: 0px 35px;
+  &:last-child {
+    border-bottom: 1px solid #e4e9ee;
+  }
+}
+
+.formLabel {
+  width: 150px;
+  display: inline-block;
+  text-align: right;
+  border-right: 1px solid #f4e0e0;
+  padding-right: 10px;
+}
+
+.formTitle {
+  padding: 10px 35px;
+  padding-right: 0;
+  width: 475px;
+}
+
+select {
+  margin-top: 3px;
+}
+
+.formLine input {
+  width: 288px;
+  border: none;
+}
+
+.submitForm {
+  float: right;
+  padding: 5px 10px;
+  margin: 10px 20px 10px 0px;
+  display: inline-block;
+  width: 275px;
+  background: #64c26f;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #64c26f 0%, #45a84e 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #64c26f), color-stop(100%, #45a84e));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #64c26f 0%, #45a84e 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #64c26f 0%, #45a84e 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #64c26f 0%, #45a84e 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #64c26f 0%, #45a84e 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#64c26f', endColorstr='#45a84e',GradientType=0 );
+  /* IE6-9 */
+  box-shadow: inset 0 1px 0 #62d573;
+  -moz-box-shadow: inset 0 1px 0 #62d573;
+  -webkit-box-shadow: inset 0 1px 0 #62d573;
+  border: 1px solid #3ba043;
+  text-align: center;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+}
+
+.userRoles {
+  text-transform: capitalize;
+}
+
+#userProfile {
+  width: 700px;
+  min-height: 300px;
+  position: relative;
+  @include redline(40px);
+}
+
+#userName {
+  padding: 15px 45px;
+  padding-top: 25px;
+}
+
+#userContent {
+  position: relative;
+  border-top: 1px solid rgb(228, 233, 238);
+  line-height: 24px;
+}
+
+#userInfo, #exemptionForm{
+  border-right: 1px solid rgb(244, 224, 224);
+  display: inline-block;
+  position: absolute;
+  right: 60%;
+  left: 0px;
+}
+
+#exemptionForm {
+    display: none;
+}
+
+#userExemptions {
+  display: inline-block;
+  left: 40%;
+  right: 0;
+  position: absolute;
+}
+
+#userExemptions > .line {
+  padding-left: 15px;
+}
+
+#exemptionForm > .line {
+  padding-left: 55px;
+}
+
+#userInfo > .line {
+  padding-left: 55px;
+}
+
+.line {
+  border-bottom: 1px solid rgb(228, 233, 238);
+  height: 24px;
+  select {
+      width: 100px;
+      font-size: 16px;
+      padding: 0;
+      margin: 0;
+      margin-top: 3px;
+      height: 20px;
+  }
+}
+
+.label {
+  border-right: 1px solid rgb(244, 224, 224);
+  width: 75px;
+  text-align: right;
+  padding-right: 10px;
+  display: inline-block;
+}
+
+.line.title {
+  font-size: 18px;
+  color: grey;
+}
+
+#profileToolbar {
+  position: absolute;
+  float: left;
+
+  bottom: 15px;
+  left: 45px; 
+  right: 15px;
+  text-align: center;
+}
+
+#submitForm {
+  text-transform: capitalize;
+  @include button (green, 150px);
+}
+
+#newExemption {
+  text-transform: capitalize;
+  @include button (green, 125px);
+  margin: 12px 25%;
+  display: inline-block;
+}

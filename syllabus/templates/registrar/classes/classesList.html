@@ -1,0 +1,35 @@
+<span id="profileName">
+    {{profile.name}}
+</span>
+<span id="profileToolbar"> 
+    <span id="newClass" onclick="newClass({{department.id}})">New Class</span>
+</span>
+<div id="profileDescription">
+    {{profile.description}}
+</div>
+
+<div id="classContainer">
+    <table id="classTable" cellspacing=0 cellpadding=0>
+        <tr>
+            <th>ID</th>
+            <th>Teacher</th>
+            <th>Term</th>
+            <th>Time</th>
+        </tr>
+        {% for class in classes.all() %}
+        <tr>
+            <td>{{class.id}}</td>
+            <td>{% for professor in class.professor.all() %} {{professor}} {%if not loop.last %},{% endif %}{% endfor %}</td>
+            <td>{{class.term}}</td>
+            <td>
+                {% for time in times[class] %}
+                    {% for day in times[class][time] %}
+                        {{day}}  {{time[0].strftime('%I:%M')}}-{{time[1].strftime('%I:%M')}}<br>
+                    {% endfor %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+

@@ -1,0 +1,24 @@
+<div id="majorForm">
+    <div id="formTitle">
+        Add New Major
+        
+        <span class="closeForm" onclick="closeOverlay()">X</span>
+    </div>
+    <div class="formLine">
+        <span class="formLabel">Name:</span><input class="input" id="name">
+    </div>
+    <div class="formLine">
+        <span class="formLabel">Type:</span><input class="input" id="type">
+    </div>
+    <div class="formLine">
+        <span class="formLabel">College:</span>
+        <select id="college">
+            {% for college in colleges %}
+            <option value="{{college.id}}">{{college.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <span id="submitMajor" onclick="createMajor()">
+        Create Major
+    </span>
+</div>

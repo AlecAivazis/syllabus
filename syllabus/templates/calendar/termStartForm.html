@@ -1,0 +1,16 @@
+<div id="termForm" class="form">
+  <div class="formTitle"> Start Term On {{date}} </div>
+  <div class="formLine">
+    <span class="formLabel">Name</span>
+    <input id="name">
+  </div>
+  {% if not term %}
+  <div class="formLine">
+    <span class="formLabel">Use Template </span>
+    <input type="checkbox">
+  </div>
+  {% endif %}
+  <div class="formLine">
+    {% if term %} {% else %}<span class="termButton" onclick="createTerm('{{date}}')" > Add term </span>{% endif %}
+  </div>
+</div>

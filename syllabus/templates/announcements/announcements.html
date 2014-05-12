@@ -1,0 +1,29 @@
+{% if announcements%}
+    {% for announcement in announcements %}
+    
+        <div class="announcement">
+            <div class="header">
+                <div class="title">
+                    {{announcement.title}}
+                </div>
+                <div class="info">
+                    <span><img src="/resources/images/announcements/calendarIcon.png">{{announcement.datePosted.strftime('%A %b %d %Y')}}</span>
+                    <span><img src="/resources/images/announcements/clockIcon.png">{{announcement.datePosted.strftime('%I:%M %p')}}</span>
+                    <span><img src="/resources/images/announcements/userIcon.png">{{announcement.author}}</span>
+                </div>
+                
+            </div>
+            <div class="body">
+                <div class="message">
+                {{announcement.message}}
+                </div>
+                <div class="more">Read More...</div>
+            </div>
+            
+        </div>
+        
+    {% endfor %}       
+{% else %}
+    There are no announcements 
+{% endif %}
+

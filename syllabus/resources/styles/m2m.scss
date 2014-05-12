@@ -1,0 +1,168 @@
+@option compress: no;
+
+.m2m_mainGutter {
+  width: 500px;
+  height: 256px;
+  margin: 0 20px;
+}
+
+/* header */
+
+.m2m_headerGutter {
+  height: 10%;
+  width: 100%;
+  float: left;
+  background: blue;
+  position: relative;
+  color: #454545;
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.36, rgb(227, 227, 227)), color-stop(0.68, rgb(247, 247, 247)));
+  background-image: -moz-linear-gradient(center bottom, rgb(227, 227, 227) 36%, rgb(247, 247, 247) 68%);
+}
+
+.m2m_headerContent {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* content */
+
+.m2m_contentGutter {
+  margin-top: 1%;
+  height: 90%;
+  width: 100%;
+  float: left;
+}
+
+.m2m_listPanelGutter {
+  float: left;
+  width: 46%;
+}
+
+.m2m_listPanelHeader {
+  text-align: center;
+}
+
+.m2m_listPanelSearchFieldGutter {
+  height: 12%;
+  position: relative;
+  border: 1px solid black;
+  border-bottom: 1px solid #d6d6d6;
+  width: 100%;
+}
+
+.m2m_listPanelSearchFieldIcon {
+  height: 80%;
+  margin: 1%;
+  float: left;
+}
+
+.m2m_listPanelSearchField {
+  top: 0;
+  padding: 0;
+  height: 80%;
+  margin: 0;
+  display: block;
+  float: left;
+  margin: 1%;
+  width: 85%;
+}
+
+.m2m_listPanelContent {
+  width: 100%;
+  float: left;
+  height: 76%;
+  overflow: auto;
+  padding-top: 2%;
+  border: 1px solid black;
+  border-top: none;
+}
+
+.m2m_controlPanel {
+  width: 6%;
+  float: left;
+  height: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.m2m_selectedPanelGutter {
+  float: right;
+  width: 47%;
+}
+
+.m2m_selectedPanelHeader {
+  text-align: center;
+}
+
+.m2m_selectedPanelContent {
+  width: 100%;
+  float: right;
+  height: 76%;
+  overflow: auto;
+  padding-top: 2%;
+  border: 1px solid black;
+  border-top: none;
+}
+
+.m2m_selectedPanelSearchFieldGutter {
+  margin-left: -2px;
+  height: 12%;
+  width: 100%;
+  position: relative;
+  border: 1px solid black;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+.m2m_selectedPanelSearchFieldIcon {
+  height: 80%;
+  margin: 1%;
+  float: left;
+}
+
+.m2m_selectedPanelSearchField {
+  top: 0;
+  padding: 0;
+  height: 80%;
+  margin: 0;
+  display: block;
+  float: left;
+  margin: 1%;
+  width: 85%;
+}
+
+.m2m_controlArrow {
+  width: 20px;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.m2m_controlContent {
+  float: left;
+  position: absolute;
+  top: 35%;
+}
+
+.m2m_selectedEntry {
+  background: #f5f5f5;
+}
+
+.m2m_selectedPanelFooter {
+  float: right;
+  color: #b3b3b3;
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.m2m_listPanelEntry {
+  padding: 0 5px 0 5px;
+  cursor: pointer;
+}
+
+.m2m_submit {
+  cursor: pointer;
+  float: left;
+  margin-top: -17px;
+  margin-left: 20px;
+}

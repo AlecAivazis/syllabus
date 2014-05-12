@@ -1,0 +1,98 @@
+@option compress: no;
+@import "base";
+@import "mixins";
+
+#myClassesGutter {
+  overflow: visible;
+}
+
+#myClassesContent {
+  position: relative;
+  padding: 10px;
+}
+
+#filterCatalog {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  float: left;
+}
+
+#catalogFilter {
+  padding: 15px;
+  background: #fffae1;
+  border-radius: 10px;
+  moz-border-radius: 10px;
+  position: relative;
+  margin-bottom: 15px;
+  -moz-box-shadow: 2px 2px 2px #c9c6b1;
+  -webkit-box-shadow: 2px 2px 2px #c9c6b1;
+  box-shadow: 2px 2px 2px #c9c6b1;
+}
+
+#catalogAdvancedFilter {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #efe8c6;
+  display: none;
+}
+
+#advancedFilters {
+  float: right;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+
+#classList {
+  background: url("/resources/images/redline.png") repeat-y scroll 60px 0 #f9f8f0;
+  border-radius: 15px 15px 15px 15px;
+}
+
+.course {
+  width: 100%;
+  background: url("/resources/images/blueline.png") 0 24px repeat scroll transparent;
+  line-height: 24px;
+  display: inline-block;
+}
+
+.course tbody {
+  margin: 50px;
+}
+
+.courseInfo a {
+  color: grey;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+tr {
+    margin: 0px 50px;
+}
+
+th {
+  font-size: 12px;
+  width: 11%;
+}
+
+td {
+  text-align: center;
+}
+
+.catalogRow td {
+  font-size: 12px;
+  vertical-align: top;
+}
+
+#catalogToolBar {
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+#wishListButton {
+    @include button(green, 150px);
+}

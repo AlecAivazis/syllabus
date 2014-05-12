@@ -1,0 +1,22 @@
+<form>
+    <div class="formTitle">
+        Add Class 
+    </div>
+    <div class="formRow">
+        <label for="professor">Professor:</label> 
+        
+        <select>
+        {% for teacher in teachers %}
+            <option>{{teacher}}</option>
+        {% endfor %}
+        {% for super in supers %}
+            <option>{{super}}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <div class="formRow">
+        <label for"term">Term:</label>
+    </div>
+
+
+</form>

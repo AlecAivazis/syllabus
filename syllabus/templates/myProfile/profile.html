@@ -1,0 +1,116 @@
+<span id="profile">
+    <div class="profileTitle">
+        Contact Details
+    </div>
+    <div class="profileRow">
+        <label>Full Name:</label> {{request.user.first_name}} {{request.user.last_name}}  
+    </div>
+    <div class="profileRow">
+        <label>Email:</label> <input id="email" value="{{request.user.email}}" onchange="updateEmail()">
+    </div>
+    <div class="profileRow">
+        <label>Phone number:</label> <input id="phone" value="{{request.user.phone}}" onchange="updatePhone()">
+    </div>
+    <div class="profileRow">
+        <label>Major:</label>{% for major in request.user.major.all() %}{{major.name}} ({{major.type}}){% if not loop.last %}, {% endif %}{% endfor %}
+    </div>
+    <div class="profileRow">
+        &nbsp;    
+    </div>
+    {% with %}
+    {% set residential = request.user.residential %}
+    <div class="profileRow">
+        <label class="profileSection">Residential Address</label>
+    </div>
+    <div id="addressResidential">
+    <div class="profileRow">
+        <label>Address Line 1:</label> <input name="residential1" value="{{residential.line1}}" class="residential" onchange="updateAddress('residential')">
+    </div>
+    <div class="profileRow">
+        <label>Address Line 2:</label> <input name="residential2" value="{{residential.line2}}" class="residential" onchange="updateAddress('residential')">
+    </div>
+    <div class="profileRow">
+        <label>City:</label> <input name="residentialCity" value="{{residential.city}}" class="residential" onchange="updateAddress('residential')">
+    </div>
+    <div class="profileRow">
+        <label>State/Providence:</label>
+        <input name="residentialState" value="{{residential.state}}" class="residential" onchange="updateAddress('residential')">
+    </div>
+    <div class="profileRow">
+        <label>Zip Code:</label> <input name="residentialZip" value="{{residential.zipCode}}" class="residential" onchange="updateAddress('residential')">
+    </div>
+    <div class="profileRow">
+        <label>Country:</label><input value="{{residential.country}}" class="residential" onchange="updateAddress('residential')">
+    </div>
+    <div class="profileRow">
+        &nbsp;    
+    </div>
+    {% endwith %}
+    </div>
+    {% with %}
+    {% set permanent = request.user.permanent  %}
+    <div class="profileRow">
+        <label class="profileSection">Permanent Address</label>
+    </div>
+    <div id="addressPermanent">
+    <div class="profileRow">
+        <label>Address Line 1:</label> <input name="permanent1" {%if permanent %}value="{{permanent.line1}}"{% endif %} class="permanent" onchange="updateAddress('permanent')">
+    </div>
+    <div class="profileRow">
+        <label>Address Line 2:</label> <input name="permanent2" {%if permanent %}value="{{permanent.line2}}"{% endif %} class="permanent" onchange="updateAddress('permanent')">
+    </div>
+    <div class="profileRow">
+        <label>City:</label> <input name="permanentCity" {%if permanent %}value="{{permanent.city}}"{% endif %} class="permanent" onchange="updateAddress('permanent')">
+    </div>
+    <div class="profileRow">
+        <label>State/Providence:</label>
+        <input name="permanentState" {%if permanent %}value="{{permanent.state}}"{% endif %} class="permanent" onchange="updateAddress('permanent')">
+    </div>
+    <div class="profileRow">
+        <label>Zip Code:</label> <input name="permanentZip" {%if permanent %}value="{{permanent.zipCode}}"{% endif %} class="permanent" onchange="updateAddress('permanent')">
+    </div>
+    <div class="profileRow">
+        <label>Country:</label><input {%if permanent %}value="{{permanent.country}}"{% endif %} class="permanent" onchange="updateAddress('permanent')">
+    </div>
+    <div class="profileRow">
+        &nbsp;    
+    </div>
+    {% endwith %}
+    </div>
+    {% with emergency = request.user.emergency %}
+    <div class="profileRow">
+        <label class="profileSection">Emergency Address</label>
+    </div>
+    <div class="profileRow">
+        <label>Name:</label> <input id="emergencyName" {% if emergency %}value="{{emergency.name}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        <label>Phone Number:</label> <input id="emergencyPhone" {% if emergency %}value="{{emergency.phone}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div id="addressEmergency">
+    <div class="profileRow">
+        <label>Address Line 1:</label> <input {% if emergency %}value="{{emergency.address.line1}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        <label>Address Line 2:</label> <input {% if emergency %}value="{{emergency.address.line2}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        <label>City:</label> <input {% if emergency %}value="{{emergency.address.city}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        <label>State/Providence:</label>
+        <input name="permanentState" {% if emergency %}value="{{emergency.address.state}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        <label>Zip Code:</label> <input {% if emergency %}value="{{emergency.address.zipCode}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        <label>Country:</label><input {% if emergency %}value="{{emergency.address.country}}"{% endif %}  class="emergency" onchange="updateAddress('emergency')">
+    </div>
+    <div class="profileRow">
+        &nbsp;    
+    </div>
+    
+    {% endwith %}
+    </div>
+</span>

@@ -1,0 +1,39 @@
+<div id="userForm">
+    <div class="formTitle">{% if user %}Edit {% else %} Add a {% endif %} User</div>
+    <div class="formLine">
+        <label class="formLabel">Username: </label>
+        <input id="username" {% if user %}value="{{user.username}}"{% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">First Name: </label>
+        <input id="firstName" {% if user %}value="{{user.first_name}}"{% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Last Name: </label>
+        <input id="lastName" {% if user %}value="{{user.last_name}}"{% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Password: </label>
+        <input  id="pass1" type="password" {% if user %}value="{{user.username}}"{% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Password (again): </label>
+        <input  id="pass2" type="password">
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Email Address:</label>
+        <input  id="email" {% if user %}value="{{user.email}}"{% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Role:</label>
+        <select  id="roleSelect">
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+            <option value="staff">Staff</option>
+            <option value="admin">Administrator</option>
+        </select>
+    </div>
+    
+    <span class="submitForm" onclick="createUser()">Add User</span>
+        
+</div>

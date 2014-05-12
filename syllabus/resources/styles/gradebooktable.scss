@@ -1,0 +1,186 @@
+@option compress: no;
+
+td, th {
+  width: 100px;
+}
+
+#gradeBookGutterLabels {
+  font-size: 10px;
+  font-weight: bold;
+  border-right: 1px solid #f4e0e0;
+  vertical-align: bottom;
+  color: #737373;
+  padding: 5px;
+  text-align: left;
+  position: relative;
+  background: #fbfbf7;
+}
+
+.odd, .even {
+  background: #f9f8f0;
+}
+
+td {
+  border-top: 1px solid #e4e9ee;
+}
+
+.eventTitle {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+}
+
+.eventCategory {
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  cursor: text;
+}
+
+.eventPossiblePoints {
+  display: block;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  cursor: text;
+}
+
+.eventWeight {
+  display: block;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  display: none;
+}
+
+#weightLabel {
+  display: none;
+}
+
+#gradeBookEntries {
+  clear: both;
+}
+
+.gradeBookStudent {
+  height: 28px;
+}
+
+.studentName {
+  padding: 5px;
+  border-right: 1px solid #f4e0e0;
+  cursor: pointer;
+  height: 100%;
+  font-size: 14px;
+  width: 100px;
+}
+
+.eventLabel {
+  color: #737373;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  width: 100px;
+  vertical-align: bottom;
+  height: 100%;
+  border-right: 1px solid #f4e0e0;
+  padding: 5px;
+}
+
+.entry {
+  padding: 5px;
+  text-align: right;
+  cursor: text;
+  border-right: 1px solid #f4e0e0;
+  span {
+    float: right;
+  }
+  a {
+    float: left;
+    margin-top: -17px;
+    display: none;
+    padding: 0;
+    cursor: pointer;
+  }
+}
+
+#averageLabel {
+  font-size: 11px;
+  font-weight: bold;
+  color: #737373;
+  background: #FBFBF7;
+  padding: 5px;
+  border-right: 1px solid #f4e0e0;
+  text-align: left;
+}
+
+.average {
+  font-size: 12px;
+  width: 100px;
+  padding: 5px;
+  border-right: 1px solid #f4e0e0;
+  text-align: right;
+  height: 18px;
+  overflow: hidden;
+}
+
+.totalGradeLabel {
+  padding: 5px;
+  border-right: 1px solid #f4e0e0;
+  position: relative;
+  text-align: left;
+  font-weight: bold;
+  vertical-align: top;
+  color: #737373;
+  font-size: 14px;
+}
+
+.totalGrade {
+  padding: 5px;
+  border-right: 1px solid #f4e0e0;
+  text-align: right;
+  height: 100%;
+}
+
+tr {
+  &.even td.late, &.odd td.late {
+    background: #f4e5de;
+  }
+  &.even td.highlighted {
+    background-color: #86d6ff;
+  }
+  &.odd td.highlighted {
+    background-color: #67cafe;
+  }
+}
+
+td.highlighted {
+  background: white;
+}
+
+th.highlighted {
+  background-color: #67cafe;
+}
+
+tr {
+  &.even.highlighted {
+    background: #86d6ff;
+  }
+  &.odd.highlighted {
+    background: #67cafe;
+  }
+  &.even.highlighted .late {
+    background: #86d6ff;
+  }
+  &.odd.highlighted .late {
+    background: #67cafe;
+  }
+}
+
+.dataTables_length {
+  float: left;
+}
+
+.dataTables_filter {
+  float: right;
+}

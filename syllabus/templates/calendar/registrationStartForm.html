@@ -1,0 +1,22 @@
+<div class="form">
+  <div class="formTitle">Open Registration on {{date}}</div>
+  <div class="formLine">
+    <div class="formLabel">
+      Term:
+    </div>
+    <select id="term">
+    {% for term in terms.all() %}
+      <option value="{{term.id}}">{{term.name}} - {{term.start.year}} </option>
+    {% endfor %}
+    </select>
+  </div>
+
+  <div class="formLine">
+    <span class="formLabel">Name:</span>
+    <input id="name">
+  </div>
+</div>
+
+<div class="formLine">
+  <span class="registrationButton" onclick="createRegistration('{{date}}')">Start Registration</span>
+</div>

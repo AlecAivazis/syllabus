@@ -1,0 +1,389 @@
+@option compress: no;
+@import "base";
+
+#calendar {
+  margin: 125px 20px;
+  margin-bottom: 0;
+  position: relative;
+  background: white;
+}
+
+.calendarMonth {
+  margin: 0px 0px 0px 0px;
+  padding-top: 10px;
+}
+
+.calendarWeek {
+  margin: 0px 200px 0px 0px;
+  padding-top: 50px;
+}
+
+#calendarTitle {
+  text-align: center;
+  text-decoration: bold;
+  font-family: 'Arial';
+  font-size: 16pt;
+  height: 35px;
+}
+
+.calendarDayStatus {
+  width: 100%;
+  padding: {
+    top: 5px;
+    left: 5px;
+  };
+  text-align: left;
+  height: 15%;
+}
+
+.calendarDayBody {
+  height: 48%;
+  padding: 0px 5px;
+  overlay: hidden;
+}
+
+.calendarEvent {
+  margin-right: 10px;
+  line-height: 200%;
+  float: left;
+  font-size: 12px;
+  &.assignment {
+    color: #2191c4;
+  }
+  &.test {
+    color: #2b8d00;
+  }
+}
+
+.sidebarClassTitle {
+  overflow: hidden;
+}
+
+.calendarDay {
+  width: 11%;
+  height: 13%;
+  border-left: 1px solid #f4e0e0;
+  border-top: 1px solid #e4e9ee;
+  border-right: none;
+  border-bottom: none;
+  text-align: center;
+  z-index: 999;
+  background: white;
+}
+
+.selectedDay {
+  background: #efefef;
+}
+
+#newEventFormGutter {
+  padding: 35px;
+  border-radius: 10px;
+  background: url("/resources/images/redline.png") repeat-y 30px white;
+}
+
+.other {
+  color: #cccccc;
+}
+
+.tableHeader {
+  color: #666666;
+  font-family: 'Arial';
+  text-decoration: none;
+  font-size: 12;
+  height: 12px;
+  padding: 0px;
+}
+
+.calendarSelector {
+  cursor: pointer;
+}
+
+#calendarEventTaskBar {
+  width: 100%;
+}
+
+.calendarEventTaskBarButton {
+  margin: 0;
+  cursor: pointer;
+  display: inline;
+}
+
+#newEventFormSubmit {
+  margin: 10px 0px 0px 10px;
+  width: 40%;
+  cursor: pointer;
+}
+
+.sidebarEvent {
+  cursor: pointer;
+  padding: 2px;
+  width: 165px;
+  margin-left: 10px;
+}
+
+.selectedSidebarEvent {
+  background: #d0d0d0;
+}
+
+#calendarWeekGutter {
+  float: left;
+  width: 102.5%;
+}
+
+.calendarWeekDay {
+  width: 14%;
+  float: left;
+  height: 87%;
+  border-left: 1px solid #dadada;
+}
+
+.calendarWeekEvents! {}
+
+.calendarWeekDayLabel {
+  border-bottom: 1px solid #dadada;
+  padding-left: 3%;
+  font-size: 12px;
+}
+
+.calendarWeekEvents {
+  padding-left: 5px;
+}
+
+.formFieldWrapper {
+  clear: both;
+  margin-bottom: 2px;
+}
+
+label {
+  width: 150px;
+  float: left;
+  text-align: right;
+  padding-right: 10px;
+}
+
+
+
+#selectSection {
+  float: right;
+  width: 222px;
+  text-align: left;
+}
+
+#formTitle {
+  text-align: left;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+#newEventFormSubmit {
+  width: 80px;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#sidebarGutter {
+  position: absolute;
+  top: 45;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  min-width: 150px;
+  max-width: 200px;
+  color: #333;
+  background: #c5c5c5;
+  z-index: 99;
+}
+
+#sidebarContent {
+  padding: 5px;
+  float: right;
+}
+
+#sidebarNav img {
+  float: left;
+}
+
+.eventFiles {
+  float: right;
+  #multiFile {
+    margin-right: 125px;
+  }
+}
+
+.eventFile {
+  display: inline;
+  clear: both;
+}
+
+.deletedFile {
+  height: 16px;
+  overflow: hidden;
+  width: 80%;
+  display: inline-block;
+  color: red;
+  margin-bottom: 2px;
+}
+
+a.file {
+  line-height: 12px;
+  height: 12px;
+  overflow: hidden;
+  width: 80%;
+  display: inline-block;
+}
+
+
+#calendarToolBar{
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  font-size: 12px;
+}
+
+.registrarTools {
+  margin-right: 25px;
+  margin-top: -20px;
+  display: inline-block;
+}
+
+.termButton{
+  @include button(green, 150px); 
+  float: right;
+  margin: {
+    top: 10px;
+    right: 5px;
+    bottom: 10px; 
+  };
+  
+}
+
+.eventTooltip {
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  .tooltipster-content {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 8px 10px;
+  }
+}
+
+/* Use this next selector to style things like font-size and line-height: */
+
+.eventInfo, .editEvent, .deleteEvent {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  display: inline-block;
+  text-align: center;
+  width: 45px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.eventInfo {
+  background: #22a12e;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #22a12e 0%, #30bd40 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #22a12e), color-stop(100%, #30bd40));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg, #22a12e 0%, #30bd40 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg, #22a12e 0%, #30bd40 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg, #22a12e 0%, #30bd40 100%);
+  /* IE10+ */
+  background: linear-gradient(45deg, #22a12e 0%, #30bd40 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#22a12e', endColorstr='#30bd40',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+}
+
+.editEvent {
+  background: #ad9117;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #ad9117 0%, #c5b121 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #ad9117), color-stop(100%, #c5b121));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg, #ad9117 0%, #c5b121 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg, #ad9117 0%, #c5b121 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg, #ad9117 0%, #c5b121 100%);
+  /* IE10+ */
+  background: linear-gradient(45deg, #ad9117 0%, #c5b121 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ad9117', endColorstr='#c5b121',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+}
+
+.deleteEvent {
+  margin-right: none;
+  background: #c00202;
+  /* Old browsers */
+  background: -moz-linear-gradient(45deg, #c00202 0%, #d20404 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #c00202), color-stop(100%, #d20404));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(45deg, #c00202 0%, #d20404 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(45deg, #c00202 0%, #d20404 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(45deg, #c00202 0%, #d20404 100%);
+  /* IE10+ */
+  background: linear-gradient(45deg, #c00202 0%, #d20404 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c00202', endColorstr='#d20404',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+}
+
+#calendarViewSelect {
+  font-size: 12px;
+  position: absolute;
+  left: 50px;
+  top: 95px;
+  cursor: pointer;
+  li {
+    display: inline-block;
+    background: red;
+    padding: 10px 10px;
+    margin-left: -20px;
+    width: 80px;
+    height: 18px;
+    text-align: center;
+    background: url('/resources/images/calendar/tab.png');
+    z-index: 10;
+    &.current {
+      background: url('/resources/images/calendar/tabSelected.png');
+      z-index: 15;
+    }
+  }
+}
+
+.registrationButton {
+  @include button(green, 200px);                    
+  float: right;
+  margin: {
+    top: 10px; 
+    right: 10px;
+    bottom: 10px;
+    }
+}
+
+.calendarDayLabel {
+    height: 40%;
+    font-size: 12px;
+    .startGroup {
+        background: #f3e060;
+    }
+    .endGroup, .endTerm {
+        background: #f36460;
+    }
+    .startTerm {
+        background: #67e291;
+    }
+}

@@ -1,0 +1,23 @@
+<div id="newAnnouncementContainer">
+    <div id="newAnnouncementHeader">New Announcement</div>
+    
+    <form id="newAnnouncementForm">
+        <div class="newAnnouncementFormFieldWrapper">
+            <label for="newAnnouncementTitle">Title: </label><input id="newAnnouncementTitle">       
+        </div>
+        <div class="newAnnouncementFormFieldWrapper">
+            <label for="newAnnouncementTo">To: </label>
+            {% for class in classes %}
+                <input type="checkbox" name="to" value="{{class.id}}"> {{class.profile.name}} ({{class.id}})
+            {% endfor %} 
+            
+        </div>
+        <div class="newAnnouncementFormFieldWrapper">
+            <label for="newAnnouncementBody">Message: </label><textarea id="newAnnouncementBody" ></textarea>
+        </div>
+        <ul class="submitButtons">
+            <li class="submitWidget disabled" onclick="submitNewAnnouncement()">submit</li>
+            <li class="closeWidget red" onclick="closeOverlay()">cancel</li>
+        </ul>
+    </form> 
+</div>

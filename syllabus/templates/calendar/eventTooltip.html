@@ -1,0 +1,9 @@
+<div class='eventToolTipTitle'>
+    <img src='/resources/images/calendar/{% if event.category == "assignment" %}document{% elif event.category=="test"%}documentPencil{% else %}projector{% endif %}.png'> {{event.title}}
+</div>
+<br>
+<div class='eventToolTipDescription'>
+{{event.description}}
+</div>
+<br>
+<span class='eventInfo' onclick='viewEventInfo({{event.id}})'>Info</span> <span class='editEvent' onclick='editEvent({{event.id}})'>Edit</span> <span class='deleteEvent' onclick='deleteEvent({{event.id}})'>Delete</span>

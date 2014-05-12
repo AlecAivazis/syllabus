@@ -1,0 +1,69 @@
+<div id="newEventFormGutter">
+
+<div id="formTitle"> New {{request.GET['category']}} {% if request.GET['category'] == 'assignment' %}due {% endif %}on {{day}}/{{month}}/{{year}} </div>
+<form method="POST" id="newEventForm" action="/calendar/createEvent/" target="invisible" enctype="multipart/form-data">
+    <input style="display:none" name="year" value="{{year}}">
+    <input style="display:none" name="month" value="{{month}}">
+    <input style="display:none" name="day" value="{{day}}">
+    <input style="display:none" name="category" value={{request.GET['category']}}>
+    
+    <div class="formFieldWrapper">       
+        <label for="newEventtitle">Title: </label>
+        <input id="newEventtitle" name="title">
+    </div>
+    
+    <div class="formFieldWrapper">
+        <label for="subCategory">Category (optional): </label>
+        <input id="subCategory" name="subCategory">
+    </div>
+    
+    <div class="formFieldWrapper">
+        <label for="newEventDescription">Description: </label>
+        <textarea id="newEventDescription" cols="26" rows="10" style="resize: none;" name="description"></textarea>
+    </div>
+    
+    {% if request.GET['category'] == 'assignment' %}
+    <div class="formFieldWrapper">
+        <label for="possiblePoints">Possible Points: </label>
+        <input id="possiblePoints" name="possiblePoints">
+    </div>
+    {% endif %}
+    
+    {% if request.GET['category'] == 'lecture' %}
+    <div class="formFieldWrapper">
+        <label for="associatedReading">Assoc. Reading: </label>
+        <input id="associatedReading" name="associatedReading">
+    </div>
+    {% endif %}
+    
+    <div class="formFieldWrapper">
+        <label for="time">{% if request.GET['category'] == 'assignment' %}Due At: {% else %} Time: {% endif %}</label>
+        <input id="time" name="time">
+    </div>
+    
+    <div class="formFieldWrapper">
+        <label> Upload Files:</label>
+        {% import "macros.html" as macros%}{{macros.multi_file()}}
+    </div>
+    
+    <div class="formFieldWrapper classId">
+        <label for="classId"> Class: </label>
+        <div id="selectSection">
+        <div style="float: left;">
+            <select id="classId" name="classId" onChange="loadSections()">
+                <option onclick="loadSectionByClassId('0');">Choose a Class</option>
+                {% for class in classes %}
+                <option onclick="loadSectionByClassId({{class.id}});" value="{{class.id}}">{{class.profile.interest}} {{class.profile.number}}</option>
+                {% endfor %}
+                
+            </select>
+        </div>
+        <div id="newEventFormSectionChoice">&nbsp;</div>
+        </div>
+    </div>
+    
+    <input id="newEventFormSubmit" style=" clear:  both;" type="submit" value="Submit"></input>
+    <iframe id="invisible" style="display: none; width: 1px; height: 1px;" src="" name="invisible"></iframe>
+</form>
+
+</div>

@@ -1,0 +1,20 @@
+<div class="form">
+  <div class="formTitle">Set End Date</div>
+  <div class="formLine">
+    <span class="formLabel">Term: </span>
+    <select id="term">
+      {% for term in terms %}
+      <option value={{term.id}}>{{term.name}} - {{term.start.year}}</option>
+      {% else %}
+      <option> none </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="formLine">
+    <span class="formLabel">Use Template </span>
+    <input type="checkbox">
+  </div>
+  <div class="formLine">
+    <span class="termButton" onclick="createTermEnd('{{date}}')">Set End Date</span>
+  </div>
+</div>

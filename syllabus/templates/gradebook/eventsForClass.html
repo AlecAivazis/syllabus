@@ -1,0 +1,2 @@
+{% if events %}<select>{% for event in events %}<option onclick="loadEvent(this, {{event.id}})">{{event}}</option>{% endfor %}{% endif %}
+

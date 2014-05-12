@@ -1,0 +1,67 @@
+{% extends "myClasses/home.html" %}
+
+{% block head %}
+    <script type="text/javascript" src="/resources/scripts/watermark.js"></script>
+    <script type="text/javascript" src="/resources/scripts/spaces.js"></script>
+
+    
+    {% compress css %}
+    <link type="text/scss" rel="stylesheet" href="/static/styles/spaces.scss" ></link>
+    {% endcompress %}
+
+    {% if klass and request.user in klass.professor.all()%}
+    <script type="text/javascript" src="/resources/scripts/raptor.min.js"></script>
+    
+    <script type="text/javascript">
+        makeEditor({{klass.id}});
+    </script>
+    {% endif %}
+        
+{% endblock %}
+
+{% block MCbody %}
+
+{% if klass %}
+<div id="header">
+    <div id="title">
+        {{klass.profile.interest}} {{klass.profile.number }} - {{klass.profile.name}}   
+    </div>
+    <div id="professor">
+        {% for professor in klass.professor.all() %}{{professor.first_name}} {{professor.last_name}}{% if not loop.last %},{% endif %}{% endfor %}
+    </div>
+   
+</div>
+<div id="spaces_content">
+     <div id="spaceNav">
+        <ul>
+            <li class="current" onclick="viewSpace(this, 'Syllabus', {{klass.id}})"> <img src="/resources/images/booksIcon.png"> syllabus</li>
+            <li onclick="viewSpace(this, 'Announcements',
+            {{klass.id}})"> <img src="/resources/images/booksIcon.png"> announcements</li>
+            <li onclick="viewSpace(this, 'Timeline', {{klass.id}})"><img src="/resources/images/calendarIcon.png"> timeline</li>
+            <li onclick="viewSpace(this, 'Messageboard', {{klass.id}})"><img src="/resources/images/chatIcon.png"> message board</li>
+        </ul>
+    </div>
+    <div id="spaceContent">
+        {% include 'spaces/syllabus.html' %}     
+    </div>
+    
+</div>
+{% else %}
+<div id="classPagesHome">
+    <div id="classPagesTitle"> Choose a Class Page</div>
+    <div id="classPages">
+        <div class="classPagesTerm">
+        {% for term,classes in pages.items() %}
+            {{term}}:
+            {% for class in classes %}
+                <div class="classPage"><a href="/myClasses/classPage/?id={{class.id}}">{{class.profile.interest}} {{class.profile.number }} - {{class.profile.name}}</a></div>
+            {% endfor %}
+        {% else %}
+            You are not enrolled in any classes yet....
+        {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

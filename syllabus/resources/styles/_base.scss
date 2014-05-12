@@ -1,0 +1,41 @@
+@import "mixins";
+
+@mixin button ($color, $width){
+  padding: 5px 10px;
+  display: inline-block;
+  width: $width;
+  text-align: center;
+  border-radius: 7px;
+  cursor: pointer;
+
+  @if $color == green {
+    @include vGradient(#64c26f, #45a84e);
+
+    box-shadow: inset 0 1px 0 #62d573;
+    -moz-box-shadow: inset 0 1px 0 #62d573;
+    -webkit-box-shadow: inset 0 1px 0 #62d573;
+
+    border: 1px solid #3ba043;
+    color: white;
+  }@else if $color == red {
+    @include vGradient(#e13333, #bd1717);
+
+    box-shadow: inset 0 1px 0 #f0727;
+    -moz-box-shadow: inset 0 1px 0 #f0727;
+    -webkit-box-shadow: inset 0 1px 0 #f0727;
+
+    border: 1px solid #980000;
+    color: white;
+  }@else if $color == tan {
+    @include vGradient(#ec3ba8, #bd1717);
+
+    box-shadow: inset 0 1px 0 #f0727;
+    -moz-box-shadow: inset 0 1px 0 #f0727;
+    -webkit-box-shadow: inset 0 1px 0 #f0727;
+
+    border: 1px solid #980000;
+    color: white;
+  }
+
+ 
+}

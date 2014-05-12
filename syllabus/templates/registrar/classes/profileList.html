@@ -1,0 +1,11 @@
+    <li class="tierFilter class" >
+      <select id="profileFilter">
+      {% include "/registrar/classes/interestList.html" %}
+      </select>
+    </li>
+{% for profile in profiles %}
+    <li class="class" id="class{{profile.id}}"
+        onclick="viewProfile({{profile.id}})">{{profile.number}} - {{profile.name}}</li>
+{% endfor %}
+    {% if interest %}<li class="addLink" onclick="newProfile({{interest.id}})" >Add Class
+        Profile...</li>{% endif %}

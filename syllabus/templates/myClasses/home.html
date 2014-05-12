@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+ 
+{% block head %}
+               {% compress css %} 
+                <link type="text/scss" rel="stylesheet" href="/static/styles/myClasses.scss" ></link>
+                <link type="text/scss" rel="stylesheet" href="/static/styles/classViews.scss" ></link>
+                {% endcompress %}
+                <script type='text/javascript' src='/resources/scripts/overlay.js'></script>
+                
+                {% block MChead %}{% endblock %}
+    
+    
+{% endblock %}
+ 
+{% block content %}
+    <div id="myClassesGutter">
+        <ul class="sidebar">
+            <a href="/myClasses/schedule"><li><div class="liContainer"><img src="/resources/images/scheduleIcon.png"> My Schedule</div></li></a>
+            <a href="/myClasses/grades"><li><div class="liContainer"><img src="/resources/images/clipboard.png"> My Grades</div></li></a>
+            <a href="/myClasses/catalog"><li><div class="liContainer"><img src="/resources/images/searchIcon.png"> Catalog</div></li></a>
+            <li class="sidebarLabel">classes</li>
+        {% for enrollment in request.user.enrollments.filter(grade="") %}
+            <a href="/myClasses/classPage?id={{enrollment.section.qlass.id}}"><li><div class="liContainer">{{enrollment.section.qlass.profile.interest}} {{enrollment.section.qlass.profile.number}}</div></li></a>
+        {% endfor %}
+        </ul>
+        <div id="myClassesContent">{%block MCbody %}{% include '/spaces/space.html' %}{% endblock %}</div>
+    </div>
+{% endblock %}

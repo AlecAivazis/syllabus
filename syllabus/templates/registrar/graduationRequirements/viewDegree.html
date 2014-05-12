@@ -1,0 +1,69 @@
+<div id="degreeTitle">
+    <span class="title">{{major.name}}</span>
+    
+    <ul id="degrees">
+        {% for degree in degrees %}
+        <li class="degree" onclick="viewDegree({{major.id}},'{{degree}}')">{{degree}}</li>
+        {% endfor %}
+    </ul>
+    
+    <span id="newRequirement" onclick="newRequirement({{major.id}})">Add a Requirement</span>
+</div>
+
+<div id="degreeBody">
+    {% if preMajor.all() %}
+        <div class="degreeCategoryTitle">Pre-Major Requirements</div>
+        
+        {% for requirement in preMajor.all() %}
+            <div class="majorRequirement">
+                <table width="100%">
+                    {%for profile in requirement.courses.all() %}
+                    <tr>
+                        <td class="number">{% if loop.first %}{% if requirement.courses.count() == 1 %}required{% else %}{{requirement.number}} of{% endif %}{% endif %}</span>
+                        <td class="classes">
+                            {{profile.interest}} {{profile.number}} {{profile.name}}
+                        </td>
+                        <td class="tools">
+                            {% if loop.first %}
+                                <img title="edit requirement" src="/resources/images/pencil.png" onclick="editRequirement({{requirement.id}})">
+                                <img title="delete requirement" src="/resources/images/greyX.png" onclick="deleteRequirement({{requirement.id}})">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if requirements.all() %} 
+        <div class="degreeCategoryTitle">Major Requirements</div>
+        
+        {% for requirement in requirements.all() %}
+            <div class="majorRequirement">
+                <table width="100%">
+                    {%for profile in requirement.courses.all() %}
+                    <tr>
+                        <td class="number">{% if loop.first %}{% if requirement.courses.count() == 1 %}required{% else %}{{requirement.number}} of{% endif %}{% endif %}</span>
+                        <td class="classes">
+                            {{profile.interest}} {{profile.number}} {{profile.name}}
+                        </td>
+                        <td class="tools">
+                            {% if loop.first %}
+                                <img title="edit requirement" src="/resources/images/pencil.png" onclick="editRequirement({{requirement.id}})">
+                                <img title="delete requirement" src="/resources/images/greyX.png" onclick="deleteRequirement({{requirement.id}})">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if not preMajor.all() and not requirements.all() %}
+        <span id="emptyRequirements">
+        No requirements added yet... please add some by clicks on the green button to the right
+        </span>
+    {% endif %}
+    
+</div>

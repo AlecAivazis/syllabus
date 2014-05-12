@@ -1,0 +1,67 @@
+<table id="classInfoTable" cellspacing=0>
+    <tr>
+        <th>Course</th>
+        <th>EnrlCode</th>
+        <th>Grading</th>
+        <th>Units</th>
+        <th>Instructor(s)</th>
+        <th>Day(s)</th>
+        <th>Time(s)</th>
+        <th>Location(s)</th>
+    </tr>
+    {% for class in classes %}
+    <tr class="myClassInfoTable">
+        <td style="text-align: left;" colspan=7>{{class.profile.interest}} {{class.profile.number }} - {{class.profile.name}}<a class="classInfoLink" onclick="courseInfo({{class.profile.id}})">course info</a></td>
+        <td class="classUtils">
+            <a onclick="confDrop({{class.id}})">drop</a> 
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>{{class.id}}</td>
+        <td>{{class.gradingOption}}</td>
+        <td>{{class.profile.units}}</td>
+        <td>{% for teacher in class.professor.all() %}{{teacher}}{% endfor %}</td>
+        <td>
+            {% for time in times[class]%}
+                {% for day in times[class][time] %}
+                    {{day}}
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </td>
+        <td>
+            {% for time in times[class]%}
+                {{time[0].strftime('%I:%M')}}&nbsp;-&nbsp;{{time[1].strftime('%I:%M&nbsp;%p')}}
+                <br>
+            {% endfor %}    
+        </td>
+        <td>{{class.location}}</td>
+    </tr>
+    {% for section in class.sections.filter(students=request.user) %}
+    <tr>
+        <td colspan=4>{{section.id}}</td>
+        <td>
+            {%for ta in section.tas.all() %}{{ta}}{%endfor%}
+        </td>
+        <td>
+            {% for time in times[section]%}
+                {% for day in times[section][time] %}
+                    {{day}}
+                {% endfor %}
+                <br>
+            {% endfor %}
+            </td>
+            <td>
+                {% for time in times[section]%}
+                    {{time[0].strftime('%I:%M')}}&nbsp;-&nbsp;{{time[1].strftime('%I:%M&nbsp;%p')}}
+                    <br>
+                {% endfor %}    
+            </td>
+        <td>{{section.location}}</td>
+    </tr>
+    {% endfor %}
+    {% endfor %}
+    
+    
+</table>

@@ -1,0 +1,26 @@
+<div class="form">
+  <div class="formTitle">End Registration on {{date}}</div>
+  <div class="formLine">
+  <div class="formLabel">
+    Term:
+  </div>
+  <select id="term">
+  {% for term in terms.all() %}
+  <option value="{{term.id}}">{{term.name}} - {{term.start.year}} </option>
+  {% endfor %}
+  </select>
+</div>
+  <div class="formLine">
+    <span class="formLabel">Name:</span>
+    <select id="id">
+      {% for group in groups %}
+        <option value="{{group.id}}">{{group.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+  <div class="formLine">
+    <span class="registrationButton" onclick="setEndRegistration('{{date}}')">End Registration</span>
+  </div>
+</div>

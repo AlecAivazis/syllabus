@@ -1,0 +1,9 @@
+    <li class="department tierFilter">
+      <select id="departmentFilter">
+        {% include "/registrar/classes/collegeList.html" %}
+      </select>
+    </li>
+{% for department in departments %}
+    <li class="department" id="department{{department.id}}" onclick="loadDepartment({{department.id}})">{{department.name}}</li>
+{% endfor %}
+    <li class="addLink" onclick="newDepartment({{college.id}})">Add Department...</li>

@@ -1,0 +1,46 @@
+<meta charset="UTF-8">
+<html>
+
+    <head>
+	    <title>Syllabus</title>
+        
+        {% compress css %}
+	    <link type="text/css" rel="stylesheet" href="/static/styles/normalize.css" ></link>
+	    <link type="text/scss" rel="stylesheet" href="/static/styles/general.scss" ></link>
+	    <link type="text/scss" rel="stylesheet" href="/static/styles/overlay.scss" ></link>
+	    <link type="text/scss" rel="stylesheet" href="/static/styles/multi.scss" ></link>
+        {% block css%}{% endblock %}
+	    {% endcompress %}
+
+        {% compress js %}
+	    <script src="/static/scripts/jquery.js"></script>
+	    <script src="/static/scripts/jquery-ui.js"></script>
+	    <script src="/static/scripts/syll.js"></script>
+	    <script type="text/javascript" src="/static/scripts/overlay.js"></script>
+	    <script type="text/javascript" src="/static/scripts/multi.js"></script>
+            {% block js%}{% endblock %}
+            <script type="text/javascript" src="/static/scripts/jquery-migrate-1.2.0.js"></script>
+        {% endcompress %}
+        
+	    {% block head %}{% endblock %}
+
+	    
+    </head>
+    
+    <body>
+	<div id="gutter">
+		<div id="nav">
+			<img id="branding" src="/resources/images/branding.png">
+			{% for pair in request.session['links'] %}
+				<a id="nav_{{pair[0]}}" href='{{pair[1]}}'><img src="/resources/images/{{pair[0]}}.png"></a>
+				
+			{% endfor %}
+		</div>
+		{% block sidebar %}{% endblock %}
+				
+		<div id="content">
+		    {% block content %}{% endblock %}
+		</div>
+	</div>
+    </body>
+</html>

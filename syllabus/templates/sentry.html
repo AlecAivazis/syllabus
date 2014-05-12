@@ -1,0 +1,26 @@
+<head>
+  {% compress css %}
+        <link type="text/scss" rel="stylesheet" href="/static/styles/sentry.scss"></link>
+  {% endcompress %}
+        <script src="/resources/scripts/jquery.js"></script>
+	<script src="/resources/scripts/sentry.js"></script>
+</head>
+<body>
+<div id="gutter">
+	<div id="header">
+		<img src="/resources/images/stevensonBanner.png"/>
+	</div>
+	<div id="content">
+		<form method="POST">
+            <label class="label" for="id_username">Username:</label> <div><input id="id_username" class="input" type="text" name="username" maxlength="1020" /></div>
+            
+            <label class="label" for="id_password">Password:</label><div><input id="id_password" class="input" type="password" name="password" maxlength="1020" /></div>
+            
+            <div id="submit">
+            <input id="submit" type="button" onclick="login()" value="Login" />
+            </div>
+		
+		</form>
+	</div>
+</div>
+</body>

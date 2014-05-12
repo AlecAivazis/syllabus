@@ -1,0 +1,13 @@
+<div id="viewEventGutter">
+    <div id="eventViewHeader">
+        <div id="eventViewTitle">
+            {{event}}
+        </div>
+        <div id="eventViewDueDate">
+            due {{event.date.strftime('%x')}}
+        </div>
+    </div>
+    <div id="eventViewBody">
+        {{event.description}}
+    </div>
+</div>

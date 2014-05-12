@@ -1,0 +1,66 @@
+<div id="newRequirementForm">
+    <div id="formTitle">
+        Add a Requirement
+        
+        <span class="closeForm" onclick="closeOverlay()">X</span>
+    </div>
+    {% if college %}
+    <div class="formLine">
+        <label class="formLabel">Name:</label>
+        <input class="input" {%if requirement %} value="{{requirement.number}}" {% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Abbreviation:</label>
+        <input class="input" {%if requirement %} value="{{requirement.abbrv}}" {% endif %}>
+    </div>
+    {% endif %}
+    <div class="formLine">
+        <label class="formLabel">Number:</label>
+        <input class="input" {%if requirement %} value="{{requirement.number}}" {% endif %}>
+    </div>
+    <div class="formLine">
+        <label class="formLabel">Min Grade:</label>
+        <input class="input" {%if requirement %} value="{{requirement.minGrade}}" {% endif %}>
+    </div>
+    {% if major %}
+    <div class="formLine">
+        <label class="formLabel">Level:</label>
+        Pre-Major<input type="radio" name="level" value="preMajor" {%if requirement%}{% if requirement.level == "preMajor" %}checked{%endif%}{%endif%}> Major <input type="radio" name="level" value="major" {%if requirement%}{% if requirement.level == "preMajor" %}checked{%endif%}{%else%}checked{% endif %}>
+    </div>
+    {% endif %}
+    {% if requirement %}
+    {% for profile in requirement.courses.all() %}
+    
+    <div class="formLine">
+        <label class="formLabel">Class:</label>
+        <select id="interestList" onchange="profilesByInterest(this, $(this).val())">
+            <option >Choose an interest</option>
+            {% for interest in interests %}
+            <option {% if interest == profile.interest %}selected{% endif %}>{{interest}}</option>
+            {% endfor %}
+        </select>
+        <select id="profileList" onchange="selectedProfile()">
+            <option>Choose a class</option>
+            {% for pofile in profiles[profile.interest] %}
+            <option value="{{pofile.id}}" {% if pofile.id == profile.id %}selected{% endif %}>{{pofile.number}} - {{pofile.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+        
+    {% endfor %}
+    {% endif %}
+    
+    <div class="formLine">
+        <label class="formLabel">Class:</label>
+        <select id="interestList" onchange="profilesByInterest(this, $(this).val())">
+            <option >Choose an interest</option>
+            {% for interest in interests %}
+            <option>{{interest}}</option>
+            {% endfor %}
+        </select>
+        <select id="profileList" onchange="selectedProfile()">
+            <option>Choose a class</option>
+        </select>
+    </div>
+    <span id="submitRequirement" {% if requirement %} onclick="modifyRequirement({{requirement.id}})" {% else %} {% if college %} onclick="submitCollegeRequirement({{college.id}})" {% else %} onclick="submitRequirement({{major.id}})" {% endif %} {% endif %}>Save Graduation Requirement</span>
+</div>

@@ -1,0 +1,558 @@
+@option compress: no;
+
+textarea {
+  resize: vertical;
+}
+
+#header {
+  padding: 15px;
+  padding-bottom: 0px;
+}
+
+#title {
+  font-size: 20px;
+}
+
+#professor {
+  margin-left: 10px;
+}
+
+#myClassesContent {
+  margin-left: 240px;
+}
+
+#spaceContent {
+  background: url("/resources/images/blueline.png") transparent;
+  line-height: 24px;
+  padding-bottom: 24px;
+}
+
+#spaceNav {
+  text-align: right;
+  margin-bottom: 10px;
+  padding: 10px 10px 0 0;
+  li {
+    img {
+      margin-top: 3px;
+      float: left;
+      padding-right: 3px;
+    }
+    display: inline-block;
+    text-align: right;
+    text-transform: capitalize;
+    cursor: pointer;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    padding: 2 10px;
+    background: #efede0;
+    &:hover, &.current {
+      background: #f5eaae;
+    }
+  }
+}
+
+#spaces_content {
+  margin: 10px;
+  background: #f9f8f0 url("/resources/images/redline.png") repeat-y;
+  background-position: 60px 0px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+#description {
+  margin-top: 15px;
+}
+
+#spaceEditButton {
+  float: right;
+  margin-top: -75px;
+}
+
+.ui-editor-wrapper {
+  .ui-editor-toolbar-wrapper, .ui-editor-path {
+    border: 1px solid rgb(194, 194, 194) !important;
+    background: -moz-linear-gradient(center top, rgb(239, 239, 239), rgb(219, 219, 219) 100%) repeat scroll 0% 0% transparent;
+    box-shadow: 1px 1px 0px white inset, -1px -1px 0px white inset;
+  }
+}
+
+#syllabusContent {
+  padding-left: 65px;
+  padding-bottom: 40px;
+  &:focus {
+    border: 1px dotted black;
+  }
+}
+
+.ui-editor-unsaved-edit-warning {
+  display: none;
+}
+
+.ui-editor-message-info {
+  background: #AEAEAE;
+}
+
+.ui-editor-path {
+  display: none;
+}
+
+#lectureScheduleHeader {
+  font-size: larger;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.lecture {
+  border: 1px solid black;
+  margin: 0 200px 10px 10px;
+}
+
+.lectureHeader {
+  font-size: large;
+  border-bottom: 1px solid black;
+  padding: 3px;
+}
+
+.lectureDescription {
+  margin-left: 10px;
+  font-size: medium;
+  padding: 5px;
+}
+
+.lectureFiles {
+  padding: 3px;
+}
+
+.topicBody {
+  margin-left: 75px;
+}
+
+.lectureAssociatedReading {
+  padding: 3px;
+}
+
+.topicFullView {
+  padding-left: 65px;
+  margin-bottom: 24px;
+  min-height: 72px;
+  img {
+    float: left;
+  }
+}
+
+#newTopicGutter {
+  width: 350px;
+}
+
+#newTopicHeader {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#newTopicTitle, #newTopicBody {
+  float: right;
+  margin-bottom: 5px;
+  input {
+    width: 300px;
+  }
+}
+
+#newTopicSubmit {
+  float: right;
+}
+
+#newTopicCancel {
+  float: right;
+  margin-right: 5px;
+}
+
+.topicTitle {
+  color: #0084c9;
+}
+
+.topicInfo {
+  font-size: 12px;
+}
+
+.topicReplies {
+  float: left;
+  width: 45px;
+  height: 35px;
+  text-align: center;
+  margin-right: 10px;
+  margin-top: 6px;
+  padding-top: 2px;
+  background: url("/resources/images/bubble.png");
+  color: white;
+  font-weight: bold;
+}
+
+#newTopic {
+  float: right;
+  cursor: pointer;
+  border-radius: 10px;
+  display: inline-block;
+  margin: -5px 5px 0 100px;
+  font-size: 14px;
+  line-height: 32px;
+  padding: 0 11px;
+  color: white;
+  border: 1px solid #BEBEBE;
+  cursor: pointer;
+  background: #54b55e;
+}
+
+#messageBoardHeader {
+  margin-top: -35px;
+  float: left;
+  margin-left: 65px;
+  color: #999999;
+  font-size: 18px;
+  img {
+    margin-bottom: -3px;
+    margin-right: 10px;
+  }
+}
+
+.topic {
+  margin-bottom: 5px;
+  cursor: pointer;
+  margin-left: 65px;
+  height: 48px;
+  margin-bottom: 24px;
+}
+
+.quickReply {
+  margin-bottom: 10px;
+  text-align: right;
+  width: 100%;
+  margin-top: 25px;
+}
+
+.quickReplyTitle {
+  font-family: 'Arial';
+  font-size: 14;
+  color: #808080;
+  text-align: left;
+  float: left;
+  margin-top: -25px;
+}
+
+.threadReply {
+  margin-left: 65px;
+}
+
+#submitReply {
+  clear: both;
+  margin-left: 80px;
+  margin-top: 6px;
+  cursor: pointer;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 32px;
+  padding: 0 11px;
+  color: white;
+  border: 1px solid #BEBEBE;
+  cursor: pointer;
+  background: #54b55e;
+}
+
+.threadReply textarea {
+  margin-left: 80px;
+  display: block;
+  height: 96px;
+  resize: none;
+}
+
+.quickReplyWidget {
+  margin-top: 5px;
+  display: none;
+  z-index: 10;
+}
+
+.textQuickReplyContent {
+  width: 100%;
+  min-height: 23px;
+  border: 1px solid #d4d4d4;
+  padding: 5px;
+  font-size: 16px;
+  cursor: text;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.submitTextQuickReply {
+  text-align: left;
+  height: 25px;
+  padding: 5px 20px;
+  float: right;
+  margin-bottom: 10px;
+  cursor: pointer;
+  background: #2f82ff;
+  color: white;
+}
+
+.quickReplySelector, .quickReplyOption {
+  float: left;
+}
+
+.quickReplyType {
+  text-align: right;
+  padding: 0 10px;
+  text-shadow: 1px 1px 0 #FFFFFF;
+  color: #555555;
+  cursor: pointer;
+  height: 10px;
+}
+
+.quickReplySelectorTriangle {
+  text-align: right;
+  display: none;
+  margin-top: 10px;
+  margin-right: 10px;
+  z-index: 999;
+}
+
+.imageQuickReplyContainer {
+  width: 100%;
+  min-height: 23px;
+  border: 1px solid #d4d4d4;
+  padding: 5px;
+  font-size: 16px;
+  text-align: left;
+  position: relative;
+}
+
+.imageQuickReplyMessage {
+  width: 100%;
+  min-height: 23px;
+  border: 0;
+  border-bottom: dashed #c8c8c8 1px;
+  display: block;
+  color: grey;
+  font-size: 16px;
+  margin-top: -1px;
+}
+
+.imageQuickReplyFileSelect {
+  float: none;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.replyTime {
+  font-size: 12px;
+}
+
+.avatar {
+  float: left;
+}
+
+.submitImageQuickReply {
+  text-align: left;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  cursor: pointer;
+  display: inline;
+  width: 75px;
+  background: #2f82ff;
+  color: white;
+  text-align: center;
+  font-size: 13px;
+}
+
+form {
+  margin: 0;
+}
+
+.replyUploads {
+  margin-top: 5px;
+  img {
+    padding: 2px;
+    border: 1px solid #9b9b9b;
+    margin-left: 10px;
+  }
+}
+
+.replyBody, .replyAuthor {
+  padding-left: 70px;
+}
+
+.docQuickReplyContainer {
+  width: 100%;
+  min-height: 23px;
+  border: 1px solid #d4d4d4;
+  padding: 5px;
+  font-size: 16px;
+  text-align: left;
+  position: relative;
+}
+
+.docQuickReplyMessage {
+  width: 100%;
+  min-height: 23px;
+  border: 0;
+  border-bottom: dashed #c8c8c8 1px;
+  display: block;
+  color: grey;
+  font-size: 16px;
+  margin-top: -1px;
+}
+
+.docQuickReplyFileSelect {
+  float: none;
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.submitDocQuickReply {
+  text-align: left;
+  height: 30px;
+  border: none;
+  margin-top: 5px;
+  cursor: pointer;
+  display: inline;
+  width: 75px;
+  background: #2f82ff;
+  color: white;
+  text-align: center;
+  font-size: 13px;
+}
+
+.topicViewTitle {
+  font-size: 18px;
+  font-weight: 550;
+  color: #333333;
+}
+
+.topicViewAuthor {
+  font-size: 12px;
+  margin-top: -5px;
+  margin-left: 10px;
+}
+
+.topicViewDate {
+  font-size: 12px;
+}
+
+.topicHeader {
+  float: left;
+  margin-top: -30px;
+  margin-bottom: 5px;
+  margin-left: 65px;
+}
+
+.reply {
+  margin-bottom: 15px;
+  padding-left: 65px;
+  min-height: 72px;
+  margin-bottom: 24px;
+}
+
+#messageBoardReturn {
+  display: inline-block;
+  margin-bottom: 3px;
+  cursor: pointer;
+  float: left;
+}
+
+#timeline {
+  padding: 24px 0px 10px 69px;
+  margin-bottom: 50px;
+}
+
+.timelineDate {
+  padding-left: 40px;
+  margin-bottom: 24px;
+}
+
+.timelineDateLabel {
+  float: left;
+  width: 38px;
+  margin-left: -43px;
+}
+
+.timelineDateLabelMonth {
+  height: 10px;
+  font-size: 10px;
+  line-height: 10px;
+  padding: 0px 4px 3px 4px;
+  border-radius: 5px 5px 0 0;
+  mox-border-radius: 5px 5px 0 0;
+  color: white;
+  text-transform: uppercase;
+  background: red;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.timelineDateLabelDay {
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  background: white;
+  color: black;
+  text-align: center;
+  border-radius: 0 0 5px 5px;
+  mox-border-radius: 0 0 5px 5px;
+}
+
+.emptyTimelineNotice {
+  margin-left: 10px;
+}
+
+#timelineFilter {
+  margin-left: 65px;
+}
+
+.timelineEventTitle {
+  font-weight: bold;
+}
+
+.eventTitle.highlighted {
+  color: red;
+}
+
+.timelineEventDescription {
+  padding-left: 20px;
+}
+
+.timelineEvent {
+  border-left: 1px solid #f4e0e0;
+  padding-left: 10px;
+  a {
+    color: #0084c9;
+  }
+}
+
+.timelineEventAssociatedReading {
+  font-size: 13px;
+  padding-left: 20px;
+  color: #a5a5a4;
+}
+
+.timelineEventFileContainer {
+  font-size: 13px;
+  padding-left: 20px;
+}
+
+#timelineNotice {
+  float: right;
+  margin-top: -75px;
+}
+
+#classPagesTitle {
+  margin-bottom: 10px;
+  font-size: large;
+}
+
+.classPage {
+  margin-left: 10px;
+}
+
+.classPagesTerm {
+  font-size: 15px;
+}

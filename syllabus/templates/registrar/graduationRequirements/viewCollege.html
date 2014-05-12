@@ -1,0 +1,38 @@
+<div id="degreeTitle"  style="margin-bottom: 25px;">
+    <span class="title">{{college.name}}</span>
+    
+    <span id="newRequirement" onclick="newCollegeRequirement({{college.id}})">Add a Requirement</span>
+</div>
+
+<div id="degreeBody">
+    
+    {% if college.requirements.all() %} 
+        {% for requirement in college.requirements.all() %}
+            <div class="majorRequirement">
+                <span class="requirementName">{% if requirement.name.__len__() == 1 %} Area {% endif %}{{requirement.name}}</span>
+                <table width="100%">
+                    {%for profile in requirement.courses.all() %}
+                    <tr>
+                        <td class="number">{% if loop.first %}{% if requirement.courses.count() == 1 %}required{% else %}{{requirement.number}} of{% endif %}{% endif %}</span>
+                        <td class="classes">
+                            {{profile.interest}} {{profile.number}} {{profile.name}}
+                        </td>
+                        <td class="tools">
+                            {% if loop.first %}
+                                <img title="edit requirement" src="/resources/images/pencil.png" onclick="editRequirement({{requirement.id}})">
+                                <img title="delete requirement" src="/resources/images/greyX.png" onclick="deleteRequirement({{requirement.id}})">
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endfor %}
+    {% else %}
+    
+    <span id="emptyRequirements">
+        No requirements added yet... please add some by clicks on the green button to the right
+        </span>
+    {% endif %}
+    
+</div>

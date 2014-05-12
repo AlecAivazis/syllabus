@@ -1,0 +1,8 @@
+<div class="line">
+  <span class="label">Course</span>
+  <select>
+    {% for course in courses %}
+    <option>{{course[0].interest.abbrv}} {{course[0].number}}</option>
+    {% endfor %}
+  </select>
+</div>

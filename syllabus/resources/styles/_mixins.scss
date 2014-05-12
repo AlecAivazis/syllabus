@@ -1,0 +1,14 @@
+@mixin vGradient($lower, $upper){
+  background: $lower; /* Old browsers */
+  background: -moz-linear-gradient(top, $lower 0%, $upper 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$lower), color-stop(100%,$upper)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, $lower 0%,$upper 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, $lower 0% $upper 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, $lower 0%, $upper 100%); /* IE10+ */
+  background: linear-gradient(to bottom, $lower 0%, $upper 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$lower', endColorstr='$upper',GradientType=0 ); /* IE6-9 */
+} 
+
+@mixin redline ($margin){
+  background: url("/resources/images/redline.png") repeat-y $margin white;
+}

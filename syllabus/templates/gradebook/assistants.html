@@ -1,0 +1,1 @@
+{% for user in users %}{{user.first_name}} {{user.last_name}},{{user.id}}{% if not loop.last %}__{% endif %}{% endfor %}

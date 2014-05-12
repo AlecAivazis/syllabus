@@ -1,0 +1,222 @@
+@option compress: no;
+
+/* CSS Document */
+
+body {
+  background: #dfddd2;
+}
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -khtml-user-drag: element;
+  cursor: pointer;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+
+/* General Layout */
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 1000px;
+  overflow-x: hidden;
+  font-family: 'Arial';
+  font-size: 14px;
+}
+
+#gutter {
+  min-width: 1000px;
+}
+
+#content {
+  margin-top: 80px;
+  z-index: 10;
+}
+
+#nav {
+  height: 80px;
+  background: #262b32;
+  color: white;
+  text-align: left;
+  overflow: hidden;
+  vertical-align: middle;
+  min-width: 1000px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  a {
+    opacity: .5;
+    &:hover, &.navCurrent {
+      opacity: 1;
+    }
+  }
+}
+
+#branding {
+  height: 100%;
+  padding: 0;
+  margin: 0 0 -5px -1px;
+}
+
+#nav a img {
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+#login {
+  float: right;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.content {
+  position: absolute;
+  left: 21%;
+  top: 70px;
+  padding: 5px;
+  width: 80%;
+  height: 100%;
+  /* works only if parent container is assigned a height value */
+  border: 1px solid #333;
+  border-left: none;
+  border-top: none;
+  margin-top: 35px;
+}
+
+#viewEventGutter {
+  float: left;
+  width: 500px;
+}
+
+#eventViewHeader {
+  font-size: 35px;
+  float: left;
+  display: inline-block;
+  width: 100%;
+}
+
+#eventViewTitle {
+  float: left;
+}
+
+#eventViewDueDate {
+  margin-left: 50px;
+  float: left;
+  font-size: 25px;
+  margin-top: 12px;
+  float: right;
+}
+
+#eventViewBody {
+  margin-top: 15px;
+  float: left;
+  clear: both;
+  font-size: 15px;
+}
+
+.sidebar {
+  background: rgb(214, 211, 193);
+  /* background: rgb(201, 195, 164); */
+  border-bottom: 1px solid #BEBEBE;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: left;
+  width: 238px;
+  position: fixed;
+  left: 0px;
+  top: 80px;
+  bottom: 0px;
+  li {
+    border-bottom: 1px solid #CAC7B7;
+    border-top: 1px solid #DFDCCE;
+    font-family: sans-serif;
+    font-weight: bold;
+    line-height: 32px;
+    color: rgb(90, 85, 60);
+    &.current {
+      background: rgb(223, 221, 210);
+    }
+  }
+}
+
+.liContainer {
+  padding: 3px;
+  padding-left: 15px;
+  &:hover {
+    background: rgb(223, 221, 210);
+  }
+}
+
+ul.sidebar a {
+  color: rgb(90, 85, 60);
+  &:visited {
+    color: rgb(90, 85, 60);
+  }
+}
+
+.gradeBookSelectLabel {
+  padding-left: 25px;
+}
+
+li.sidebarLabel {
+  text-transform: uppercase;
+  color: #a5a38c;
+  padding-left: 15px;
+}
+
+.formLabel {
+  width: 150px;
+  display: inline-block;
+  text-align: right;
+  border-right: 1px solid #f4e0e0;
+  padding-right: 10px;
+}
+
+.formLine {
+  border-top: 1px solid #e4e9ee;
+  padding: 0px 35px;
+}
+
+.formTitle {
+  padding: 10px 35px;
+  padding-right: 0;
+  width: 425px;
+}
+
+.form {
+  background: url("/resources/images/redline.png") repeat-y 30px white;
+  width: 525px;
+  line-height: 24px;
+  border-radius: 10px;
+
+  
+  input {
+    border: none;
+    text-align: left;
+    &:not([type=checkbox]){
+        width: 200px;    
+    }        
+  }
+}

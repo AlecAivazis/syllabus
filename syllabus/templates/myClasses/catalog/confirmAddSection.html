@@ -1,0 +1,13 @@
+<div id="confirmAddTitle">Are you sure you want to {% if switch == 'True' %} switch to a different {% if which == 'class' %}  {{qlass}}{% elif which == 'section' %} section{%endif %}{% else %} add {{qlass}}{%endif%}?</div>
+{% if eligible %}
+    <div id="confirmAddBody">
+        <span onclick="addSection({{section.id}})">yes</span>
+        <span onclick="closeOverlay();">no</span>
+    </div>
+{% else %}
+<div id="confirmAddBody">
+    you are not eligible for this class. Please enter the add code given to you by the department/teacher: <input name="addCode" >
+    <br>
+    request an add code
+</div>
+{% endif %}

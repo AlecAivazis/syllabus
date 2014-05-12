@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block js %}
+            <script type="text/javascript" src="/static/scripts/tutors.js"></script>
+{% endblock %}
+{% block css %}
+            <link type="text/scss" rel="stylesheet" href="/static/styles/tutors.scss" ></link>
+{% endblock %}
+
+{% block content %}
+
+    <ul class="sidebar">
+       <a href="/tutors/">
+         <li>
+           <div class="liContainer">
+             <img src="/resources/images/searchIcon.png">
+             Find a Tutor
+           </div>
+         </li>
+       </a>
+       {% if userTutor %}
+       <span id="stopTutor" onclick="deleteTutor({{userTutor.id}})" class="tutorButton">
+         Stop Tutoring
+       </span>
+       {% else %}
+       <span id="newTutor" onclick="newTutor()" class="tutorButton">
+         Apply to be a Tutor
+       </span>
+       {% endif %}
+    </ul>
+
+    <div id="tutorsContent">
+    <div class="filter">
+      <span class="filterCategory">
+        <label>
+          Subject Area
+        </label>
+        <br>
+        <select>
+        {% for interest in interests %}
+          <option>
+            {{interest}}
+          </option>
+        {% endfor %}
+        </select>
+      </span>
+
+      <span class="filterCategory">
+        <label disabled="True">
+          Course
+        </label>
+        <br>
+        <select disabled="True">
+          <option>
+            Select...
+          </option>
+        </select>  
+      </span>
+      <span class="filterCategory">
+        <label>
+          Available Day
+         </label>
+        <br>
+        <select>
+          <option> Sun </option>
+          <option> Mon </option>
+          <option> Tue </option>
+          <option> Wed </option>
+          <option> Thur </option>
+          <option> Fri </option>
+          <option> Sat </option>
+        </select>
+      </span>
+      <span class="filterCategory">
+        <label> Available Time </label> <br>
+        time select widget
+      </span>
+    </div>
+    <div id="tutors ">
+        {% include "tutors/tutorList.html"%}
+    </div>
+    
+    </div>
+
+{% endblock %}
+

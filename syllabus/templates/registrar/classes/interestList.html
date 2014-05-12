@@ -1,0 +1,6 @@
+{% if interests %}
+{% for interest in interests %}
+<option {% if request.GET['id'] == interest.id.__str__() %} selected {% endif %} onclick="loadInterest({{interest.id}})"> {{interest.name}}</option>
+{% endfor %}
+{% endif %}
+<option onclick="newInterest()">Add New Interest</option>

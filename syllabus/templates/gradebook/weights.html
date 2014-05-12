@@ -1,0 +1,36 @@
+<div class="arrow-up"></div>
+
+<div id="weightsWidgetBody">
+    
+    <div id="weightsBody">
+        {% if weights %}
+        {% for category in  weights.categories.all()%}
+        
+        <div class="weightCategory">
+
+                <input size="5" value="{{category.category}}" onchange="newWeightCategory()">
+                <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
+                <input size="1" value="{{category.percentage}}" style="margin-left: 3px" onchange="newWeightCategory()"> %
+
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="weightCategory">
+
+                <input size="5" onchange="newWeightCategory()">
+                <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
+                <input size="1" onchange="newWeightCategory()" style="margin-left: 3px"> %
+        </div>
+    </div>
+    
+    <ul id="weightsButtons">
+        <li onclick="closeWeights();" class="closeWidget">
+            cancel
+        </li>
+        <li class="disabled submitWidget" style="right: 0;">
+            submit
+        </li>
+    </ul>
+
+    
+</div>

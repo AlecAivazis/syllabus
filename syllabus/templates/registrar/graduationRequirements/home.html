@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block js %}
+            <script type="text/javascript" src="/static/scripts/registrar/gradRequirements.js"></script>
+            <script type="text/javascript" src="/static/scripts/overlay.js"></script>
+            <script type="text/javascript" src="/static/scripts/watermark.js"></script>
+{% endblock %}
+{% block css %}
+            <link type="text/scss" rel="stylesheet" href="/static/styles/overlay.scss" ></link>
+            <link type="text/scss" rel="stylesheet" href="/static/styles/registrar/gradRequirements.scss" ></link>
+
+{% endblock %}
+
+{% block content %}
+<div id="registrarContent">
+        <span id="degreeFilter" class="sidebar">
+                <ul>
+                        <li class="filterHeader sidebarLabel">Colleges</li>
+                        {%for college in colleges %}
+                        <li onclick="viewCollegeDegree({{college.id}})" class="college"><div class="liContainer">{{college.name}}</div></li>
+                        {% endfor %}
+                        <li class="sidebarLabel">Majors</li>
+                        <li><input class="filter" style="margin-left: 5px"></li>
+                        {% include "/registrar/graduationRequirements/majorList.html" %}
+                        <li class="newMajor" onclick="newMajor()">Add a major...</li>
+                </ul>
+        </span>
+        <span id="degree">
+                Please select a major/college to view more details...
+        </span>
+</div>
+{% endblock %}

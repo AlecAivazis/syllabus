@@ -1,0 +1,117 @@
+<div id="classList">
+    
+    {% for course in courses %}{% if course.classes.all()%}
+            <table class="course" cellspacing=0 cellpadding=0>
+                <td colspan=9 class="courseInfo" >
+                   <div style="width: 50%; text-align: left; display: inline-block;">{{course.interest}} {{course.number}} - {{course.name}} - <a onclick="courseInfo({{course.id}})">course info</a></div>
+                    <div style="width: 49%; text-align: right; display: inline-block;">
+                        Units: {{course.units}}
+                    </div>
+                </td>
+                <tr>
+                    <th>EnrlCd</th>
+                    <th>Day(s)</th>
+                    <th>Times(s)</th>
+                    <th>Instructor</th>
+                    <th>Location</th>
+                    <th>Max</th>
+                    <th>Space&nbsp;Avail</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+                {% for class in courseDict[course]%}
+                <tr class="catalogRow">
+                    <td>
+                        {{class.id}} 
+                    </td>
+                    <td>
+                        {% for time in times[class]%}
+                            {% for day in times[class][time] %}
+                                {{day}}
+                            {% endfor %}
+                            <br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for time in times[class]%}
+                            {{time[0].strftime('%I:%M')}}&nbsp;-&nbsp;{{time[1].strftime('%I:%M&nbsp;%p')}}
+                            <br>
+                        {% endfor %}    
+                    </td>
+                    <td>
+                        {% for professor in class.professor.all()%}
+                            {{professor.first_name}} {{professor.last_name}}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {{class.location.replace(' ', '&nbsp;')}}
+                    </td>
+                    <td>{{occupancy[class][0]}}</td>
+                    <td>{{occupancy[class][0] - occupancy[class][1]}}</td>
+                    <td>&nbsp;</td>
+                    <td>
+                        {% if occupancy[class][1] >= occupancy[class][0] %}
+                            full
+                        {% elif class.sections.filter(students = request.user)%}
+                            enrolled
+                        {% elif course.classes.filter(sections__students = request.user) and class.sections.all().count() <= 1 %}
+                                 <a onclick="confirmAddSection({{class.sections.all()[0].id}}, 'True', 'class')">switch</a>
+                        {% elif class.sections.all().count() <= 1 %}
+                            <a onclick="confirmAddSection({{class.sections.all()[0].id}}, 'False', 'class')">add</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% with %}
+                    {% set eligible = class.isEligible(request.user, True)%}
+                    {% if class.sections.count() > 1 %}    
+                        {% for section in class.sections.all()%}
+                            <tr class="catalogRow">
+                                <td style="padding-left: 20px;"> {{section.id}}</td>
+                                <td>
+                                {% for time in times[section]%}
+                                    {% for day in times[section][time] %}
+                                        {{day}}
+                                    {% endfor %}
+                                    <br>
+                                {% endfor %}
+                                </td>
+                                <td>
+                                    {% for time in times[section]%}
+                                        {{time[0].strftime('%I:%M')}}&nbsp;-&nbsp;{{time[1].strftime('%I:%M&nbsp;%p')}}
+                                        <br>
+                                    {% endfor %}    
+                                </td>
+                                <td>
+                                    {% for ta in section.tas.all() %}
+                                        {{ta.first_name}} {{ta.last_name}}{% if not loop.last %}, {%endif%}
+                                    {% endfor %}
+                                </td>
+                                <td>{{section.location}}</td>
+                                <td>{{occupancy[section][0]}}</td>
+                                <td>{{occupancy[section][0] - occupancy[class][1]}}</td>
+                                <td>&nbsp;</td>
+                                <td>{%if eligible and  occupancy[section][1] < occupancy[section][0]%}
+                                        {% if  section.qlass.sections.filter(students = request.user) and request.user not in section.students.all() %}
+                                            <a onclick="confirmAddSection({{section.id}}, 'True', 'section')"> switch </a>
+                                        {% elif request.user in section.students.all()  %}
+                                            enrolled
+                                        {% elif section.qlass.profile.classes.filter(sections__students = request.user) %}
+                                            <a onclick="confirmAddSection({{section.id}}, 'True', 'section')"> switch </a>
+                                        {% else %}
+                                            <a onclick="confirmAddSection({{section.id}}, 'False', 'section')"> add </a>
+                                        {% endif %}
+                                    {% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% endfor %}
+            </table>    
+        {% else %}<script type="text/javascript">checkCatalog()</script>{% endif %}
+        
+    {% else %}
+        <div class="emptyFilter">
+            No classes were found that matched your criteria...
+        </div>
+    {% endfor %}
+</div>

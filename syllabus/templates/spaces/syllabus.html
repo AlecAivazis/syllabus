@@ -1,0 +1,6 @@
+<div id="spaceSyllabus">
+    {% if request.user in  klass.professor.all() %}<span id="spaceEditButton">Click on the content below to edit...</span>{% endif %}
+    <div id="syllabusContent">
+        {% if klass.syllabus %}{{klass.syllabus}}{% else %}Click here to modify the syllabus of {{klass.profile.interest}} {{klass.profile.number }} - {{klass.profile.name}}{% endif %}
+    </div>
+</div>

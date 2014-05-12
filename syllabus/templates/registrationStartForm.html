@@ -1,0 +1,11 @@
+<div class="form">
+  <div class="formTitle"> Begin Registration </div>
+  <div class="formLine">
+    <span class="formLabel"> Pass Number </span>
+    <select>
+      {% for i in range(university.numPassTimes) %}
+          <option>{{i}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>

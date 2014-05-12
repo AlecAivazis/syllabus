@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block js %}
+            <script type="text/javascript" src="/static/scripts/registrar/users.js"></script>
+            <script type="text/javascript" src="/static/scripts/watermark.js"></script>
+            <script type="text/javascript" src="/static/scripts/dataTables/jquery.dataTables.min.js"></script>
+{% endblock %}
+{% block css %}           
+
+            <link type="text/scss" rel="stylesheet" href="/static/styles/m2m.scss" ></link>
+            <link type="text/scss" rel="stylesheet" href="/static/styles/registrar/users.scss" ></link>
+            <link type="text/scss" rel="stylesheet" href="/static/styles/registrar/usersTable.scss" ></link>
+{% endblock %}
+
+{% block content %}
+<div id="registrarContent">
+    <span id="userFilter">
+        <div id="title">Search Users</div>
+        <div class="filterCategory">
+            <label class="categoryTitle">Name</label>
+            <input id="name" onchange="filterList()">
+        </div>
+        <div class="filterCategory">
+            <label class="categoryTitle">Perm Number</label>
+            <input id="perm" onchange="filterList()">
+        </div>
+        <div class="filterCategory">
+            <label class="categoryTitle">Role</label>
+            <select  id="role"  onchange="filterList()">
+                <option value="">All</option>
+                <option value="student">Student</option>
+                <option value="faculty">Faculty</option>
+                <option value="staff">Staff</option>
+                <option value="admin">Administrator</option>
+            </select>
+        </div>
+    </span>
+    <span id="userList">
+        <table cellspacing=0 cellpadding=0 width=100%>
+            <tr>
+                <th>User</th>
+                <th>Perm Number</th>
+                <th>Role</th>
+                <th><span id="newUser" onclick="newUser()">Add New User</span></th>
+            </tr>
+            {% include "/registrar/users/userList.html" %}
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+    </span>
+</div>
+{% endblock %}

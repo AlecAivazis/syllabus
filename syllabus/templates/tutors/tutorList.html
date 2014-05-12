@@ -1,0 +1,42 @@
+{% for tutor in tutors %}
+    <div class="tutor">
+        <div class="tutorTitle">
+          {{tutor.user.first_name}} {{tutor.user.last_name}}
+          <span class="tutorContact">
+            {% if tutor.rate > 0 %}
+              <span class="tutorPrice active">
+                ${{tutor.rate}}/hour
+              </span>
+            {% else %}
+              <span class="tutorPrice">
+                Contact for prices
+              </span>
+            {% endif %}
+            <span class="profileButton" onclick="viewTutorProfile({{tutor.id}})">
+              View Profile
+            </span>
+          </span>
+        </div>
+        <div class="tutorAvatar">
+            <img src="{% if tutor.user.avatar %}{{tutor.user.avatar}}{% else %}/resources/images/emptyAvatar.png{% endif %}">
+        </div>
+            <div class="tutorInfo">
+              <span class="courses">
+                {# for profile in tutor.coureses.all().distinct('interest') #}
+                {% for profile in tutor.courses.all() %}
+                  {{profile.interest.name}} {% if not loop.last %} , {% endif %}
+                {% endfor %}
+              </span>
+              <span class="times">
+                {% for  time in tutor.available.all() %}
+                  {{time.start.strftime('%I')}}-{{time.end.strftime('%I')}} ({{dd[time.day]}}) {% if not loop.last %},{% endif %}
+                {% endfor %}
+              </span>
+            <div>
+    </div>
+    
+{% else %}
+    <span id="emptyTutors">    
+        There are no registered tutors!
+    </span>
+{% endfor %}

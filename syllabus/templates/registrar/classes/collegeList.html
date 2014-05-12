@@ -1,0 +1,4 @@
+{% for college in colleges %}
+<option {% if request.GET['id'] == college.id.__str__() %} selected {% endif %} onclick="loadCollege({{college.id}})"> {{college.name}}</option>
+{% endfor %}
+<option onclick="newCollege()">Add New College</option>

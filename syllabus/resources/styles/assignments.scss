@@ -1,0 +1,273 @@
+a {
+  color: #008aff;
+}
+
+body {
+  font-family: "Arial";
+}
+
+a:visited {
+  color: #373737;
+  color: #008aff;
+}
+
+#assignmentContent {
+  padding: 10px 0px 0px 30px;
+}
+
+#assignments {
+  float: left;
+  margin-top: 30px;
+  width: 70%;
+  line-height: 24px;
+  margin-left: 250px;
+}
+
+.class {
+  width: 100%;
+  margin: 0px 0 25px 20px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: white;
+  float: left;
+  clear: both;
+  background: url("/resources/images/redline.png") repeat-y scroll 40px 0 #f9f8f0;
+  -moz-box-shadow: 0px 0px 4px #9b9b9b;
+  -webkit-box-shadow: 0px 0px 4px #9b9b9b;
+  box-shadow: 0px 0px 4px #9b9b9b;
+  padding: 10px 0px;
+}
+
+.classTitle {
+  height: 55px;
+  position: relative;
+  float: left;
+  width: 100%;
+  padding-left: 40px;
+  padding-top: 20px;
+}
+
+.classTitleName {
+  color: #373737;
+  font-size: 45px;
+  float: left;
+  margin-left: 8px;
+}
+
+.section {
+  float: left;
+  font-size: 35px;
+  color: #8e8e8e;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.classDesc {
+  padding: 0px;
+  float: left;
+  width: 100%;
+  background: url("/resources/images/blueline.png") repeat scroll 0 0 transparent;
+}
+
+.checkArea {
+  width: 25px;
+  height: 25px;
+  background: white;
+  cursor: pointer;
+  border: 2px solid #8f8f8f;
+  margin: 0 auto;
+}
+
+.assignment {
+  clear: both;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  float: left;
+}
+
+.assignmentTitle {
+  width: 25%;
+  font-size: 20px;
+  color: #8e8e8e;
+  text-align: center;
+  padding: 3px;
+  float: left;
+  padding-left: 40px;
+}
+
+.assignmentDesc {
+  margin-top: 3px;
+  margin-left: 10px;
+  width: 50%;
+  text-align: left;
+  color: #b4b4b4;
+  font-size: 17px;
+  float: left;
+}
+
+#outlook {
+  float: right;
+  width: 15%;
+  margin-top: 25px;
+  .header {
+    font-size: 18px;
+    text-shadow: 3px 3px 1px #FFFFFF;
+    color: #3a3a3a;
+  }
+}
+
+.outlookDay {
+  margin-left: 15px;
+  font-size: 16px;
+  text-shadow: 3px 3px 1px #FFFFFF;
+  color: #3a3a3a;
+}
+
+.dayEvent {
+  color: black;
+  font-size: 14px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+#finishedSections {
+  width: 80%;
+  float: left;
+  clear: left;
+}
+
+#nextWeek {
+  margin-top: 25px;
+}
+
+.nextCategory {
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  text-shadow: 3px 3px 1px #FFFFFF;
+  color: #3a3a3a;
+  text-transform: capitalize;
+}
+
+.nextWeekEvent {
+  display: none;
+  margin-left: 15px;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.question {
+  font-size: 14px;
+}
+
+.eventFiles {
+  text-align: left;
+  font-size: 16px;
+  color: #373737;
+  display: block;
+  margin-right: 1%;
+  width: 70%;
+  float: left;
+  line-height: 24px;
+}
+
+.eventFile {
+  text-decoration: none;
+  font-size: 14px;
+  a {
+    text-decoration: none;
+    color: #008AFF;
+    &:visited {
+      text-decoration: none;
+      color: #008AFF;
+    }
+  }
+}
+
+.turnIn {
+  color: #008AFF;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.turnedIn {
+  width: 100%;
+  font-size: 14px;
+  color: #373737;
+  margin-bottom: 28px;
+  margin-left: 10px;
+}
+
+.turnedInHeader {
+  font-size: 14px;
+  color: #373737;
+}
+
+.turnInSubmit {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+form {
+  margin-bottom: 0;
+}
+
+.assignmentsHeader {
+  float: left;
+  clear: both;
+  font-size: 18px;
+  text-shadow: 3px 3px 1px #FFFFFF;
+  color: #3a3a3a;
+  margin-bottom: 10px;
+}
+
+.noAssignments {
+  float: left;
+  clear: both;
+  font-size: 18px;
+  text-shadow: 3px 3px 1px #FFFFFF;
+  color: #3a3a3a;
+  margin: -10px 0px 10px 20px;
+}
+
+.ignore {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.submitArea {
+  float: right;
+  margin-right: 25px;
+}
+
+#assignmentSelector {
+  li {
+    border-top: #dfdcce 1px solid;
+    border-right: #cfcbb7 solid 1px;
+    border-bottom: #cac7b7 solid 1px;
+    line-height: 32px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-left: 35px;
+    &.current {
+      background: #DFDDD2;
+      border-right: none;
+    }
+  }
+  a {
+    cursor: pointer;
+  }
+}
+
+.submitAssignment {
+  background: #54b55e;
+  width: 80px;
+  height: 30px;
+  color: white;
+  padding-top: 10px;
+  margin-right: 100px;
+  border-radius: 3px;
+  cursor: pointer;
+}

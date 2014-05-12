@@ -1,0 +1,185 @@
+@option compress: no;
+@import "mixins"; 
+@import "base"; 
+
+.filterCategory {
+  padding: 10px 15px 15px 15px;
+  color: #6d5f1b;
+}
+
+.categoryTitle {
+  font-size: 12px;
+  margin-bottom: 5px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.filter {
+  background: #fffae1;
+  color: #beb171;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  padding: 10px;
+}
+
+#tutorsContent {
+  padding: 15px;
+  padding-left: 265px;
+}
+
+.tutorInfo {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #999999;
+}
+
+.filterTitle {
+  padding: 15px 15px 5px 15px;
+  color: #beb171;
+  border-bottom: 1px solid #efe8c6;
+}
+
+.formInput {
+  width: 190px;
+  border: 1px solid #bdb8a0;
+  line-height: 25px;
+  font-size: 16px;
+  height: 25px;
+  color: #999999;
+  border-radius: 3px;
+  padding-top: 5px;
+}
+
+.filterCategory {
+  display: inline-block;
+}
+
+#tutors! {}
+
+.listCategoryTitle {
+  display: inline-block;
+  font-size: 18px;
+  color: #b7b5a3;
+  padding-bottom: 10px;
+}
+
+.tutorButton {
+  text-align: center;
+  padding: 5px 0px;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  left: 13px;
+  bottom: 13px;
+  width: 210px;
+}
+
+#newTutor {
+  border: 1px solid #199424;
+  box-shadow: inset 0 1px 0 #62d573;
+  -moz-box-shadow: inset 0 1px 0 #62d573;
+  @include vGradient(#30bd40, #22a12e);
+
+}
+
+.form {
+  width: 525px;
+  line-height: 24px;
+  border-radius: 10px;
+}
+
+.formTitle {
+  padding: 10px 35px;
+  padding-right: 0;
+  width: 475px;
+}
+
+.closeForm {
+  float: right;
+  cursor: pointer;
+}
+
+.formLine {
+  border-top: 1px solid #e4e9ee;
+  padding: 0px 35px;
+}
+
+.formLabel {
+  width: 120px;
+  display: inline-block;
+  text-align: right;
+  border-right: 1px solid #f4e0e0;
+  padding-right: 10px;
+}
+
+.input {
+  width: 325px;
+  border: none;
+  height: 24px;
+}
+
+.tutor {
+  @include redline(20px);
+  position: relative;
+  padding-bottom: 24px;
+  line-height: 24px;
+  border-radius: 10px;
+}
+
+.tutorTitle {
+  padding-top: 15px;
+  padding-left: 90px;
+  line-height: 24px;
+  padding-bottom: 15px;
+  font-size: 18px;
+  color: #0072c1;
+}
+
+.tutorAvatar {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  float: left;
+}
+
+.tutorInfo {
+  border-top: 1px solid rgb(228, 233, 238);
+  border-bottom: 1px solid rgb(228, 233, 238);
+  padding-left: 90px;
+}
+
+#stopTutor {
+  box-shadow: inset 0 1px 0 #f07272;
+  -moz-box-shadow: inset 0 1px 0 #f07272;
+
+  border: 1px solid #980000;
+  @include vGradient(#e13333, #bd1717);        
+}
+
+.times {
+  margin-left: 20px;
+}
+
+.tutorContact {
+  float: right;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.tutorPrice {
+  margin-right: 10px;
+  color: #999999;
+}
+.tutorPrice.active {
+   color: #57b761;
+  
+}
+
+.profileButton {
+  position: inherit;
+  padding: 5px 25px;
+  @include button(tan, 220px);
+
+
+}

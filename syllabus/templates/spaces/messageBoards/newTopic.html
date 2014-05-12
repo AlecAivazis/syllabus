@@ -1,0 +1,21 @@
+<div id="newTopicGutter">
+    <div id="newTopicHeader">
+        New Topic
+    </div>
+    <div id="newTopicForm">
+        <div id="newTopicTitle">
+            <label>Title: </label>
+            <input id="topicTitle" type="text">
+        </div>
+        <div id="newTopicBody">
+            <label>Body: </label>
+            <textarea id="topicBody" style="resize: none;" ></textarea>
+        </div>
+        <div id="newTopicSubmit">
+            <input style="text-align: center; width: 80px; font-size: 18px; cursor: pointer;" type="submit" value="Submit" onclick="createTopic({{request.GET['id']}})">
+        </div>
+        <div id="newTopicCancel">
+            <input style="text-align: center; width: 80px; font-size: 18px; cursor: pointer;" type="submit" value="Cancel" onclick="closeOverlay()">
+        </div>
+    </div>
+</div>

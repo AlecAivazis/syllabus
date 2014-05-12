@@ -1,0 +1,22 @@
+<div id="messageBoardHeader">
+   Message Board  <div id="newTopic" onclick="newTopic({{request.GET['id']}})"><img src="/resources/images/newTopic.png">Start New Thread</div>
+</div>
+
+{% for topic in messageBoard.all().order_by('-datePosted') %}
+<div class="topic" onclick="viewTopic({{topic.id}})">
+    <span class="topicReplies">{{topic.replies.count()}}</span>
+    <div class="topicTitle">{{topic.title}}</div>
+    <div class="topicInfo">
+        by
+        <span class="topicAuthor">
+            {{topic.author.first_name}} {{topic.author.last_name}}
+        </span>
+        on
+        <span class="topicDate">
+            {{topic.datePosted.strftime('%x')}}
+        </span>
+    </div>
+</div>
+{% else %}
+this board is empty! Why don't you post something by clicking <span onclick="newTopic({{qlass.id}})" style="text-decoration: underline; color: blue; cursor: pointer;">here</span>
+{% endfor %}

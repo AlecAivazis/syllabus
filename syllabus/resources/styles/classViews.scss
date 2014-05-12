@@ -1,0 +1,75 @@
+@option compress: no;
+
+#classInfo {
+  display: inline;
+}
+
+#className {
+  color: #9B9B9B;
+  font-size: 32px;
+  text-shadow: 1px 1px 5 #000000;
+}
+
+#sections {
+  width: 50%;
+  display: inline;
+  float: right;
+  margin-top: 0px;
+}
+
+.section {
+  margin-left: 20px;
+}
+
+#sectionsHeader {
+  color: #9B9B9B;
+  font-size: 24px;
+  text-shadow: 1px 1px 5 #000000;
+}
+
+#classDescription {
+  margin-left: 20px;
+}
+
+#books {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+#booksHeader {
+  color: #9B9B9B;
+  font-size: 24px;
+  text-shadow: 1px 1px 5 #000000;
+}
+
+.book, .bookIsbn {
+  margin-left: 20px;
+}
+
+.timeslots {
+  text-transform: uppercase;
+  margin-left: 25px;
+}
+
+.sectionTeacher {
+  margin-left: 25px;
+}
+
+#prerequisites {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+#prerequisitesHeader {
+  color: #9B9B9B;
+  font-size: 24px;
+  text-shadow: 1px 1px 5 #000000;
+}
+
+.prerequisite {
+  margin-left: 20px;
+}
+
+#times {
+  margin-left: 25px;
+}

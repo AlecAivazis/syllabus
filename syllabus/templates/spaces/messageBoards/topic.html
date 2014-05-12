@@ -1,0 +1,80 @@
+<div class="topicHeader">
+    <div class="topicViewTitle">{{topic.title}}</div>
+</div>
+<div class="topicFullView">
+    <div style="margin-bottom: 25px;">
+        {% if request.user.avatar %}<img class="avatar" src="{{request.user.avatar.fileName}}"> {% else %} <img class="avatar" src="/resources/images/emptyAvatar.png">{%endif%}
+        <div class="topicBody">
+            {{topic.body | linebreaks}}
+        </div>
+        <div>
+        <span class="topicViewAuthor">{{topic.author.first_name}} {{topic.author.last_name}}</span>
+        <span class="topicViewDate"> on {{topic.datePosted.strftime('%A %d, %Y  at %I:%M %p')}}</span>
+        </div>
+    </div>
+    
+</div>
+{% if topic.replies.all() %}
+{% for reply in topic.replies.all().order_by('datePosted')%}
+<div class="reply">
+    {% if request.user.avatar %}<img class="avatar" src="{{request.user.avatar.fileName}}"> {% else %} <img class="avatar" src="/resources/images/emptyAvatar.png">{%endif%}
+    <div class="replyBody">
+        {{reply.body}}
+        {% if reply.files.all()%}
+            <div class="replyUploads">
+            {% if reply.kind == 'image' %}
+            {% for file in reply.files.all()%}
+                <img class="replyImage" width="400px;" src="/{{oz.path.relpath(file.fileName, fileRoot)}}">
+            {% endfor %}
+            {% elif reply.kind == 'file'%}
+            Uploaded files: {% for file in reply.files.all() %} <a href="/{{oz.path.relpath(file.fileName, fileRoot)}}">{{oz.path.basename(file.fileName)}}</a>{% if not loop.last %},{%endif%}{% endfor %}
+            {% endif %}
+            </div>
+        {% endif%}
+    </div>
+    <div class="replyAuthor">{{reply.author.first_name}} {{reply.author.last_name}}
+        
+        {% with %}
+        {% set delta = (now-reply.datePosted).total_seconds() %}
+        {% set hours = nt(delta // 3600) %}
+        {% set days = nt(hours // 24)%}  
+        {% set minutes = nt((delta - (hours*3600))//60) %}
+        {% set seconds = nt(((delta - (hours*3600)) - (minutes*60))//1) %}
+        ({% if days %}{{days}} day{% if days > 1 %}s{% endif%}{% elif hours %}{{hours}} hours {% if minutes %}and {{minutes}} minute{%if minutes >1 %}s{%endif%}{% endif %}{% elif minutes %}{{minutes}} minutes and {{seconds}} seconds {% else %} {{seconds}} seconds {% endif %} ago)
+        {% endwith %}
+        
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="threadReply">
+    {% if request.user.avatar %}<img class="avatar" src="{{request.user.avatar.fileName}}"> {% else %} <img class="avatar" src="/resources/images/emptyAvatar.png">{%endif%}
+    <textarea cols=60>Enter your comment</textarea>    
+    
+    <span id="submitReply"><img src="/resources/images/newTopic.png"> Post Comment</span>
+    
+</div>
+
+{#
+
+ <div class="quickReplyWidget" id="imageQuickReply">
+            <div class="imageQuickReplyContainer">
+                <form method="POST" action="/course/messageBoard/createReply/" target="invisible" enctype="multipart/form-data">
+                    <input style="display: none;" name="topic" value="{{topic.id}}">
+                    <input style="display: none;" name="kind" value="image">
+                    <input class="imageQuickReplyMessage" contenteditable="true" name="body">
+                    <div class="imageQuickReplyFile">
+                        <input type="file" name="file" class="imageQuickReplyFileSelect">
+                        <input class="submitImageQuickReply" type="submit" value="upload">
+
+                        <iframe id="invisible" style="display: none; width: 1px; height: 1px;" src="" name="invisible"></iframe>
+                    </div>
+                </form>
+            </div>
+        
+        
+        </div>
+
+#}
+

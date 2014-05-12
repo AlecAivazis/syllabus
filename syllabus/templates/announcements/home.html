@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+ 
+{% block css %}
+    <link type="text/scss" rel="stylesheet" href="/static/styles/announcements.scss" ></link>
+{% endblock %}
+{% block js %}
+    <script type='text/javascript' src='/static/scripts/overlay.js'></script>
+    <script type='text/javascript' src='/static/scripts/announcements.js'></script>
+{% endblock %}
+{% block content %}
+    
+    <span id="announcementsFilter">
+        <ul class="sidebar">
+            <li class="filterAnnouncements" onclick="viewAnnouncements(this, 'all',0)"><div class="liContainer">All Announcements</div></li>
+            {% if sections %}
+            {% for section in sections%}
+            <li class="filterAnnouncements" onclick="viewAnnouncements(this, 'section',{{section.id}})"><div class="liContainer">{{section.qlass.profile.name}}</div></li>
+            {% endfor %}
+            {% endif %}
+            {% if groups %}
+            {% for group in groups%}
+            <li class="filterAnnouncements" onclick="viewAnnouncements(this, 'group',{{group.id}}"><div class="liContainer">{{group.name}}</div></li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+    </span>
+    {% if canPost %}<div id="newAnnouncements" onclick="newAnnouncement()">new announcement</div> {% endif %}
+    <span id="announcements">
+        
+    </span>
+    
+{% endblock %}

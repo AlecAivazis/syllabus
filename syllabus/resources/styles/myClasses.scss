@@ -1,0 +1,378 @@
+#myClassesGutter {
+  width: 100%;
+  overflow: hidden;
+}
+
+#myClassesContent {
+  padding-top: 25px;
+  margin-left: 240px;
+}
+
+#myClassesSelector {
+  background: #d6d3c1;
+  float: left;
+  text-align: left;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 238px;
+  height: 100%;
+  border-right: #cfcbb7 solid 1px;
+  border-bottom: 1px solid #BEBEBE;
+  li {
+    border-top: #dfdcce 1px solid;
+    border-bottom: #cac7b7 solid 1px;
+    line-height: 32px;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding-left: 35px;
+  }
+  a {
+    color: #6e6d60;
+    cursor: pointer;
+  }
+}
+
+
+
+#myClassesScheduleGutter {
+  margin: 20px 20px 20px 20px;
+}
+
+#scheduleHeader {
+  padding: 10px;
+  color: #333333;
+  font-weight: 500;
+}
+
+#myClassesSchedule {
+  float: left;
+  width: 800px;
+  height: 65%;
+  table-layout: fixed;
+  margin-left: -30px;
+  tr {
+    height: 3.33%;
+    td {
+      border: black 1px solid;
+      border-left: none;
+      border-bottom: none;
+      &:first-child {
+        background: none;
+        border: none;
+        border-right: 1px solid black;
+      }
+    }
+    &:last-child td {
+      border-bottom: 1px solid black;
+      &:first-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.myClassesScheduleTime {
+  font-size: 14px;
+  text-align: right;
+  padding-right: 5px;
+  width: 75px;
+}
+
+#scheduleSelector {
+  float: left;
+  margin-top: -48px;
+  padding-bottom: 10px;
+  background: #fffae1;
+  margin-left: 5px;
+  padding: 10px 0px;
+  border-radius: 10px;
+}
+
+.selectorYear {
+  font-size: 18px;
+  text-shadow: 3px 3px 1px #FFFFFF;
+  color: #3a3a3a;
+}
+
+#selectorTitle {
+  height: 40px;
+  font-size: 20px;
+  text-transform: capitalize;
+  color: #beb171;
+  padding: 10px 20px 0 20px;
+}
+
+.selectorYear {
+  line-height: 24px;
+  border-top: 1px solid #efe8c6;
+  padding-top: 5px;
+  span:nth-child(1) {
+    padding: 0px 20px;
+    color: #5f5212;
+  }
+}
+
+.selectorNames {
+  margin-top: 2px;
+  margin-left: 10px;
+}
+
+td.scheduleSection {
+  text-align: center;
+  background: #67CAFE;
+}
+
+.sectionTime {
+  font-size: 11px;
+}
+
+.sectionLoc {
+  font-size: 13px;
+}
+
+#myScheduleHeader {
+  width: 60%;
+  padding-left: 20px;
+  padding-top: 20px;
+  background: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-left: 50px;
+  font-size: 24px;
+  color: #cccccc;
+}
+
+#calendar {
+  width: 60%;
+  float: left;
+  margin: 0px 0 25px 50px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 10px;
+  background: white;
+}
+
+#gradesGutter {
+  margin: 0px;
+}
+
+#myGradesTitle {
+  padding: 20px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333333;
+}
+
+.gradesYear {
+  margin: 20px;
+  padding-bottom: 24px;
+  float: left;
+  margin-top: 0;
+  width: 50%;
+  background: url("/resources/images/redline.png") repeat-y scroll 20px 0 #f9f8f0;
+  border-radius: 10px;
+}
+
+.yearTitle {
+  border-bottom: 1px solid #e4e9ee;
+  padding: 10px 35px;
+  font-size: 18px;
+  height: 25px;
+  color: #999999;
+}
+
+.myGradesClass {
+  line-height: 24px;
+  border-bottom: 1px solid #e4e9ee;
+  padding-left: 50px;
+}
+
+#myScheduleSideBar {
+  float: left;
+  margin-left: 10px;
+}
+
+.gradesClassName {
+  width: 300px;
+  display: inline-block;
+  color: #0084c9;
+}
+
+.grade {
+  display: inline-block;
+  border-left: #f4e0e0 solid 1px;
+  border-right: #f4e0e0 solid 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-weight: 500;
+}
+
+#classInfo {
+  float: left;
+  width: 100%;
+}
+
+#classInfoTable {
+  border-top: 1px solid black;
+  width: 100%;
+  th {
+    font-size: 11px;
+  }
+  td {
+    text-align: center;
+    font-size: 12px;
+    vertical-align: top;
+    &.finalInfo {
+      text-align: right;
+      background: white;
+      padding-right: 5px;
+      a {
+        color: black;
+      }
+    }
+    a {
+      color: #AEAEAE;
+      cursor: pointer;
+    }
+  }
+}
+
+.classUtils {
+  color: #AEAEAE;
+}
+
+.confirmDrop {
+  margin-top: 10px;
+  text-align: center;
+  margin-bottom: 5px;
+  ul li {
+    display: inline;
+    padding: 3px 5px;
+    border: 1px solid #BEBEBE;
+    cursor: pointer;
+    background: #fefefe;
+    background: -moz-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe), color-stop(100%, #e8e8e8));
+    background: -webkit-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    background: -o-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    background: -ms-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#e8e8e8',GradientType=0 );
+    background: linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+  }
+}
+
+#alertArea {
+  display: none;
+  padding: 5px;
+  background: #CCFFD2;
+  margin-bottom: 5px;
+}
+
+#confirmAddTitle {
+  font-size: 16px;
+}
+
+#confirmAddBody {
+  text-align: center;
+  margin-top: 10px;
+  span {
+    padding: 3px 5px;
+    border: 1px solid #BEBEBE;
+    cursor: pointer;
+    background: #fefefe;
+    background: -moz-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe), color-stop(100%, #e8e8e8));
+    background: -webkit-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    background: -o-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    background: -ms-linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#e8e8e8',GradientType=0 );
+    background: linear-gradient(top, #fefefe 0%, #e8e8e8 100%);
+  }
+}
+
+.classInfoLink {
+  margin-left: 5px;
+}
+
+.addLink {
+  color: #329400;
+}
+
+.emptyFilter {
+  padding: 75px;
+}
+
+#requirements {
+  float: right;
+  width: 40%;
+  margin-right: 20px;
+  margin-top: -44px;
+  background: #fffae1;
+  border-radius: 10px;
+}
+
+#requirementsHeader {
+  color: #beb171;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  border-bottom: 1px solid #efe8c6;
+}
+
+.requirement {
+  color: #76704f;
+  padding: 5px 25px;
+}
+
+.requirementTitle {
+  color: #76704f;
+  font-weight: bold;
+  padding: 5px 15px;
+}
+
+.requirementsList {
+  border-bottom: 1px solid #efe8c6;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+#declareGraduation {
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 7px;
+  border: 1px solid #199424;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  margin: 15px 0px;
+  width: 200px;
+  font-weight: bold;
+  box-shadow: inset 0 1px 0 #62d573;
+  -moz-box-shadow: inset 0 1px 0 #62d573;
+  -webkit-box-shadow: inset 0 1px 0 #62d573;
+  background: #30bd40;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #30bd40), color-stop(100%, #22a12e));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #30bd40 0%, #22a12e 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #30bd40 0%, #22a12e 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#30bd40', endColorstr='#22a12e',GradientType=0 );
+  /* IE6-9 */
+}
+
+#units {
+  float: left;
+  width: 50%;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  line-height: 24px;
+}
