@@ -1,6 +1,6 @@
 from django.conf.urls import  url
 
-from ..spacesViews import *
+from ..views.spacesViews import *
 
 # calendar urls
 urlpatterns = [
