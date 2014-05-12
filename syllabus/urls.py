@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'(?i)^calendar/', include(classroom.urls.calendar)),
 
     # handle the messageBoards through the course pages
-    url(r'(?i)^course/messageBoard/', include(messages.urls.messageBoards)),
+    url(r'(?i)^course/messageBoard/', include(messages.urls.messageboards)),
 
     # load the course page urls
     url(r'(?i)^course/', include(classroom.urls.spaces)),
@@ -38,5 +38,15 @@ urlpatterns = patterns('',
     url(r'(?i)^myClasses/', include(classroom.urls.myClasses)),
 
     # load the tutor urls
-    url(r'(?i)^tutors/', include(socialservice.urls.meeting)),
+    url(r'(?i)^tutors/', include(socialservice.urls.meetings)),
+
+    # load the myHomework urls
+    url(r'(?i)^myHomework/', include(core.urls.myHomework)),
+
+    # load the myProfile urls
+    url(r'(?i)^myProfile/', include(core.urls.myProfile)),
+
+    # load the miscillaneous urls in core
+    url(r'^$', include(core.urls.core)),
+
 )
