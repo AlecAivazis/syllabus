@@ -53,6 +53,10 @@ SYLLABUS = (
 # Application definition
 INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY + SYLLABUS
 
+
+# load the appropriate base user class
+AUTH_USER_MODEL = 'core.SyllUser'
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
