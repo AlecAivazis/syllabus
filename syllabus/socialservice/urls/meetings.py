@@ -1,6 +1,6 @@
 from django.conf.urls import  url
 
-from ..tutorsViews import *
+from ..views.meetings import *
 
 urlpatterns = [
     url(r'(?i)^$', home),

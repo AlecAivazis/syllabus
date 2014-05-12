@@ -1,4 +1,4 @@
-from common import *
+from syllabus import *
 
 def render_to_response(filename, context={},mimetype=default_mimetype):
     template = env.get_template(filename)
@@ -18,8 +18,6 @@ def home(request):
         if profile.interest  not in interests:
             interests.append(profile.interest)
    
-    print interests
- 
     return render_to_response('/tutors/home.html', locals())
 
 def new(request):
