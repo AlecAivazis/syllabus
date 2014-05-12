@@ -28,9 +28,6 @@ TEMPLATE_LOADERS = (
 
 # the directories that contains my templates
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
 )
 
@@ -151,7 +148,6 @@ STATICFILES_DIRS = (
     os.path.join(os.path.dirname(__file__), 'resources/').replace('\\','/'),
 )
 
-# Django pipeline settings
 
 # Django compressor settings
 
@@ -173,6 +169,7 @@ COMPRESS_OUTPUT_DIR = 'static'
 
 # set the compressor filters
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter']
+COMPRESS_JS_FILTERS = ['compressor.filters.jsmin.JSMinFilter']
 
 # set the compressor parser
 COMPRESS_PARSER = 'compressor.parser.AutoSelectParser'
