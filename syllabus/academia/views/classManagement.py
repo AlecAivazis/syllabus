@@ -1,4 +1,4 @@
-from ..common import *
+from syllabus import *
 
 dayDict={
     '1':'M',

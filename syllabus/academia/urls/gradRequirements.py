@@ -1,9 +1,9 @@
 from django.conf.urls import  url
 
-from ..gradRequirementsViews import *
+from ..views.gradRequirements import *
 
 urlpatterns = [
-    url(r'(?i)^$', gradRequirements.home),
+    url(r'(?i)^$', home),
     url(r'(?i)^viewDegree/$', viewDegree),
     url(r'(?i)^viewCollegeDegree/$', viewCollegeDegree),
     url(r'(?i)^newCollegeRequirement/$', newCollegeRequirement),

@@ -1,6 +1,6 @@
 from django.conf.urls import  url
 
-from ..userManagementViews import *
+from ..views.userManagement import *
 
 urlpatterns = [
     (r'(?i)^$', home),
@@ -9,7 +9,7 @@ urlpatterns = [
     (r'(?i)^create/$', create),
     (r'(?i)^addExemption/$', addExemption),
     (r'(?i)^userProfile/$', userProfile),
-    (r'(?i)^list/$', listRequirement),
+    (r'(?i)^list/$', listRequirements),
     (r'(?i)^edit/$', editRequirement),
     (r'(?i)^addExemption/$', addExemption),
     (r'(?i)^getInterestCourseNumbers/$', getInterestCourseNumber),

@@ -1,4 +1,4 @@
-from ..common import *
+from syllabus import *
 
 def home(request):
     
@@ -120,9 +120,6 @@ def createMajor(request):
         major.name = request.POST['name']
         major.type = request.POST['type']
         major.save()
-        
-        print major.name
-        print major.type
         
         College.objects.get(id=request.POST['college']).majors.add(major)
         

@@ -1,4 +1,4 @@
-from ..common import *
+from syllabus import *
 
 def home(request):
     
@@ -57,8 +57,6 @@ def userProfile(request):
     interests = []
     interests = Interest.objects.all()
 
-    print interests
-
     return render_to_response('registrar/users/userProfile.html', locals())
 
 
@@ -91,13 +89,13 @@ def create(request):
     
     return HttpResponse('success!')
 
-def list(request):
+def listRequirements(request):
     
     users = SyllUser.objects.all()
     
     return render_to_response('/registrar/users/userList.html',locals())
 
-def edit(request):
+def editRequirement(request):
     user = SyllUser.objects.get(id=request.GET['id'])
     return render_to_response('/registrar/users/form.html', locals())
 
