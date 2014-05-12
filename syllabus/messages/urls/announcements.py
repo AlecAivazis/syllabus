@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from ..announcementViews import *
+from ..views.announcementViews import *
 
 # announcement urls
 urlpatterns = [
