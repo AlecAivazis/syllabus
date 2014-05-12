@@ -47,6 +47,6 @@ urlpatterns = patterns('',
     url(r'(?i)^myProfile/', include(core.urls.myProfile)),
 
     # load the miscillaneous urls in core
-    url(r'^$', include(core.urls.core)),
+    url(r'', include(core.urls.core)),
 
 )
