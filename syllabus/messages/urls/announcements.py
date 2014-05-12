@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, url
 
+from ..announcementViews import *
+
 # announcement urls
 urlpatterns = [
-    url(r'(?i)^announcements/create$', announcements.create),
-    url(r'(?i)^announcements/$', announcements.home),
-    url(r'(?i)^announcements/newAnnouncement/$', announcements.newAnnouncement),
-    url(r'(?i)^announcements/view/$', announcements.view),
+    url(r'(?i)^create$', create),
+    url(r'(?i)^newAnnouncement/$', newAnnouncement),
+    url(r'(?i)^view/$', view),
+    url(r'(?i)^$', home),
 ]

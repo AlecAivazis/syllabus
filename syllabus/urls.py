@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     # load the academia urls
     url(r'(?i)^registrar/classes/', include(academia.urls.classManagement)),
     url(r'(?i)^registrar/graduationRequirements/', include(academia.urls.gradRequirements)),
-    url(r'(?i)^registrar/users/', include(academia.urls.gradRequirements)),
+    url(r'(?i)^registrar/users/', include(academia.urls.userManagement)),
 
     # load the myClasses urls
     url(r'(?i)^myClasses/', include(classroom.urls.myClasses)),
