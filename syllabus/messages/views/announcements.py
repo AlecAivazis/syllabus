@@ -1,4 +1,4 @@
-from common import *
+from syllabus import *
 
 def newAnnouncement(request):
     classes = Class.objects.filter(professor = request.user)
