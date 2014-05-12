@@ -24,7 +24,6 @@ def myHomework(request):
 
     events = {}
     for date in dates:
-        print date
         for section in sections:
             targetEvents = section.qlass.events.filter(date=date).exclude(category='lecture').exclude(category='test')
             

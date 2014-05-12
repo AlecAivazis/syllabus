@@ -1,4 +1,4 @@
-from common import *
+from syllabus import *
 
 def home(request):
     
