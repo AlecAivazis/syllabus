@@ -2,7 +2,7 @@ from django.db import models
 
 User = 'core.SyllUser'
 Timeslot = 'core.TimeSlot'
-ClassProfile = 'classroom.ClassProfile'
+ClassProfile = 'academia.ClassProfile'
 
 # this application handles interactions between users where one has a service and is rated
 # using aggregate thumbs up and downs (normalized a la reddit) 

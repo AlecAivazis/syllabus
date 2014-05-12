@@ -3,7 +3,7 @@ from django.db import models
 # local imports defined as string references
 File = 'core.File'
 MetaData = 'core.MetaData'
-User = 'core.User'
+User = 'core.SyllUser'
 Timeslot = 'core.Timeslot'
 GradingScale = 'classroom.GradingScale'
 Weight = 'classroom.Weight'
@@ -169,7 +169,7 @@ class Class(models.Model):
 # the {sections} of a particular {class} to add more user based organization
 class Section(models.Model):
     name = models.CharField(max_length=508)
-    students = models.ManyToManyField(User, related_name='students', through='Enrollment')
+    students = models.ManyToManyField(User, related_name='students', through=Enrollment)
     tas = models.ManyToManyField(User, related_name='tas', blank=True)
     qlass = models.ForeignKey(Class, related_name='sections')
     times = models.ManyToManyField(Timeslot, related_name="sections", blank=True)

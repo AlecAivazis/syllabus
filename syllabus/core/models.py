@@ -5,8 +5,9 @@ from syllabus.classroom.models import Event
 Major = 'academia.Major'
 Address = 'core.address'
 Contact = 'core.contact'
-ClassProfile = 'classroom.ClassProfile'
+ClassProfile = 'academia.ClassProfile'
 File = 'core.File'
+WishList = 'wishlist.WishList'
 
 # most of these are random models used throughout the application
 
@@ -79,7 +80,7 @@ class SyllUser(AbstractUser):
     emergency = models.ForeignKey('Contact', null=True)
     phone = models.CharField(max_length=20)
     unitsTransfered = models.IntegerField(null=True)
-    wishList = models.ManyToManyField(ClassProfile, through="WishList")
+    wishList = models.ManyToManyField(ClassProfile, through=WishList)
 
     # calculate how many units this user has completed
     def unitsCompleted(self):
