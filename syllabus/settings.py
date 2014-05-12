@@ -169,7 +169,7 @@ COMPRESS_CSS_COMPRESSOR = 'compressor.css.CssCompressor'
 COMPRESS_ROOT = os.path.join(os.path.dirname(__file__), 'resources').replace('\\','/')
 
 # set the compressor output directory
-COMPRESS_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), 'static').replace('\\','/')
+COMPRESS_OUTPUT_DIR = 'static'
 
 # set the compressor filters
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter']
