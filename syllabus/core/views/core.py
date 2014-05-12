@@ -1,4 +1,4 @@
-from common import *
+from syllabus import *
 
 def sentry(request):
     if request.user.is_authenticated():
