@@ -1,5 +1,7 @@
 from syllabus import *
 
+from ..forms import LoginForm
+
 def sentry(request):
     if request.user.is_authenticated():
         return render_to_response('base.html', locals())
