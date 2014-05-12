@@ -1,8 +1,8 @@
-from django.conf.urls import url
+from django.conf.urls import url, patterns
 
 from ..views.myHomework import *
 
-urlpatterns = [
+urlpatterns = patterns( '', 
     url(r'(?i)^turnIn/$', turnIn),
     url(r'(?i)^$', myHomework),
-]
+)

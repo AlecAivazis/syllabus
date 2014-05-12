@@ -1,9 +1,9 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, patterns
 
 from ..views.calendar import *
 
 # calendar urls
-urlpatterns = [
+urlpatterns = patterns('', 
 
     url(r'(?i)^createEvent/$', createEvent),
     url(r'(?i)^deleteEvent/$', deleteEvent),
@@ -24,4 +24,4 @@ urlpatterns = [
     url(r'(?i)^endRegistration/$', endRegistration),
     url(r'(?i)^startRegistration/$', startRegistrationForm),
     url(r'(?i)^$', calendarHome),
-]
+)

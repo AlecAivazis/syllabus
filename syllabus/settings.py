@@ -21,6 +21,19 @@ SECRET_KEY = 'u2me%mqm!-lo&9((-$_c3$+b0=ws&izb44x#=1faq-u+^sgilr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.app_directories.Loader',
+)
+
+# the directories that contains my templates
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+)
+
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -38,6 +51,8 @@ DJANGO_APPS = (
 # third party apps
 THIRD_PARTY = (
     'django_extensions',
+    'compressor',
+    'debug_toolbar'
 )
 
 # syllabus is just a collection of apps... whoa... meta
@@ -117,18 +132,13 @@ MEDIA_URL = ''
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/'
 
+# Static Files
+
 STATIC_DOC_ROOT = os.path.join(os.path.dirname(__file__), 'resources/').replace('\\','/')
 STATIC_ADMIN_MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'Syllabus/media').replace('\\','/')
 
 STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static').replace('\\','/')
-COMPRESS_URL = '/static/'
 STATIC_URL = '/static/'
-
-COMPRESS_PRECOMPILERS =(
-    ('text/scss', 'sass {infile} > {outfile}'),
-)
-
-COMPRESS_ENABLED = False
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -140,3 +150,39 @@ STATICFILES_FINDERS = (
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(__file__), 'resources/').replace('\\','/'),
 )
+
+# Django pipeline settings
+
+# Django compressor settings
+
+COMPRESS_URL = '/static/'
+
+COMPRESS_PRECOMPILERS =(
+    ('text/scss', 'sass {infile} > {outfile}'),
+)
+
+# set the django compressors
+COMPRESS_JS_COMPRESSOR = 'compressor.js.JsCompressor'
+COMPRESS_CSS_COMPRESSOR = 'compressor.css.CssCompressor'
+
+# set the compressor root directory
+COMPRESS_ROOT = os.path.join(os.path.dirname(__file__), 'resources').replace('\\','/')
+
+# set the compressor output directory
+COMPRESS_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), 'static').replace('\\','/')
+
+# set the compressor filters
+COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter']
+
+# set the compressor parser
+COMPRESS_PARSER = 'compressor.parser.AutoSelectParser'
+
+# set the storage algorithm
+COMPRESS_STORAGE = 'compressor.storage.CompressorFileStorage'
+
+# turn off verbose
+COMPRESS_VERBOSE = False
+
+# turn off compression for debugging
+COMPRESS_ENABLED = False
+

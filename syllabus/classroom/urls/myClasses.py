@@ -1,8 +1,8 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, patterns
 
 from ..views.myClasses import *
 
-urlpatterns = [
+urlpatterns = patterns('', 
     url(r'(?i)^classPage/$', classPage),
     url(r'(?i)^classPages/$', classPage),
     url(r'(?i)^confDrop/$', confDrop),
@@ -15,4 +15,4 @@ urlpatterns = [
     url(r'(?i)^filterCatalog/$', filterCatalog),
     url(r'(?i)^runTask/$', runTask),
     url(r'(?i)^grades/$', grades),
-]
+)

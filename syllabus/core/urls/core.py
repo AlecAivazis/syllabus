@@ -1,10 +1,10 @@
 
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, patterns
 
 from ..views.core import *
 
-urlpatterns = [
+urlpatterns = patterns('', 
     # misc urls
     url(r'(?i)^$', sentry),
     url(r'(?i)^downloadSubmission/$', downloadSubmission),
@@ -20,4 +20,4 @@ urlpatterns = [
         {'document_root': settings.STATIC_ADMIN_MEDIA_ROOT}),
     url(r'^resources/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}), 
-]
+)

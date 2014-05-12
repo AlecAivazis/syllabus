@@ -1,8 +1,8 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, patterns
 
 from ..views.userManagement import *
 
-urlpatterns = [
+urlpatterns = patterns('', 
     (r'(?i)^$', home),
     (r'(?i)^new/$', new),
     (r'(?i)^delete/$', delete),
@@ -13,4 +13,4 @@ urlpatterns = [
     (r'(?i)^edit/$', editRequirement),
     (r'(?i)^addExemption/$', addExemption),
     (r'(?i)^getInterestCourseNumbers/$', getInterestCourseNumber),
-]
+)

@@ -1,9 +1,9 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, patterns
 
 from ..views.gradebook import *
 
 # calendar urls
-urlpatterns = [
+urlpatterns = patterns('', 
     url(r'(?i)^addGrade/$', addGrade),
     url(r'(?i)^allStudents/$', allStudents),
     url(r'(?i)^selectedAssistants/$', selectedAssistants),
@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'(?i)^weights/eventWeight/$', eventWeight),
     url(r'(?i)^weights/remove/$', removeWeight),
     url(r'(?i)^$', gradebookHome),
-]
 
+)

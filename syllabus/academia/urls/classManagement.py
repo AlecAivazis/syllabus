@@ -1,9 +1,9 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, patterns
 
 from ..views.classManagement import *
 
 # calendar urls
-urlpatterns = [
+urlpatterns = patterns('', 
     url(r'(?i)^$', home),
     url(r'(?i)^createCollege/$', createCollege),
     url(r'(?i)^newCollege/$', newCollege),
@@ -16,4 +16,4 @@ urlpatterns = [
     url(r'(?i)^newClass/$', newClass),
     url(r'(?i)^newProfile/$', newProfile),
     url(r'(?i)^profile/$', profile),
-]
+)

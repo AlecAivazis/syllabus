@@ -1,8 +1,8 @@
-from django.conf.urls import  url
+from django.conf.urls import  url, patterns
 
 from ..views.gradRequirements import *
 
-urlpatterns = [
+urlpatterns = patterns('', 
     url(r'(?i)^$', home),
     url(r'(?i)^viewDegree/$', viewDegree),
     url(r'(?i)^viewCollegeDegree/$', viewCollegeDegree),
@@ -17,4 +17,4 @@ urlpatterns = [
     url(r'(?i)^majorList/$', majorList),
     url(r'(?i)^newMajor/$', newMajor),
     url(r'(?i)^createMajor/$', createMajor),
-]
+)
