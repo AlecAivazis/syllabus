@@ -39,8 +39,10 @@ class Interest(models.Model):
     abbrv  = models.CharField(max_length=10)
 
     # default string behavior is to return its abbreviation
-    def __unicode__(self):
+    def __str__(self):
         return self.abbrv
+    def __unicode__(self):
+        return __str__() 
     
     # should add like a string
     def __add__(self, other):
