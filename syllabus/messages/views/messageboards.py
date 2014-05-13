@@ -1,5 +1,7 @@
 from syllabus import *
 
+from syllabus.classroom.models import Class
+
 def home(request):
     qlass = Class.objects.get(id=request.GET['id'])
     messageBoard = qlass.messageBoard
