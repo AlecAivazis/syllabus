@@ -1,6 +1,9 @@
 from syllabus import *
 
-from syllabus.classroom.models import Class
+from syllabus.classroom.models import Class, Section
+from syllabus.academia.models import Enrollment
+
+from ..models import UserGroup, Announcement
 
 def newAnnouncement(request):
     classes = Class.objects.filter(professor = request.user)
