@@ -6,8 +6,8 @@ File = 'core.File'
 MetaData = 'core.MetaData'
 User = 'core.SyllUser'
 Timeslot = 'core.Timeslot'
-GradingScale = 'classroom.GradingScale'
-Weight = 'classroom.Weight'
+GradingScale = 'GradingScale'
+Weight = 'Weight'
 Topic = 'messages.Topic'
 Term = 'academia.Term'
 User = 'core.SyllUser'
@@ -231,4 +231,3 @@ class Book(models.Model):
     title = models.CharField(max_length=1020)
     author = models.CharField(max_length = 1020)
     isbn = models.CharField(max_length = 1020)
-

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from ..classroom.models import Event
+Event = 'classroom.Event'
 Major = 'academia.Major'
 from ..academia.models import University, Enrollment
 Address = 'core.address'

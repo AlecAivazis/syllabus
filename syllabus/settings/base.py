@@ -49,7 +49,6 @@ THIRD_PARTY = (
     'compressor',
 )
 
-
 # Application definition
 INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY 
 
@@ -92,7 +91,6 @@ MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = '/media/'
 
 # Static Files
-
 
 STATIC_DOC_ROOT = os.path.join(ROOT, 'resources/').replace('\\','/')
 STATIC_ADMIN_MEDIA_ROOT = os.path.join(ROOT, 'Syllabus/media').replace('\\','/')

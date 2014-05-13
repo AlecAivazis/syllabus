@@ -1,6 +1,6 @@
 # this file represents common imports among all of the views
 
-from django.shortcuts import HttpResponseRedirect, HttpResponse #, render_to_response
+from django.shortcuts import HttpResponseRedirect, HttpResponse 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 import jinja2

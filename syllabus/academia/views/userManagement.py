@@ -1,5 +1,7 @@
 from syllabus import *
 
+from ...core.models import SyllUser
+
 def home(request):
     
     users = SyllUser.objects.all()
