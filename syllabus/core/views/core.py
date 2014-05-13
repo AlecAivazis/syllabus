@@ -1,4 +1,5 @@
 from syllabus import *
+from django.views.decorators.csrf import csrf_exempt
 
 from ..forms import LoginForm
 
@@ -133,7 +134,9 @@ def upload(request):
     
     return render_to_response('upload.html',locals())
 
+@csrf_exempt
 def syllogin(request):
+    
     logout(request)
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
