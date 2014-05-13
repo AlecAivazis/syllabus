@@ -1,5 +1,8 @@
 from syllabus import *
 
+from syllabus.classroom.models import Section
+from syllabus.core.models import State, Upload
+
 def myHomework(request):
     oz = os
     fileRoot = settings.ROOT
