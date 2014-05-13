@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 from syllabus.classroom.models import Event
 Major = 'academia.Major'
+from syllabus.academia.models import University, Enrollment
 Address = 'core.address'
 Contact = 'core.contact'
 ClassProfile = 'academia.ClassProfile'
