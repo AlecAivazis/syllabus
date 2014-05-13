@@ -1,6 +1,7 @@
 from syllabus import *
 
 from syllabus.classroom.models import Class
+from ..models import Topic
 
 def home(request):
     qlass = Class.objects.get(id=request.GET['id'])
@@ -33,11 +34,12 @@ def viewTopic(request):
     
     if request.user not in topic.read.all():
         topic.read.add(request.user)
-    
+
     oz = os
     fileRoot = settings.ROOT
-    now = datetime.datetime.now()
+    now = datetime.datetime.now().replace(tzinfo=None)
     nt = int
+    dt = datetime.datetime
     
     return render_to_response('/spaces/messageBoards/topic.html', locals())
 

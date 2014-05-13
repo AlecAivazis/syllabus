@@ -35,7 +35,8 @@
     <div class="replyAuthor">{{reply.author.first_name}} {{reply.author.last_name}}
         
         {% with %}
-        {% set delta = (now-reply.datePosted).total_seconds() %}
+        {# put now in the replied timezone before computing delta #}
+        {% set delta = (dt.astimezone(reply.datePosted) -reply.datePosted).total_seconds() %}
         {% set hours = nt(delta // 3600) %}
         {% set days = nt(hours // 24)%}  
         {% set minutes = nt((delta - (hours*3600))//60) %}
