@@ -1,1 +1,0 @@
-make files into a django object rather than a string
