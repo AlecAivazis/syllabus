@@ -1,5 +1,8 @@
 from syllabus import *
 
+from syllabus.classroom.models import Class
+from syllabus.academia.models import RegistrationGroup, Term
+
 def editEventForm(request):
     
     id = request.GET['id']
