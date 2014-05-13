@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'(?i)^viewTopic/$', viewTopic),
     url(r'(?i)^newTopic/$', newTopic),
     url(r'(?i)^createTopic/$', createTopic),
-    url(r'(?i)^$', home),
+    url(r'(?i)^view/$', home),
 )
