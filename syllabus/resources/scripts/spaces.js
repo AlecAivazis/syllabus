@@ -85,7 +85,7 @@ function filterTimeline(which){
 
 function viewSpace(self, which, id){
     $.ajax({
-        url: '/course/view'+ which + '/',
+        url: '/course/'+ which + '/' + 'view',
         data: {
             id:id
         },
