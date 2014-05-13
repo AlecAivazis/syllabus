@@ -77,6 +77,8 @@ PERMS = {
 AUTH_USER_MODEL = 'core.SyllUser'
 
 MIDDLEWARE_CLASSES = (
+    'syllabus.middlewares.UAC',
+    'syllabus.middlewares.GetLinks',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
