@@ -23,7 +23,6 @@ function getCookie(name)
  
 $.ajaxSetup({ 
      beforeSend: function(xhr, settings) {
-         alert('setting up csrf');
          if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
              // Only send the token to relative URLs i.e. locally.
              xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
