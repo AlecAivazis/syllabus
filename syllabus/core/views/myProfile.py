@@ -1,5 +1,7 @@
 from syllabus import *
 
+from syllabus.academia.models import ClassProfile
+
 def home(request):
     
     interests = []
