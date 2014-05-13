@@ -1,5 +1,7 @@
 from syllabus import *
 
+from syllabus.classroom.models import Class
+
 def setSyllabus(request):
     
     if 'syllabus' in request.POST:

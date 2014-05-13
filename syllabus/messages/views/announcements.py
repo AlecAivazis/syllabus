@@ -1,5 +1,7 @@
 from syllabus import *
 
+from syllabus.classroom.models import Class
+
 def newAnnouncement(request):
     classes = Class.objects.filter(professor = request.user)
     sections = Section.objects.filter(tas= request.user)
