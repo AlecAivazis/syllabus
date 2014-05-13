@@ -1,5 +1,7 @@
 from syllabus import *
 
+from syllabus.academia.models import Major, College, MajorRequirement, ClassProfile
+
 def home(request):
     
     #majors = Major.objects.all().distinct('name')
