@@ -207,9 +207,9 @@ def eventsForClass(request, classId, sectionId = False):
         return HttpResponse('fail')
 
 def addGrade(request):
-    student = SyllUser.objects.get(id = int(request.GET['student']))
-    score = request.GET['score'].strip()
-    event = Event.objects.get(id = int(request.GET['event']))
+    student = SyllUser.objects.get(id = int(request.POST['student']))
+    score = request.POST['score'].strip()
+    event = Event.objects.get(id = int(request.POST['event']))
     
     if student and event:
         if Class.objects.filter(events=event).filter(professor = request.user):

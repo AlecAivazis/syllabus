@@ -1,5 +1,10 @@
 from syllabus import *
 
+# syllabus imports
+from syllabus.classroom.models import Section, Class
+from syllabus.academia.models import Term, Department, Interest, ClassProfile
+from syllabus.core.models import Timeslot
+
 dayDict={
     '1':'M',
     '2':'T',
