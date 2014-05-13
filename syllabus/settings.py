@@ -133,6 +133,8 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # Static Files
 
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+
 STATIC_DOC_ROOT = os.path.join(os.path.dirname(__file__), 'resources/').replace('\\','/')
 STATIC_ADMIN_MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'Syllabus/media').replace('\\','/')
 
