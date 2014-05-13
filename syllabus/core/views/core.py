@@ -134,7 +134,6 @@ def upload(request):
     
     return render_to_response('upload.html',locals())
 
-@csrf_exempt
 def syllogin(request):
     
     logout(request)
