@@ -173,7 +173,7 @@ function loadView(which){
 
 function loadCalendar(which, year, number){
 	$.ajax({
-	    url: '/calendarAjax/',
+	    url: '/calendar/ajax/',
 	    async: false,
 	    data: 'which=' + which + "&year=" + year + '&number=' + number,
 	    success: function(data) {
