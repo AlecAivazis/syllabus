@@ -46,8 +46,8 @@ dayDict = {
 }
 
 
-def render_to_response(filename, context={},mimetype=default_mimetype):
+def render_to_response(filename, context={}):
     template = env.get_template(filename)
     rendered = template.render(**context)
 
-    return HttpResponse(rendered,mimetype=mimetype)
+    return HttpResponse(rendered)

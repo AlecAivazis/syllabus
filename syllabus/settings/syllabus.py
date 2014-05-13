@@ -32,6 +32,10 @@ WSGI_APPLICATION = 'apache.wsgi.application'
 
 # Django compressor settings
 
+STATICFILES_DIRS = (
+    os.path.join(ROOT, 'resources/').replace('\\','/'),
+)
+
 COMPRESS_URL = '/static/'
 
 COMPRESS_PRECOMPILERS =(
@@ -41,7 +45,7 @@ COMPRESS_PRECOMPILERS =(
 COMPRESS_JS_COMPRESSOR = 'compressor.js.JsCompressor'
 COMPRESS_CSS_COMPRESSOR = 'compressor.css.CssCompressor'
 
-COMPRESS_ROOT = os.path.join(os.path.dirname(__file__), 'resources').replace('\\','/')
+COMPRESS_ROOT = os.path.join(ROOT, 'resources').replace('\\','/')
 
 COMPRESS_OUTPUT_DIR = 'static'
 

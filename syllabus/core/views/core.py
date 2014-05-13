@@ -1,8 +1,10 @@
 from syllabus import *
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from ..forms import LoginForm
 
+@ensure_csrf_cookie
 def sentry(request):
     if request.user.is_authenticated():
         return render_to_response('base.html', locals())

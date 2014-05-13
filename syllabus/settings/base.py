@@ -10,7 +10,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+ROOT = os.path.join(BASE_DIR, 'syllabus')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -26,7 +27,7 @@ TEMPLATE_LOADERS = (
 
 # the directories that contains my templates
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+    os.path.join(ROOT, 'templates').replace('\\','/'),
 )
 
 TEMPLATE_DEBUG = True
@@ -39,7 +40,6 @@ DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
 )
 
@@ -79,7 +79,7 @@ USE_TZ = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'resources').replace('\\','/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/resources').replace('\\','/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -93,20 +93,15 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # Static Files
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
-STATIC_DOC_ROOT = os.path.join(os.path.dirname(__file__), 'resources/').replace('\\','/')
-STATIC_ADMIN_MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'Syllabus/media').replace('\\','/')
+STATIC_DOC_ROOT = os.path.join(ROOT, 'resources/').replace('\\','/')
+STATIC_ADMIN_MEDIA_ROOT = os.path.join(ROOT, 'Syllabus/media').replace('\\','/')
 
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static').replace('\\','/')
+STATIC_ROOT = os.path.join(ROOT, 'static').replace('\\','/')
 STATIC_URL = '/static/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-)
-
-STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'resources/').replace('\\','/'),
 )
