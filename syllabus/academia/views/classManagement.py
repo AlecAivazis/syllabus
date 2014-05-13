@@ -1,5 +1,7 @@
 from syllabus import *
 
+from syllabus.academia.models import College, Department
+
 dayDict={
     '1':'M',
     '2':'T',
