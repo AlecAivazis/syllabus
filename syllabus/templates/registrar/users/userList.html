@@ -2,7 +2,15 @@
 <tr class="user" id="{{user.id}}" onclick="userProfile({{user.id}})">
     <td>{{user.first_name}} {{user.last_name}}</td>
     <td>{{user.id}}</td>
-    <td class="userRoles">{% for group in user.groups.all()%}{{group}}{% if not loop.last %}, {%endif%}{%endfor%}</td>
-    <td class="userTools">&nbsp;<span class="editUser" onclick="editUser({{user.id}})">Edit</span><span class="deleteUser" onclick="deleteUser({{user.id}})">Delete</span></td>
+    <td class="userRoles">
+      {% for group in user.groups.all()%}
+      {{group}}
+      {% if not loop.last %},   {%endif%}
+      {%endfor%}</td>
+    <td class="userTools">&nbsp;
+      <span class="editUser" onclick="editUser({{user.id}})">Edit</span>
+      <span class="deleteUser" onclick="deleteUser({{user.id}})">Delete</span>
+      <span class="addExemption" onclick="addExemption({{user.id}})">Delete</span>
+    </td>
 </tr>
 {% endfor %}

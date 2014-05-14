@@ -17,4 +17,5 @@ urlpatterns = patterns('',
     url(r'(?i)^majorList/$', majorList),
     url(r'(?i)^newMajor/$', newMajor),
     url(r'(?i)^createMajor/$', createMajor),
+    url(r'(?i)^addExemption/$', addExemption),
 )

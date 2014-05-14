@@ -16,6 +16,10 @@ def viewCollegeDegree(request):
     
     return render_to_response('/registrar/graduationRequirements/viewCollege.html', locals())
 
+def addExemption(request):
+
+    return HttpResponse("hello")
+
 def viewDegree(request):
     
     major = Major.objects.get(id = request.GET['id'])

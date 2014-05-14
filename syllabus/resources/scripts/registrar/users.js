@@ -156,6 +156,19 @@ function viewProfile(id){
     });
 }
 
+function addExemption(userId){
+    $.ajax({
+        url: '/registrar/graduationrequirements/addexemption',
+        method: 'POST'
+        data: {
+            id: userId
+        },
+        success: function(data){
+            alert(data);
+        }
+    });
+}
+
 function getInterestCourseNumbers(id, self){
 
     alert('hello');
