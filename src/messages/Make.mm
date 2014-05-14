@@ -1,24 +1,24 @@
 # -*- Makefile -*-
 #
-# alec aivazis
+# michael a.g. aïvázis
 # orthologue
 # (c) 1998-2014 all rights reserved
 #
 
 
 PROJECT = syllabus
+PACKAGE = messages
+PROJ_CLEAN += $(EXPORT_MODULEDIR)
 
 RECURSE_DIRS = \
-    bin \
-    people \
-    src \
-    apache \
+    urls \
+    views \
+
 
 #--------------------------------------------------------------------------
 #
 
-all:
-	BLD_ACTION="all" $(MM) recurse
+all: export
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
@@ -31,21 +31,16 @@ distclean::
 
 
 #--------------------------------------------------------------------------
-#  shortcuts to building in my subdirectories
-.PHONY: bin people src
+# export
 
-bin:
-	(cd bin; $(MM))
+EXPORT_PYTHON_MODULES = \
+    admin.py \
+    models.py \
+    tests.py \
+    __init__.py
 
-people:
-	(cd people; $(MM))
 
-src:
-	(cd src; $(MM))
-
-build: 
-
-test: 
-
+export:: export-python-modules
+	BLD_ACTION="export" $(MM) recurse
 
 # end of file 
