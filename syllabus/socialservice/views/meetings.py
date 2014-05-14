@@ -1,11 +1,5 @@
 from syllabus import *
 
-def render_to_response(filename, context={},mimetype=default_mimetype):
-    template = env.get_template(filename)
-    rendered = template.render(**context)
-    return HttpResponse(rendered,mimetype=mimetype)
-
-
 def home(request):
     userTutor = Tutor.objects.get(user=request.user)
     tutors = Tutor.objects.all()

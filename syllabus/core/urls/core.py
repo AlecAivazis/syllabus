@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     
     url(r'^resources/uploads/(?P<path>.*)$', protectedDownload),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.STATIC_ADMIN_MEDIA_ROOT}),
-    url(r'^resources/(?P<path>.*)$', 'django.views.static.serve',
+         {'document_root': settings.STATIC_ADMIN_MEDIA_ROOT}),
+     url(r'^resources/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}), 
 )
