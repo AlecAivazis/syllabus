@@ -42,7 +42,7 @@ class Interest(models.Model):
     def __str__(self):
         return self.abbrv
     def __unicode__(self):
-        return __str__() 
+        return self.__str__() 
     
     # should add like a string
     def __add__(self, other):
