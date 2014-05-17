@@ -117,7 +117,11 @@ class Major(models.Model):
     preMajor = models.ManyToManyField(MajorRequirement, related_name="pre", blank=True)
     major = models.ManyToManyField(MajorRequirement, related_name="major", blank=True)
 
-
+# an replacement requirement for a major
+class MajorExemption(models.Model):
+    user = models.ForeignKey(User, related_name="exemptions")
+    profile = models.ForeignKey(ClassProfile, related_name="replaced_set")
+    replace = models.ManyToManyField(ClassProfile, related_name="replacing_set")
 
 # Registration
 # -----------------------------

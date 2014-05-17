@@ -1,6 +1,7 @@
 from syllabus import *
 
 from ...core.models import SyllUser
+from ..models import MajorExemption as Exemption
 
 def home(request):
     
