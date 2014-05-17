@@ -23,6 +23,8 @@ $(EXPORT_DB):
 	$(CHMOD) ugo+rwx $(EXPORT_DBDIR)
 	echo "" > $(EXPORT_DBDIR)/db.sqlite3
 	$(CHMOD) ugo+rw $(EXPORT_DBDIR)/db.sqlite3
+	# manage.py migrate
+	# manage.py runscript $(EXPORT_ROOT)/packages/util/db.py
 
 migrate:
 	manage.py migrate
