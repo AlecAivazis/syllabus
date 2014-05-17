@@ -5,3 +5,4 @@ syllabus/resources/static
 db.sqlite3
 products/
 builds/
+src/resources/static/
