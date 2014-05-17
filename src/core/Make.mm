@@ -36,6 +36,7 @@ distclean::
 EXPORT_PYTHON_MODULES = \
     admin.py \
     forms.py \
+    middlewares.py \
     models.py \
     tests.py \
     __init__.py

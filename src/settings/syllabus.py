@@ -12,8 +12,8 @@ INSTALLED_APPS += (
 )
 
 MIDDLEWARE_CLASSES = ( 
-    'syllabus.middlewares.UAC',
-    'syllabus.middlewares.GetLinks',
+    'syllabus.core.middlewares.UAC',
+    'syllabus.core.middlewares.GetLinks',
 ) + MIDDLEWARE_CLASSES
 
 # the url permissions of the various user groups (to be moved somewhere else)
@@ -30,10 +30,11 @@ ROOT_URLCONF = 'syllabus.urls'
 # point to the wsgi app
 WSGI_APPLICATION = 'apache.wsgi.application'
 
+
 # Django compressor settings
 
 STATICFILES_DIRS = (
-    os.path.join(ROOT, 'resources/').replace('\\','/'),
+    RESOURCES, 
 )
 
 COMPRESS_URL = '/static/'
@@ -45,7 +46,7 @@ COMPRESS_PRECOMPILERS =(
 COMPRESS_JS_COMPRESSOR = 'compressor.js.JsCompressor'
 COMPRESS_CSS_COMPRESSOR = 'compressor.css.CssCompressor'
 
-COMPRESS_ROOT = os.path.join(ROOT, 'resources').replace('\\','/')
+COMPRESS_ROOT = RESOURCES
 
 COMPRESS_OUTPUT_DIR = 'static'
 

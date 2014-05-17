@@ -17,8 +17,10 @@ RECURSE_DIRS = \
     core \
     messages \
     wishlist \
-    settings \
     socialservice \
+    settings \
+
+# CAUTION: settings must be last so the entire model is built before migrating
 
 
 #--------------------------------------------------------------------------
@@ -40,7 +42,6 @@ distclean::
 # export
 
 EXPORT_PYTHON_MODULES = \
-    middlewares.py \
     urls.py \
     __init__.py
 

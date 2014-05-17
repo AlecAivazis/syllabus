@@ -12,10 +12,15 @@ RECURSE_DIRS = \
     bin \
     people \
     src \
+    util \
     apache \
 
 #--------------------------------------------------------------------------
 #
+run: all server 
+
+server:
+	manage.py runserver_plus
 
 all:
 	BLD_ACTION="all" $(MM) recurse

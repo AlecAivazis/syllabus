@@ -5,7 +5,7 @@
 # (c) 1998-2014 all rights reserved
 #
 
-PROJECT = apache
+PROJECT = util
 PROJ_CLEAN += $(EXPORT_MODULEDIR)/$(PACKAGE)
 
 
@@ -18,7 +18,7 @@ all: export
 # export
 
 EXPORT_PYTHON_MODULES = \
-    wsgi.py \
+    db.py \
     __init__.py
 
 
