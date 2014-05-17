@@ -12,7 +12,7 @@
         <label>Phone number:</label> <input id="phone" value="{{request.user.phone}}" onchange="updatePhone()">
     </div>
     <div class="profileRow">
-        <label>Major:</label>{% for major in request.user.major.all() %}{{major.name}} ({{major.type}}){% if not loop.last %}, {% endif %}{% endfor %}
+        <label>Major:</label><span onclick="modifyMajor()">{% for major in request.user.major.all() %}{{major.name}} ({{major.type}}){% if not loop.last %}, {% endif %}{% endfor %}</span>
     </div>
     <div class="profileRow">
         &nbsp;    

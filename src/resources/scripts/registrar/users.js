@@ -1,13 +1,17 @@
 $(document).ready(function(){
+
+    // run dataTable on the user list to make sortable
     $('#usersTable').dataTable({
         "aaSorting": [[ 1, "asc" ]] ,
         "sDom": '<"userTableToolBar">frtip'
     });
     
+    // add the new user handle
     $('.userTableToolBar').bind('click',function(){
         addUser();    
     }).html('add user');;
     
+    // 
     $('#name').watermark('Enter Name...');
     $('#perm').watermark('Enter Perm Number...');
     
@@ -152,19 +156,6 @@ function viewProfile(id){
         },
         success: function(data){
             $('#classes').empty().append(data);
-        }
-    });
-}
-
-function addExemption(userId){
-    $.ajax({
-        url: '/registrar/graduationrequirements/addexemption',
-        method: 'POST'
-        data: {
-            id: userId
-        },
-        success: function(data){
-            alert(data);
         }
     });
 }

@@ -4,6 +4,7 @@
             <script type="text/javascript" src="/static/scripts/registrar/users.js"></script>
             <script type="text/javascript" src="/static/scripts/watermark.js"></script>
             <script type="text/javascript" src="/static/scripts/dataTables/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="/static/scripts/handlebars.js"></script>
 {% endblock %}
 {% block css %}           
 
@@ -53,4 +54,7 @@
         </table>
     </span>
 </div>
+
+{% include "/registrar/users/templates.html" %}
+
 {% endblock %}
