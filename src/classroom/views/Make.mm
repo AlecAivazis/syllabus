@@ -6,9 +6,8 @@
 #
 
 PROJECT = syllabus
-PACKAGE = messages/urls
+PACKAGE = classroom/views
 PROJ_CLEAN += $(EXPORT_MODULEDIR)/$(PACKAGE)
-
 
 #--------------------------------------------------------------------------
 #
@@ -19,8 +18,11 @@ all: export
 # export
 
 EXPORT_PYTHON_MODULES = \
-    messageboards.py \
-    annountments.py \
+    calendar.py \
+    gradebook.py \
+    massageboard.py \
+    myClasses.py \
+    spaces.py \
     __init__.py
 
 

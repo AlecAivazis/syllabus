@@ -7,12 +7,18 @@
 
 
 PROJECT = syllabus
-PACKAGE = academia
+PACKAGE = syllabus
+PROJ_TIDY = *~ .*~ *.pyc
 PROJ_CLEAN += $(EXPORT_MODULEDIR)
 
 RECURSE_DIRS = \
-    urls \
-    views \
+    academia \
+    classroom \
+    core \
+    messages \
+    wishlist \
+    settings \
+    socialservice \
 
 
 #--------------------------------------------------------------------------
@@ -34,13 +40,20 @@ distclean::
 # export
 
 EXPORT_PYTHON_MODULES = \
-    admin.py \
-    models.py \
-    tests.py \
+    middlewares.py \
+    urls.py \
     __init__.py
 
-
-export:: export-python-modules
+export:: __init__.py export-python-modules export-resources
 	BLD_ACTION="export" $(MM) recurse
+	@$(RM) __init__.py
+
+export-resources:
+	$(CP_R) resources templates $(EXPORT_ROOT)
+
+# construct my {__init__.py}
+__init__.py: __init__py
+	@sed -e "s:BZR_REVNO:$$(bzr revno):g" __init__py > __init__.py
+
 
 # end of file 

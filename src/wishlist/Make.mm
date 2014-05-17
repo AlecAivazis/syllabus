@@ -5,9 +5,12 @@
 # (c) 1998-2014 all rights reserved
 #
 
+
 PROJECT = syllabus
-PACKAGE = classroom/urls
-PROJ_CLEAN += $(EXPORT_MODULEDIR)/$(PACKAGE)
+PACKAGE = wishlist
+PROJ_CLEAN += $(EXPORT_MODULEDIR)
+
+RECURSE_DIRS = \
 
 
 #--------------------------------------------------------------------------
@@ -15,18 +18,26 @@ PROJ_CLEAN += $(EXPORT_MODULEDIR)/$(PACKAGE)
 
 all: export
 
+tidy::
+	BLD_ACTION="tidy" $(MM) recurse
+
+clean::
+	BLD_ACTION="clean" $(MM) recurse
+
+distclean::
+	BLD_ACTION="distclean" $(MM) recurse
+
+
 #--------------------------------------------------------------------------
 # export
 
 EXPORT_PYTHON_MODULES = \
-    calendar.py \
-    gradebook.py \
-    massageboard.py \
-    myClasses.py \
-    spaces.py \
-    __init__.py
-
+    admin.py \
+    models.py \
+    tests.py \
+    __init__.py \
 
 export:: export-package-python-modules
+	BLD_ACTION="export" $(MM) recurse
 
 # end of file 

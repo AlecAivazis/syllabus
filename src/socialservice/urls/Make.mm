@@ -5,14 +5,9 @@
 # (c) 1998-2014 all rights reserved
 #
 
-
 PROJECT = syllabus
-PACKAGE = socialservice
-PROJ_CLEAN += $(EXPORT_MODULEDIR)
-
-RECURSE_DIRS = \
-    urls \
-    views \
+PACKAGE = socialservice/urls
+PROJ_CLEAN += $(EXPORT_MODULEDIR)/$(PACKAGE)
 
 
 #--------------------------------------------------------------------------
@@ -20,27 +15,14 @@ RECURSE_DIRS = \
 
 all: export
 
-tidy::
-	BLD_ACTION="tidy" $(MM) recurse
-
-clean::
-	BLD_ACTION="clean" $(MM) recurse
-
-distclean::
-	BLD_ACTION="distclean" $(MM) recurse
-
-
 #--------------------------------------------------------------------------
 # export
 
 EXPORT_PYTHON_MODULES = \
-    admin.py \
-    models.py \
-    tests.py \
+    meetings.py \
     __init__.py
 
 
-export:: export-python-modules
-	BLD_ACTION="export" $(MM) recurse
+export:: export-package-python-modules
 
 # end of file 
