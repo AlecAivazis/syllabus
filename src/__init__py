@@ -1,4 +1,4 @@
-# this file represents common imports among all of the views
+# this file contains common imports among all of the views
 
 from django.shortcuts import HttpResponseRedirect, HttpResponse 
 from django.contrib.auth import authenticate, login, logout
@@ -51,3 +51,5 @@ def render_to_response(filename, context={}):
     rendered = template.render(**context)
 
     return HttpResponse(rendered)
+
+syllabus_version = (0, 8, BZR_REVNO)
