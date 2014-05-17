@@ -2,6 +2,7 @@ from syllabus import *
 
 from ...core.models import SyllUser
 from ..models import MajorExemption as Exemption
+from ..models import Interest
 
 def home(request):
     
@@ -57,7 +58,6 @@ def userProfile(request):
                 if (course, requirement.id) not in courses:
                     courses.append((course, requirement.id))
 
-    interests = []
     interests = Interest.objects.all()
 
     return render_to_response('registrar/users/userProfile.html', locals())
