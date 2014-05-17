@@ -1,1 +1,1 @@
-from . import urls, forms
+from . import urls, forms, middlewares
