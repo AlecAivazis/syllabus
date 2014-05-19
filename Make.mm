@@ -37,7 +37,7 @@ distclean::
 
 #--------------------------------------------------------------------------
 #  shortcuts to building in my subdirectories
-.PHONY: bin people src
+.PHONY: bin people src 
 
 bin:
 	(cd bin; $(MM))

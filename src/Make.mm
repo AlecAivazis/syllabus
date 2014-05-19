@@ -40,6 +40,7 @@ distclean::
 
 #--------------------------------------------------------------------------
 # export
+.PHONY: resources
 
 EXPORT_PYTHON_MODULES = \
     urls.py \
@@ -51,6 +52,8 @@ export:: __init__.py export-python-modules export-resources
 
 export-resources:
 	$(CP_R) resources templates $(EXPORT_ROOT)
+
+resources: export-resources
 
 # construct my {__init__.py}
 __init__.py: __init__py
