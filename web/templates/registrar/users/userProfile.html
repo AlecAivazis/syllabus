@@ -68,18 +68,16 @@
         </div>
       </div>
       <div class="line"></div>
-
       <div id="addCodes">
         <div class="line title">
-         Outstanding Add Codes
+         Outstanding Registration Passes
         </div>
-        {% for code in addcodes %}
-        <div class="line code">
-          {{code.profile}}
+        {% for pass in passes %}
+        <div class="line reigstrationPass">
+          {{pass.profile}}
         </div>
         {% endfor %}
       </div>
-
       </span>
     </span>
   </div>

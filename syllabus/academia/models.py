@@ -73,6 +73,10 @@ class Enrollment(models.Model):
     grade = models.CharField(max_length=3, blank=True)
 
 
+# an {registrationPass} allows for a user to go add a class regardless of rules in place
+class RegistrationPass(models.Model):
+    user = models.ForeignKey(User, related_name="addcodes")
+    profile = models.ForeignKey(ClassProfile, related_name="addcodes")
 
 # Requirements
 # -----------------------------

@@ -3,7 +3,7 @@ Syllabus To-Do List
 Catalog:
     
     clock widget for time select
-    add codes
+    registration passes
     exemptions codes
     
     
