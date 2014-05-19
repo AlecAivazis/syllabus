@@ -1,30 +1,20 @@
 # -*- Makefile -*-
 #
-# alec aivazis
+# michael a.g. aïvázis
 # orthologue
 # (c) 1998-2014 all rights reserved
 #
 
 
 PROJECT = syllabus
-
-RECURSE_DIRS = \
-    bin \
-    people \
-    syllabus \
-    util \
-    apache \
-    web \
+PACKAGE = syllabus
+PROJ_TIDY = *~ .*~ *.pyc
+PROJ_CLEAN += $(EXPORT_MODULEDIR)
 
 #--------------------------------------------------------------------------
 #
-run: all server 
 
-server:
-	manage.py runserver_plus
-
-all:
-	BLD_ACTION="all" $(MM) recurse
+all: export
 
 tidy::
 	BLD_ACTION="tidy" $(MM) recurse
@@ -37,24 +27,14 @@ distclean::
 
 
 #--------------------------------------------------------------------------
-#  shortcuts to building in my subdirectories
-.PHONY: bin people syllabus web 
+# export
 
-bin:
-	(cd bin; $(MM))
+.PHONY: resources
 
-people:
-	(cd people; $(MM))
+export:: resources
 
-syllabus:
-	(cd syllabus; $(MM))
-
-web:
-	(cd web; $(MM))
-
-build: 
-
-test: 
+resources: 
+	$(CP_R) resources templates $(EXPORT_ROOT)
 
 
 # end of file 
