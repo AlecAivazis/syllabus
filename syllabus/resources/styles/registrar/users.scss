@@ -257,14 +257,19 @@ select {
     display: none;
 }
 
-#userExemptions {
+#userData {
   display: inline-block;
   left: 40%;
   right: 0;
   position: absolute;
 }
 
-#userExemptions > .line {
+
+#userExemptions {
+  width: 100%;
+}
+
+#userData .line {
   padding-left: 15px;
 }
 

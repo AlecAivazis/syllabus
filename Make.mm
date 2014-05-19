@@ -11,7 +11,7 @@ PROJECT = syllabus
 RECURSE_DIRS = \
     bin \
     people \
-    src \
+    syllabus \
     util \
     apache \
 
@@ -45,8 +45,8 @@ bin:
 people:
 	(cd people; $(MM))
 
-src:
-	(cd src; $(MM))
+syllabus:
+	(cd syllabus; $(MM))
 
 build: 
 
