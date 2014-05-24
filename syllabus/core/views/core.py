@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from ..forms import LoginForm
+from ...classroom.models import State
 
 @ensure_csrf_cookie
 def sentry(request):
@@ -11,7 +12,6 @@ def sentry(request):
     else:
         form = LoginForm()
         return render_to_response('sentry.html', locals())
-
 
 
 def myHomework(request):
