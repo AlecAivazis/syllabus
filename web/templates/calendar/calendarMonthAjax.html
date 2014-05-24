@@ -1,66 +1,74 @@
-<div id="calendar" todayyear="{{today.year}}" todaynumber="{{today.month}}" which="{{which}}" number="{{number}}" year="{{year}}" class="calendarMonth">
+<div id="calendar" todayyear="{{today.year}}" todaynumber="{{today.month}}" 
+     which="{{which}}" number="{{number}}" year="{{year}}" class="calendarMonth">
 	<div id="calendarTitle">
-		<span id="prevMonthSelector"><img src="/resources/images/calendar/prevArrow.png"></span>
+		<span id="prevMonthSelector">
+                  <img src="/resources/images/calendar/prevArrow.png">
+                </span>
 		{{monthName}} {{year}}
-		<span id="nextMonthSelector"><img src="/resources/images/calendar/nextArrow.png"></span>
-
+		<span id="nextMonthSelector">
+                  <img src="/resources/images/calendar/nextArrow.png">
+                </span>
 	</div>
 	
 	<table cellpadding="0px" cellspacing="0px" width="100%" height="80%">
-		<tbody>
-			<tr>
-			<th class="tableHeader">Sunday</th>
-			<th class="tableHeader">Monday</th>
-			<th class="tableHeader">Tuesday</th>
-			<th class="tableHeader">Wednesday</th>
-			<th class="tableHeader">Thursday</th>
-			<th class="tableHeader">Friday</th>
-			<th class="tableHeader">Saturday</th>
-			</tr>
-			{% for week in monthList %}
-			<tr>
-				{% for day in week %}
-					<td ondragenter="return false" {% if request.user.groups.filter(name='teacher') or request.user.groups.filter(name= 'super') or request.user.is_superuser%} onclick="selectDay('{{day}}')" ondragover="return false" ondrop="eventDropMoveEvent(this, event)" {% endif %}valign="top" id="{{day}}" class="calendarDay {% if day.month != intMonth %} other {% endif %}">
-						<div class="calendarDayStatus">{{day.day}}</div>
-						<div class="calendarDayBody">
-							{% for event in eventDict[day.__str__()] %}
-								<div title="{% include '/calendar/eventTooltip.html' %}" class="calendarEvent {{event.category}} tooltip" {% if request.user.groups.filter(name='teacher') or request.user.groups.filter(name= 'super') or request.user.is_superuser %} draggable="true" ondragstart="eventDrag(this, event)" {% endif %} id="{{event.id}}">
-								{{event.title}}
-								</div>
-							{% endfor %}
-						</div>
-                                                <div class="calendarDayLabel" >
-                                                  {% if day in groups %}
-                                                    {% for group in groups[day] %}
-                                                      <div class="{{group[1].lower()}}Group" {% if
-                                                     request.user.groups.filter(name= 'admin')
-                                                     or request.user.is_superuser %}
-                                                     draggable="true" ondragstart="eventDrag(this,
+	  <tbody>
+	    <tr>
+	      <th class="tableHeader">Sunday</th>
+	      <th class="tableHeader">Monday</th>
+	      <th class="tableHeader">Tuesday</th>
+	      <th class="tableHeader">Wednesday</th>
+	      <th class="tableHeader">Thursday</th>
+	      <th class="tableHeader">Friday</th>
+	      <th class="tableHeader">Saturday</th>
+	    </tr>
+	    {% for week in monthList %}
+	    <tr>
+	      {% for day in week %}
+	      <td ondragenter="return false"
+                  {% if request.user.groups.filter(name='teacher')
+                  or request.user.groups.filter(name= 'super')
+                  or request.user.is_superusr%} 
+                  onclick="selectDay('{{day}}')" ondragover="return false" ondrop="eventDropMoveEvent(this, event)" {% endif %}valign="top" id="{{day}}" class="calendarDay {% if day.month != intMonth %} other {% endif %}">
+		<div class="calendarDayStatus">{{day.day}}</div>
+		<div class="calendarDayBody">
+		  {% for event in eventDict[day.__str__()] %}
+		  <div title="{% include '/calendar/eventTooltip.html' %}" class="calendarEvent {{event.category}} tooltip" {% if request.user.groups.filter(name='teacher') or request.user.groups.filter(name= 'super') or request.user.is_superuser %} draggable="true" ondragstart="eventDrag(this, event)" {% endif %} id="{{event.id}}">
+		    {{event.title}}
+		  </div>
+		  {% endfor %}
+		</div>
+                <div class="calendarDayLabel" >
+                  {% if day in groups %}
+                  {% for group in groups[day] %}
+                  <div class="{{group[1].lower()}}Group" {% if
+                       request.user.groups.filter(name= 'admin')
+                       or request.user.is_superuser %}
+                       draggable="true" ondragstart="eventDrag(this,
                                                      event)" draggable="True"{% endif %}
-                                                     id="label{{group[0].id}}-{{group[1].lower()}}">
-                                                     {{group[1]}} Regis. {{group[0].name}}
-                                                      </div>
-                                                      {% endfor %} 
-                                                      
-                                                  {% endif %}
-                                                      {% if day in termDates  %}
-                                                      {% for term in termDates[day] %}
-                                                      <div class="{{term[1].lower()}}Term" {% if
-                                                      request.user.groups.filter(name= 'admin')
-                                                      or request.user.is_superuser %}
-                                                      draggable="true" ondragstart="eventDrag(this,
-                                                      event)" draggable="True"{% endif %}
-                                                      id="term{{term[0].id}}-{{term[1].lower()}}">
-                                                        {{term[1]}} {{term[0].name}} Term
-                                                      </div>
-                                                      {% endfor %}
-                                                      {% endif %}
-                                                </div>
-						
-					</td>
-				{% endfor %}
-			</tr>
-			{% endfor %}
-		</tbody>
+                       id="label{{group[0].id}}-{{group[1].lower()}}">
+                    {{group[1]}} Regis. {{group[0].name}}
+                  </div>
+                  {% endfor %} 
+                  
+                  {% endif %}
+                  {% if day in termDates  %}
+                  {% for term in termDates[day] %}
+                  <div class="{{term[1].lower()}}Term" {% if
+                       request.user.groups.filter(name= 'admin')
+                       or request.user.is_superuser %}
+                       draggable="true" ondragstart="eventDrag(this,
+                                                     event)" draggable="True"{% endif %}
+                       id="term{{term[0].id}}-{{term[1].lower()}}">
+                    {{term[1]}} {{term[0].name}} Term
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                </div>
+		
+	      </td>
+	      {% endfor %}
+	    </tr>
+	    {% endfor %}
+	  </tbody>
 	</table>
 </div>
