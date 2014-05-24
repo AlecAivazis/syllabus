@@ -54,17 +54,17 @@
             {% endfor %}
           </select>
           with 
-          <select>
+          <select "updateInterestClasses()">
             <option selected > none </option>
             {%for interest in interests%}
-            <option>
+            <option onclick="updateInterestCourses({{interest.id}})">
               {{interest.abbrv}}
             </option>
             {%endfor%}
           </select>
           <select class="exemptionNumber">
             <option>--</option>
-          </select>
+         </select>
         </div>
       </div>
       <div class="line"></div>

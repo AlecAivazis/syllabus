@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     url(r'(?i)^registrar/classes/', include(academia.urls.classManagement)),
     url(r'(?i)^registrar/graduationRequirements/', include(academia.urls.gradRequirements)),
     url(r'(?i)^registrar/users/', include(academia.urls.userManagement)),
+    url(r'(?i)^registrar/', include(academia.urls.core)),
 
     # load the myClasses urls
     url(r'(?i)^myClasses/', include(classroom.urls.myClasses)),
