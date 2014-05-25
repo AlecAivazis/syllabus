@@ -47,6 +47,11 @@ urlpatterns = patterns('',
     # load the myProfile urls
     url(r'(?i)^myProfile/', include(core.urls.myProfile)),
 
+    # load the rest api urls
+    url(r'(?i)^api/', include([
+        url(r'', include(classroom.api.urls)),
+    ])),
+
     # load the miscillaneous urls in core
     url(r'', include(core.urls.core)),
 

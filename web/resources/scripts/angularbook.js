@@ -5,7 +5,9 @@
   gradebook = angular.module('gradebook', []);
 
   gradebook.controller('ClassSelect', function($scope) {
-    return $scope.message = "hello";
+    var data;
+    $scope.message = "hello";
+    return data = $http.get("/academia/api/classes");
   });
 
 }).call(this);

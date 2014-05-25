@@ -8,7 +8,7 @@
 
 PROJECT = syllabus
 PACKAGE = syllabus
-PROJ_TIDY = *~ .*~ *.pyc
+PROJ_TIDY = *~ .*~ *.pyc __pycache__
 PROJ_CLEAN += $(EXPORT_MODULEDIR)
 
 RECURSE_DIRS = \
