@@ -2,25 +2,49 @@
   <div id="gradeBookError" style="display: none">
     
   </div>
-  <span id="gradeBookBreadCrumbs" class="{{qlass.id}}" {% if sectionId %} section="{{sectionId}}"{% endif %}>
-    <span id="gradeBookBreadCrumbsParent">{{breadcrumb[0]}}{{breadcrumb[1]}}</span>{% for child in breadcrumb[2] %}<span class="gradeBookBreadCrumbsChild" style="color: #{{ loop.cycle('669cff') }}">{{child}}</span>{% endfor %}
+  <span id="gradeBookBreadCrumbs" class="{{qlass.id}}"
+        {% if sectionId %} section="{{sectionId}}"{% endif %}>
+    <span id="gradeBookBreadCrumbsParent">
+      {{breadcrumb[0]}}{{breadcrumb[1]}}
+    </span>
+    {% for child in breadcrumb[2] %}
+    <span class="gradeBookBreadCrumbsChild" 
+          style="color: #{{ loop.cycle('669cff') }}">
+      {{child}}
+    </span>
+    {% endfor %}
   </span>
   <span class="gradeBookViewToolBar">
-    <span class="gradeBookTool" id="scaleTool" onclick="showGradingScale()"><img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
+    <span class="gradeBookTool" id="scaleTool" onclick="showGradingScale()">
+      <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
       Grading Scale
     </span>
-    <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()"> Isolate Highlighted Student </span>
-    <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()"> Show
-      All Students</span>
-    <span class="gradeBookTool" id="statsTool"><img src="/resources/images/icons/stats.png">
+    <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()">
+      Isolate Highlighted Student 
+    </span>
+    <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()"> 
+      Show
+      All Students
+    </span>
+    <span class="gradeBookTool" id="statsTool">
+      <img src="/resources/images/icons/stats.png">
       Statistics
       <ul id="statsList" style="display: none;">
-	<li class='statChoice' onclick="histogram()"> <img src="/resources/images/icons/stats.png"> Histogram</li>
-	<li class='statChoice' onclick="performance()"> <img src="/resources/images/icons/stats.png"> Performance</li>
-	<li class='statChoice' onclick="timeline()"> <img src="/resources/images/icons/stats.png"> Timeline</li>
+	<li class='statChoice' onclick="histogram()"> 
+          <img src="/resources/images/icons/stats.png"> 
+          Histogram
+        </li>
+	<li class='statChoice' onclick="performance()"> 
+          <img src="/resources/images/icons/stats.png"> 
+          Performance
+        </li>
+	<li class='statChoice' onclick="timeline()"> 
+          <img src="/resources/images/icons/stats.png"> Timeline
+        </li>
       </ul>
     </span>
-    <span class="gradeBookTool" id="optionsTool" onclick="weights()"><img src="/resources/images/icons/scale.png">
+    <span class="gradeBookTool" id="optionsTool" onclick="weights()">
+      <img src="/resources/images/icons/scale.png">
       {% if not qlass.weights %}Assign {%endif%}Weights
     </span>
   </span>
@@ -44,6 +68,14 @@
 
 {# begin actual gradebook #}
 
+{% raw %}
+<table id="gradebookTable" cellspacing="0" cellpadding="0" ng-app="gradebook">
+  <input type="text" ng-model="your Name">
+  hello {{yourName}}
+</table>
+{% endraw %}
+
+{#
     <table id="gradeBookTable" cellspacing="0" cellpadding="0">
       
       <thead id="gradeBookHeaders">
@@ -82,7 +114,9 @@
 	{% for student in gradeBook %}
 	{% with %}
 	<tr class="gradeBookStudent">
-	  <td class="studentName" value="{{student.id}}">{{student.first_name}} {{student.last_name}}</td>
+	  <td class="studentName" value="{{student.id}}">
+            {{student.first_name}} {{student.last_name}}
+          </td>
 	  <td class="totalGrade">
 	    <span {% if totalGrade[student.id][0] != 'n/a' %} style="float: left" {% endif %}>
               {{totalGrade[student.id][0]}}
@@ -129,5 +163,8 @@
 	</tr>
       </tbody>
     </table>
+
+#}
+
   </div>
 </div>

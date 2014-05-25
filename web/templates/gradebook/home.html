@@ -1,53 +1,70 @@
 {% extends "base.html" %}
 
 {% block css %}
-		
-        <link type="text/scss" rel="stylesheet" href="/static/styles/gradebook.scss" ></link>
-		<link type="text/scss" rel="stylesheet" href="/static/styles/gradebooktable.scss" ></link>
-        
-		<link type="text/scss" rel="stylesheet" href="/static/styles/m2m.scss" ></link>
+<link type="text/scss" rel="stylesheet" href="/static/styles/gradebook.scss" ></link>
+<link type="text/scss" rel="stylesheet" href="/static/styles/gradebooktable.scss" ></link>
+<link type="text/scss" rel="stylesheet" href="/static/styles/m2m.scss" ></link>
 {% endblock %}       
+
 {% block js %}
-		<script src="/static/scripts/gradebook.js"></script>
-		<script src="/static/scripts/flot/jquery.flot.min.js"></script>
-		<script src="/static/scripts/flot/jquery.flot.resize.min.js"></script>
-		<script type="text/javascript" src="/static/scripts/dataTables/jquery.dataTables.min.js"></script>
-		
-		<script type="text/javascript" src="/static/scripts/m2m.js"></script>
-		
-		<script type="text/javascript">
-				$(document).ready(function(){
-						
-					$('.gradeBookClass').click(function(event){
-						selectClass(this, $(this).attr('id'));
-					});
-				{% if selectedClass is defined %}	$('#{{selectedClass}}').trigger('click');{% endif %}});
-		</script>
-		
-		
+<script src="/static/scripts/flot/jquery.flot.min.js"></script>
+<script src="/static/scripts/flot/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="/static/scripts/dataTables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/scripts/m2m.js"></script>
+<script type="text/javascript" src="/static/scripts/angular.min.js"></script>
+<script type="text/javascript" src="/static/scripts/angularbook.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+  
+  $('.gradeBookClass').click(function(event){
+  selectClass(this, $(this).attr('id'));
+  });
+  {% if selectedClass is defined %}$('#{{selectedClass}}').trigger('click');{% endif %}});
+</script>
+
+
 {% endblock %}
 
 {% block content %}
-<div id="gradebookGutter">
-	<span id="gradeBookClassSelect">
-		<ul class="sidebar">
-		{%for class in classes%}
-		<li id="{{class.id}}" class="gradeBookClass">
-				<div class="gradeBookSelectLabel"><img onclick="viewSections(event, {{class.id}})" src="/resources/images/sidebarArrow.png"> {{class.profile.interest}} {{class.profile.number }}</div>
-				{% for section in class.sections.all() %}
-					<span class="classSection" id="{{section.qlass.id}},{{section.id}}" onclick="selectSection(event, this,{{class.id}}, {{section.id}})" >
-						{{section.name}}
-					</span>	
-				{% endfor %}
-				
-		</li>
-		{% endfor %}
-		</ul>
-	</span>
-	<span id="gradeBookBody">
-		<div id="gradeBookContent">
-			Click on a class to view the grade book
-		</div>
-	</span>
+
+{% raw %}
+<div id="gradebook" ng-app="gradebook">
+  <aside id="gradeBookClassSelect" ng-controller="ClassSelect">
+    <ul class="sidebar" ng-controller="ClassSelect">
+      {{message}}
+    </ul>
+  </aside>
 </div>
+{% endraw %}
+
+
+{# 
+<div id="gradebookGutter">
+  <span id="gradeBookClassSelect">
+    <ul class="sidebar">
+      {%for class in classes%}
+      <li id="{{class.id}}" class="gradeBookClass">
+	<div class="gradeBookSelectLabel">
+          <img onclick="viewSections(event, {{class.id}})" 
+               src="/resources/images/sidebarArrow.png"> 
+          {{class.profile.interest}} {{class.profile.number }}
+        </div>
+	{% for section in class.sections.all() %}
+	<span class="classSection" id="{{section.qlass.id}},{{section.id}}" onclick="selectSection(event, this,{{class.id}}, {{section.id}})" >
+	  {{section.name}}
+	</span>	
+	{% endfor %}
+	
+      </li>
+      {% endfor %}
+    </ul>
+  </span>
+  <span id="gradeBookBody">
+    <div id="gradeBookContent">
+      Click on a class to view the grade book
+    </div>
+  </span>
+</div>
+#}
 {% endblock %}
