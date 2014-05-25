@@ -54,6 +54,7 @@ DJANGO_APPS = (
 THIRD_PARTY = (
     'django_extensions',
     'compressor',
+    'rest_framework',
 )
 
 # Application definition

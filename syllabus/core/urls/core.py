@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'(?i)^test/$', test),
     url(r'(?i)^viewEvent/$', viewEvent),
     url(r'(?i)^viewClass/$', viewClass),
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
     url(r'^resources/uploads/(?P<path>.*)$', protectedDownload),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
