@@ -32,22 +32,28 @@
 <div id="gradebook" ng-app="gradebook-app">
 
   <!-- Sidebar: select a class to view the appropriate gradebook -->
-  <aside id="gradeBookClassSelect" >
-    <ul class="sidebar" ng-controller="ClassSelect">
-      <li ng-repeat="class in classes"  id="{{class.id}}" class="gradeBookClass">
-          <img onclick="viewSections(event, {{class.id}})" 
-               src="/resources/images/sidebarArrow.png"> 
+  <aside id="gradeBookClassSelect" class="sidebar" ng-controller="ClassSelect" >
+    <ul>
+      <li ng-repeat="class in classes"  id="{{class.id}}" class="gradeBookClass"
+          ng-click="loadGradeBook(class.id)">
+          <!-- <img onclick="viewSections(event, {{class.id}})" 
+               src="/resources/images/sidebarArrow.png"> -->
           {{class.name}}
       </li>
     </ul>
   </aside>
 
-  <!-- Content: an organized view of the grades -->
-  <article ng-controller="gradebook">
-    
+  <!-- Gradebook: an organized view of the grades -->
+  <article ng-controller="gradebook-view" id="gradeBookContent">
+    <!-- message when no book is selected -->
+    <div id="emptyMessage" ng-hide="gradebook_id">
+      Please select a class to view its gradebook
+    </div>
+    <div id="gradebook" ng-show="gradebook_id" >
+      {{gradebook_id}}
+    </div>
+
   </article>
-
-
 
 </div>
 {% endraw %}

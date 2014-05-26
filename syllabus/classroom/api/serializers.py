@@ -20,3 +20,7 @@ class SectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Section
         fields = ('id', )
+
+class EventSerializer(serializer.ModelSerializer):
+    
+    
