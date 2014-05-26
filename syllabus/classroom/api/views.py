@@ -1,8 +1,8 @@
 from rest_framework import generics, permissions
 from django.http import HttpResponse
 
-from .serializers import ClassSerializer, SectionSerializer
-from ..models import Class, Section
+from .serializers import ClassSerializer, SectionSerializer, EventSerializer
+from ..models import Class, Section, Event
 
 # return all of the classes
 class ClassList(generics.ListCreateAPIView):
@@ -13,7 +13,7 @@ class ClassList(generics.ListCreateAPIView):
     ]
 
 # return the classes taught by the user
-class ClassTaughtByMe(generics.ListCreateAPIView):
+class ClassesTaughtByMe(generics.ListCreateAPIView):
     model = Class
     serializer_class = ClassSerializer
     permission_classes = [
@@ -31,3 +31,25 @@ class SectionList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
+
+# return all of the sections
+class EventList(generics.ListCreateAPIView):
+    model = Event
+    serializer_class = EventSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+# return all of the sections
+class EventsByClass(generics.ListCreateAPIView):
+    model = Event
+    serializer_class = EventSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    # return the events from the request class
+    def get_queryset(self):
+
+        return Event.objects.filter(classes__id=self.kwargs.get('id'))
+

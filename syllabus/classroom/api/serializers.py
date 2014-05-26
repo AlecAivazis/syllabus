@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Class, Section
+from ..models import Class, Event, Section
 
 class ClassSerializer(serializers.ModelSerializer):
     
@@ -21,6 +21,9 @@ class SectionSerializer(serializers.ModelSerializer):
         model = Section
         fields = ('id', )
 
-class EventSerializer(serializer.ModelSerializer):
-    
+class EventSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = ('id',)
     
