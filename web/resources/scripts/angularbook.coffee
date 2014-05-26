@@ -1,7 +1,7 @@
 gradebook = angular.module 'gradebook-app', []
 
 # class select controller
-gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
+gradebook.controller 'ClassSelect', ['$scope', '$http', '$rootScope($scope, $http, $rootScope) ->
 
   # store a list of the classes the user teaches
   $scope.classes = []
