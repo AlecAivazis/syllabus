@@ -18,6 +18,14 @@ input {
 .gradeBookClass {
   display: block;
   cursor: pointer;
+
+  color: #3d3c35;
+  &:hover {
+    background: none repeat scroll 0 0 #DFDDD2;
+    border: none;
+  }
+
+  padding-left: 15px;
 }
 
 .selectedClass {
@@ -135,13 +143,6 @@ input {
   display: none;
 }
 
-.gradeBookSelectLabel {
-  color: #3d3c35;
-  &:hover {
-    background: none repeat scroll 0 0 #DFDDD2;
-    border: none;
-  }
-}
 
 .classSection:hover {
   background: none repeat scroll 0 0 #DFDDD2;
@@ -154,24 +155,10 @@ input {
   color: #3d3c35;
 }
 
-.gradeBookClassSelectLabel div {
-  float: left;
-  width: 100%;
-  line-height: 12px;
-  height: 12px;
-  overflow: hidden;
-  &:hover {
-    background: #9b9b9b;
-    color: white;
-  }
-}
-
 #gradeBookClassSelect li {
   border-top: #dfdcce 1px solid;
   border-bottom: #cac7b7 solid 1px;
   line-height: 32px;
-  font-family: sans-serif;
-  font-weight: bold;
   float: left;
   width: 100%;
   padding-left: none;

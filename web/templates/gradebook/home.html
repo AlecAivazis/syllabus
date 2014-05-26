@@ -35,11 +35,9 @@
   <aside id="gradeBookClassSelect" >
     <ul class="sidebar" ng-controller="ClassSelect">
       <li ng-repeat="class in classes"  id="{{class.id}}" class="gradeBookClass">
-        <div class="gradeBookSelectLabel">
           <img onclick="viewSections(event, {{class.id}})" 
                src="/resources/images/sidebarArrow.png"> 
           {{class.name}}
-        </div>
       </li>
     </ul>
   </aside>
