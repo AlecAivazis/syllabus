@@ -1,7 +1,7 @@
 gradebook = angular.module 'gradebook-app', []
 
 # class select controller
-gradebook.controller 'ClassSelect', ['$scope', '$http', '$rootScope($scope, $http, $rootScope) ->
+gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
 
   # store a list of the classes the user teaches
   $scope.classes = []
@@ -18,14 +18,23 @@ gradebook.controller 'ClassSelect', ['$scope', '$http', '$rootScope($scope, $htt
     # change the id of the current gradebook
     $rootScope.gradebook_id = id
 
-# controller for the actual gradebook
-gradebook.controller 'gradebook-view', ['$scope', '$rootScope', ($scope, $rootScope) ->
+gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 
-  # detect changes in rootScope's gradebook_id to switch to the appropriate book
-  $rootScope.$watch('gradebook_id', () ->
-   
-    
+  $rootScope.$watch 'gradebook_id', () ->
+    # check that its not null
+    if not $rootScope.gradebook_id
+      return
 
-    $scope.gradebook_id = $rootScope.gradebook_id
-  )
-]
+    # load the homework events 
+    $http.get('/api/events/homeworkByClass/' + $rootScope.gradebook_id).success (result)->
+      $scope.events = []
+      angular.forEach result, (item) ->
+        $scope.events.push item
+
+    # load the students in this class
+    $http.get('/api/users/studentsbyClass/' + $rootScope.gradebook_id).success (result)->
+      #keep a list of the students in this class
+      $scope.students = []
+      # loop over the response and add them to the list
+      angular.forEach result (item) ->
+        $scope.students.push item

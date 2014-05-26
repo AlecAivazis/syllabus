@@ -50,7 +50,9 @@
       Please select a class to view its gradebook
     </div>
     <div id="gradebook" ng-show="gradebook_id" >
-      {{gradebook_id}}
+      <span ng-repeat="event in events">
+        {{event.id}}
+      </span>
     </div>
 
   </article>

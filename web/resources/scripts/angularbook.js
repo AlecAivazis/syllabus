@@ -16,12 +16,24 @@
     };
   });
 
-  gradebook.controller('gradebook-view', [
-    '$scope', '$rootScope', function($scope, $rootScope) {
-      return $rootScope.$watch('gradebook_id', function() {
-        return $scope.gradebook_id = $rootScope.gradebook_id;
+  gradebook.controller('gradebook-view', function($scope, $rootScope, $http) {
+    return $rootScope.$watch('gradebook_id', function() {
+      if (!$rootScope.gradebook_id) {
+        return;
+      }
+      $http.get('/api/events/homeworkByClass/' + $rootScope.gradebook_id).success(function(result) {
+        $scope.events = [];
+        return angular.forEach(result, function(item) {
+          return $scope.events.push(item);
+        });
       });
-    }
-  ]);
+      return $http.get('/api/users/studentsbyClass/' + $rootScope.gradebook_id).success(function(result) {
+        $scope.students = [];
+        return angular.forEach(result(function(item) {
+          return $scope.students.push(item);
+        }));
+      });
+    });
+  });
 
 }).call(this);
