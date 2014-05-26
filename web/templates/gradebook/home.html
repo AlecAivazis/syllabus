@@ -29,7 +29,9 @@
 {% block content %}
 
 {% raw %}
-<div id="gradebook" ng-app="gradebook">
+<div id="gradebook" ng-app="gradebook-app">
+
+  <!-- Sidebar: select a class to view the appropriate gradebook -->
   <aside id="gradeBookClassSelect" >
     <ul class="sidebar" ng-controller="ClassSelect">
       <li ng-repeat="class in classes"  id="{{class.id}}" class="gradeBookClass">
@@ -41,6 +43,14 @@
       </li>
     </ul>
   </aside>
+
+  <!-- Content: an organized view of the grades -->
+  <article ng-controller="gradebook">
+    
+  </article>
+
+
+
 </div>
 {% endraw %}
 
