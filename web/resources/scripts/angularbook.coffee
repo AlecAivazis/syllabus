@@ -1,8 +1,14 @@
 gradebook = angular.module 'gradebook', []
 
 # class select controller
-gradebook.controller 'ClassSelect', ($scope) ->
-  $scope.message = "hello"
-  
-  # load the class list from the server
-  data = $http.get "/academia/api/classes"
+gradebook.controller 'ClassSelect', ($scope, $http) ->
+
+  $scope.classes = []
+
+  # load the classes
+  $http.get('/api/classes/taughtByMe/').success (result)->
+    # loop over the result
+    angular.forEach result, (item) ->
+      console.log item
+      # add them to the list
+      $scope.classes.push item
