@@ -139,13 +139,13 @@ class GradingScaleSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for GradingScaleSerializer """
         model = GradingScale
-        fields = ('name', 'gradingCategories')
+        fields = ('name', 'categories')
 
-    gradingCategories = serializers.SerializerMethodField('getCategories')
+    categories = serializers.SerializerMethodField('getCategories')
 
     def getCategories(self, obj):
        """ return a serialization of the categories for this scale""" 
-       categories = obj.gradingCategories.all()
+       categories = obj.gradingCategories.all().order_by('-lower')
        serializer = GradingCategorySerializer(categories)
        return serializer.data
        
