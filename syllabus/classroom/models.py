@@ -1,5 +1,30 @@
+import django, datetime, pytz
+
 from django.db import models
 from django.contrib.auth import get_user_model
+
+
+# implements a switch statement with generators
+class switch(object):
+    def __init__(self, value):
+        self.value = value
+        self.fall = False
+
+    def __iter__(self):
+        """Return the match method once, then stop"""
+        yield self.match
+        raise StopIteration
+    
+    def match(self, *args):
+        """Indicate whether or not to enter a case suite"""
+        if self.fall or not args:
+            return True
+        elif self.value in args: # changed for v1.5, see below
+            self.fall = True
+            return True
+        else:
+            return False
+
 
 # local imports defined as string references
 File = 'core.File'
@@ -88,6 +113,46 @@ class Event(models.Model):
             else:   
                 return 0
 
+    def isStudentOnTime(self, student):
+
+        # get the due datetime of the event
+        eventDateTime = datetime.datetime(year = self.date.year, 
+                                          month = self.date.month, 
+                                          day = self.date.day, 
+                                          hour = self.time.hour, 
+                                          minute = self.time.minute, tzinfo=pytz.UTC)
+        # get now
+        now = django.utils.timezone.now()
+
+        # check if this event is past due
+        if now < eventDateTime:
+            return True
+        # since its pastdue, check if there is any states
+        states = self.state.filter(owner=student)
+        # if there arent
+        if not states:
+            # then its not on time
+            return False
+
+        # get the most recent activity by the student
+        recentState = self.state.filter(owner=student).order_by('-date')[0]
+        
+        for case in switch(recentStatus.status):
+            # if it was turned in most recently
+            if case('turned-in'):
+                # and that was after the due date
+                if state.date <= eventDateTime:
+                    return True
+                else:
+                    return False
+            # if it was most recently revoked, then its not turned in (aka not on time)
+            if case('revoked'):
+                return False
+            # if it was ignored, its not ever going to be on time
+            if case('ignored'):
+                return False
+            
+
 # the main connection between the teacher and the student
 class Class(models.Model):
     professor = models.ManyToManyField(User, related_name="classesTeaching")
@@ -106,6 +171,14 @@ class Class(models.Model):
     # string behavior is to return {interest}-{number} ie PHYS-21
     def __unicode__(self):
         return self.profile.interest + '-' + str(self.profile.number)  
+
+    def getGradableEvents(self):
+        """ return the events that get a grade """
+        return (self.events.all()
+               .exclude(category='lecture')
+               .exclude(category='meeting')
+               .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
+
 
     # return the grade of the user with the given is
     def totalGrade(self, id):
@@ -237,4 +310,6 @@ class State(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=1020)
     author = models.CharField(max_length = 1020)
-    isbn = models.CharField(max_length = 1020)
+    asbn = models.CharField(max_length = 1020)
+
+
