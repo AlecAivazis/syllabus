@@ -22,4 +22,6 @@ urlpatterns = patterns('',
          {'document_root': settings.STATIC_ADMIN_MEDIA_ROOT}),
     url(r'^resources/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}), 
+    url(r'^templates/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.TEMPLATES}), 
 )
