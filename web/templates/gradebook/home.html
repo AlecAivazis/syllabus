@@ -49,10 +49,45 @@
     <div id="emptyMessage" ng-hide="gradebook_id">
       Please select a class to view its gradebook
     </div>
+    <!-- breadcrumb -->
     <div id="gradebook" ng-show="gradebook_id" >
-      <span ng-repeat="event in events">
-        {{event.id}}
+      <span id="gradeBookBreadCrumbs" class="{{gradebook_id}}">
+        {{breadcrumb[0]}}
       </span>
+
+      <!-- Grading Scale Toolbar -->
+      <span id="gradeBookToolbar">
+        <span class="gradeBookTool" id="scaleTool" ng-click="toggleGradingScale()">
+          <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
+          Grading Scale
+        </span>
+        <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()">
+          Isolate Highlighted Student 
+        </span>
+        <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()"> 
+          Show All Students
+        </span>
+      </span>
+
+      <!-- Grading Scale Modal Window -->
+      <div id="gradingScaleSelect" ng-show="showGradingScale"
+           ng-init="showGradingScale = false">
+        <div class="arrow-up"></div>
+        <!-- grading category -->
+        <div class="category" ng-repeat="category in gradingScale.categories">
+          <input class="categoryInput categoryLower" type="text" value="{{category.lower}}">
+          to
+          <input class="categoryInput categoryUpper" type="text" >
+          <img src="/resources/images/gradeBook/rightArrow.png">
+          <input class="categoryInput categoryValue" type="text" value="{{category.value}}">
+        </div>
+        <!-- modal control buttons -->
+        <ul id="gradingScaleButtons" ng-show="showGradingScale">
+          <li class="closeWidget" id="closeGradingScaleSelect">close</li>
+          <li class="submitWidget" onclick="applyGradingScale()">apply</li>    
+        </ul>
+      </div>
+
     </div>
 
   </article>
