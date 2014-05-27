@@ -45,37 +45,24 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     if refreshGradingScale
       # load the grading scale from the syllabus api
       $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
+        # load the scale into the view
         $scope.gradingScale = result
+        # update the upper categories
+        updateCategoryUppers()
 
       # prevent the gradingScale from refreshing
       refreshGradingScale = false
 
     $scope.showGradingScale = !$scope.showGradingScale
 
-  # show the grading scale window
-  $scope.showGradingScale = () ->
+# grading scale window directive
+gradebook.directive 'gsc', () ->
+  restrict : 'AE',
+  templateUrl: '../templates/gradebook/gradingScale.html'
 
-    #start    
-    dataString = ''
-
-    if $('#gradeBookBreadCrumbs').attr('class')
-        $http(
-          url: '/gradebook/gradingScale/view/',
-          method: 'GET',
-          params: {
-            'section' : $('#gradeBookBreadCrumbs').attr('section'),
-            'class' : $('#gradeBookBreadCrumbs').attr('class')
-          }
-        ).success (result) ->
-          $('#gradingScaleSelect').remove();
-          $('<div/>').attr({
-            id: 'gradingScaleSelect'	
-	  }).css('position','absolute').html(result).appendTo('#gutter');
-	    
-	  updateCategoryUppers();
-	  updateCategoryLowers();
 
 updateCategoryUppers = () ->
+
   $('.category').not(':first').each () ->
     $(this).find('.categoryUpper').val(parseFloat($(this).parent().children().eq($(this).index()-1).find('.categoryLower').val()))
   
@@ -88,3 +75,5 @@ updateCategoryLowers = () ->
 
   $('#closeGradingScaleSelect').unbind('click').bind 'click', () ->
     closeGradingScaleSelect(false)
+
+

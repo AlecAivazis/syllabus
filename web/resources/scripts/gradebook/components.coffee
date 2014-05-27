@@ -2,6 +2,6 @@
 components = angular.module 'components', []
 
 components.directive 'gsc', () ->
-    restrict : "AE",
+    restrict : "A",
     replace : 'true',
-    templateUrl : "../templates/gradebook/gradingScale.html"
+    templateUrl : "'../templates/gradebook/gradingScale.html'"

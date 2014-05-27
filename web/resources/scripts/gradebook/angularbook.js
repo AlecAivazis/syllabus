@@ -31,36 +31,23 @@
       return class_id = $rootScope.gradebook_id;
     });
     refreshGradingScale = true;
-    $scope.toggleGradingScale = function() {
+    return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
         $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
-          return $scope.gradingScale = result;
+          $scope.gradingScale = result;
+          return updateCategoryUppers();
         });
         refreshGradingScale = false;
       }
       return $scope.showGradingScale = !$scope.showGradingScale;
     };
-    $scope.showGradingScale = function() {
-      var dataString;
-      dataString = '';
-      if ($('#gradeBookBreadCrumbs').attr('class')) {
-        return $http({
-          url: '/gradebook/gradingScale/view/',
-          method: 'GET',
-          params: {
-            'section': $('#gradeBookBreadCrumbs').attr('section'),
-            'class': $('#gradeBookBreadCrumbs').attr('class')
-          }
-        }).success(function(result) {
-          $('#gradingScaleSelect').remove();
-          return $('<div/>').attr({
-            id: 'gradingScaleSelect'
-          }).css('position', 'absolute').html(result).appendTo('#gutter');
-        });
-      }
+  });
+
+  gradebook.directive('gsc', function() {
+    return {
+      restrict: 'AE',
+      templateUrl: '../templates/gradebook/gradingScale.html'
     };
-    updateCategoryUppers();
-    return updateCategoryLowers();
   });
 
   updateCategoryUppers = function() {

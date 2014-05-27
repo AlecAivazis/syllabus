@@ -1,17 +1,18 @@
-<div id="gradingScaleSelectBody">
-<div class="arrow-up"></div>
-    {% for category in scale.gradingCategories.all().order_by('-lower') %}
-    <div class="category">
-        <input class="categoryInput categoryLower" type="text" {% if loop.last %} value="0" disabled {% else %} value="{{category.lower}}" {% endif %} >
-         to
-        <input class="categoryInput categoryUpper" type="text" {% if loop.first %} value="100" disabled {% endif %} >
-        <img src="/resources/images/gradeBook/rightArrow.png">
-        <input class="categoryInput categoryValue" type="text" value="{{category.value}}">
-    </div>
-    {% endfor %}
-</div>
-
-<ul id="gradingScaleButtons">
+<!-- Grading Scale Modal Window -->
+<div id="gradingScaleSelect" ng-show="showGradingScale"
+     ng-init="showGradingScale = false">
+  <div class="arrow-up"></div>
+  <!-- grading category -->
+  <div class="category" ng-repeat="category in gradingScale.categories">
+    <input class="categoryInput categoryLower" type="text" value="{{category.lower}}">
+    to
+    <input class="categoryInput categoryUpper" type="text" >
+    <img src="/resources/images/gradeBook/rightArrow.png">
+    <input class="categoryInput categoryValue" type="text" value="{{category.value}}">
+  </div>
+  <!-- modal control buttons -->
+  <ul id="gradingScaleButtons" ng-show="showGradingScale">
     <li class="closeWidget" id="closeGradingScaleSelect">close</li>
     <li class="submitWidget" onclick="applyGradingScale()">apply</li>    
-</ul>
+  </ul>
+</div>

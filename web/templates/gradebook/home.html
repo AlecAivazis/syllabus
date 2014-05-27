@@ -11,8 +11,10 @@
 <script src="/static/scripts/flot/jquery.flot.resize.min.js"></script>
 <script type="text/javascript" src="/static/scripts/dataTables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/static/scripts/m2m.js"></script>
+
 <script type="text/javascript" src="/static/scripts/angular.min.js"></script>
-<script type="text/javascript" src="/static/scripts/angularbook.js"></script>
+
+<script type="text/javascript" src="/static/scripts/gradebook/angularbook.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -68,25 +70,9 @@
           Show All Students
         </span>
       </span>
-
-      <!-- Grading Scale Modal Window -->
-      <div id="gradingScaleSelect" ng-show="showGradingScale"
-           ng-init="showGradingScale = false">
-        <div class="arrow-up"></div>
-        <!-- grading category -->
-        <div class="category" ng-repeat="category in gradingScale.categories">
-          <input class="categoryInput categoryLower" type="text" value="{{category.lower}}">
-          to
-          <input class="categoryInput categoryUpper" type="text" >
-          <img src="/resources/images/gradeBook/rightArrow.png">
-          <input class="categoryInput categoryValue" type="text" value="{{category.value}}">
-        </div>
-        <!-- modal control buttons -->
-        <ul id="gradingScaleButtons" ng-show="showGradingScale">
-          <li class="closeWidget" id="closeGradingScaleSelect">close</li>
-          <li class="submitWidget" onclick="applyGradingScale()">apply</li>    
-        </ul>
-      </div>
+ 
+      
+      <div gsc></div>
 
     </div>
 
