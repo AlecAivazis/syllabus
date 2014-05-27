@@ -1,13 +1,15 @@
 from django.conf.urls import patterns, url, include
 
-from .views import ClassList, ClassesTaughtByMe, Gradebook
+from .views import ClassList, ClassesTaughtByMe, Gradebook, GradingScale
 from .views import SectionList 
 from .views import EventList, EventsByClass, HomeworkByClass
 
 # define the class api urls
 class_urls = patterns('', 
-    url(r'(?i)^gradebook/(?P<pk>[0-9a-zA-Z_-]+)/$', Gradebook.as_view(),
+    url(r'(?i)^(?P<pk>[0-9a-zA-Z_-]+)/gradebook/$', Gradebook.as_view(),
                                                     name="api-classes-gradebook"),
+    url(r'(?i)^(?P<pk>[0-9a-zA-Z_-]+)/gradingScale/$', GradingScale.as_view(),
+                                                    name="api-classes-gradingScale"),
     url(r'(?i)^taughtByMe/$', ClassesTaughtByMe.as_view(), name="api-classes-taughtByMe"),
     url(r'^$', ClassList.as_view(), name="api-classes-list")
 )

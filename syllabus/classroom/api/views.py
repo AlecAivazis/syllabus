@@ -1,8 +1,9 @@
 from rest_framework import generics, permissions
 from django.http import HttpResponse
 
-from .serializers import ClassSerializer, SectionSerializer, EventSerializer, GradebookSerializer
-from ..models import Class, Section, Event
+from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
+                          GradebookSerializer, GradingScaleSerializer)
+from ..models import Class, Section, Event, GradingScale
 
 import django, datetime
 
@@ -37,6 +38,18 @@ class Gradebook(generics.RetrieveAPIView):
     # return the requested class
     def get_object(self):
         return Class.objects.get(pk = self.kwargs.get('pk'))
+
+class GradingScale(generics.RetrieveUpdateDestroyAPIView):
+    """ return the grading scale for a given class """
+    model = GradingScale
+    serializer_class = GradingScaleSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    def get_object(self):
+        """ return the grading scale for a given class """
+        return Class.objects.get(pk = self.kwargs.get('pk')).gradingScale
 
 # return all of the sections
 class SectionList(generics.ListCreateAPIView):

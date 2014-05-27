@@ -1,11 +1,14 @@
-import django
+##
+# Serializers for classroom api
+#
+##
 
-import datetime
-
+# system imports
+import django, datetime
 from rest_framework import serializers
-
-from ..models import Class, Event, Section
-
+# syllabus imports
+from ..models import Class, Event, Section, Grade, GradingScale, GradingCategory
+from syllabus.core.models import Upload
 from syllabus.core.models import SyllUser as User
 
 class ClassSerializer(serializers.ModelSerializer):
@@ -28,7 +31,17 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id',)
+        fields = ('id', 'possiblePoints')
+
+    possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
+
+    def getPossiblePoints(self, obj):
+        """ return the total number of possible points associated with this event"""
+        data = obj.metaData.filter(key = 'possiblePoints')
+        if data:
+            return data[0].value
+        else:
+            return '--'
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,33 +60,96 @@ class GradebookSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for GradebookSerializer """
         model = Class
-        fields = ('students', 'events')
+        fields = ('breadcrumb', 'events', 'gradebook', 'students')
     
-    # the students in the class
+    # the meta data of students in the class
     students = serializers.SerializerMethodField('getStudents')
-    # the gradable events
+    # the meta data of gradable events in the class
     events = serializers.SerializerMethodField('getGradableEvents')
+    # the gradebook dictionary of {student} -> {event} -> {grade}
+    gradebook = serializers.SerializerMethodField('getGradebook')
+    # get the breadcrumb
+    breadcrumb = serializers.SerializerMethodField('getBreadcrumb')
 
     def getStudents(self, obj):
         """ return the students in the serialized class """
+        # save the data as a list of dictionarys
+        data = []
         # get the users who are in the class
         users = User.objects.filter(classes__pk = obj.pk)
-        # serialize the users
-        serializer = UserSerializer(users)
+        # for each user
+        for user in users:
+            # save the name
+            data.append({
+                "name" : user.first_name + ' ' + user.last_name,
+                "id": user.pk,
+                "totalGrade": obj.totalGrade(user.id),
+            })
+        
         # return the serialized data
-        return serializer.data
+        return data
 
     def getGradableEvents(self, obj):
         """ return the events that are gradable """
         # gradable events are not lectures or meetings that are due before tomorrow
-        events = (Event.objects.filter(classes__id=obj.pk)
-                .exclude(category='lecture')
-                .exclude(category='meeting')
-                .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
+        events = obj.getGradableEvents()
         # serialize the events
         serializer = EventSerializer(events)
         # return the serialized data
         return serializer.data
+
+    def getGradebook(self, obj):
+        """ return a dictionary of students pointing another dict
+            of events to gradebook data """
+        # gradebook is a dictionary of dictionaries
+        gradebook = {}
+        # the first level of keys correspond to the id of the student
+        for student in User.objects.filter(classes__pk = obj.pk):
+            gradebook[student.pk] = {}
+            # the second level is the event
+            for event in obj.getGradableEvents():
+                gradebook[student.pk][event.pk] = {}
+                
+                # get the grades associated with this student/event
+                grade = Grade.objects.filter(student = student).filter(event = event)
+                # if there is a grade save it, otherwise use an empty string
+                gradebook[student.pk][event.pk]['grade'] = grade[0].score if grade else ''
+
+                # get the uploads
+                uploads = Upload.objects.filter(event = event).filter(user = student).count()
+                # if there are uploads, set it to true otherwise false
+                gradebook[student.pk][event.pk]['hasUploads'] = True if uploads else False
+                
+                # set the onTime
+                gradebook[student.pk][event.pk]['onTime'] = event.isStudentOnTime(student)
+                
+
+        return gradebook
+
+    def getBreadcrumb(self, obj):
+       return [obj.profile.interest + ' ' + str(obj.profile.number)] 
+
+class GradingCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for GradingCategorySerializer """
+        model = GradingCategory
+        fields = ("lower", "value")
+
+class GradingScaleSerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for GradingScaleSerializer """
+        model = GradingScale
+        fields = ('name', 'gradingCategories')
+
+    gradingCategories = serializers.SerializerMethodField('getCategories')
+
+    def getCategories(self, obj):
+       """ return a serialization of the categories for this scale""" 
+       categories = obj.gradingCategories.all()
+       serializer = GradingCategorySerializer(categories)
+       return serializer.data
+       
+       
 
 class SectionSerializer(serializers.ModelSerializer):
     class Meta:
