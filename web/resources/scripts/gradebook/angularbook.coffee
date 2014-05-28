@@ -58,7 +58,14 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 # grading scale window directive
 gradebook.directive 'gsc', () ->
   restrict : 'AE',
-  templateUrl: '../templates/gradebook/gradingScale.html'
+  templateUrl: '../templates/gradebook/gradingScale.html',
+  link: (scope, elem, attrs) ->
+
+    scope.updateLower = () ->
+      console.log 'updating lowers'
+
+    scope.updateUppers = () ->
+      console.log 'updating uppers'
 
 
 updateCategoryUppers = () ->
@@ -66,14 +73,6 @@ updateCategoryUppers = () ->
   $('.category').not(':first').each () ->
     $(this).find('.categoryUpper').val(parseFloat($(this).parent().children().eq($(this).index()-1).find('.categoryLower').val()))
   
-  $('#closeGradingScaleSelect').unbind('click').bind 'click', () ->
-    closeGradingScaleSelect(false)
-
 updateCategoryLowers = () ->
   $('.category').not(':last').each () ->
     $(this).find('.categoryLower').val(parseFloat($(this).parent().children().eq($(this).index()+1).find('.categoryUpper').val()))
-
-  $('#closeGradingScaleSelect').unbind('click').bind 'click', () ->
-    closeGradingScaleSelect(false)
-
-

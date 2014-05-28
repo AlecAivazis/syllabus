@@ -5,14 +5,15 @@
   <!-- grading category -->
   <div class="category" ng-repeat="category in gradingScale.categories">
     <input class="categoryInput categoryLower" type="text" value="{{category.lower}}">
-    to
-    <input class="categoryInput categoryUpper" type="text" >
+    <input class="categoryInput categoryUpper" type="text">
     <img src="/resources/images/gradeBook/rightArrow.png">
     <input class="categoryInput categoryValue" type="text" value="{{category.value}}">
   </div>
   <!-- modal control buttons -->
   <ul id="gradingScaleButtons" ng-show="showGradingScale">
-    <li class="closeWidget" id="closeGradingScaleSelect">close</li>
+    <li class="closeWidget" id="closeGradingScaleSelect" ng-click="showGradingScale = false">
+      close
+    </li>
     <li class="submitWidget" onclick="applyGradingScale()">apply</li>    
   </ul>
 </div>

@@ -46,25 +46,27 @@
   gradebook.directive('gsc', function() {
     return {
       restrict: 'AE',
-      templateUrl: '../templates/gradebook/gradingScale.html'
+      templateUrl: '../templates/gradebook/gradingScale.html',
+      link: function(scope, elem, attrs) {
+        scope.updateLower = function() {
+          return console.log('updating lowers');
+        };
+        return scope.updateUppers = function() {
+          return console.log('updating uppers');
+        };
+      }
     };
   });
 
   updateCategoryUppers = function() {
-    $('.category').not(':first').each(function() {
+    return $('.category').not(':first').each(function() {
       return $(this).find('.categoryUpper').val(parseFloat($(this).parent().children().eq($(this).index() - 1).find('.categoryLower').val()));
-    });
-    return $('#closeGradingScaleSelect').unbind('click').bind('click', function() {
-      return closeGradingScaleSelect(false);
     });
   };
 
   updateCategoryLowers = function() {
-    $('.category').not(':last').each(function() {
+    return $('.category').not(':last').each(function() {
       return $(this).find('.categoryLower').val(parseFloat($(this).parent().children().eq($(this).index() + 1).find('.categoryUpper').val()));
-    });
-    return $('#closeGradingScaleSelect').unbind('click').bind('click', function() {
-      return closeGradingScaleSelect(false);
     });
   };
 
