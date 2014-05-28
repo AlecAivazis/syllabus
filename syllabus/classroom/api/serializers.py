@@ -2,7 +2,6 @@
 # Serializers for classroom api
 #
 ##
-
 # system imports
 import django, datetime
 from rest_framework import serializers

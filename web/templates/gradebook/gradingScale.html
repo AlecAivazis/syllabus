@@ -4,8 +4,10 @@
   <div class="arrow-up"></div>
   <!-- grading category -->
   <div class="category" ng-repeat="category in gradingScale.categories">
-    <input class="categoryInput categoryLower" type="text" value="{{category.lower}}">
-    <input class="categoryInput categoryUpper" type="text">
+    <input class="categoryInput categoryLower" type="text" value="{{category.lower}}"
+           ng-change="updateUppers()" ng-model="category.lower">
+    <input class="categoryInput categoryUpper" type="text" ng-change="updateLowers()"
+           ng-model="category.upper">
     <img src="/resources/images/gradeBook/rightArrow.png">
     <input class="categoryInput categoryValue" type="text" value="{{category.value}}">
   </div>
@@ -14,6 +16,6 @@
     <li class="closeWidget" id="closeGradingScaleSelect" ng-click="showGradingScale = false">
       close
     </li>
-    <li class="submitWidget" onclick="applyGradingScale()">apply</li>    
+    <li class="submitWidget" onclick="applyGradingScale()">apply</li>
   </ul>
 </div>

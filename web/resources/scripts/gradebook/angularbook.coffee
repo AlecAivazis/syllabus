@@ -47,8 +47,6 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
       $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
         # load the scale into the view
         $scope.gradingScale = result
-        # update the upper categories
-        updateCategoryUppers()
 
       # prevent the gradingScale from refreshing
       refreshGradingScale = false
@@ -59,13 +57,13 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 gradebook.directive 'gsc', () ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/gradingScale.html',
-  link: (scope, elem, attrs) ->
+  controller: ($scope) ->
+    $scope.updateLowers = () ->
+      console.log "Updating lowers"
+      console.log $scope.gradingScale
 
-    scope.updateLower = () ->
-      console.log 'updating lowers'
-
-    scope.updateUppers = () ->
-      console.log 'updating uppers'
+    $scope.updateUppers = () ->
+      console.log "Updating uppers"
 
 
 updateCategoryUppers = () ->

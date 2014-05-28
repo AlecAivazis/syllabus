@@ -34,8 +34,7 @@
     return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
         $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
-          $scope.gradingScale = result;
-          return updateCategoryUppers();
+          return $scope.gradingScale = result;
         });
         refreshGradingScale = false;
       }
@@ -47,12 +46,13 @@
     return {
       restrict: 'AE',
       templateUrl: '../templates/gradebook/gradingScale.html',
-      link: function(scope, elem, attrs) {
-        scope.updateLower = function() {
-          return console.log('updating lowers');
+      controller: function($scope) {
+        $scope.updateLowers = function() {
+          console.log("Updating lowers");
+          return console.log($scope.gradingScale);
         };
-        return scope.updateUppers = function() {
-          return console.log('updating uppers');
+        return $scope.updateUppers = function() {
+          return console.log("Updating uppers");
         };
       }
     };
