@@ -57,20 +57,13 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 gradebook.directive 'gsc', () ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/gradingScale.html',
-  controller: ($scope) ->
+  controller: ['$scope', ($scope) ->
     $scope.updateLowers = () ->
       console.log "Updating lowers"
       console.log $scope.gradingScale
+      angular.forEach $scope.gradingScale.categories, (category) ->
+        console.log category
 
     $scope.updateUppers = () ->
       console.log "Updating uppers"
-
-
-updateCategoryUppers = () ->
-
-  $('.category').not(':first').each () ->
-    $(this).find('.categoryUpper').val(parseFloat($(this).parent().children().eq($(this).index()-1).find('.categoryLower').val()))
-  
-updateCategoryLowers = () ->
-  $('.category').not(':last').each () ->
-    $(this).find('.categoryLower').val(parseFloat($(this).parent().children().eq($(this).index()+1).find('.categoryUpper').val()))
+  ]
