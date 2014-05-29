@@ -52,30 +52,34 @@
       Please select a class to view its gradebook
     </div>
     
-    <!-- gradebook content -->
+    <!-- content -->
     <div id="gradebook" ng-show="gradebook_id" >
       <!-- breadcrumb -->
       <span id="gradeBookBreadCrumbs" class="{{gradebook_id}}">
         {{breadcrumb[0]}}
       </span>
 
-      <!-- grading scale toolbar -->
+      <!-- toolbar -->
       <span id="gradeBookToolbar">
         <span class="gradeBookTool" id="scaleTool" ng-click="toggleGradingScale()">
           <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
           Grading Scale
         </span>
+
+        <!--
         <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()">
           Isolate Highlighted Student 
         </span>
         <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()"> 
           Show All Students
         </span>
+        -->
       </span>
       
-      <!-- grading scale control -->
+      <!-- controls -->
       <div gsc></div>
       
+      <!-- table -->
 
     </div>
   </article>
