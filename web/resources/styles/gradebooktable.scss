@@ -16,6 +16,10 @@ td, th {
   background: #fbfbf7;
 }
 
+#gradebookTable {
+  clear: both;
+}
+
 .odd, .even {
   background: #f9f8f0;
 }
@@ -124,7 +128,7 @@ td {
   overflow: hidden;
 }
 
-.totalGradeLabel {
+#totalGradeLabel {
   padding: 5px;
   border-right: 1px solid #f4e0e0;
   position: relative;

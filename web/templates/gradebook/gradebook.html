@@ -2,7 +2,17 @@
   <thead id="gradebookHeaders">
     <th id="gutterLabels">
       category: <br>
-      possible points: <span> </span>
+      possible points: <br>
+      weight:
+    </th>
+    <th id="totalGradeLabel"> 
+      Grades
+    </th>
+    <!-- a header for each event -->
+    <th ng-repeat="event in events" class="eventLabel">
+      <span class="eventTitle">
+        {{event.title}}
+      </span>
       
     </th>
   </thead>
