@@ -15,7 +15,7 @@ input {
   width: 100%;
 }
 
-.gradeBookClass {
+.gradebookClass {
   display: block;
   cursor: pointer;
 
@@ -33,26 +33,26 @@ input {
   color: black;
 }
 
-#gradeBookContent {
+#gradebookContent {
   padding: 5px;
   overflow: auto;
   margin-left: 240px;
 }
 
-#gradeBook {
+#gradebook {
   margin-top: 10px;
 }
 
-.gradeBookView {
+.gradebookView {
   width: 100%;
 }
 
-#gradeBookToolbar {
+#gradebookToolbar {
   float: right;
   position: relative;
 }
 
-.gradeBookTool {
+.gradebookTool {
   float: left;
   line-height: 32px;
   padding: 0 11px;
@@ -80,7 +80,7 @@ input {
   }
 }
 
-.gradeBookTool img {
+.gradebookTool img {
   width: 16px;
   float: left;
   margin: 8px 4px 0 0;
@@ -92,7 +92,7 @@ input {
   position: relative;
 }
 
-#gradeBookSectionSelect {
+#gradebookSectionSelect {
   padding: 0;
   float: right;
   position: absolute;
@@ -125,7 +125,7 @@ input {
   color: black;
 }
 
-.gradeBookSection {
+.gradebookSection {
   color: black;
   display: inline;
   cursor: pointer;
@@ -155,7 +155,7 @@ input {
   color: #3d3c35;
 }
 
-#gradeBookClassSelect li {
+#gradebookClassSelect li {
   border-top: #dfdcce 1px solid;
   border-bottom: #cac7b7 solid 1px;
   line-height: 32px;
@@ -164,7 +164,7 @@ input {
   padding-left: none;
 }
 
-#gradeBookViewBody {
+#gradebookViewBody {
   width: 99%;
   float: left;
   margin-top: 4px;
@@ -174,19 +174,19 @@ input {
   border-radius: 5px;
 }
 
-#gradeBookBreadCrumbs {
+#gradebookBreadCrumbs {
   font-size: 25px;
   margin-left: 6px;
   float: left;
   color: #333333;
 }
 
-#gradeBookTable_wrapper {
+#gradebookTable_wrapper {
   float: left;
   clear: both;
 }
 
-#gradeBookTable tbody tr td:first {
+#gradebookTable tbody tr td:first {
   background: red;
 }
 
@@ -194,7 +194,7 @@ input {
   background: #fbfbf7;
 }
 
-#gradeBookTAs {
+#gradebookTAs {
   font-size: 25px;
   margin-right: 6px;
   float: right;
@@ -202,7 +202,7 @@ input {
   font-size: 18px;
 }
 
-.gradeBookBreadCrumbsChild {
+.gradebookBreadCrumbsChild {
   color: #9b9b9b;
 }
 

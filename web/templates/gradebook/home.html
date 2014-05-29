@@ -9,34 +9,30 @@
 {% block js %}
 <script src="/static/scripts/flot/jquery.flot.min.js"></script>
 <script src="/static/scripts/flot/jquery.flot.resize.min.js"></script>
-<script type="text/javascript" src="/static/scripts/dataTables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/scripts/m2m.js"></script>
-
 <script type="text/javascript" src="/static/scripts/angular.min.js"></script>
 
-<script type="text/javascript" src="/static/scripts/gradebook/angularbook.js"></script>
+<script type="text/javascript" src="/static/scripts/m2m.js"></script>
+<script type="text/javascript" src="/static/scripts/gradebook/app.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
   
-  $('.gradeBookClass').click(function(event){
+  $('.gradebookClass').click(function(event){
   selectClass(this, $(this).attr('id'));
   });
   {% if selectedClass is defined %}$('#{{selectedClass}}').trigger('click');{% endif %}});
 </script>
-
-
 {% endblock %}
 
 {% block content %}
-
 {% raw %}
+
 <div id="gradebook" ng-app="gradebook-app">
 
   <!-- Sidebar: select a class to view the appropriate gradebook -->
-  <aside id="gradeBookClassSelect" class="sidebar" ng-controller="ClassSelect" >
+  <aside id="gradebookClassSelect" class="sidebar" ng-controller="ClassSelect" >
     <ul>
-      <li ng-repeat="class in classes"  id="{{class.id}}" class="gradeBookClass"
+      <li ng-repeat="class in classes"  id="{{class.id}}" class="gradebookClass"
           ng-click="loadGradeBook(class.id)">
           <!-- <img onclick="viewSections(event, {{class.id}})" 
                src="/resources/images/sidebarArrow.png"> -->
@@ -46,7 +42,7 @@
   </aside>
 
   <!-- gradebook controller: an organized view of the grades -->
-  <article ng-controller="gradebook-view" id="gradeBookContent">
+  <article ng-controller="gradebook-view" id="gradebookContent">
     <!-- message when no book is selected -->
     <div id="emptyMessage" ng-hide="gradebook_id">
       Please select a class to view its gradebook
@@ -55,64 +51,45 @@
     <!-- content -->
     <div id="gradebook" ng-show="gradebook_id" >
       <!-- breadcrumb -->
-      <span id="gradeBookBreadCrumbs" class="{{gradebook_id}}">
+      <span id="gradebookBreadCrumbs" class="{{gradebook_id}}">
         {{breadcrumb[0]}}
       </span>
 
       <!-- toolbar -->
-      <span id="gradeBookToolbar">
-        <span class="gradeBookTool" id="scaleTool" ng-click="toggleGradingScale()">
+      <span id="gradebookToolbar">
+        <span class="gradebookTool" id="scaleTool" ng-click="toggleGradingScale()">
           <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
           Grading Scale
         </span>
 
         <!--
-        <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()">
+        <span class="gradebookTool" id="isolate" onclick="isolateHighlightedStudent()">
           Isolate Highlighted Student 
         </span>
-        <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()"> 
+        <span class="gradebookTool" id="unisolate" onclick="showAllStudents()"> 
           Show All Students
         </span>
         -->
       </span>
       
       <!-- controls -->
-      <div gsc></div>
+      <div gsc ng-show="showGradingScale" ng-init="showGradingScale = false"></div>
       
       <!-- table -->
+      <table id="gradebookTable" cellspacing="0" cellpadding="0">
+        <thead id="gradebookHeaders">
+          <th id="gutterLabels">
+            category: <br>
+            possible points: <span> </span>
+            
+          </th>
+        </thead>
+
+      </table>
 
     </div>
   </article>
 </div>
+
 {% endraw %}
-
-
-{# 
-<div id="gradebookGutter">
-  <span id="gradeBookClassSelect">
-    <ul class="sidebar">
-      {%for class in classes%}
-      <li id="{{class.id}}" class="gradeBookClass">
-	<div class="gradeBookSelectLabel">
-          <img onclick="viewSections(event, {{class.id}})" 
-               src="/resources/images/sidebarArrow.png"> 
-          {{class.profile.interest}} {{class.profile.number }}
-        </div>
-	{% for section in class.sections.all() %}
-	<span class="classSection" id="{{section.qlass.id}},{{section.id}}" onclick="selectSection(event, this,{{class.id}}, {{section.id}})" >
-	  {{section.name}}
-	</span>	
-	{% endfor %}
-	
-      </li>
-      {% endfor %}
-    </ul>
-  </span>
-  <span id="gradeBookBody">
-    <div id="gradeBookContent">
-      Click on a class to view the grade book
-    </div>
-  </span>
-</div>
-#}
 {% endblock %}

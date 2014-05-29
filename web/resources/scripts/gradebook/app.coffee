@@ -99,6 +99,4 @@ gradebook.directive 'gsc', () ->
           next = scope.gradingScale.categories[key+1]    
           # my lower is its upper
           category.lower = next.upper
-
-    $scope.applyScale = () ->
       
