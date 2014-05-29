@@ -100,3 +100,8 @@ gradebook.directive 'gsc', () ->
           # my lower is its upper
           category.lower = next.upper
       
+
+gradebook.directive 'gradebook', () ->
+  restrict: 'AE',
+  templateUrl: '../templates/gradebook/gradebook.html',
+  
