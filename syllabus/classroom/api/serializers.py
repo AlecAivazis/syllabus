@@ -140,16 +140,24 @@ class GradingScaleSerializer(serializers.ModelSerializer):
         model = GradingScale
         fields = ('name', 'categories')
 
-    categories = GradingCategorySerializer(many=True, )
-
-    # categories = serializers.SerializerMethodField('getCategories')
+    categories = serializers.SerializerMethodField('getCategories')
 
     def getCategories(self, obj):
        """ return a serialization of the categories for this scale""" 
-       categories = obj.gradingCategories.all().order_by('-lower')
+       categories = obj.categories.all().order_by('-lower')
        serializer = GradingCategorySerializer(categories)
        return serializer.data
-       
+
+    def restore_object(self, attrs, instance=None):
+        """
+        Given a dictionary of deserialized field values, either update
+        an existing model instance, or create a new model instance.
+        """
+        if instance is not None:
+            instance.name = attrs.get('name', instance.name)
+            instance.categories = attrs.get('categories', instance.categories)
+            return instance
+        return GradingScale(**attrs)
        
 
 class SectionSerializer(serializers.ModelSerializer):

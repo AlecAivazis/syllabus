@@ -201,7 +201,7 @@ class Class(models.Model):
             return 'n/a',
         else:
             score = pointsEarned/totalPossible * 100
-            letter = self.gradingScale.gradingCategories.filter(lower__lte = score).order_by('-lower')[0].value
+            letter = self.gradingScale.categories.filter(lower__lte = score).order_by('-lower')[0].value
             
             return letter,"%.1f" % (score)
 
@@ -269,7 +269,7 @@ class GradingCategory(models.Model):
 # a group of {GradingCategories} to reuse across various {Classes}
 class GradingScale(models.Model):
     name = models.CharField(max_length=1020, blank=True)
-    categories = models.ManyToManyField(GradingCategory, related_name='gradingCategories')
+    categories = models.ManyToManyField(GradingCategory, related_name='categories')
     
     # string behavior is to return {name}
     def __unicode__(self):

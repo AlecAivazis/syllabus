@@ -405,36 +405,36 @@ def run():
     Syllabus_gradingscale_1.name = u'tens'
     Syllabus_gradingscale_1.save()
 
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_1)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_2)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_3)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_4)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_5)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_6)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_7)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_8)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_9)
-    Syllabus_gradingscale_1.gradingCategories.add(Syllabus_gradingcategory_10)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_1)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_2)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_3)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_4)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_5)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_6)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_7)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_8)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_9)
+    Syllabus_gradingscale_1.categories.add(Syllabus_gradingcategory_10)
 
     Syllabus_gradingscale_2 = GradingScale()
     Syllabus_gradingscale_2.name = u'default'
     Syllabus_gradingscale_2.save()
 
-    Syllabus_gradingscale_2.gradingCategories.add(Syllabus_gradingcategory_1)
-    Syllabus_gradingscale_2.gradingCategories.add(Syllabus_gradingcategory_7)
-    Syllabus_gradingscale_2.gradingCategories.add(Syllabus_gradingcategory_8)
-    Syllabus_gradingscale_2.gradingCategories.add(Syllabus_gradingcategory_9)
-    Syllabus_gradingscale_2.gradingCategories.add(Syllabus_gradingcategory_10)
+    Syllabus_gradingscale_2.categories.add(Syllabus_gradingcategory_1)
+    Syllabus_gradingscale_2.categories.add(Syllabus_gradingcategory_7)
+    Syllabus_gradingscale_2.categories.add(Syllabus_gradingcategory_8)
+    Syllabus_gradingscale_2.categories.add(Syllabus_gradingcategory_9)
+    Syllabus_gradingscale_2.categories.add(Syllabus_gradingcategory_10)
 
     Syllabus_gradingscale_3 = GradingScale()
     Syllabus_gradingscale_3.name = u''
     Syllabus_gradingscale_3.save()
 
-    Syllabus_gradingscale_3.gradingCategories.add(Syllabus_gradingcategory_1)
-    Syllabus_gradingscale_3.gradingCategories.add(Syllabus_gradingcategory_7)
-    Syllabus_gradingscale_3.gradingCategories.add(Syllabus_gradingcategory_8)
-    Syllabus_gradingscale_3.gradingCategories.add(Syllabus_gradingcategory_9)
-    Syllabus_gradingscale_3.gradingCategories.add(Syllabus_gradingcategory_11)
+    Syllabus_gradingscale_3.categories.add(Syllabus_gradingcategory_1)
+    Syllabus_gradingscale_3.categories.add(Syllabus_gradingcategory_7)
+    Syllabus_gradingscale_3.categories.add(Syllabus_gradingcategory_8)
+    Syllabus_gradingscale_3.categories.add(Syllabus_gradingcategory_9)
+    Syllabus_gradingscale_3.categories.add(Syllabus_gradingcategory_11)
 
     #Processing model: WeightCategory
 

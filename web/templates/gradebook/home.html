@@ -45,19 +45,21 @@
     </ul>
   </aside>
 
-  <!-- Gradebook: an organized view of the grades -->
+  <!-- gradebook controller: an organized view of the grades -->
   <article ng-controller="gradebook-view" id="gradeBookContent">
     <!-- message when no book is selected -->
     <div id="emptyMessage" ng-hide="gradebook_id">
       Please select a class to view its gradebook
     </div>
-    <!-- breadcrumb -->
+    
+    <!-- gradebook content -->
     <div id="gradebook" ng-show="gradebook_id" >
+      <!-- breadcrumb -->
       <span id="gradeBookBreadCrumbs" class="{{gradebook_id}}">
         {{breadcrumb[0]}}
       </span>
 
-      <!-- Grading Scale Toolbar -->
+      <!-- grading scale toolbar -->
       <span id="gradeBookToolbar">
         <span class="gradeBookTool" id="scaleTool" ng-click="toggleGradingScale()">
           <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
@@ -71,12 +73,12 @@
         </span>
       </span>
       
+      <!-- grading scale control -->
       <div gsc></div>
+      
 
     </div>
-
   </article>
-
 </div>
 {% endraw %}
 
