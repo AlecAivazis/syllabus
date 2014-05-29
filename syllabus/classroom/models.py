@@ -269,7 +269,7 @@ class GradingCategory(models.Model):
 # a group of {GradingCategories} to reuse across various {Classes}
 class GradingScale(models.Model):
     name = models.CharField(max_length=1020, blank=True)
-    gradingCategories = models.ManyToManyField(GradingCategory, related_name='gradingCategories')
+    categories = models.ManyToManyField(GradingCategory, related_name='gradingCategories')
     
     # string behavior is to return {name}
     def __unicode__(self):

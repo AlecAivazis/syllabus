@@ -63,13 +63,12 @@
             }
           });
         };
-        return scope.updateLowers = function() {
+        scope.updateLowers = function() {
           return angular.forEach(scope.gradingScale.categories, function(category, key) {
             var cont, next;
             cont = true;
             if (key === scope.gradingScale.categories.length - 1) {
               category.lower = 0;
-              console.log("updated the last one");
               cont = false;
             }
             if (cont) {
@@ -78,6 +77,7 @@
             }
           });
         };
+        return $scope.applyScale = function() {};
       }
     };
   });

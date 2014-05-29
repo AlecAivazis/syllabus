@@ -48,7 +48,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
         console.log result
         # load the scale into the view
         $scope.gradingScale = result
-        # fill in the upper bounds
+        # fill in the upper bounds (defined in grading scale control directive)
         $scope.updateUppers()
 
       # prevent the gradingScale from refreshing
@@ -72,10 +72,11 @@ gradebook.directive 'gsc', () ->
         if key == 0
           # set the upper to the maximum: 100 %
           category.upper = 100
-          # move on to the next one
+          # move on to the next category
           cont= false
+
         if cont
-          # grab the one before
+          # grab the previous category
           prev = scope.gradingScale.categories[key-1]    
           # my upper is its lower
           category.upper = prev.lower
@@ -90,12 +91,14 @@ gradebook.directive 'gsc', () ->
         if key == scope.gradingScale.categories.length - 1
           # set the lower to the minimum: 0 %
           category.lower = 0
-          console.log "updated the last one"
-          # move on to the next one
-          cont= false
+          # move on to the next category
+          cont = false
 
         if cont
-          # grab the next one
+          # grab the next category
           next = scope.gradingScale.categories[key+1]    
           # my lower is its upper
           category.lower = next.upper
+
+    $scope.applyScale = () ->
+      

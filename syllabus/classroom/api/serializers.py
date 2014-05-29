@@ -140,7 +140,9 @@ class GradingScaleSerializer(serializers.ModelSerializer):
         model = GradingScale
         fields = ('name', 'categories')
 
-    categories = serializers.SerializerMethodField('getCategories')
+    categories = GradingCategorySerializer(many=True, )
+
+    # categories = serializers.SerializerMethodField('getCategories')
 
     def getCategories(self, obj):
        """ return a serialization of the categories for this scale""" 
