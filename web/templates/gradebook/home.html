@@ -73,19 +73,10 @@
       </span>
       
       <!-- controls -->
-      <div gsc ng-show="showGradingScale" ng-init="showGradingScale = false"></div>
+      <gsc ng-show="showGradingScale" ng-init="showGradingScale = false"></gsc>
       
       <!-- table -->
-      <table id="gradebookTable" cellspacing="0" cellpadding="0">
-        <thead id="gradebookHeaders">
-          <th id="gutterLabels">
-            category: <br>
-            possible points: <span> </span>
-            
-          </th>
-        </thead>
-
-      </table>
+      <gradebook></gradebook>
 
     </div>
   </article>
