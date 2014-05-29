@@ -50,13 +50,11 @@
       templateUrl: '../templates/gradebook/gradingScale.html',
       link: function(scope, elem, attrs) {
         scope.updateUppers = function() {
-          console.log("Updating uppers");
           return angular.forEach(scope.gradingScale.categories, function(category, key) {
             var cont, prev;
             cont = true;
             if (key === 0) {
               category.upper = 100;
-              console.log("updated the first one");
               cont = false;
             }
             if (cont) {
@@ -66,9 +64,8 @@
           });
         };
         return scope.updateLowers = function() {
-          console.log("Updating lower");
           return angular.forEach(scope.gradingScale.categories, function(category, key) {
-            var cont, prev;
+            var cont, next;
             cont = true;
             if (key === scope.gradingScale.categories.length - 1) {
               category.lower = 0;
@@ -76,8 +73,8 @@
               cont = false;
             }
             if (cont) {
-              prev = scope.gradingScale.categories[key + 1];
-              return category.lower = prev.upper;
+              next = scope.gradingScale.categories[key + 1];
+              return category.lower = next.upper;
             }
           });
         };
