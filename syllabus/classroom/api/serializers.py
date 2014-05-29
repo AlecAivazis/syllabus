@@ -30,7 +30,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id', 'possiblePoints')
+        fields = ('id', 'possiblePoints', 'title')
 
     possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
 
