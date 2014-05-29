@@ -34,7 +34,9 @@
     return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
         $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
-          return $scope.gradingScale = result;
+          console.log(result);
+          $scope.gradingScale = result;
+          return $scope.updateUppers();
         });
         refreshGradingScale = false;
       }
@@ -46,20 +48,40 @@
     return {
       restrict: 'AE',
       templateUrl: '../templates/gradebook/gradingScale.html',
-      controller: [
-        '$scope', function($scope) {
-          $scope.updateLowers = function() {
-            console.log("Updating lowers");
-            console.log($scope.gradingScale);
-            return angular.forEach($scope.gradingScale.categories, function(category) {
-              return console.log(category);
-            });
-          };
-          return $scope.updateUppers = function() {
-            return console.log("Updating uppers");
-          };
-        }
-      ]
+      link: function(scope, elem, attrs) {
+        scope.updateUppers = function() {
+          console.log("Updating uppers");
+          return angular.forEach(scope.gradingScale.categories, function(category, key) {
+            var cont, prev;
+            cont = true;
+            if (key === 0) {
+              category.upper = 100;
+              console.log("updated the first one");
+              cont = false;
+            }
+            if (cont) {
+              prev = scope.gradingScale.categories[key - 1];
+              return category.upper = prev.lower;
+            }
+          });
+        };
+        return scope.updateLowers = function() {
+          console.log("Updating lower");
+          return angular.forEach(scope.gradingScale.categories, function(category, key) {
+            var cont, prev;
+            cont = true;
+            if (key === scope.gradingScale.categories.length - 1) {
+              category.lower = 0;
+              console.log("updated the last one");
+              cont = false;
+            }
+            if (cont) {
+              prev = scope.gradingScale.categories[key + 1];
+              return category.lower = prev.upper;
+            }
+          });
+        };
+      }
     };
   });
 

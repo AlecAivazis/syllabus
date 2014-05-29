@@ -45,8 +45,11 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     if refreshGradingScale
       # load the grading scale from the syllabus api
       $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
+        console.log result
         # load the scale into the view
         $scope.gradingScale = result
+
+        $scope.updateUppers()
 
       # prevent the gradingScale from refreshing
       refreshGradingScale = false
@@ -57,13 +60,41 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 gradebook.directive 'gsc', () ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/gradingScale.html',
-  controller: ['$scope', ($scope) ->
-    $scope.updateLowers = () ->
-      console.log "Updating lowers"
-      console.log $scope.gradingScale
-      angular.forEach $scope.gradingScale.categories, (category) ->
-        console.log category
+  link: (scope, elem, attrs) ->
 
-    $scope.updateUppers = () ->
+    # when an upper is changed, go make the lowers reflect it
+    scope.updateUppers = () ->
       console.log "Updating uppers"
-  ]
+      # go over each category
+      angular.forEach scope.gradingScale.categories, (category, key) ->
+        # check if it made it past the first category
+        cont = true
+        # if its the first one
+        if key == 0
+          # set the upper to the maximum: 100 %
+          category.upper = 100
+          console.log "updated the first one"
+          # move on to the next one
+          cont= false
+        if cont
+          prev = scope.gradingScale.categories[key-1]    
+          category.upper = prev.lower
+
+    # when an upper is changed, go make the lowers reflect it
+    scope.updateLowers = () ->
+      console.log "Updating lower"
+      # go over each category
+      angular.forEach scope.gradingScale.categories, (category, key) ->
+        # check if it made it past the first category
+        cont = true
+        # if its the last one
+        if key == scope.gradingScale.categories.length - 1
+          # set the lower to the minimum: 0 %
+          category.lower = 0
+          console.log "updated the last one"
+          # move on to the next one
+          cont= false
+
+        if cont
+          prev = scope.gradingScale.categories[key+1]    
+          category.lower = prev.upper

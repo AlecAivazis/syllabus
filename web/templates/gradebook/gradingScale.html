@@ -9,7 +9,8 @@
     <input class="categoryInput categoryUpper" type="text" ng-change="updateLowers()"
            ng-model="category.upper" ng-disabled="$first">
     <img src="/resources/images/gradeBook/rightArrow.png">
-    <input class="categoryInput categoryValue" type="text" ng-value="{{category.value}}">
+    <input class="categoryInput categoryValue" type="text" ng-value="{{category.value}}"
+           ng-model="category.value">
   </div>
   <!-- modal control buttons -->
   <ul id="gradingScaleButtons" ng-show="showGradingScale">
