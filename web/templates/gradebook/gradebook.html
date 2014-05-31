@@ -10,9 +10,12 @@
     </th>
     <!-- a header for each event -->
     <th ng-repeat="event in events" class="eventLabel">
-      <span class="eventTitle">
+      <div class="eventTitle">
         {{event.title}}
-      </span>
+      </div>
+      <input class="eventCategory" contentEditable="True" ng-model="event.category"
+             ng-value="{{event.category}}" ng-change="updateEventCategory({[event.id}})">
+      </input>
       
     </th>
   </thead>
