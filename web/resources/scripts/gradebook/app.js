@@ -96,7 +96,7 @@
         link: function(scope, elem, attrs) {
           var _;
           _ = window._;
-          return scope.updateEventCategory = function(eventId) {
+          scope.updateEventCategory = function(eventId) {
             var event;
             event = _.where(scope.events, {
               id: eventId
@@ -104,6 +104,16 @@
             return $http.post('/gradebook/changeCategory/', {
               id: event.id,
               value: event.category
+            });
+          };
+          return scope.updatePossiblePoints = function(eventId) {
+            var event;
+            event = _.where(scope.events, {
+              id: eventId
+            })[0];
+            return $http.post('/gradebook/changePossiblePoints/', {
+              id: event.id,
+              value: event.possiblePoints
             });
           };
         }

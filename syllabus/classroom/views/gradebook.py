@@ -244,7 +244,9 @@ def loadEvent(request):
 
 def changePossiblePoints(request):
     
-    id = request.POST['id']
+    post = json.loads(bytes.decode(request.body))
+
+    id = post['id']
     
     event = Event.objects.get(id = int(id))
     
@@ -252,12 +254,12 @@ def changePossiblePoints(request):
     
         if event.metaData.filter(key = 'possiblePoints'):
             data = event.metaData.get(key = 'possiblePoints')
-            data.value = request.POST['value']
+            data.value = post['value']
             data.save()
         else:
             data = MetaData()
             data.key = 'possiblePoints'
-            data.value = request.POST['value']
+            data.value = post['value']
             data.save()
             
             event.metaData.add(data)

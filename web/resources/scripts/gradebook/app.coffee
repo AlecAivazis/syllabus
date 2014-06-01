@@ -123,5 +123,12 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
         id: event.id, 
         value: event.category
     
-    scope.       
+    scope.updatePossiblePoints = (eventId) ->
+      # get the event we care about
+      event = _.where(scope.events, {id: eventId})[0]
+      #  update its possiblePossible on the database
+      $http.post '/gradebook/changePossiblePoints/', 
+        id: event.id, 
+        value: event.possiblePoints
+       
 ]

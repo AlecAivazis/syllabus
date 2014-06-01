@@ -20,5 +20,9 @@
              ng-change="updatePossiblePoints(event.id)"></input>
       <input class="eventWeight" ng-model="event.weight" disabled="true"></input>
     </th>
+    <!-- a row for each student -->
+    <tr ng-reapeat="student in gradebook" class="">
+
+    </tr>
   </thead>
 </table>
