@@ -108,20 +108,18 @@ td {
   text-align: right;
   cursor: text;
   border-right: 1px solid #f4e0e0;
-  span {
-    float: right;
+  input {
+    text-align: right;
   }
   a {
-    float: left;
-    margin-top: -17px;
-    display: none;
     padding: 0;
     cursor: pointer;
+    float: left;
   }
   input {
     background: none;
     border: none;
-    width: 100px;
+    width: 70%;
   }
 }
 

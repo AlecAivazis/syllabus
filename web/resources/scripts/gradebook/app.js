@@ -117,7 +117,13 @@
             });
           };
           return scope.updateGrade = function(studentId, eventId) {
-            return console.log('updating grade for ' + studentId + ' ' + eventId);
+            var grade;
+            grade = scope.gradebook[studentId][eventId].grade;
+            return $http.post('/gradebook/addgrade/', {
+              student: studentId,
+              event: eventId,
+              score: grade
+            });
           };
         }
       };

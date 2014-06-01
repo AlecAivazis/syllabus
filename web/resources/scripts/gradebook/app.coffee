@@ -131,7 +131,15 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
       $http.post '/gradebook/changePossiblePoints/', 
         id: event.id, 
         value: event.possiblePoints
-       
+
+    # update the grade for a student/event on the database   
     scope.updateGrade = (studentId, eventId) ->
-      console.log 'updating grade for ' + studentId + ' ' + eventId 
+      # get the grade we care about
+      grade = scope.gradebook[studentId][eventId].grade
+      # update the grade on the server
+      $http.post '/gradebook/addgrade/', 
+        student: studentId,
+        event: eventId,
+        score: grade
+                          
 ]

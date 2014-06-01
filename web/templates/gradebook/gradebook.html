@@ -26,7 +26,7 @@
       <!-- a row for each student -->
       <tr ng-repeat="student in students" ng-class-even="'even'" ng-class-odd="'odd'" 
           class="gradebookStudent">
-        <td>
+        <td class="studentName">
           {{student.name}}
         </td>
         <!-- students grade in the class -->
@@ -40,9 +40,19 @@
           <span 
              </td>
         <!-- an entry for each event to show the students grade -->
-        <td ng-repeat="event in events" class="entry" 
+        <td ng-repeat="event in events" class="entry" ng-init="show_a = false"
+            ng-mouseenter="show_a = true"  ng-mouseleave="show_a=false"
             ng-class="{onTime : gradebook[student.id][event.id].onTime,
                       late : !gradebook[student.id][event.id].onTime}">
+          <!-- icon to indicate a download is availible as well as act as the link -->
+          <a ng-show="show_a" ng-if="gradebook[student.id][event.id].hasUploads"
+             href="/downloadSubmission/?event={{event.id}}&student={{student.id}}" >
+            <img src="/resources/images/downloadArrow.png"
+                 ng-show="gradebook[student.id][event.id].onTime" /> 
+            <img src="/resources/images/downloadArrowWhite.png"
+                 ng-hide="gradebook[student.id][event.id].onTime" />
+          </a>
+          <!-- input for changing grades -->
           <input ng-model="gradebook[student.id][event.id].grade" 
                  ng-change="updateGrade(student.id, event.id)"></input>
         </td>
