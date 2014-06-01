@@ -29,6 +29,9 @@ gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
 gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 
   class_id = 
+  # track wether the controls need to be refrehed
+  refreshWeights = true
+  refreshGradingScale = true 
 
   $rootScope.$watch 'gradebook_id', () ->
     # check that its not null
@@ -44,8 +47,13 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 
     class_id = $rootScope.gradebook_id
 
-  # track if the weights need to be reloaded
-  refreshWeights = true
+    # track if the weights need to be reloaded
+    refreshWeights = true
+    # track if the grading scale need to be reloaded
+    refreshGradingScale = true
+    # hide the various controls
+    $scope.displayWeightControl = false
+    $scope.showGradingScale = false
 
   # hide/show the weights control
   $scope.toggleWeightControl = () ->
@@ -61,15 +69,13 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     # flip the control variable
     $scope.displayWeightControl = !$scope.displayWeightControl
 
-  # track if the grading scale need to be reloaded
-  refreshGradingScale = true
-
   # hide/show the grading scale
   $scope.toggleGradingScale = () ->
     # if the grading scale needs to be refreshed
     if refreshGradingScale
       # load the grading scale from the syllabus api
       $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
+        console.log result
         # load the scale into the view
         $scope.gradingScale = result
         # fill in the upper bounds (defined in grading scale control directive)
@@ -127,14 +133,11 @@ gradebook.directive 'wc', [ '$http', '$rootScope', ($http, $rootScope) ->
         if not scope.canSubmitWidget
           # if its not, get out
           return
-        $http.post('/gradebook/weights/set',
+        $http.post('/gradebook/weights/set/',
           'classId' : $rootScope.gradebook_id,
           'weights' : scope.weights
         ).success (result) ->
-          console.log result
-
-        # generate the data string to be parsed by django
-        console.log 'updateing widgets'
+          scope.toggleWeightControl()
 ]
        
 

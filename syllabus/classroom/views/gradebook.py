@@ -3,7 +3,7 @@ import json
 
 # syllabus model imports
 from syllabus.core.models import Upload, SyllUser, MetaData
-from syllabus.classroom.models import Class, Section, Grade, Event
+from syllabus.classroom.models import Class, Section, Grade, Event, Weight, WeightCategory
 
 # django imports
 from django.db.models import Count
@@ -298,29 +298,38 @@ def changeCategory(request):
 
 def assignWeights(request):
     
-    qlass = Class.objects.get(id = request.POST['class'])
-      
+    # load the json data
+    post = json.loads(bytes.decode(request.body))
+
+    # create an empty weight group
     weight = Weight()
-    
+    # with the supplied name if there is one
+    weight.name = "hello" #post['weights']['name'] if 'name' in post['weights'] else ''
+    # save the group to the database
     weight.save()
+
+    # add the given categories
+    for category in post['weights']['categories']:
+        # make an empty one
+        weightCategory = WeightCategory()
+        # set its parameter
+        weightCategory.category = category['category']
+        weightCategory.percentage = category['percentage']
+        # add it to the database
+        weightCategory.save()
+        # add it to the group
+        weight.categories.add(weightCategory)
+
+    print("finished making the new weight group")
+    # update the classes weight
+    print(post['classId'])
+    klass = Class.objects.get(pk = post['classId'])
+    klass.weights = weight
+    klass.save()
     
-    for category in request.POST['weights'].split('||'):
-        if category != '' :
-            info=category.split('//')
-            if info[0] != '' and info[1] != '':
-                weightCategory = WeightCategory()
-                weightCategory.category = info[0].lower()
-                weightCategory.percentage = info[1]
-                
-                weightCategory.save()
-                
-                weight.categories.add(weightCategory)
-                
-            
-            
-    qlass.weights = weight
-    qlass.save()
-    
+    for category in klass.weights.categories.all():
+        print(category.category, category.percentage)
+
     return HttpResponse('success')
 
 def removeWeight(request):

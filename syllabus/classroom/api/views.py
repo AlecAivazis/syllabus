@@ -25,6 +25,10 @@ class WeightsList(generics.RetrieveUpdateDestroyAPIView):
         permissions.AllowAny
     ]
 
+    # return the classes that the user teachers
+    def get_object(self):
+        return Class.objects.get(pk = self.kwargs.get('pk')).weights
+
 # return the classes taught by the user
 class ClassesTaughtByMe(generics.ListCreateAPIView):
     model = Class

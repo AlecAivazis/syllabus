@@ -27,7 +27,9 @@
 
   gradebook.controller('gradebook-view', function($scope, $rootScope, $http) {
     var class_id, refreshGradingScale, refreshWeights;
-    class_id = $rootScope.$watch('gradebook_id', function() {
+    class_id = refreshWeights = true;
+    refreshGradingScale = true;
+    $rootScope.$watch('gradebook_id', function() {
       if (!$rootScope.gradebook_id) {
         return;
       }
@@ -37,9 +39,12 @@
         $scope.gradebook = result.gradebook;
         return $scope.students = result.students;
       });
-      return class_id = $rootScope.gradebook_id;
+      class_id = $rootScope.gradebook_id;
+      refreshWeights = true;
+      refreshGradingScale = true;
+      $scope.displayWeightControl = false;
+      return $scope.showGradingScale = false;
     });
-    refreshWeights = true;
     $scope.toggleWeightControl = function() {
       if (refreshWeights) {
         $http.get('/api/classes/' + class_id + '/weights/').success(function(result) {
@@ -49,10 +54,10 @@
       }
       return $scope.displayWeightControl = !$scope.displayWeightControl;
     };
-    refreshGradingScale = true;
     return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
         $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
+          console.log(result);
           $scope.gradingScale = result;
           return $scope.updateUppers();
         });
@@ -100,13 +105,12 @@
             if (!scope.canSubmitWidget) {
               return;
             }
-            $http.post('/gradebook/weights/set', {
+            return $http.post('/gradebook/weights/set/', {
               'classId': $rootScope.gradebook_id,
               'weights': scope.weights
             }).success(function(result) {
-              return console.log(result);
+              return scope.toggleWeightControl();
             });
-            return console.log('updateing widgets');
           };
         }
       };

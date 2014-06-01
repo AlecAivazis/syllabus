@@ -103,7 +103,7 @@ class Event(models.Model):
             if qlass.weights:
                 if qlass.weights.categories.filter(category=category):
                     # if so, let's return the percentage divded by the number of events that fit the category
-                    totalPercentage = qlass.weights.categories.get(category=category).percentage
+                    totalPercentage = qlass.weights.categories.filter(category=category)[0].percentage
                     
                     return totalPercentage/count
                     
@@ -285,6 +285,13 @@ class Weight(models.Model):
     name = models.CharField(max_length=1020, blank=True)
     categories = models.ManyToManyField(WeightCategory, related_name="weights")
  
+    # string behavior is to return {name}
+    def __str__(self):
+        if self.name:
+            return self.name
+        else:
+            return 'no name'
+
 # a {students} grade for a particular {event} - teacher can associate a {comment}
 class Grade(models.Model):
     student = models.ForeignKey(User, related_name='student')
