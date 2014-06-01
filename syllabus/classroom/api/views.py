@@ -2,8 +2,9 @@ from rest_framework import generics, permissions
 from django.http import HttpResponse
 
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
-                          GradebookSerializer, GradingScaleSerializer)
-from ..models import Class, Section, Event, GradingScale
+                          GradebookSerializer, GradingScaleSerializer, WeightSerializer)
+
+from ..models import Class, Section, Event, GradingScale, Weight
 
 import django, datetime
 
@@ -11,6 +12,15 @@ import django, datetime
 class ClassList(generics.ListCreateAPIView):
     model = Class
     serializer_class = ClassSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+
+# return the weights of a class
+class WeightsList(generics.ListCreateAPIView):
+    model = Weight
+    serializer_class = WeightSerializer
     permission_classes = [
         permissions.AllowAny
     ]

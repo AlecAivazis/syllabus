@@ -6,7 +6,8 @@
 import django, datetime
 from rest_framework import serializers
 # syllabus imports
-from ..models import Class, Event, Section, Grade, GradingScale, GradingCategory
+from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategory, Weight,
+                      WeightCategory)
 from syllabus.core.models import Upload
 from syllabus.core.models import SyllUser as User
 
@@ -57,6 +58,28 @@ class EventSerializer(serializers.ModelSerializer):
     def getWeight(self, obj):
         """ return the current weight of the event """
         return obj.calculateWorth()
+
+class WeightCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for WeightCategorySerializer """
+        model = WeightCategory
+        fields = ( 'category', 'percentage')
+
+class WeightSerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for WeightSerializer """
+        model = Weight
+        fields = ('name', 'categories')
+
+    # the categories in a weight group
+    categories = serializers.SerializerMethodField('getCategories')
+
+    def getCategories(self, obj):
+        """ return serialized versions of the weights categories """
+        categories = obj.categories.all().order_by('-percentage')
+        serializer = WeightCategorySerializer(categories)
+        return serializer.data
+        
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
