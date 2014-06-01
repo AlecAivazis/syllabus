@@ -1,7 +1,8 @@
 from syllabus import *
+import json
 
 # syllabus model imports
-from syllabus.core.models import Upload, SyllUser
+from syllabus.core.models import Upload, SyllUser, MetaData
 from syllabus.classroom.models import Class, Section, Grade, Event
 
 # django imports
@@ -266,16 +267,23 @@ def changePossiblePoints(request):
 
 def changeCategory(request):
     
-    event = Event.objects.get(id = int(request.POST['id']))
+    # load the post data
+    post = json.loads(bytes.decode(request.body))
+    # grab the corresponding event
+    event = Event.objects.get(id = int(post['id']))
+    # check if the user is the professor
     if Class.objects.filter(events=event).filter(professor = request.user):
+        # check if there is a sub category assigned yet
         meta = event.metaData.filter(key='subCategory')
+        # if it exists
         if meta:
-            meta[0].value = request.POST['value'].lower()
+            # set its value
+            meta[0].value = post['value'].lower()
             meta[0].save()
         else:
             meta = MetaData()
             meta.key = 'subCategory'
-            meta.value = request.POST['value'].lower()
+            meta.value = post['value'].lower()
             meta.save()
             
             event.metaData.add(meta)

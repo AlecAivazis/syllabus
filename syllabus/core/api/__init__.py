@@ -1,1 +1,1 @@
-from . import serializers, urls, views
+from . import serializers

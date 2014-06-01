@@ -1,4 +1,9 @@
-gradebook = angular.module 'gradebook-app', []
+gradebook = angular.module('gradebook-app', ['ngCookies'])
+
+gradebook.run ['$http', '$cookies', ($http, $cookies) -> 
+  $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+  $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
+]
 
 # class select controller
 gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
@@ -101,7 +106,26 @@ gradebook.directive 'gsc', () ->
           category.lower = next.upper
       
 
-gradebook.directive 'gradebook', () ->
+gradebook.directive 'gradebook', ['$http', ($http) ->
   restrict: 'AE',
   templateUrl: '../templates/gradebook/gradebook.html',
-  
+  link: (scope, elem, attrs) ->
+
+    # add shortcut to underscore
+    _ = window._
+    
+    # update the event category in the database with its current value
+    scope.updateEventCategory = (eventId) ->
+      # get the event we care about
+      event = _.where(scope.events, {id: eventId})[0]
+      
+      data =
+        id: event.id,
+        value: event.category
+
+      $http.post('/gradebook/changeCategory/',{
+        id: event.id, 
+        value: event.category,
+      }).success () ->
+        console.log 'updating category'
+]

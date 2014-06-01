@@ -7,8 +7,8 @@ from rest_framework import serializers
 # syllabus imports
 from ..models import MetaData
 
-class SectionSerializer(serializers.ModelSerializer):
+class MetaDataSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for SectionSerializer """
-        model = Section
-        fields = ('id', )
+        model = MetaData
+        fields = ('key', 'value' )

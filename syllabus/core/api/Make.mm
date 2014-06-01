@@ -6,7 +6,7 @@
 #
 
 PROJECT = syllabus
-PACKAGE = classroom/api
+PACKAGE = core/api
 PROJ_CLEAN += $(EXPORT_MODULEDIR)/$(PACKAGE)
 
 
@@ -20,8 +20,6 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
     serializers.py \
-    views.py \
-    urls.py \
     __init__.py
 
 

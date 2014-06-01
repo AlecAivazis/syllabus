@@ -2,7 +2,14 @@
 (function() {
   var gradebook;
 
-  gradebook = angular.module('gradebook-app', []);
+  gradebook = angular.module('gradebook-app', ['ngCookies']);
+
+  gradebook.run([
+    '$http', '$cookies', function($http, $cookies) {
+      $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+      return $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
+    }
+  ]);
 
   gradebook.controller('ClassSelect', function($scope, $http, $rootScope) {
     $scope.classes = [];
@@ -81,11 +88,33 @@
     };
   });
 
-  gradebook.directive('gradebook', function() {
-    return {
-      restrict: 'AE',
-      templateUrl: '../templates/gradebook/gradebook.html'
-    };
-  });
+  gradebook.directive('gradebook', [
+    '$http', function($http) {
+      return {
+        restrict: 'AE',
+        templateUrl: '../templates/gradebook/gradebook.html',
+        link: function(scope, elem, attrs) {
+          var _;
+          _ = window._;
+          return scope.updateEventCategory = function(eventId) {
+            var data, event;
+            event = _.where(scope.events, {
+              id: eventId
+            })[0];
+            data = {
+              id: event.id,
+              value: event.category
+            };
+            return $http.post('/gradebook/changeCategory/', {
+              id: event.id,
+              value: event.category
+            }).success(function() {
+              return console.log('updating category');
+            });
+          };
+        }
+      };
+    }
+  ]);
 
 }).call(this);

@@ -14,9 +14,8 @@
         {{event.title}}
       </div>
       <input class="eventCategory" contentEditable="True" ng-model="event.category"
-             ng-value="{{event.category}}" ng-change="updateEventCategory({[event.id}})">
-      </input>
-      
+             ng-value="{{event.category}}" ng-change="updateEventCategory(event.id)">
+      </input><br>
     </th>
   </thead>
 </table>
