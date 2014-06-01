@@ -3,7 +3,8 @@ import json
 
 # syllabus model imports
 from syllabus.core.models import Upload, SyllUser, MetaData
-from syllabus.classroom.models import Class, Section, Grade, Event, Weight, WeightCategory
+from syllabus.classroom.models import (Class, Section, Grade, Event, Weight, WeightCategory,
+                                       GradingScale, GradingCategory )
 
 # django imports
 from django.db.models import Count
@@ -19,7 +20,7 @@ def gradebookHome(request):
     for section in sections:
         if section.qlass not in classes:
             classes.append(section.qlass)
-    
+            
     if not classes:
         for section in Section.objects.filter(tas = request.user):
             if section.qlass not in classes:
@@ -27,158 +28,12 @@ def gradebookHome(request):
                 
     if 'selectedClass' in request.GET:
         selectedClass = request.GET['selectedClass']
-    
+        
     return render_to_response('gradebook/home.html', locals())
 
 def viewGradeBook(request):
     
-    classId = request.GET['classId']
-    sectionId = "";
-    
-    if 'sectionId' in request.GET:
-        sectionId = request.GET['sectionId']
-    
-    qlass = Class.objects.get(id= int(classId))
-    sections = Section.objects.filter(qlass = qlass)
-    
-    students = []
-    breadcrumb = []
-    
-    gradeBook = collections.OrderedDict()
-    #gradeBook = {}
-    possiblePoints = {}
-    
-    tas = []
-    
-    if sectionId :
-        
-        section = Section.objects.get(id = int(sectionId))
-        
-        # create the breadcrumb
-        students = section.students
-        child = [section.name]
-        
-        breadcrumb.append(qlass.profile.interest + ' ' + str(qlass.profile.number))
-        breadcrumb.append(' > ')
-        breadcrumb.append(child)
-        
-        events = []
-        events = section.qlass.events.exclude(category='lecture').exclude(category = 'meeting').filter(date__lte = datetime.date.today() + datetime.timedelta(days = 1))
-        
-        studentsSorted  = students.order_by('last_name', 'first_name').all()
-        eventsSorted = events.order_by('date')
-        
-        if section.tas.all():
-            tas = section.tas.all()
-            
-    else: 
-        
-        for section in sections.all():
-            for student in section.students.all().order_by('last_name').order_by('first_name'):
-                if student not in students:
-                    students.append(student)
-            
-        
-        # create the breadcrumb
-                    
-        breadcrumb.append(qlass.profile.interest + ' ' + str(qlass.profile.number))
-        
-        qlass = Class.objects.get(id = int(classId))
-        sections = Section.objects.filter(qlass = Class.objects.get(id = int(classId)))
-        events = []
-        
-        
-        for event in qlass.events.exclude(category='lecture').exclude(category='meeting').all():
-            if event.date <= datetime.date.today() + datetime.timedelta(days = 1):
-                events.append(event)
-            
-        studentsSorted = sorted(students, key=lambda x: x.last_name)
-        eventsSorted = sorted(events, key = lambda x: x.date)
-        
-    #create gradeBook and onTime tracker and files
-    onTime = {}
-    files = {}
-    for student in studentsSorted:
-        gradeBook[student] = {}
-        onTime[student] = {}
-        files[student] = {}
-        for event in events:
-            grade = Grade.objects.filter(student = student).filter(event = event)
-            uploads = Upload.objects.filter(event = event).filter(user = student)
-            
-            if grade:
-                gradeBook[student][event] = grade[0]
-                
-            if uploads:
-                files[student][event] = True
-            else:
-                files[student][event] = False
-                
-            # states are for multiple people to point to one event since students can be at different
-            # parts of a single event
-            if event.state.all():
-                # if the most recent status='turned-in' is less than the due date then it is on time
-                eventDateTime = datetime.datetime(year = event.date.year, 
-                                                  month = event.date.month, 
-                                                  day = event.date.day, 
-                                                  hour = event.time.hour, 
-                                                  minute = event.time.minute)
-                #if it was never turned in, it's late
-                if event.state.filter(status = 'turned-in').all():
-                    if event.state.filter(status='turned-in').filter(owner=student):
-                        if event.state.filter(status = 'turned-in').filter(owner=student).order_by('-date')[0].date < eventDateTime:
-                            # unless it's been revoked since then or ignored
-                            if event.state.filter(status='revoked').filter(date__gt = event.state.filter(status = 'turned-in').order_by('-date')[0].date) or event.state.filter(status='ignored').filter(date__gt = event.state.filter(status = 'turned-in').order_by('-date')[0].date):
-                                onTime[student][event] = False
-                            else:
-                                onTime[student][event] = True
-                        else:
-                            onTime[student][event] = False
-                    else:
-                            onTime[student][event] = False
-                else:
-                    onTime[student][event] = False
-            else:
-                onTime[student][event] = False
-    
-    # create possiblePoints
-                
-    for event in events:
-        data = event.metaData.filter(key = 'possiblePoints')
-        if data:
-            possiblePoints[event.id] = data[0].value
-        else:
-            possiblePoints[event.id] = '--'
-            
-    # create totalGrade
-    
-    totalGrade = {}
-    for section in sections:
-        for student in studentsSorted:
-            totalGrade[student.id] = qlass.totalGrade(student.id)
-            
-    # calculate total average
-    
-    number = 0.0
-    total = 0.0
-    
-    for student in studentsSorted:
-        if len(totalGrade[student.id])>1:
-            number = number + 1
-            total = total + float(totalGrade[student.id][1])
-
-        
-    if number != 0:
-        totalAverage = "%.1f" % (total/number) + '%'
-        
-    else:
-        totalAverage = 'n/a'
-
-    length = len
-    
-    
-    if sections.filter(qlass__professor=request.user) or sections.filter(tas = request.user):
-        return render_to_response('gradebook/gradebook.html', locals())
+    return render_to_response('gradebook/gradebook.html', locals())
 
 def sectionsForClass(request):
     
@@ -188,7 +43,7 @@ def sectionsForClass(request):
     
     if not sections :
         sections = Section.objects.filter(qlass__id__exact = int(id)).filter(tas = request.user)
-    
+        
     return render_to_response('gradebook/sectionsForClass.html', locals())
 
 def eventsForClass(request, classId, sectionId = False):
@@ -203,7 +58,7 @@ def eventsForClass(request, classId, sectionId = False):
                 if not Grade.objects.filter(section = section).filter(event = event):
                     if event not in events:
                         events.append(event)
-    
+                        
     if events:    
         return render_to_response('gradebook/eventsForClass.html', locals())
     else:
@@ -230,10 +85,10 @@ def addGrade(request):
                 grade.student = student
                 grade.score = score
                 grade.save()
-        
+                
             return HttpResponse('sucess')
-    else:
-        return HttpResponse('fail')
+        else:
+            return HttpResponse('fail')
 
 def loadEvent(request):
     
@@ -251,7 +106,7 @@ def changePossiblePoints(request):
     event = Event.objects.get(id = int(id))
     
     if Class.objects.filter(events=event).filter(professor = request.user):
-    
+        
         if event.metaData.filter(key = 'possiblePoints'):
             data = event.metaData.get(key = 'possiblePoints')
             data.value = post['value']
@@ -289,7 +144,7 @@ def changeCategory(request):
             meta.save()
             
             event.metaData.add(meta)
-        
+            
         return HttpResponse('success')
 
 def assignWeights(request):
@@ -379,7 +234,7 @@ def gradingScale(request):
         scale = qlass = (Class.objects.get(id = request.GET['class'])).gradingScale
     else:
         scale = GradingScale.objects.get(name = 'default')
-    
+        
     return render_to_response('gradebook/gradingScale.html', locals())
 
 def viewWeights(request):
@@ -388,57 +243,68 @@ def viewWeights(request):
         weights = Class.objects.get(id = request.GET['class']).weights
     else:
         weights = []
-    
+        
     return render_to_response('gradebook/weights.html', locals())
     
 def setScale(request):
     
-    if 'name' not in request.POST:
+    # load the json data
+    post = json.loads(bytes.decode(request.body))
+
+    # check if they named this scale
+    if 'name' not in post:
         
         categories = []
         scale = ''
         
-        #let's start with every scale that has the same number of categories as what was given to be filter
-        scales = GradingScale.objects.all().annotate(count=Count('gradingCategories')).filter(count=len(request.POST['categories'].split(',')))
-        
-        
-        for pair in request.POST['categories'].split(','):
-            gradeList = GradingCategory.objects.filter(lower = pair.split('-')[0]).filter(value = pair.split('-')[1]);
+        #let's start with every scale that has the same number of categories as what 
+        # was given to be filtered
+        scales = (GradingScale.objects.all().annotate(count=Count('categories'))
+                                            .filter(count=len(post['gradingScale']['categories'])))
+        # for ever category you asked to create
+        for category in post['gradingScale']['categories']:
+            # check if this category already exists
+            gradeList = (GradingCategory.objects.filter(lower = float(category['lower']))
+                                                .filter(value = category['value']));
+            # if it does
             if gradeList:
-                category = gradeList[0]
-                categories.append(category)
+                # grab it
+                cat = gradeList[0]
+                # and add it to the list
+                categories.append(cat)
+            # otherwise
             else:
-                category = GradingCategory()
-                category.lower = pair.split('-')[0]
-                category.value = pair.split('-')[1]
-                
-                category.save()
-                
-                
-                
-                categories.append(category)
-                
-            scales = scales.filter(gradingCategories = category)
-            
+                # create a new category
+                cat = GradingCategory()
+                cat.lower = category['lower']
+                cat.value = category['value']
+                # save the new category
+                cat.save()
+                # and add it to the list
+                categories.append(cat)
+            # filter scales to have this category
+            scales = scales.filter(categories = cat)
+        # if there is still a scale    
         if scales:
+            # grab the first one
             scale = scales[0]
-            
+        # otherwise make a new one
         else:
             scale = GradingScale()
             scale.save()
-            
+            # with the right categories
             for category in categories:
-                scale.gradingCategories.add(category)
+                scale.categories.add(category)
     else:
-        scale = GradingScale.objects.get(name=request.GET['name'])
+        scale = GradingScale.objects.get(name=post['name'])
+                
+    qlass =  Class.objects.get(id=post['classId'])
     
-    qlass =  Class.objects.get(id=request.POST['class'])
-        
     qlass.gradingScale = scale
     qlass.save()
     
                 
-    return HttpResponse(scale.gradingCategories)
+    return HttpResponse("success")
     
 def allStudents(request):
     

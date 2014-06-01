@@ -3,6 +3,9 @@
   <div id="weightsBody">
     <!-- a category for each weight already assigned -->
     <div class="weightCategory" ng-repeat="category in weights.categories">
+      <a class="removeWeightCategory" ng-click="removeCategory($index)">
+        x
+      </a>
       <input size="5" ng-model="category.category", ng-blur="addCategory()">
       <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
       <input size="1" ng-model="category.percentage" ng-blur="addCategory()"> %

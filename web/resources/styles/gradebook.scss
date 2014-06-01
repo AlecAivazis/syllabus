@@ -284,6 +284,14 @@ input {
   cursor: pointer;
 }
 
+.removeWeightCategory {
+  float: left;
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+  margin-right: -30px;
+}
+
 #gradingScaleHeaders {
   font-size: 14px;
   width: 100%;

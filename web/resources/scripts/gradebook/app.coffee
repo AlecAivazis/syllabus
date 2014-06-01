@@ -125,23 +125,28 @@ gradebook.directive 'wc', [ '$http', '$rootScope', ($http, $rootScope) ->
       else
         # you cannot
         return false
+        
+    # remove a given index from the weights
+    scope.removeCategory = (index) ->
+      scope.weights.categories.splice(index, 1)
+      scope.canSubmitWidget = scope.canSubmit()
 
     # update the weights on the database and recalculate the grades
     scope.updateWeights = () ->
-        # check that this is allowed
-        if not scope.canSubmitWidget
-          # if its not, get out
-          return
-        $http.post('/gradebook/weights/set/',
-          'classId' : $rootScope.gradebook_id,
-          'weights' : scope.weights
-        ).success (result) ->
-          scope.toggleWeightControl()
+      # check that this is allowed
+      if not scope.canSubmitWidget
+        # if its not, get out
+        return
+      $http.post('/gradebook/weights/set/',
+        'classId' : $rootScope.gradebook_id,
+        'weights' : scope.weights
+      ).success (result) ->
+        scope.toggleWeightControl()
 ]
        
 
 # grading scale window directive
-gradebook.directive 'gsc', () ->
+gradebook.directive 'gsc', ['$http', '$rootScope', ($http, $rootScope) ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/gradingScale.html',
   link: (scope, elem, attrs) ->
@@ -206,8 +211,15 @@ gradebook.directive 'gsc', () ->
       scope.gradingScale.categories.splice index, 0, additional
       # update the lowers to fill the hole
       scope.updateLowers()
-  
-      
+
+    scope.applyGradingScale = () ->
+      # post the grading scale to the database
+      $http.post('/gradebook/gradingScale/setScale/',
+        gradingScale: scope.gradingScale,
+        classId: $rootScope.gradebook_id
+      ).success (result) ->
+        scope.toggleGradingScale()
+]
       
 
 gradebook.directive 'gradebook', ['$http', ($http) ->

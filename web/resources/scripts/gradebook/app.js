@@ -100,6 +100,10 @@
               return false;
             }
           };
+          scope.removeCategory = function(index) {
+            scope.weights.categories.splice(index, 1);
+            return scope.canSubmitWidget = scope.canSubmit();
+          };
           return scope.updateWeights = function() {
             if (!scope.canSubmitWidget) {
               return;
@@ -116,64 +120,74 @@
     }
   ]);
 
-  gradebook.directive('gsc', function() {
-    return {
-      restrict: 'AE',
-      templateUrl: '../templates/gradebook/gradingScale.html',
-      link: function(scope, elem, attrs) {
-        scope.updateUppers = function() {
-          return angular.forEach(scope.gradingScale.categories, function(category, key) {
-            var cont, prev;
-            cont = true;
-            if (key === 0) {
-              category.upper = 100;
-              cont = false;
-            }
-            if (cont) {
-              prev = scope.gradingScale.categories[key - 1];
-              return category.upper = prev.lower;
-            }
-          });
-        };
-        scope.updateLowers = function() {
-          return angular.forEach(scope.gradingScale.categories, function(category, key) {
-            var cont, next;
-            cont = true;
-            if (key === scope.gradingScale.categories.length - 1) {
-              category.lower = 0;
-              cont = false;
-            }
-            if (cont) {
-              next = scope.gradingScale.categories[key + 1];
-              return category.lower = next.upper;
-            }
-          });
-        };
-        scope.deleteGradingScaleCategory = function(lower) {
-          var cat;
-          cat = _.findWhere(scope.gradingScale.categories, {
-            lower: lower
-          });
-          scope.gradingScale.categories.splice(_.indexOf(scope.gradingScale.categories, cat), 1);
-          return scope.updateUppers();
-        };
-        return scope.addGradingScaleCategory = function(upper) {
-          var additional, cat, index, next;
-          cat = _.findWhere(scope.gradingScale.categories, {
-            upper: upper
-          });
-          index = _.indexOf(scope.gradingScale.categories, cat);
-          next = scope.gradingScale.categories[index - 1];
-          additional = {
-            upper: (next.upper + cat.upper) / 2,
-            value: cat.value
+  gradebook.directive('gsc', [
+    '$http', '$rootScope', function($http, $rootScope) {
+      return {
+        restrict: 'AE',
+        templateUrl: '../templates/gradebook/gradingScale.html',
+        link: function(scope, elem, attrs) {
+          scope.updateUppers = function() {
+            return angular.forEach(scope.gradingScale.categories, function(category, key) {
+              var cont, prev;
+              cont = true;
+              if (key === 0) {
+                category.upper = 100;
+                cont = false;
+              }
+              if (cont) {
+                prev = scope.gradingScale.categories[key - 1];
+                return category.upper = prev.lower;
+              }
+            });
           };
-          scope.gradingScale.categories.splice(index, 0, additional);
-          return scope.updateLowers();
-        };
-      }
-    };
-  });
+          scope.updateLowers = function() {
+            return angular.forEach(scope.gradingScale.categories, function(category, key) {
+              var cont, next;
+              cont = true;
+              if (key === scope.gradingScale.categories.length - 1) {
+                category.lower = 0;
+                cont = false;
+              }
+              if (cont) {
+                next = scope.gradingScale.categories[key + 1];
+                return category.lower = next.upper;
+              }
+            });
+          };
+          scope.deleteGradingScaleCategory = function(lower) {
+            var cat;
+            cat = _.findWhere(scope.gradingScale.categories, {
+              lower: lower
+            });
+            scope.gradingScale.categories.splice(_.indexOf(scope.gradingScale.categories, cat), 1);
+            return scope.updateUppers();
+          };
+          scope.addGradingScaleCategory = function(upper) {
+            var additional, cat, index, next;
+            cat = _.findWhere(scope.gradingScale.categories, {
+              upper: upper
+            });
+            index = _.indexOf(scope.gradingScale.categories, cat);
+            next = scope.gradingScale.categories[index - 1];
+            additional = {
+              upper: (next.upper + cat.upper) / 2,
+              value: cat.value
+            };
+            scope.gradingScale.categories.splice(index, 0, additional);
+            return scope.updateLowers();
+          };
+          return scope.applyGradingScale = function() {
+            return $http.post('/gradebook/gradingScale/setScale/', {
+              gradingScale: scope.gradingScale,
+              classId: $rootScope.gradebook_id
+            }).success(function(result) {
+              return scope.toggleGradingScale();
+            });
+          };
+        }
+      };
+    }
+  ]);
 
   gradebook.directive('gradebook', [
     '$http', function($http) {
