@@ -1,28 +1,53 @@
-<table id="gradebookTable" cellspacing="0" cellpadding="0">
-  <thead id="gradebookHeaders">
-    <th id="gutterLabels">
-      category: <br>
-      possible points: <br>
-      weight:
-    </th>
-    <th id="totalGradeLabel"> 
-      Grades
-    </th>
-    <!-- a header for each event -->
-    <th ng-repeat="event in events" class="eventLabel">
-      <div class="eventTitle">
-        {{event.title}}
-      </div>
-      <input class="eventCategory" ng-model="event.category"
-             ng-change="updateEventCategory(event.id)"></input>
-      <br>
-      <input class="eventPossiblePoints" ng-model="event.possiblePoints"
-             ng-change="updatePossiblePoints(event.id)"></input>
-      <input class="eventWeight" ng-model="event.weight" disabled="true"></input>
-    </th>
-    <!-- a row for each student -->
-    <tr ng-reapeat="student in gradebook" class="">
-
-    </tr>
-  </thead>
+<div id="gradebookContainer">
+  <table id="gradebookTable" cellspacing="0" cellpadding="0">
+    <thead id="gradebookHeaders">
+      <th id="gutterLabels">
+        category: <br>
+        possible points: <br>
+        weight:
+      </th>
+      <th id="totalGradeLabel"> 
+        Grades
+      </th>
+      <!-- a header for each event -->
+      <th ng-repeat="event in events" class="eventLabel">
+        <div class="eventTitle">
+          {{event.title}}
+        </div>
+        <input class="eventCategory" ng-model="event.category"
+               ng-change="updateEventCategory(event.id)"></input>
+        <br>
+        <input class="eventPossiblePoints" ng-model="event.possiblePoints"
+               ng-change="updatePossiblePoints(event.id)"></input>
+        <input class="eventWeight" ng-model="event.weight" disabled="true"></input>
+      </th>
+    </thead>
+    <tbody>
+      <!-- a row for each student -->
+      <tr ng-repeat="student in students" ng-class-even="'even'" ng-class-odd="'odd'" 
+          class="gradebookStudent">
+        <td>
+          {{student.name}}
+        </td>
+        <!-- students grade in the class -->
+        <td class="totalGrade">
+          <span class="totalGradeLetter" ng-show="student.totalGrade != -1">
+            {{student.totalGrade.letter}}
+          </span>
+          <span class="totalGradeScore" ng-show="student.totalGrade != -1">
+            {{student.totalGrade.score}}
+          </span>
+          <span 
+             </td>
+        <!-- an entry for each event to show the students grade -->
+        <td ng-repeat="event in events" class="entry" 
+            ng-class="{onTime : gradebook[student.id][event.id].onTime,
+                      late : !gradebook[student.id][event.id].onTime}">
+          <input ng-model="gradebook[student.id][event.id].grade" 
+                 ng-change="updateGrade(student.id, event.id)"></input>
+        </td>
+        
+      </tr>
+</thead>
 </table>
+</div>

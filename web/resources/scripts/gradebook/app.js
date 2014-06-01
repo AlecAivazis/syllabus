@@ -106,7 +106,7 @@
               value: event.category
             });
           };
-          return scope.updatePossiblePoints = function(eventId) {
+          scope.updatePossiblePoints = function(eventId) {
             var event;
             event = _.where(scope.events, {
               id: eventId
@@ -115,6 +115,9 @@
               id: event.id,
               value: event.possiblePoints
             });
+          };
+          return scope.updateGrade = function(studentId, eventId) {
+            return console.log('updating grade for ' + studentId + ' ' + eventId);
           };
         }
       };

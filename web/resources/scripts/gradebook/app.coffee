@@ -123,6 +123,7 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
         id: event.id, 
         value: event.category
     
+    # update the event possible points on the database with its current value in the model
     scope.updatePossiblePoints = (eventId) ->
       # get the event we care about
       event = _.where(scope.events, {id: eventId})[0]
@@ -131,4 +132,6 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
         id: event.id, 
         value: event.possiblePoints
        
+    scope.updateGrade = (studentId, eventId) ->
+      console.log 'updating grade for ' + studentId + ' ' + eventId 
 ]

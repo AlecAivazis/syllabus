@@ -56,7 +56,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     def getWeight(self, obj):
         """ return the current weight of the event """
-        return 2
+        return obj.calculateWorth()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,12 +94,24 @@ class GradebookSerializer(serializers.ModelSerializer):
         users = User.objects.filter(classes__pk = obj.pk)
         # for each user
         for user in users:
-            # save the name
-            data.append({
+            userDict = {
                 "name" : user.first_name + ' ' + user.last_name,
-                "id": user.pk,
-                "totalGrade": obj.totalGrade(user.id),
-            })
+                "id" : user.pk
+            }
+            # grab the grade data
+            grade = obj.totalGrade(user.id)
+            # if its valid
+            if grade != -1:
+                # add it to the return data
+                userDict["totalGrade"] = {
+                        "letter" : grade[0],
+                        "score" : grade[1]
+                }
+            else:
+                # else add -1
+                userDict["totalGrade"] = '-1'
+            
+            data.append(userDict)
         
         # return the serialized data
         return data

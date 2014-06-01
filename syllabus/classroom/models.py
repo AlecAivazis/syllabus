@@ -198,7 +198,7 @@ class Class(models.Model):
                     pointsEarned = pointsEarned + grade.score
         
         if totalPossible == 0:        
-            return 'n/a',
+            return -1
         else:
             score = pointsEarned/totalPossible * 100
             letter = self.gradingScale.categories.filter(lower__lte = score).order_by('-lower')[0].value

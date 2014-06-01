@@ -1,5 +1,16 @@
 @option compress: no;
 
+#gradebookContainer {
+  clear: both;
+  width: 99%;
+  float: left;
+  margin-top: 4px;
+  padding: 5px;
+  background: #f9f8f0;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
 td, th {
   width: 100px;
 }
@@ -14,10 +25,6 @@ td, th {
   text-align: left;
   position: relative;
   background: #fbfbf7;
-}
-
-#gradebookTable {
-  clear: both;
 }
 
 .odd, .even {
@@ -111,6 +118,11 @@ td {
     padding: 0;
     cursor: pointer;
   }
+  input {
+    background: none;
+    border: none;
+    width: 100px;
+  }
 }
 
 #averageLabel {
@@ -132,6 +144,7 @@ td {
   height: 18px;
   overflow: hidden;
 }
+
 
 #totalGradeLabel {
   padding: 5px;
