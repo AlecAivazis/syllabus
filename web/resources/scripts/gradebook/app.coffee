@@ -183,6 +183,14 @@ gradebook.directive 'gsc', () ->
           next = scope.gradingScale.categories[key+1]    
           # my lower is its upper
           category.lower = next.upper
+
+    scope.deleteGradingScaleCategory = (lower) ->
+      # find the category we care about
+      cat = _.findWhere(scope.gradingScale.categories, {lower: lower})
+      # remove it from the categories list
+      scope.gradingScale.categories.splice _.indexOf(scope.gradingScale.categories, cat), 1
+      # update the uppers to fill the hole
+      scope.updateUppers()
       
 
 gradebook.directive 'gradebook', ['$http', ($http) ->

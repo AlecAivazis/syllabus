@@ -135,7 +135,7 @@
             }
           });
         };
-        return scope.updateLowers = function() {
+        scope.updateLowers = function() {
           return angular.forEach(scope.gradingScale.categories, function(category, key) {
             var cont, next;
             cont = true;
@@ -148,6 +148,14 @@
               return category.lower = next.upper;
             }
           });
+        };
+        return scope.deleteGradingScaleCategory = function(lower) {
+          var cat;
+          cat = _.findWhere(scope.gradingScale.categories, {
+            lower: lower
+          });
+          scope.gradingScale.categories.splice(_.indexOf(scope.gradingScale.categories, cat), 1);
+          return scope.updateUppers();
         };
       }
     };
