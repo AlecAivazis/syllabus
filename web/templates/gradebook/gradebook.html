@@ -13,9 +13,12 @@
       <div class="eventTitle">
         {{event.title}}
       </div>
-      <input class="eventCategory" contentEditable="True" ng-model="event.category"
-             ng-value="{{event.category}}" ng-change="updateEventCategory(event.id)">
-      </input><br>
+      <input class="eventCategory" ng-model="event.category"
+             ng-change="updateEventCategory(event.id)"></input>
+      <br>
+      <input class="eventPossiblePoints" ng-model="event.possiblePoints"
+             ng-change="updatePossiblePoints(event.id)"></input>
+      <input class="eventWeight" ng-model="event.weight" disabled="true"></input>
     </th>
   </thead>
 </table>

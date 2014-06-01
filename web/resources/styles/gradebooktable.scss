@@ -50,6 +50,8 @@ td {
   font-weight: bold;
   text-align: center;
   cursor: text;
+  border: none;
+  background: none;
 }
 
 .eventWeight {
@@ -57,7 +59,8 @@ td {
   font-size: 10px;
   font-weight: bold;
   text-align: center;
-  display: none;
+  border: none;
+  background: none;
 }
 
 #weightLabel {

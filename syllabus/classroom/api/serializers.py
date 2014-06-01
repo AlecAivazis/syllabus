@@ -30,11 +30,12 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id', 'possiblePoints', 'title', 'category', 'type')
+        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight')
 
-    possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
     category = serializers.SerializerMethodField('getSubCategory')
+    possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
     type = serializers.CharField(source="category")
+    weight = serializers.SerializerMethodField('getWeight')
 
     def getPossiblePoints(self, obj):
         """ return the total number of possible points associated with this event"""
@@ -52,6 +53,10 @@ class EventSerializer(serializers.ModelSerializer):
         else:
             # the default subcategory is its category
             return obj.category
+
+    def getWeight(self, obj):
+        """ return the current weight of the event """
+        return 2
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

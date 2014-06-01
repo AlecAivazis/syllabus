@@ -123,5 +123,5 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
         id: event.id, 
         value: event.category
     
-           
+    scope.       
 ]
