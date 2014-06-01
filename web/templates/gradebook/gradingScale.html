@@ -3,6 +3,10 @@
   <div class="arrow-up"></div>
   <!-- grading category -->
   <div class="category" ng-repeat="category in gradingScale.categories">
+    <span class="deleteGradingScaleCategory"
+          ng-click="deleteGradingScaleCategory(category.lower)">
+      x
+    </span>
     <input class="categoryInput categoryLower" type="text" ng-model="category.lower"
            ng-change="updateUppers()"  ng-disabled="$last" ng-value="{{category.lower}}">
     <input class="categoryInput categoryUpper" type="text" ng-change="updateLowers()"
@@ -10,6 +14,10 @@
     <img src="/resources/images/gradeBook/rightArrow.png">
     <input class="categoryInput categoryValue" type="text" ng-value="{{category.value}}"
            ng-model="category.value">
+    <span class="addGradingScaleCategory"
+          ng-click="addGradingScaleCategory(category.lower)">
+      +
+    </span>
   </div>
   <!-- modal control buttons -->
   <ul id="gradingScaleButtons" ng-show="showGradingScale">
