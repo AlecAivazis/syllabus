@@ -1,3 +1,6 @@
+# add shortcut to underscore
+_ = window._
+
 gradebook = angular.module('gradebook-app', ['ngCookies'])
 
 gradebook.run ['$http', '$cookies', ($http, $cookies) -> 
@@ -99,8 +102,6 @@ gradebook.directive 'wc', () ->
           
     # return if the widget can be submitted ie the percentages add up to 100
     scope.canSubmit = () ->
-      # add a shortcut to _
-      _ = window._
       # if there are no weights you can submit to remove
       if ! scope.weights 
         return true
@@ -170,9 +171,6 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
   templateUrl: '../templates/gradebook/gradebook.html',
   link: (scope, elem, attrs) ->
 
-    # add shortcut to underscore
-    _ = window._
-    
     # update the event category in the database with its current value
     scope.updateEventCategory = (eventId) ->
       # get the event we care about
