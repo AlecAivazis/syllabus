@@ -191,6 +191,23 @@ gradebook.directive 'gsc', () ->
       scope.gradingScale.categories.splice _.indexOf(scope.gradingScale.categories, cat), 1
       # update the uppers to fill the hole
       scope.updateUppers()
+
+    scope.addGradingScaleCategory = (upper) ->
+      # find the category we care about and its index
+      cat = _.findWhere(scope.gradingScale.categories, {upper: upper})
+      index = _.indexOf(scope.gradingScale.categories, cat) 
+      # grab the category after it
+      next = scope.gradingScale.categories[index - 1]
+      # create a category that splits it and the next one and uses cats value
+      additional =
+        upper: (next.upper + cat.upper)/2
+        value: cat.value
+      # add it to the categories
+      scope.gradingScale.categories.splice index, 0, additional
+      # update the lowers to fill the hole
+      scope.updateLowers()
+  
+      
       
 
 gradebook.directive 'gradebook', ['$http', ($http) ->

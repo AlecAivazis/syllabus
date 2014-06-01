@@ -149,13 +149,27 @@
             }
           });
         };
-        return scope.deleteGradingScaleCategory = function(lower) {
+        scope.deleteGradingScaleCategory = function(lower) {
           var cat;
           cat = _.findWhere(scope.gradingScale.categories, {
             lower: lower
           });
           scope.gradingScale.categories.splice(_.indexOf(scope.gradingScale.categories, cat), 1);
           return scope.updateUppers();
+        };
+        return scope.addGradingScaleCategory = function(upper) {
+          var additional, cat, index, next;
+          cat = _.findWhere(scope.gradingScale.categories, {
+            upper: upper
+          });
+          index = _.indexOf(scope.gradingScale.categories, cat);
+          next = scope.gradingScale.categories[index - 1];
+          additional = {
+            upper: (next.upper + cat.upper) / 2,
+            value: cat.value
+          };
+          scope.gradingScale.categories.splice(index, 0, additional);
+          return scope.updateLowers();
         };
       }
     };
