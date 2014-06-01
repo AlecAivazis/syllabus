@@ -57,7 +57,6 @@
     return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
         $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
-          console.log(result);
           $scope.gradingScale = result;
           return $scope.updateUppers();
         });

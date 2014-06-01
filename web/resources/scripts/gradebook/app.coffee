@@ -75,7 +75,6 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     if refreshGradingScale
       # load the grading scale from the syllabus api
       $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
-        console.log result
         # load the scale into the view
         $scope.gradingScale = result
         # fill in the upper bounds (defined in grading scale control directive)

@@ -231,11 +231,7 @@ def addGrade(request):
                 grade.score = score
                 grade.save()
         
-        
             return HttpResponse('sucess')
-
-        print("nope.")
-            
     else:
         return HttpResponse('fail')
 
@@ -320,15 +316,10 @@ def assignWeights(request):
         # add it to the group
         weight.categories.add(weightCategory)
 
-    print("finished making the new weight group")
     # update the classes weight
-    print(post['classId'])
     klass = Class.objects.get(pk = post['classId'])
     klass.weights = weight
     klass.save()
-    
-    for category in klass.weights.categories.all():
-        print(category.category, category.percentage)
 
     return HttpResponse('success')
 
