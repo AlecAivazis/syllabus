@@ -42,7 +42,7 @@ class EventSerializer(serializers.ModelSerializer):
         if data:
             return data[0].value
         else:
-            return '--'
+            return ''
 
     def getSubCategory(self, obj):
         """ return the value of meta data entry corresponding to this events subcategory"""
@@ -50,7 +50,7 @@ class EventSerializer(serializers.ModelSerializer):
         if data:
             return data[0].value
         else:
-            return '--'
+            return ''
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
