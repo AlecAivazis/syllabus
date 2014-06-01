@@ -81,7 +81,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     $scope.showGradingScale = !$scope.showGradingScale
 
 # grading scale window directive
-gradebook.directive 'wc', () ->
+gradebook.directive 'wc', [ '$http', '$rootScope', ($http, $rootScope) ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/weights.html',
   link: (scope, elem, attrs) ->
@@ -120,6 +120,23 @@ gradebook.directive 'wc', () ->
       else
         # you cannot
         return false
+
+    # update the weights on the database and recalculate the grades
+    scope.updateWeights = () ->
+        # check that this is allowed
+        if not scope.canSubmitWidget
+          # if its not, get out
+          return
+        $http.post('/gradebook/weights/set',
+          'classId' : $rootScope.gradebook_id,
+          'weights' : scope.weights
+        ).success (result) ->
+          console.log result
+
+        # generate the data string to be parsed by django
+        console.log 'updateing widgets'
+]
+       
 
 # grading scale window directive
 gradebook.directive 'gsc', () ->

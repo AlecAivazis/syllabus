@@ -574,7 +574,8 @@ function submitWeights() {
     
     $('.weightCategory').not(':last').each(function(){
 	if ($(this).children().eq(0).val() != '' && $(this).children().eq(1).val() != '' ){
-	    dataString = dataString + $(this).children().eq(0).val() + '//' + $(this).children().eq(1).val() + '||' ;
+	    dataString = dataString + $(this).children().eq(0).val() 
+                         + '//' + $(this).children().eq(1).val() + '||' ;
 	}
 	
     });

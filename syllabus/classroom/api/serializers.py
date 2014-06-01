@@ -79,7 +79,6 @@ class WeightSerializer(serializers.ModelSerializer):
         categories = obj.categories.all().order_by('-percentage')
         serializer = WeightCategorySerializer(categories)
         return serializer.data
-        
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

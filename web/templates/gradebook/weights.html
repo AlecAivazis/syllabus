@@ -19,7 +19,8 @@
       cancel
     </a>
     <a class="submitWidget" style="right: 0;" ng-class="{disabled: canSubmitWidget == false}"
-       ng-disabled="canSubmitWidget" ng-init="canSubmitWidget = true">
+       ng-init="canSubmitWidget = true" ng-click="updateWeights()"
+       >
       submit
     </a>
   </div>
