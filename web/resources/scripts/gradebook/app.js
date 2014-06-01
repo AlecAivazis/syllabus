@@ -97,19 +97,13 @@
           var _;
           _ = window._;
           return scope.updateEventCategory = function(eventId) {
-            var data, event;
+            var event;
             event = _.where(scope.events, {
               id: eventId
             })[0];
-            data = {
-              id: event.id,
-              value: event.category
-            };
             return $http.post('/gradebook/changeCategory/', {
               id: event.id,
               value: event.category
-            }).success(function() {
-              return console.log('updating category');
             });
           };
         }

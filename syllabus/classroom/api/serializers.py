@@ -50,7 +50,8 @@ class EventSerializer(serializers.ModelSerializer):
         if data:
             return data[0].value
         else:
-            return ''
+            # the default subcategory is its category
+            return obj.category
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

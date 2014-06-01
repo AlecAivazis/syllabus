@@ -118,14 +118,10 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
     scope.updateEventCategory = (eventId) ->
       # get the event we care about
       event = _.where(scope.events, {id: eventId})[0]
-      
-      data =
-        id: event.id,
-        value: event.category
-
-      $http.post('/gradebook/changeCategory/',{
+      #  update its category on the database
+      $http.post '/gradebook/changeCategory/', 
         id: event.id, 
-        value: event.category,
-      }).success () ->
-        console.log 'updating category'
+        value: event.category
+    
+           
 ]
