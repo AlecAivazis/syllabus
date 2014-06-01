@@ -22,11 +22,12 @@
         <input class="eventWeight" ng-model="event.weight" disabled="true"></input>
       </th>
     </thead>
-    <tbody>
+    <tbody> 
       <!-- a row for each student -->
       <tr ng-repeat="student in students" ng-class-even="'even'" ng-class-odd="'odd'" 
-          class="gradebookStudent">
-        <td class="studentName">
+          class="gradebookStudent" ng-class="{highlighted : selectedStudent == student.id}" >
+        <!-- header is used to select a student for various purposes -->
+        <td class="studentName" ng-click="selectedStudent = student.id">
           {{student.name}}
         </td>
         <!-- students grade in the class -->

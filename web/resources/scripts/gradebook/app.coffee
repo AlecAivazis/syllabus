@@ -141,5 +141,5 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
         student: studentId,
         event: eventId,
         score: grade
-                          
+
 ]

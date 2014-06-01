@@ -51,10 +51,10 @@
     </div>
     
     <!-- content -->
-    <div id="gradebook" ng-show="gradebook_id" >
+    <div id="gradebook" ng-show="gradebook_id">
       <!-- breadcrumb -->
       <span id="gradebookBreadCrumbs" class="{{gradebook_id}}">
-        {{breadcrumb[0]}}
+        {{breadcrumb[0]}} 
       </span>
 
       <!-- toolbar -->
@@ -63,14 +63,16 @@
           <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
           Grading Scale
         </span>
-
         <!--
-        <span class="gradebookTool" id="isolate" onclick="isolateHighlightedStudent()">
+        <span class="gradebookTool" ng-click="isolateStudent = true"
+              ng-show="isolateStudent = false">
           Isolate Highlighted Student 
         </span>
-        <span class="gradebookTool" id="unisolate" onclick="showAllStudents()"> 
+        <span class="gradebookTool" ng-click="isolateStudent = false"
+              ng-show="isolateStudent = true"> 
           Show All Students
         </span>
+        <span class="gradebookTool" ng-init="isolateStudent=false"> {{isolateStudent}} </span>
         -->
       </span>
       
