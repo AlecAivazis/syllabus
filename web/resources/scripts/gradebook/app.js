@@ -24,7 +24,7 @@
   });
 
   gradebook.controller('gradebook-view', function($scope, $rootScope, $http) {
-    var class_id, refreshGradingScale;
+    var class_id, refreshGradingScale, refreshWeights;
     class_id = $rootScope.$watch('gradebook_id', function() {
       if (!$rootScope.gradebook_id) {
         return;
@@ -37,17 +37,64 @@
       });
       return class_id = $rootScope.gradebook_id;
     });
+    refreshWeights = true;
+    $scope.toggleWeightControl = function() {
+      if (refreshWeights) {
+        $http.get('/api/classes/' + class_id + '/weights/').success(function(result) {
+          $scope.weights = result;
+          return refreshWeights = false;
+        });
+      }
+      return $scope.displayWeightControl = !$scope.displayWeightControl;
+    };
     refreshGradingScale = true;
     return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
         $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
-          console.log(result);
           $scope.gradingScale = result;
           return $scope.updateUppers();
         });
         refreshGradingScale = false;
       }
       return $scope.showGradingScale = !$scope.showGradingScale;
+    };
+  });
+
+  gradebook.directive('wc', function() {
+    return {
+      restrict: 'AE',
+      templateUrl: '../templates/gradebook/weights.html',
+      link: function(scope, elem, attrs) {
+        scope.addCategory = function() {
+          if (scope.newCategory && scope.newPercentage) {
+            scope.weights.categories.push({
+              category: scope.newCategory,
+              percentage: scope.newPercentage
+            });
+            scope.newCategory = null;
+            scope.newPercentage = null;
+          } else {
+
+          }
+          return scope.canSubmitWidget = scope.canSubmit();
+        };
+        return scope.canSubmit = function() {
+          var percentages, sum, _;
+          _ = window._;
+          if (!scope.weights) {
+            return true;
+          }
+          percentages = _.pluck(scope.weights.categories, 'percentage');
+          sum = _.reduce(percentages, function(memo, num) {
+            return memo + parseInt(num);
+          }, 0);
+          if (sum === 100) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+      }
     };
   });
 
@@ -104,6 +151,8 @@
             return $http.post('/gradebook/changeCategory/', {
               id: event.id,
               value: event.category
+            }).success(function(result) {
+              return $scope.weights = result;
             });
           };
           scope.updatePossiblePoints = function(eventId) {

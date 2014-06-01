@@ -41,7 +41,24 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 
     class_id = $rootScope.gradebook_id
 
-  # track if the grading scale needs to be refreshed
+  # track if the weights need to be reloaded
+  refreshWeights = true
+
+  # hide/show the weights control
+  $scope.toggleWeightControl = () ->
+    # if the weights need to be refreshed
+    if refreshWeights
+      # load the weights from the syllabus api
+      $http.get('/api/classes/' + class_id + '/weights/').success (result) ->
+        # load the result
+        $scope.weights = result
+        # prevent the weights from loading again
+        refreshWeights = false
+
+    # flip the control variable
+    $scope.displayWeightControl = !$scope.displayWeightControl
+
+  # track if the grading scale need to be reloaded
   refreshGradingScale = true
 
   # hide/show the grading scale
@@ -50,7 +67,6 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     if refreshGradingScale
       # load the grading scale from the syllabus api
       $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
-        console.log result
         # load the scale into the view
         $scope.gradingScale = result
         # fill in the upper bounds (defined in grading scale control directive)
@@ -60,6 +76,49 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
       refreshGradingScale = false
 
     $scope.showGradingScale = !$scope.showGradingScale
+
+# grading scale window directive
+gradebook.directive 'wc', () ->
+  restrict : 'AE',
+  templateUrl: '../templates/gradebook/weights.html',
+  link: (scope, elem, attrs) ->
+
+    # check if a new category needs to be added
+    scope.addCategory = () ->
+      if scope.newCategory && scope.newPercentage 
+        # add the new weight
+        scope.weights.categories.push
+          category: scope.newCategory,
+          percentage: scope.newPercentage
+        # wipe the containers for the new ones
+        scope.newCategory = null
+        scope.newPercentage = null
+      else
+      # update the submit button        
+      scope.canSubmitWidget = scope.canSubmit()
+          
+    # return if the widget can be submitted ie the percentages add up to 100
+    scope.canSubmit = () ->
+      # add a shortcut to _
+      _ = window._
+      # if there are no weights you can submit to remove
+      if ! scope.weights 
+        return true
+
+      # grab the percentage of each category
+      percentages = _.pluck(scope.weights.categories, 'percentage')
+      # compute their sum
+      sum = _.reduce(percentages, (memo, num) ->
+        memo + parseInt(num)
+      , 0)
+      # if they add up to 100
+      if sum == 100
+        # then you can submit the widget
+        return true
+      # otherwise
+      else
+        # you cannot
+        return false
 
 # grading scale window directive
 gradebook.directive 'gsc', () ->
@@ -119,9 +178,12 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
       # get the event we care about
       event = _.where(scope.events, {id: eventId})[0]
       #  update its category on the database
-      $http.post '/gradebook/changeCategory/', 
+      $http.post('/gradebook/changeCategory/', 
         id: event.id, 
         value: event.category
+      ).success (result) ->
+        $scope.weights = result
+        
     
     # update the event possible points on the database with its current value in the model
     scope.updatePossiblePoints = (eventId) ->

@@ -18,7 +18,7 @@ class ClassList(generics.ListCreateAPIView):
 
 
 # return the weights of a class
-class WeightsList(generics.ListCreateAPIView):
+class WeightsList(generics.RetrieveUpdateDestroyAPIView):
     model = Weight
     serializer_class = WeightSerializer
     permission_classes = [

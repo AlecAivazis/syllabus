@@ -1,36 +1,33 @@
-<div class="arrow-up"></div>
-
-<div id="weightsWidgetBody">
-    
-    <div id="weightsBody">
-        {% if weights %}
-        {% for category in  weights.categories.all()%}
-        
-        <div class="weightCategory">
-
-                <input size="5" value="{{category.category}}" onchange="newWeightCategory()">
-                <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
-                <input size="1" value="{{category.percentage}}" style="margin-left: 3px" onchange="newWeightCategory()"> %
-
-        </div>
-        {% endfor %}
-        {% endif %}
-        <div class="weightCategory">
-
-                <input size="5" onchange="newWeightCategory()">
-                <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
-                <input size="1" onchange="newWeightCategory()" style="margin-left: 3px"> %
-        </div>
+<div id="weightsWidget">
+  <div class="arrow-up"></div>
+  <div id="weightsBody">
+    <!-- a category for each weight already assigned -->
+    <div class="weightCategory" ng-repeat="category in weights.categories">
+      <input size="5" ng-model="category.category", ng-blur="addCategory()">
+      <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
+      <input size="1" ng-model="category.percentage" ng-blur="addCategory()"> %
     </div>
-    
-    <ul id="weightsButtons">
-        <li onclick="closeWeights();" class="closeWidget">
-            cancel
-        </li>
-        <li class="disabled submitWidget" style="right: 0;">
-            submit
-        </li>
-    </ul>
-
-    
+    <!-- and an empty one to add additional groups -->
+    <div class="weightCategory">
+      <input size="5" ng-model="newCategory" ng-blur="addCategory()">
+      <img src="/resources/images/gradeBook/rightArrow.png" style="margin-left: 2px;"/>
+      <input size="1" ng-model="newPercentage" ng-blur="addCategory()"> %
+    </div>
+  </div>
+  <div id="weightsButtons">
+    <a ng-click="toggleWeightControl()" class="closeWidget">
+      cancel
+    </a>
+    <a class="submitWidget" style="right: 0;" ng-class="{disabled: canSubmitWidget == false}"
+       ng-disabled="canSubmitWidget" ng-init="canSubmitWidget = true">
+      submit
+    </a>
+  </div>
 </div>
+<!--
+    {% if weights %}
+    
+  
+    
+  </div>
+</div> -->

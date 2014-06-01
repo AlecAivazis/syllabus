@@ -345,8 +345,8 @@ input {
     margin-top: -16px;
     margin-right: 15px;
   }
-  position: fixed;
-  top: 125px;
+  position: absolute;
+  top: 137px;
   right: 20px;
   float: left;
   width: 225px;
@@ -396,7 +396,7 @@ input {
 
 #weightsButtons {
   margin: 5px;
-  li {
+  a {
     display: inline-block;
     cursor: pointer;
     padding: 5px;

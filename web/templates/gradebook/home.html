@@ -63,7 +63,7 @@
           <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
           Grading Scale
         </span>
-        <span class="gradebookTool" ng-click="toggleWeights()">
+        <span class="gradebookTool" ng-click="toggleWeightControl()">
           <img src="/resources/images/icons/scale.png">
           Assign Weights
         </span>
@@ -83,6 +83,7 @@
       
       <!-- controls -->
       <gsc ng-show="showGradingScale" ng-init="showGradingScale = false"></gsc>
+      <wc ng-show="displayWeightControl" ng-init="displayWeightControl = false"></wc>
       
       <!-- table -->
       <div gradebook></div>
