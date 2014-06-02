@@ -37,9 +37,10 @@
         $scope.breadcrumb = result.breadcrumb;
         $scope.events = result.events;
         $scope.gradebook = result.gradebook;
-        return $scope.students = result.students;
+        $scope.students = result.students;
+        class_id = $rootScope.gradebook_id;
+        return $scope.calculateAverages();
       });
-      class_id = $rootScope.gradebook_id;
       refreshWeights = true;
       refreshGradingScale = true;
       $scope.displayWeightControl = false;
@@ -114,7 +115,8 @@
             }).success(function(result) {
               scope.toggleWeightControl();
               scope.recalculateWeights();
-              return scope.recalculateGrades();
+              scope.recalculateGrades();
+              return scope.calculateAverages();
             });
           };
         }
@@ -231,13 +233,24 @@
               event: eventId,
               score: grade
             }).success(function(result) {
-              return scope.recalculateGrades();
+              scope.recalculateGrades();
+              return scope.calculateAverages();
+            });
+          };
+          scope.calculateAverages = function() {
+            var nStudents;
+            nStudents = scope.students.length;
+            return angular.forEach(scope.events, function(event) {
+              var total;
+              total = _.reduce(scope.students, function(memo, student) {
+                return memo += scope.gradebook[student.id][event.id].grade;
+              }, 0);
+              return event.average = total / nStudents;
             });
           };
           scope.computeWeights = function() {
             var categories;
             categories = _.uniq(_.pluck(scope.events, 'category'));
-            console.log(categories);
             return angular.forEach(categories, function(category) {
               var totalPoints, weight, weightPerPoint;
               totalPoints = _.reduce(_.where(scope.events, {

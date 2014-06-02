@@ -57,7 +57,14 @@
           <input ng-model="gradebook[student.id][event.id].grade" 
                  ng-change="updateGrade(student.id, event.id)"></input>
         </td>
-        
+      </tr>
+      <!-- the last row showed the averages for each event -->
+      <tr id="averages">
+        <td id="averageLabel"> averages: </td>
+        <td id="totalAverage" class="average"> {{totalAverage}} </td>
+        <td ng-repeat="event in events" class="average">
+          {{event.average}}
+        </td>
       </tr>
 </thead>
 </table>

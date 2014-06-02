@@ -44,8 +44,10 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
       $scope.events = result.events
       $scope.gradebook = result.gradebook
       $scope.students = result.students
-
-    class_id = $rootScope.gradebook_id
+      # register the class for the gradebook
+      class_id = $rootScope.gradebook_id
+      # compute the averages
+      $scope.calculateAverages()
 
     # track if the weights need to be reloaded
     refreshWeights = true
@@ -144,6 +146,7 @@ gradebook.directive 'wc', [ '$http', '$rootScope', ($http, $rootScope) ->
         scope.toggleWeightControl()
         scope.recalculateWeights()
         scope.recalculateGrades()
+        scope.calculateAverages()
 ]
        
 
@@ -264,11 +267,24 @@ gradebook.directive 'gradebook', ['$http', '$rootScope', ($http, $rootScope) ->
         score: grade
       ).success (result) ->
         scope.recalculateGrades()
+        scope.calculateAverages()
+
+    # compute the average of each event
+    scope.calculateAverages = () ->
+      # save the number of students so it only has to be computed one
+      nStudents = scope.students.length
+      # go over each event
+      angular.forEach scope.events, (event) ->
+        # compute the sum of the grades for each student
+        total =  _.reduce scope.students, (memo, student) ->
+          return memo += scope.gradebook[student.id][event.id].grade
+        , 0
+        # set the average
+        event.average = total/nStudents
 
     scope.computeWeights = () ->
       # grab a list of the unique categories
       categories = _.uniq _.pluck(scope.events, 'category')
-      console.log categories
       # loop over the categories
       angular.forEach categories, (category) ->
         # calculate the total number of possible points for this category
@@ -297,7 +313,7 @@ gradebook.directive 'gradebook', ['$http', '$rootScope', ($http, $rootScope) ->
       else
         scope.computeWeights()
 
-
+    # compute the grades of each user
     scope.computeGrades = () ->
       # loop over each student
       angular.forEach scope.students, (student) ->
