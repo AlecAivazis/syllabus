@@ -15,10 +15,10 @@
           {{event.title}}
         </div>
         <input class="eventCategory" ng-model="event.category"
-               ng-change="updateEventCategory(event.id)"></input>
+               ng-blur="updateEventCategory(event.id)"></input>
         <br>
         <input class="eventPossiblePoints" ng-model="event.possiblePoints"
-               ng-change="updatePossiblePoints(event.id)"></input>
+               ng-blur="updatePossiblePoints(event.id)"></input>
         <input class="eventWeight" ng-model="event.weight" disabled="true"></input>
       </th>
     </thead>

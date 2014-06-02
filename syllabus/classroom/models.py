@@ -1,6 +1,7 @@
 import django, datetime, pytz
 
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth import get_user_model
 
 
@@ -29,7 +30,7 @@ class switch(object):
 # local imports defined as string references
 File = 'core.File'
 from ..core.models import MetaData
-User = 'core.SyllUser'
+from ..core.models import SyllUser as User
 Timeslot = 'core.Timeslot'
 GradingScale = 'GradingScale'
 Weight = 'Weight'
@@ -63,6 +64,19 @@ class Event(models.Model):
     # string behavior is to return the title
     def __unicode__(self):
         return self.title
+
+    # get the weighted grade for the given student
+    def getWeightedGrade(self, id):
+        # see if there is a grade entry
+        grades = Grade.objects.filter(student__pk = id).filter(event = self)
+        if grades:
+            grade = grades[0].score
+            # check if there is a entry for possible points
+            metaData = self.metaData.filter(key = 'possiblePoints')
+            if metaData:
+                possiblePoints = int(metaData[0].value)
+
+                return (grade/possiblePoints) * self.calculateWorth()
     
     # calculate the individual worth of this event based on the weight
     def calculateWorth(self):
@@ -169,28 +183,19 @@ class Class(models.Model):
                .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
 
 
-    # return the grade of the user with the given is
+    # return the grade of the user with the given id
     def totalGrade(self, id):
         totalPossible = 0
-        pointsEarned = 0
         
-        for grade in Grade.objects.filter(student = get_user_model().objects.get(id = int(id))).filter(event__in = self.events.all()):
-            if grade.event.metaData.filter(key = 'possiblePoints'):
-                if grade.event.classes.all()[0].weights:
-                    
-                    if grade.event.calculateWorth():
-                        weight = grade.event.calculateWorth()
-                        totalPossible = totalPossible + (weight * int(grade.event.metaData.get(key = 'possiblePoints').value))
-                        pointsEarned = pointsEarned + (weight * grade.score)
-                else:
-                    totalPossible = totalPossible + int(grade.event.metaData.get(key = 'possiblePoints').value)
-                    pointsEarned = pointsEarned + grade.score
-        
+        for event in self.getGradableEvents():
+            totalPossible += event.getWeightedGrade(id)
+
         if totalPossible == 0:        
             return -1
         else:
-            score = pointsEarned/totalPossible * 100
-            letter = self.gradingScale.categories.filter(lower__lte = score).order_by('-lower')[0].value
+            score = round(totalPossible, 2)
+            letter = (self.gradingScale.categories.filter(lower__lte = score)
+                                                  .order_by('-lower')[0].value)
             
             return letter,"%.1f" % (score)
 
@@ -269,7 +274,7 @@ class WeightCategory(models.Model):
     category = models.CharField(max_length=1020)
     percentage = models.IntegerField()
 
-# a group of weights by category
+# a group of weights by category/
 class Weight(models.Model):
     name = models.CharField(max_length=1020, blank=True)
     categories = models.ManyToManyField(WeightCategory, related_name="weights")
