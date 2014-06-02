@@ -28,7 +28,7 @@ class switch(object):
 
 # local imports defined as string references
 File = 'core.File'
-MetaData = 'core.MetaData'
+from ..core.models import MetaData
 User = 'core.SyllUser'
 Timeslot = 'core.Timeslot'
 GradingScale = 'GradingScale'
@@ -66,52 +66,41 @@ class Event(models.Model):
     
     # calculate the individual worth of this event based on the weight
     def calculateWorth(self):
+        # grab the events class
         qlass = self.classes.all()[0]
-
-        
-        if self.metaData.filter(key = 'weight'):
-            return self.metaData.filter(key = 'weight').value
+        # figure out the category of the event
+        # if it has a subcategory
+        if self.metaData.filter(key = 'subCategory'):
+            # use it
+            category = self.metaData.get(key = 'subCategory').value
+        # otherwise
         else:
-            if self.metaData.filter(key = 'subCategory'):
-                category = self.metaData.get(key = 'subCategory').value
-                events = []
-                
-                for event in qlass.events.filter(category = category):
-                    if event not in events:
-                        events.append(event)
-                
-                for event in qlass.events.filter(metaData__key = 'subCategory').filter(metaData__value=category):
-                    if event not in events:
-                        events.append(event)
- 
-                count = len(events)
-            else:
-                category = self.category
-                events = []
-                
-                for event in qlass.events.filter(category = category):
-                    if event not in events:
-                        events.append(event)
-                
-                for event in qlass.events.filter(metaData__key = 'subCategory').filter(metaData__value=category):
-                    if event not in events:
-                        events.append(event)
- 
-                count = len(events)
-                
-            # is there a weight for this category?
-            if qlass.weights:
-                if qlass.weights.categories.filter(category=category):
-                    # if so, let's return the percentage divded by the number of events that fit the category
-                    totalPercentage = qlass.weights.categories.filter(category=category)[0].percentage
-                    
-                    return totalPercentage/count
-                    
-                else:
-                    return 0
-            
-            else:   
-                return 0
+            # use the event category
+            category = self.category
+        
+        # gather the events of this category including matching subCategory
+        events = (qlass.events.filter(category = category) | 
+                  qlass.events.filter(metaData__key = 'subCategory')
+                              .filter(metaData__value = category)).distinct()
+        # the total  number of possible points for this category
+        possiblePoints = 0
+        # gather the possible metaData
+        for data in (MetaData.objects.filter(events__in = events)
+                                     .filter(key = 'possiblePoints')):
+            # add up the points
+            possiblePoints += float(data.value)
+        
+        # get a corresponding weight entry
+        weightEntry = (WeightCategory.objects.filter(weights__sections = qlass)
+                                        .filter(category = category))
+        if weightEntry:
+            percentage = weightEntry[0].percentage
+            # grab the events possible points
+            eventPossible = int(self.metaData.get(key='possiblePoints').value)
+            # calculate the weight
+            weight = (eventPossible/possiblePoints) * percentage
+            # return the weight
+            return round(weight)
 
     def isStudentOnTime(self, student):
 

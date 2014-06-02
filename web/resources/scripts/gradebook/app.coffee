@@ -142,6 +142,7 @@ gradebook.directive 'wc', [ '$http', '$rootScope', ($http, $rootScope) ->
         'weights' : scope.weights
       ).success (result) ->
         scope.toggleWeightControl()
+        scope.recalculateWeights()
 ]
        
 
@@ -199,8 +200,8 @@ gradebook.directive 'gsc', ['$http', '$rootScope', ($http, $rootScope) ->
 
     scope.addGradingScaleCategory = (upper) ->
       # find the category we care about and its index
-      cat = _.findWhere(scope.gradingScale.categories, {upper: upper})
-      index = _.indexOf(scope.gradingScale.categories, cat) 
+      cat = _.findWhere scope.gradingScale.categories, {upper: upper} 
+      index = _.indexOf scope.gradingScale.categories, cat  
       # grab the category after it
       next = scope.gradingScale.categories[index - 1]
       # create a category that splits it and the next one and uses cats value
@@ -222,7 +223,7 @@ gradebook.directive 'gsc', ['$http', '$rootScope', ($http, $rootScope) ->
 ]
       
 
-gradebook.directive 'gradebook', ['$http', ($http) ->
+gradebook.directive 'gradebook', ['$http', '$rootScope', ($http, $rootScope) ->
   restrict: 'AE',
   templateUrl: '../templates/gradebook/gradebook.html',
   link: (scope, elem, attrs) ->
@@ -244,9 +245,21 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
       # get the event we care about
       event = _.where(scope.events, {id: eventId})[0]
       #  update its possiblePossible on the database
-      $http.post '/gradebook/changePossiblePoints/', 
+      $http.post('/gradebook/changePossiblePoints/', 
         id: event.id, 
         value: event.possiblePoints
+      ).success (result) ->
+        if not scope.weights
+          # load the weights from the syllabus api
+          $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success (result) ->
+            # load the result
+            scope.weights = result
+            # prevent the weights from loading again
+            refreshWeights = false
+            # recalculate the weights
+            scope.recalculateWeights()
+        else
+          scope.recalculateWeights()
 
     # update the grade for a student/event on the database   
     scope.updateGrade = (studentId, eventId) ->
@@ -258,4 +271,20 @@ gradebook.directive 'gradebook', ['$http', ($http) ->
         event: eventId,
         score: grade
 
-]
+    # recalculate the weight of each event
+    scope.recalculateWeights = () ->
+      # grab a list of the unique categories
+      categories = _.uniq _.pluck(scope.events, 'category')
+      # loop over the categories
+      angular.forEach categories, (category) ->
+        # calculate the total number of possible points for this category
+        totalPoints = _.reduce _.where(scope.events, {category:category}), (memo, event) ->
+          return memo + parseInt(event.possiblePoints)
+        , 0
+        # get the weight for the entire group
+        weight = _.where(scope.weights.categories, {category: category})[0].percentage
+        # calculate the weight per point
+        weightPerPoint = weight/totalPoints
+        angular.forEach _.where(scope.events, {category: category}), (category) ->
+          category.weight = Math.round(category.possiblePoints * weightPerPoint)
+  ]

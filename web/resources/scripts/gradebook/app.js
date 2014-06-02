@@ -112,7 +112,8 @@
               'classId': $rootScope.gradebook_id,
               'weights': scope.weights
             }).success(function(result) {
-              return scope.toggleWeightControl();
+              scope.toggleWeightControl();
+              return scope.recalculateWeights();
             });
           };
         }
@@ -190,7 +191,7 @@
   ]);
 
   gradebook.directive('gradebook', [
-    '$http', function($http) {
+    '$http', '$rootScope', function($http, $rootScope) {
       return {
         restrict: 'AE',
         templateUrl: '../templates/gradebook/gradebook.html',
@@ -215,15 +216,47 @@
             return $http.post('/gradebook/changePossiblePoints/', {
               id: event.id,
               value: event.possiblePoints
+            }).success(function(result) {
+              if (!scope.weights) {
+                return $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success(function(result) {
+                  var refreshWeights;
+                  scope.weights = result;
+                  refreshWeights = false;
+                  return scope.recalculateWeights();
+                });
+              } else {
+                return scope.recalculateWeights();
+              }
             });
           };
-          return scope.updateGrade = function(studentId, eventId) {
+          scope.updateGrade = function(studentId, eventId) {
             var grade;
             grade = scope.gradebook[studentId][eventId].grade;
             return $http.post('/gradebook/addgrade/', {
               student: studentId,
               event: eventId,
               score: grade
+            });
+          };
+          return scope.recalculateWeights = function() {
+            var categories;
+            categories = _.uniq(_.pluck(scope.events, 'category'));
+            return angular.forEach(categories, function(category) {
+              var totalPoints, weight, weightPerPoint;
+              totalPoints = _.reduce(_.where(scope.events, {
+                category: category
+              }), function(memo, event) {
+                return memo + parseInt(event.possiblePoints);
+              }, 0);
+              weight = _.where(scope.weights.categories, {
+                category: category
+              })[0].percentage;
+              weightPerPoint = weight / totalPoints;
+              return angular.forEach(_.where(scope.events, {
+                category: category
+              }), function(category) {
+                return category.weight = Math.round(category.possiblePoints * weightPerPoint);
+              });
             });
           };
         }
