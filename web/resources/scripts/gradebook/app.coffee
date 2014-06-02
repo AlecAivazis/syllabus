@@ -221,6 +221,7 @@ gradebook.directive 'gsc', ['$http', '$rootScope', ($http, $rootScope) ->
         classId: $rootScope.gradebook_id
       ).success (result) ->
         scope.recalculateGrades()
+        scope.toggleGradingScale()
 ]
       
 

@@ -183,7 +183,8 @@
               gradingScale: scope.gradingScale,
               classId: $rootScope.gradebook_id
             }).success(function(result) {
-              return scope.recalculateGrades();
+              scope.recalculateGrades();
+              return scope.toggleGradingScale();
             });
           };
         }
