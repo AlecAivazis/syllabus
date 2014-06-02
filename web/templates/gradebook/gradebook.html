@@ -55,7 +55,7 @@
           </a>
           <!-- input for changing grades -->
           <input ng-model="gradebook[student.id][event.id].grade" 
-                 ng-change="updateGrade(student.id, event.id)"></input>
+                 ng-blur="updateGrade(student.id, event.id)"></input>
         </td>
       </tr>
       <!-- the last row showed the averages for each event -->

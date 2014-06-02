@@ -281,6 +281,12 @@ gradebook.directive 'gradebook', ['$http', '$rootScope', ($http, $rootScope) ->
         , 0
         # set the average
         event.average = total/nStudents
+      # compute the average student grade
+      total = _.reduce scope.students, (memo, student) ->
+        return memo += parseFloat(student.totalGrade.score)
+      , 0
+      # set the scope variable
+      scope.totalAverage = total/nStudents
 
     scope.computeWeights = () ->
       # grab a list of the unique categories

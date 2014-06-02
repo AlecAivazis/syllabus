@@ -238,15 +238,19 @@
             });
           };
           scope.calculateAverages = function() {
-            var nStudents;
+            var nStudents, total;
             nStudents = scope.students.length;
-            return angular.forEach(scope.events, function(event) {
+            angular.forEach(scope.events, function(event) {
               var total;
               total = _.reduce(scope.students, function(memo, student) {
                 return memo += scope.gradebook[student.id][event.id].grade;
               }, 0);
               return event.average = total / nStudents;
             });
+            total = _.reduce(scope.students, function(memo, student) {
+              return memo += parseFloat(student.totalGrade.score);
+            }, 0);
+            return scope.totalAverage = total / nStudents;
           };
           scope.computeWeights = function() {
             var categories;
