@@ -4,15 +4,13 @@
 
   _ = window._;
 
-  angular.module('gradebook', []).directive('gradebook', [
-    '$http', '$rootScope', function($http, $rootScope) {
-      return {
-        restrict: 'AE',
-        templateUrl: '../templates/gradebook/gradebook.html',
-        controller: 'gradebookCtrl'
-      };
-    }
-  ]).controller('gradebookCtrl', [
+  angular.module('gradebook', []).directive('gradebook', function() {
+    return {
+      restrict: 'AE',
+      templateUrl: '../templates/gradebook/gradebook.html',
+      controller: 'gradebookCtrl'
+    };
+  }).controller('gradebookCtrl', [
     '$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
       $rootScope.$on('recalculateWeights', function() {
         return $scope.recalculateWeights();

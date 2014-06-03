@@ -8,11 +8,11 @@ _ = window._
 angular.module('gradebook', [])
 
 # the gradebook directive
-.directive 'gradebook', ['$http', '$rootScope', ($http, $rootScope) ->
+.directive 'gradebook', () ->
   restrict: 'AE',
   templateUrl: '../templates/gradebook/gradebook.html',
   controller: 'gradebookCtrl'
-]
+
 # the gradebook controller
 .controller 'gradebookCtrl' , [ '$scope', '$http', '$rootScope', ($scope, $http, $rootScope) ->
 
@@ -98,7 +98,9 @@ angular.module('gradebook', [])
       weight = _.where($scope.weights.categories, {category: category})[0].percentage
       # calculate the weight per point
       weightPerPoint = weight/totalPoints
+      # go over every event in the category
       angular.forEach _.where($scope.events, {category: category}), (category) ->
+        # set its weight
         category.weight = Math.round(category.possiblePoints * weightPerPoint)
 
   # load the weights if necessary before calculating
@@ -111,7 +113,9 @@ angular.module('gradebook', [])
         refreshWeights = false
         # recalculate the weights
         $scope.computeWeights()
+    # otherwise
     else
+      # recalculate the weights
       $scope.computeWeights()
 
   # compute the grades of each user
@@ -148,7 +152,10 @@ angular.module('gradebook', [])
       $scope.loadGradingScale().success (result) ->
         # prevent the regradingScale from refreshing
         refreshGradingScale = false
+        # compute the grades
         $scope.computeGrades()
+    # otherwise
     else
+      # compute the grades
       $scope.computeGrades()
 ]

@@ -78,6 +78,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
   $scope.toggleGradingScale = () ->
     # if the grading scale needs to be refreshed
     if refreshGradingScale
+      # then load the scale
       $scope.loadGradingScale()
       # prevent the gradingScale from refreshing
       refreshGradingScale = false

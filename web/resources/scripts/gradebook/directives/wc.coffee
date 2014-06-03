@@ -57,10 +57,12 @@ angular.module('wc', [])
       # you cannot
       return false
       
-  # remove a given index from the weights
+    # remove a given index from the weights
     $scope.removeCategory = (index) ->
-    $scope.weights.categories.splice(index, 1)
-    $scope.canSubmitWidget = $scope.canSubmit()
+      # remove the index
+      $scope.weights.categories.splice(index, 1)
+      # update the submit button
+      $scope.canSubmitWidget = $scope.canSubmit()
 
   # update the weights on the database and recalculate the grades
   $scope.updateWeights = () ->
@@ -68,11 +70,13 @@ angular.module('wc', [])
     if not $scope.canSubmitWidget
       # if its not, get out
       return
+    # otherwise set the weights
     $http.post('/gradebook/weights/set/',
       'classId' : $rootScope.gradebook_id,
       'weights' : $scope.weights
     ).success (result) ->
       $scope.toggleWeightControl()
+      # tell the gradebook directive to recalculate the necessary quantities
       $rootScope.$broadcast 'recalculateWeights'
       $rootScope.$broadcast 'recalculateGrades'
       $rootScope.$broadcast 'recalculateAverages'

@@ -44,9 +44,10 @@
         } else {
           return false;
         }
-        $scope.removeCategory = function(index) {};
-        $scope.weights.categories.splice(index, 1);
-        return $scope.canSubmitWidget = $scope.canSubmit();
+        return $scope.removeCategory = function(index) {
+          $scope.weights.categories.splice(index, 1);
+          return $scope.canSubmitWidget = $scope.canSubmit();
+        };
       };
       return $scope.updateWeights = function() {
         if (!$scope.canSubmitWidget) {
