@@ -1,5 +1,8 @@
 Syllabus To-Do List
 
+Angular:
+    make a blur-changed directive
+
 Catalog:
     
     clock widget for time select
