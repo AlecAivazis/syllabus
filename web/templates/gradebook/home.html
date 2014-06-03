@@ -21,6 +21,8 @@
         src="/static/scripts/gradebook/directives/gsc.js"></script>
 <script type="text/javascript"
         src="/static/scripts/gradebook/directives/wc.js"></script>
+<script type="text/javascript"
+        src="/static/scripts/gradebook/directives/utilities.js"></script>
 <script type="text/javascript" src="/static/scripts/gradebook/app.js"></script>
 
 <script type="text/javascript">
@@ -66,15 +68,22 @@
 
       <!-- toolbar -->
       <span id="gradebookToolbar">
+        <!-- statistics -->
+        <span class="gradebookTool" ng-click="showUtilities = !showUtilities"
+              ng-init="showUtilities = false">
+          <img src="/resources/images/icons/stats.png">
+          Graphs
+        </span>
+        <!-- toggle grading scale -->
         <span class="gradebookTool" id="scaleTool" ng-click="toggleGradingScale()">
           <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
           Grading Scale
         </span>
+        <!-- toggle weight control -->
         <span class="gradebookTool" ng-click="toggleWeightControl()">
           <img src="/resources/images/icons/scale.png">
           Assign Weights
         </span>
-
         <!--
         <span class="gradebookTool" ng-click="isolateStudent = true"
               ng-show="isolateStudent = false">
@@ -94,6 +103,7 @@
       
       <!-- gradebook table -->
       <div gradebook></div>
+      <div utilities></div>
 
     </div>
   </article>

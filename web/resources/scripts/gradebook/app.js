@@ -4,7 +4,7 @@
 
   _ = window._;
 
-  gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc']);
+  gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc', 'utilities']);
 
   gradebook.run([
     '$http', '$cookies', function($http, $cookies) {

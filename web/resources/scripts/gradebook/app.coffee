@@ -5,7 +5,8 @@
 _ = window._
 
 # create the angular module
-gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc'])
+gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc',
+  'utilities'])
 
 # add csrf tokens for proper ajax support
 gradebook.run ['$http', '$cookies', ($http, $cookies) -> 
