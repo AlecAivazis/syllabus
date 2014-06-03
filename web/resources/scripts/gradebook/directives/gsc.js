@@ -11,7 +11,13 @@
       controller: 'gscCtrl'
     };
   }).controller('gscCtrl', [
-    '$scope', function($scope) {
+    '$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+      $scope.loadGradingScale = function() {
+        return $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success(function(result) {
+          $scope.gradingScale = result;
+          return $scope.updateUppers();
+        });
+      };
       $scope.updateUppers = function() {
         return angular.forEach($scope.gradingScale.categories, function(category, key) {
           var cont, prev;
@@ -65,9 +71,9 @@
       return $scope.applyGradingScale = function() {
         return $http.post('/gradebook/gradingScale/setScale/', {
           gradingScale: $scope.gradingScale,
-          classId: $root$scope.gradebook_id
+          classId: $rootScope.gradebook_id
         }).success(function(result) {
-          $root$scope.$broadcast('recalculateGrades');
+          $rootScope.$broadcast('recalculateGrades');
           return $scope.toggleGradingScale();
         });
       };

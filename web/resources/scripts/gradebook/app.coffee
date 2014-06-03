@@ -78,13 +78,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
   $scope.toggleGradingScale = () ->
     # if the grading scale needs to be refreshed
     if refreshGradingScale
-      # load the grading scale from the syllabus api
-      $http.get('/api/classes/' + class_id + '/gradingScale/').success (result) ->
-        # load the scale into the view
-        $scope.gradingScale = result
-        # fill in the upper bounds (defined in grading scale control directive)
-        $scope.updateUppers()
-
+      $scope.loadGradingScale()
       # prevent the gradingScale from refreshing
       refreshGradingScale = false
 

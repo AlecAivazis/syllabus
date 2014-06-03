@@ -55,10 +55,7 @@
     };
     return $scope.toggleGradingScale = function() {
       if (refreshGradingScale) {
-        $http.get('/api/classes/' + class_id + '/gradingScale/').success(function(result) {
-          $scope.gradingScale = result;
-          return $scope.updateUppers();
-        });
+        $scope.loadGradingScale();
         refreshGradingScale = false;
       }
       return $scope.showGradingScale = !$scope.showGradingScale;

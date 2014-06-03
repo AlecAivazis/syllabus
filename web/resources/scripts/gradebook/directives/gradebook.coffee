@@ -145,11 +145,7 @@ angular.module('gradebook', [])
     # check if the gradingScale has loaded yet
     if not $scope.gradingScale
       # load the grading scale from the syllabus api
-      $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success (result) ->
-        # load the scale into the view
-        $scope.gradingScale = result
-        # fill in the upper bounds (defined in grading scale control directive)
-        $scope.updateUppers()
+      $scope.loadGradingScale().success (result) ->
         # prevent the regradingScale from refreshing
         refreshGradingScale = false
         $scope.computeGrades()

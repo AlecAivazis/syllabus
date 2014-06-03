@@ -130,10 +130,8 @@
       };
       return $scope.recalculateGrades = function() {
         if (!$scope.gradingScale) {
-          return $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success(function(result) {
+          return $scope.loadGradingScale().success(function(result) {
             var refreshGradingScale;
-            $scope.gradingScale = result;
-            $scope.updateUppers();
             refreshGradingScale = false;
             return $scope.computeGrades();
           });
