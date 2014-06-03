@@ -15,6 +15,13 @@ angular.module('gsc', [])
 # grading scale controller
 .controller 'gscCtrl', [ '$scope', '$http', '$rootScope', ($scope, $http, $rootScope) ->
 
+  # compute the letter grade corresponding to a score
+  $scope.computeGrade = (score) ->
+    letter = _.sortBy(_.filter($scope.gradingScale.categories, (category) ->
+      return category.lower < score
+    ), (num) ->
+      return num.lower).reverse()[0].value
+
   # load the grading scale from the syllabus api
   $scope.loadGradingScale = () ->
     return $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/')

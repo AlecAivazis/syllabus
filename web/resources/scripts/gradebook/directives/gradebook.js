@@ -107,22 +107,16 @@
       };
       $scope.computeGrades = function() {
         return angular.forEach($scope.students, function(student) {
-          var letter, score, totalScore;
+          var totalScore;
           totalScore = 0;
           angular.forEach($scope.events, function(event) {
             var grade;
             grade = $scope.gradebook[student.id][event.id].grade;
             return totalScore += parseFloat((grade / parseInt(event.possiblePoints)) * event.weight);
           });
-          letter = _.sortBy(_.filter($scope.gradingScale.categories, function(category) {
-            return category.lower < totalScore;
-          }), function(num) {
-            return num.lower;
-          }).reverse()[0].value;
-          score = totalScore.toFixed(1);
           return student.totalGrade = {
-            letter: letter,
-            score: score
+            letter: $scope.computeGrade(totalScore),
+            score: totalScore.toFixed(1)
           };
         });
       };

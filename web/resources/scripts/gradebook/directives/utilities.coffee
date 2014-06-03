@@ -11,9 +11,10 @@ angular.module('utilities', [])
 .directive 'utilities', () ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/utilities.html',
-  controller: 'utilitiesCtrl'
-# grading scale controller
-.controller 'utilitiesCtrl', [ '$scope', '$http', '$rootScope', ($scope, $http, $rootScope) ->
+  link: (scope, element, attrs) ->
 
-]
+    # display a histogram to organize the frequency of grades
+    scope.histogram = () ->
+      scope.hideGradebook = true
+      console.log 'opening up histogram'
       

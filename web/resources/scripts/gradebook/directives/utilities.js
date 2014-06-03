@@ -8,8 +8,13 @@
     return {
       restrict: 'AE',
       templateUrl: '../templates/gradebook/utilities.html',
-      controller: 'utilitiesCtrl'
+      link: function(scope, element, attrs) {
+        return scope.histogram = function() {
+          scope.hideGradebook = true;
+          return console.log('opening up histogram');
+        };
+      }
     };
-  }).controller('utilitiesCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {}]);
+  });
 
 }).call(this);

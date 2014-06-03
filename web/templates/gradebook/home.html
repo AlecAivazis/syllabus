@@ -100,10 +100,12 @@
       <!-- controls -->
       <div gsc ng-show="showGradingScale" ng-init="showGradingScale = false"></div>
       <div wc ng-show="displayWeightControl" ng-init="displayWeightControl = false"></div>
+      <div utilities></div>
       
       <!-- gradebook table -->
-      <div gradebook></div>
-      <div utilities></div>
+      <div gradebook ng-hide="hideGradebook"></div>
+      <!-- when the gradebook is hidden, show the stats view -->
+      <div id="statistics" ng-show="hideGradebook"></div>
 
     </div>
   </article>

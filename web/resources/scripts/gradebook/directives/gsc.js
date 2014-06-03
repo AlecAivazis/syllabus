@@ -12,6 +12,14 @@
     };
   }).controller('gscCtrl', [
     '$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+      $scope.computeGrade = function(score) {
+        var letter;
+        return letter = _.sortBy(_.filter($scope.gradingScale.categories, function(category) {
+          return category.lower < score;
+        }), function(num) {
+          return num.lower;
+        }).reverse()[0].value;
+      };
       $scope.loadGradingScale = function() {
         return $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success(function(result) {
           $scope.gradingScale = result;

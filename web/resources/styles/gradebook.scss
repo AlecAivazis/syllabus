@@ -102,7 +102,9 @@ input {
   font-weight: medium;
   text-shadow: none;
   display: inline-block;
-  float: right;
+
+  width: 150px;
+
   position: absolute;
   top: 130px;
   right: 275px;
@@ -113,14 +115,20 @@ input {
       color: inherit;
     }
   }
+
   z-index: 999;
 }
 
 .statChoice {
-  padding-left: 5px;
+  padding: 5px;
   background: white;
-  border-bottom: 1px solid  #BEBEBE;
+  border: 1px solid  #BEBEBE;
+  border-top: none;
+  opacity: .9;
   color: black;
+  img {
+    height: 20px;
+  }
 }
 
 .gradebookSection {

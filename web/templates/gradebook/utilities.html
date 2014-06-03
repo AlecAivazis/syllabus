@@ -1,15 +1,20 @@
-
 <ul id="statsList" ng-show="showUtilities">
-  <li class="statChoice" onclick="histogram()"> 
-    <img src="/resources/images/icons/stats.png">
-    Histogram
-  </li>
-  <li class="statChoice" onclick="performance()"> 
-    <img src="/resources/images/icons/stats.png">
-    Performance
-  </li>
-  <li class="statChoice" onclick="timeline()"> 
-    <img src="/resources/images/icons/stats.png">
-    Timeline
-  </li>
+  <a ng-click="histogram()">
+    <li class="statChoice"> 
+      <img src="/resources/images/icons/stats.png">
+      Histogram
+    </li>
+  </a>
+  <a ng-click="performance()">
+    <li class="statChoice"> 
+      <img src="/resources/images/icons/stats.png">
+      Performance
+    </li>
+  </a>
+  <a ng-click="timeline()">
+    <li class="statChoice"> 
+      <img src="/resources/images/icons/stats.png">
+      Timeline
+    </li>
+  </a>
 </ul>
