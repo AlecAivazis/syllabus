@@ -1,8 +1,13 @@
+# the gradebook angular application for the syllabus web app
+# author: alec aivazis
+
 # add shortcut to underscore
 _ = window._
 
+# create the angular module
 gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc'])
 
+# add csrf tokens for proper ajax supper
 gradebook.run ['$http', '$cookies', ($http, $cookies) -> 
   $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
   $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;

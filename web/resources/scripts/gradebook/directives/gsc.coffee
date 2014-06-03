@@ -14,7 +14,8 @@ angular.module('gsc', [])
   controller: 'gscCtrl'
 # grading scale controller
 .controller 'gscCtrl', [ '$scope', ($scope) ->
-    # when an upper is changed, go make the lowers reflect it
+
+    # when an lower is changed, go make the uppers reflect it
     $scope.updateUppers = () ->
       # go over each category
       angular.forEach $scope.gradingScale.categories, (category, key) ->
