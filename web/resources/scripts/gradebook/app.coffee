@@ -1,7 +1,7 @@
 # add shortcut to underscore
 _ = window._
 
-gradebook = angular.module('gradebook-app', ['ngCookies'])
+gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook'])
 
 gradebook.run ['$http', '$cookies', ($http, $cookies) -> 
   $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
@@ -47,7 +47,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
       # register the class for the gradebook
       class_id = $rootScope.gradebook_id
       # compute the averages
-      $scope.calculateAverages()
+      $rootScope.$broadcast 'recalculateAverages'
 
     # track if the weights need to be reloaded
     refreshWeights = true
@@ -144,9 +144,9 @@ gradebook.directive 'wc', [ '$http', '$rootScope', ($http, $rootScope) ->
         'weights' : scope.weights
       ).success (result) ->
         scope.toggleWeightControl()
-        scope.recalculateWeights()
-        scope.recalculateGrades()
-        scope.calculateAverages()
+        $rootScope.$broadcast 'recalculateWeights'
+        $rootScope.$broadcast 'recalculateGrades'
+        $rootScope.$broadcast 'recalculateAverages'
 ]
        
 
@@ -223,142 +223,7 @@ gradebook.directive 'gsc', ['$http', '$rootScope', ($http, $rootScope) ->
         gradingScale: scope.gradingScale,
         classId: $rootScope.gradebook_id
       ).success (result) ->
-        scope.recalculateGrades()
+        $rootScope.$broadcast 'recalculateGrades'
         scope.toggleGradingScale()
 ]
       
-
-gradebook.directive 'gradebook', ['$http', '$rootScope', ($http, $rootScope) ->
-  restrict: 'AE',
-  templateUrl: '../templates/gradebook/gradebook.html',
-  link: (scope, elem, attrs) ->
-
-    # update the event category in the database with its current value
-    scope.updateEventCategory = (eventId) ->
-      # get the event we care about
-      event = _.where(scope.events, {id: eventId})[0]
-      #  update its category on the database
-      $http.post('/gradebook/changeCategory/', 
-        id: event.id, 
-        value: event.category
-      ).success (result) ->
-        scope.recalculateWeights()
-        scope.recalculateGrades()
-    
-    # update the event possible points on the database with its current value in the model
-    scope.updatePossiblePoints = (eventId) ->
-      # get the event we care about
-      event = _.where(scope.events, {id: eventId})[0]
-      #  update its possiblePossible on the database
-      $http.post('/gradebook/changePossiblePoints/', 
-        id: event.id, 
-        value: event.possiblePoints
-      ).success (result) ->
-        scope.recalculateGrades()
-
-    # update the grade for a student/event on the database   
-    scope.updateGrade = (studentId, eventId) ->
-      # get the grade we care about
-      grade = scope.gradebook[studentId][eventId].grade
-      # update the grade on the server
-      $http.post('/gradebook/addgrade/', 
-        student: studentId,
-        event: eventId,
-        score: grade
-      ).success (result) ->
-        scope.recalculateGrades()
-        scope.calculateAverages()
-
-    # compute the average of each event
-    scope.calculateAverages = () ->
-      # save the number of students so it only has to be computed one
-      nStudents = scope.students.length
-      # go over each event
-      angular.forEach scope.events, (event) ->
-        # compute the sum of the grades for each student
-        total =  _.reduce scope.students, (memo, student) ->
-          return memo += scope.gradebook[student.id][event.id].grade
-        , 0
-        # set the average
-        event.average = total/nStudents
-      # compute the average student grade
-      total = _.reduce scope.students, (memo, student) ->
-        return memo += parseFloat(student.totalGrade.score)
-      , 0
-      # set the scope variable
-      scope.totalAverage = total/nStudents
-
-    scope.computeWeights = () ->
-      # grab a list of the unique categories
-      categories = _.uniq _.pluck(scope.events, 'category')
-      # loop over the categories
-      angular.forEach categories, (category) ->
-        # calculate the total number of possible points for this category
-        totalPoints = _.reduce _.where(scope.events, {category:category}), (memo, event) ->
-          return memo + parseInt(event.possiblePoints)
-        , 0
-        # get the weight for the entire group
-        weight = _.where(scope.weights.categories, {category: category})[0].percentage
-        # calculate the weight per point
-        weightPerPoint = weight/totalPoints
-        angular.forEach _.where(scope.events, {category: category}), (category) ->
-          category.weight = Math.round(category.possiblePoints * weightPerPoint)
-
-    # load the weights if necessary before calculating
-    scope.recalculateWeights = () ->
-      # if the weights are already loaded
-      if not scope.weights
-        # load the weights from the syllabus api
-        $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success (result) ->
-          # load the result
-          scope.weights = result
-          # prevent the weights from loading again
-          refreshWeights = false
-          # recalculate the weights
-          scope.computeWeights()
-      else
-        scope.computeWeights()
-
-    # compute the grades of each user
-    scope.computeGrades = () ->
-      # loop over each student
-      angular.forEach scope.students, (student) ->
-        # store the total score for this student
-        totalScore = 0
-        # for each event
-        angular.forEach scope.events, (event) ->
-          # grab the score for this student
-          grade = scope.gradebook[student.id][event.id].grade
-          # add the weighted grade to the totalScore
-          totalScore += parseFloat((grade/parseInt(event.possiblePoints)) * event.weight)
-  
-        # the letter is given by the category with the highest lower below totalScore
-        letter = _.sortBy(_.filter(scope.gradingScale.categories, (category) ->
-          return category.lower < totalScore
-        ), (num) ->
-          return num.lower).reverse()[0].value
-        # the score is totalScore rounded to 1 decimal place
-        score = totalScore.toFixed(1)
-
-        # set the students grade
-        student.totalGrade =
-          letter: letter,
-          score: score
-
-    # recalculate the grade of each student
-    scope.recalculateGrades = () ->
-
-      # check if the gradingScale has loaded yet
-      if not scope.gradingScale
-        # load the grading scale from the syllabus api
-        $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success (result) ->
-          # load the scale into the view
-          scope.gradingScale = result
-          # fill in the upper bounds (defined in grading scale control directive)
-          scope.updateUppers()
-          # prevent the gradingScale from refreshing
-          refreshGradingScale = false
-          scope.computeGrades()
-      else
-        scope.computeGrades()
-  ]

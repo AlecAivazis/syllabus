@@ -68,9 +68,9 @@ def addGrade(request):
 
     # load the json data
     post = json.loads(bytes.decode(request.body))
-
+    # load the post data
     student = SyllUser.objects.get(id = int(post['student']))
-    score = post['score'].strip()
+    score = post['score']
     event = Event.objects.get(id = int(post['event']))
     
     if student and event:

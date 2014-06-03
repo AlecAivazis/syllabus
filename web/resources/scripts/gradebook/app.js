@@ -4,7 +4,7 @@
 
   _ = window._;
 
-  gradebook = angular.module('gradebook-app', ['ngCookies']);
+  gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook']);
 
   gradebook.run([
     '$http', '$cookies', function($http, $cookies) {
@@ -39,7 +39,7 @@
         $scope.gradebook = result.gradebook;
         $scope.students = result.students;
         class_id = $rootScope.gradebook_id;
-        return $scope.calculateAverages();
+        return $rootScope.$broadcast('recalculateAverages');
       });
       refreshWeights = true;
       refreshGradingScale = true;
@@ -114,9 +114,9 @@
               'weights': scope.weights
             }).success(function(result) {
               scope.toggleWeightControl();
-              scope.recalculateWeights();
-              scope.recalculateGrades();
-              return scope.calculateAverages();
+              $rootScope.$broadcast('recalculateWeights');
+              $rootScope.$broadcast('recalculateGrades');
+              return $rootScope.$broadcast('recalculateAverages');
             });
           };
         }
@@ -185,139 +185,9 @@
               gradingScale: scope.gradingScale,
               classId: $rootScope.gradebook_id
             }).success(function(result) {
-              scope.recalculateGrades();
+              $rootScope.$broadcast('recalculateGrades');
               return scope.toggleGradingScale();
             });
-          };
-        }
-      };
-    }
-  ]);
-
-  gradebook.directive('gradebook', [
-    '$http', '$rootScope', function($http, $rootScope) {
-      return {
-        restrict: 'AE',
-        templateUrl: '../templates/gradebook/gradebook.html',
-        link: function(scope, elem, attrs) {
-          scope.updateEventCategory = function(eventId) {
-            var event;
-            event = _.where(scope.events, {
-              id: eventId
-            })[0];
-            return $http.post('/gradebook/changeCategory/', {
-              id: event.id,
-              value: event.category
-            }).success(function(result) {
-              scope.recalculateWeights();
-              return scope.recalculateGrades();
-            });
-          };
-          scope.updatePossiblePoints = function(eventId) {
-            var event;
-            event = _.where(scope.events, {
-              id: eventId
-            })[0];
-            return $http.post('/gradebook/changePossiblePoints/', {
-              id: event.id,
-              value: event.possiblePoints
-            }).success(function(result) {
-              return scope.recalculateGrades();
-            });
-          };
-          scope.updateGrade = function(studentId, eventId) {
-            var grade;
-            grade = scope.gradebook[studentId][eventId].grade;
-            return $http.post('/gradebook/addgrade/', {
-              student: studentId,
-              event: eventId,
-              score: grade
-            }).success(function(result) {
-              scope.recalculateGrades();
-              return scope.calculateAverages();
-            });
-          };
-          scope.calculateAverages = function() {
-            var nStudents, total;
-            nStudents = scope.students.length;
-            angular.forEach(scope.events, function(event) {
-              var total;
-              total = _.reduce(scope.students, function(memo, student) {
-                return memo += scope.gradebook[student.id][event.id].grade;
-              }, 0);
-              return event.average = total / nStudents;
-            });
-            total = _.reduce(scope.students, function(memo, student) {
-              return memo += parseFloat(student.totalGrade.score);
-            }, 0);
-            return scope.totalAverage = total / nStudents;
-          };
-          scope.computeWeights = function() {
-            var categories;
-            categories = _.uniq(_.pluck(scope.events, 'category'));
-            return angular.forEach(categories, function(category) {
-              var totalPoints, weight, weightPerPoint;
-              totalPoints = _.reduce(_.where(scope.events, {
-                category: category
-              }), function(memo, event) {
-                return memo + parseInt(event.possiblePoints);
-              }, 0);
-              weight = _.where(scope.weights.categories, {
-                category: category
-              })[0].percentage;
-              weightPerPoint = weight / totalPoints;
-              return angular.forEach(_.where(scope.events, {
-                category: category
-              }), function(category) {
-                return category.weight = Math.round(category.possiblePoints * weightPerPoint);
-              });
-            });
-          };
-          scope.recalculateWeights = function() {
-            if (!scope.weights) {
-              return $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success(function(result) {
-                var refreshWeights;
-                scope.weights = result;
-                refreshWeights = false;
-                return scope.computeWeights();
-              });
-            } else {
-              return scope.computeWeights();
-            }
-          };
-          scope.computeGrades = function() {
-            return angular.forEach(scope.students, function(student) {
-              var letter, score, totalScore;
-              totalScore = 0;
-              angular.forEach(scope.events, function(event) {
-                var grade;
-                grade = scope.gradebook[student.id][event.id].grade;
-                return totalScore += parseFloat((grade / parseInt(event.possiblePoints)) * event.weight);
-              });
-              letter = _.sortBy(_.filter(scope.gradingScale.categories, function(category) {
-                return category.lower < totalScore;
-              }), function(num) {
-                return num.lower;
-              }).reverse()[0].value;
-              score = totalScore.toFixed(1);
-              return student.totalGrade = {
-                letter: letter,
-                score: score
-              };
-            });
-          };
-          return scope.recalculateGrades = function() {
-            if (!scope.gradingScale) {
-              return $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success(function(result) {
-                var refreshGradingScale;
-                scope.gradingScale = result;
-                scope.updateUppers();
-                refreshGradingScale = false;
-                return scope.computeGrades();
-              });
-            } else {
-              return scope.computeGrades();
-            }
           };
         }
       };
