@@ -67,11 +67,9 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
     # if the weights need to be refreshed
     if refreshWeights
       # load the weights from the syllabus api
-      $http.get('/api/classes/' + class_id + '/weights/').success (result) ->
-        # load the result
-        $scope.weights = result
-        # prevent the weights from loading again
-        refreshWeights = false
+      $scope.loadWeights()
+      # prevent the weights from loading again
+      refreshWeights = false
 
     # flip the control variable
     $scope.displayWeightControl = !$scope.displayWeightControl

@@ -106,9 +106,7 @@ angular.module('gradebook', [])
     # if the weights are already loaded
     if not $scope.weights
       # load the weights from the syllabus api
-      $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success (result) ->
-        # load the result
-        $scope.weights = result
+      $scope.loadWeights().success (result) ->
         # prevent the weights from loading again
         refreshWeights = false
         # recalculate the weights

@@ -14,6 +14,14 @@ angular.module('wc', [])
   controller: 'wcCtrl'
 # grading scale controller
 .controller 'wcCtrl', [ '$scope' ,'$http', '$rootScope', ($scope, $http, $rootScope) ->
+
+  # load the weights from the syllabus api
+  $scope.loadWeights = () ->
+    return $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/')
+                .success (result) ->
+        # load the result
+        $scope.weights = result
+
   # check if a new category needs to be added
   $scope.addCategory = () ->
     if $scope.newCategory && $scope.newPercentage 

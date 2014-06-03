@@ -48,10 +48,8 @@
     });
     $scope.toggleWeightControl = function() {
       if (refreshWeights) {
-        $http.get('/api/classes/' + class_id + '/weights/').success(function(result) {
-          $scope.weights = result;
-          return refreshWeights = false;
-        });
+        $scope.loadWeights();
+        refreshWeights = false;
       }
       return $scope.displayWeightControl = !$scope.displayWeightControl;
     };

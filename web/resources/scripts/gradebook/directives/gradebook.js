@@ -98,9 +98,8 @@
       };
       $scope.recalculateWeights = function() {
         if (!$scope.weights) {
-          return $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success(function(result) {
+          return $scope.loadWeights().success(function(result) {
             var refreshWeights;
-            $scope.weights = result;
             refreshWeights = false;
             return $scope.computeWeights();
           });

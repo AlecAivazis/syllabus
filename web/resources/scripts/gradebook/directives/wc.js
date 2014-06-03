@@ -12,6 +12,11 @@
     };
   }).controller('wcCtrl', [
     '$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+      $scope.loadWeights = function() {
+        return $http.get('/api/classes/' + $rootScope.gradebook_id + '/weights/').success(function(result) {
+          return $scope.weights = result;
+        });
+      };
       $scope.addCategory = function() {
         if ($scope.newCategory && $scope.newPercentage) {
           $scope.weights.categories.push({
