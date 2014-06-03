@@ -4,7 +4,7 @@
 
   _ = window._;
 
-  gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc']);
+  gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc']);
 
   gradebook.run([
     '$http', '$cookies', function($http, $cookies) {
@@ -66,62 +66,5 @@
       return $scope.showGradingScale = !$scope.showGradingScale;
     };
   });
-
-  gradebook.directive('wc', [
-    '$http', '$rootScope', function($http, $rootScope) {
-      return {
-        restrict: 'AE',
-        templateUrl: '../templates/gradebook/weights.html',
-        link: function(scope, elem, attrs) {
-          scope.addCategory = function() {
-            if (scope.newCategory && scope.newPercentage) {
-              scope.weights.categories.push({
-                category: scope.newCategory,
-                percentage: scope.newPercentage
-              });
-              scope.newCategory = null;
-              scope.newPercentage = null;
-            } else {
-
-            }
-            return scope.canSubmitWidget = scope.canSubmit();
-          };
-          scope.canSubmit = function() {
-            var percentages, sum;
-            if (!scope.weights) {
-              return true;
-            }
-            percentages = _.pluck(scope.weights.categories, 'percentage');
-            sum = _.reduce(percentages, function(memo, num) {
-              return memo + parseInt(num);
-            }, 0);
-            if (sum === 100) {
-              return true;
-            } else {
-              return false;
-            }
-          };
-          scope.removeCategory = function(index) {
-            scope.weights.categories.splice(index, 1);
-            return scope.canSubmitWidget = scope.canSubmit();
-          };
-          return scope.updateWeights = function() {
-            if (!scope.canSubmitWidget) {
-              return;
-            }
-            return $http.post('/gradebook/weights/set/', {
-              'classId': $rootScope.gradebook_id,
-              'weights': scope.weights
-            }).success(function(result) {
-              scope.toggleWeightControl();
-              $rootScope.$broadcast('recalculateWeights');
-              $rootScope.$broadcast('recalculateGrades');
-              return $rootScope.$broadcast('recalculateAverages');
-            });
-          };
-        }
-      };
-    }
-  ]);
 
 }).call(this);

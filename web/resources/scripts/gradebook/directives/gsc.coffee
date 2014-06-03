@@ -1,4 +1,4 @@
-# the gradebook table as an angularjs directive
+# the grading scale as an angularjs directive
 # author: alec aivazis
 
 # add a shortcut to underscore
@@ -8,11 +8,10 @@ _ = window._
 angular.module('gsc', [])
 
 # grading scale window directive
-.directive 'gsc', ['$http', '$rootScope', ($http, $rootScope) ->
+.directive 'gsc', () ->
   restrict : 'AE',
   templateUrl: '../templates/gradebook/gradingScale.html',
   controller: 'gscCtrl'
-]
 # grading scale controller
 .controller 'gscCtrl', [ '$scope', ($scope) ->
     # when an upper is changed, go make the lowers reflect it

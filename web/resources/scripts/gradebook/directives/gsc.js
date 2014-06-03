@@ -4,15 +4,13 @@
 
   _ = window._;
 
-  angular.module('gsc', []).directive('gsc', [
-    '$http', '$rootScope', function($http, $rootScope) {
-      return {
-        restrict: 'AE',
-        templateUrl: '../templates/gradebook/gradingScale.html',
-        controller: 'gscCtrl'
-      };
-    }
-  ]).controller('gscCtrl', [
+  angular.module('gsc', []).directive('gsc', function() {
+    return {
+      restrict: 'AE',
+      templateUrl: '../templates/gradebook/gradingScale.html',
+      controller: 'gscCtrl'
+    };
+  }).controller('gscCtrl', [
     '$scope', function($scope) {
       $scope.updateUppers = function() {
         return angular.forEach($scope.gradingScale.categories, function(category, key) {
