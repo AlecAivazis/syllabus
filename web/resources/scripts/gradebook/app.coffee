@@ -7,7 +7,7 @@ _ = window._
 # create the angular module
 gradebook = angular.module('gradebook-app', ['ngCookies', 'gradebook', 'gsc', 'wc'])
 
-# add csrf tokens for proper ajax supper
+# add csrf tokens for proper ajax support
 gradebook.run ['$http', '$cookies', ($http, $cookies) -> 
   $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
   $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
@@ -31,6 +31,7 @@ gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
     # change the id of the current gradebook
     $rootScope.gradebook_id = id
 
+# gradebook view controller
 gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 
   class_id = 
