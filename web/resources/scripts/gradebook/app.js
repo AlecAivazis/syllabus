@@ -21,9 +21,8 @@
       });
     });
     return $scope.loadGradeBook = function(id) {
-      console.log('loading gradebook');
-      $rootScope.$broadcast('load gradebook');
-      return $rootScope.gradebook_id = id;
+      $rootScope.gradebook_id = id;
+      return $rootScope.$broadcast('load gradebook');
     };
   });
 

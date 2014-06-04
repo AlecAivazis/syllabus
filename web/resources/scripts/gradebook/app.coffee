@@ -29,10 +29,10 @@ gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
 
   # event handler for class select
   $scope.loadGradeBook = (id) ->
-    console.log 'loading gradebook'
-    $rootScope.$broadcast 'load gradebook'
     # change the id of the current gradebook
     $rootScope.gradebook_id = id
+    # tell the gradebook directive to reload
+    $rootScope.$broadcast 'load gradebook'
 
 # gradebook view controller
 gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
