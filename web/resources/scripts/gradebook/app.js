@@ -21,6 +21,8 @@
       });
     });
     return $scope.loadGradeBook = function(id) {
+      console.log('loading gradebook');
+      $rootScope.$broadcast('load gradebook');
       return $rootScope.gradebook_id = id;
     };
   });
@@ -29,7 +31,7 @@
     var class_id, refreshGradingScale, refreshWeights;
     class_id = refreshWeights = true;
     refreshGradingScale = true;
-    $rootScope.$watch('gradebook_id', function() {
+    $rootScope.$on('load gradebook', function() {
       if (!$rootScope.gradebook_id) {
         return;
       }
@@ -39,7 +41,8 @@
         $scope.gradebook = result.gradebook;
         $scope.students = result.students;
         class_id = $rootScope.gradebook_id;
-        return $rootScope.$broadcast('recalculateAverages');
+        $rootScope.$broadcast('recalculateAverages');
+        return $scope.hideGradebook = false;
       });
       refreshWeights = true;
       refreshGradingScale = true;

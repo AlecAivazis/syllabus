@@ -9,11 +9,75 @@
       restrict: 'AE',
       templateUrl: '../templates/gradebook/utilities.html',
       link: function(scope, element, attrs) {
-        return scope.histogram = function() {
+        scope.figureTitle = 'Histogram';
+        scope.histogram = function() {
+          scope.showUtilities = false;
+          console.log('opening up histogram');
+          if (!scope.gradingScale) {
+            return scope.loadGradingScale().success(function(result) {
+              console.log('loaded grading scale:');
+              console.log(scope.gradingScale);
+              return scope.computeHistograms();
+            });
+          } else {
+            console.log('scale is good');
+            return scope.computeHistograms();
+          }
+        };
+        return scope.computeHistograms = function() {
+          var data, i, max;
+          console.log('computing histograms');
+          console.log('students:');
+          console.log(scope.students);
+          i = 0;
+          console.log('starting student loop');
+          data = _.countBy(scope.students, function(student) {
+            var grade;
+            console.log('student ' + i + ': ');
+            console.log(student.totalGrade);
+            grade = scope.computeGrade(student.totalGrade.score);
+            console.log('computed letter: ' + grade.value);
+            return grade.lower;
+          });
+          console.log('histogram:');
+          console.log(data);
           scope.hideGradebook = true;
-          return console.log('opening up histogram');
+          max = 110;
+          return $.plot($("#figure"), [
+            {
+              label: null,
+              data: _.pairs(data)
+            }
+          ], {
+            series: {
+              bars: {
+                show: true,
+                barWidth: 10
+              },
+              color: '#00a8ff'
+            },
+            xaxis: {
+              ticks: 10,
+              min: 0,
+              max: max
+            },
+            yaxis: {
+              tickSize: 1,
+              tickDecimals: 0
+            },
+            grid: {
+              backgroundColor: {
+                colors: ["#fff", "#f8f8f8"]
+              }
+            }
+          });
         };
       }
+    };
+  }).directive('utilityView', function() {
+    return {
+      restrict: 'AE',
+      templateUrl: '../templates/gradebook/figure.html'
     };
   });
 

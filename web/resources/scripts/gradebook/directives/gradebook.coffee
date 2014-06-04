@@ -132,7 +132,7 @@ angular.module('gradebook', [])
         totalScore += parseFloat((grade/parseInt(event.possiblePoints)) * event.weight)
 
       # set the students grade
-      # the letter is given by the category with the highest lower below totalScore
+      # the letter is given by the grading scale control
       # the score is totalScore rounded to 1 decimal place
       student.totalGrade =
         letter: $scope.computeGrade(totalScore)

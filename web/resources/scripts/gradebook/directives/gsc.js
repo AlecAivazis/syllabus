@@ -12,13 +12,32 @@
     };
   }).controller('gscCtrl', [
     '$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-      $scope.computeGrade = function(score) {
-        var letter;
-        return letter = _.sortBy(_.filter($scope.gradingScale.categories, function(category) {
-          return category.lower < score;
-        }), function(num) {
-          return num.lower;
-        }).reverse()[0].value;
+      $scope.computeGrade = function(score_obj) {
+        var grade, score;
+        score = parseFloat(score_obj);
+        console.log('computing grade for ' + score);
+        if (!$scope.gradingScale) {
+          console.log('need to refresh gradingScale');
+          return $scope.loadGradingScale().success(function(result) {
+            var grade;
+            console.log('loaded scale');
+            grade = _.sortBy(_.filter($scope.gradingScale.categories, function(category) {
+              return category.lower < parseFloat(score);
+            }), function(num) {
+              return num.lower;
+            }).reverse()[0].value;
+            console.log('computed grade as ' + grade.value);
+            return grade;
+          });
+        } else {
+          console.log('gradingScale is good');
+          grade = _.sortBy(_.filter($scope.gradingScale.categories, function(category) {
+            return category.lower < parseFloat(score);
+          }), function(num) {
+            return num.lower;
+          }).reverse()[0];
+          return grade;
+        }
       };
       $scope.loadGradingScale = function() {
         return $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradingScale/').success(function(result) {

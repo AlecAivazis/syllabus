@@ -29,6 +29,8 @@ gradebook.controller 'ClassSelect', ($scope, $http, $rootScope) ->
 
   # event handler for class select
   $scope.loadGradeBook = (id) ->
+    console.log 'loading gradebook'
+    $rootScope.$broadcast 'load gradebook'
     # change the id of the current gradebook
     $rootScope.gradebook_id = id
 
@@ -40,7 +42,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
   refreshWeights = true
   refreshGradingScale = true 
 
-  $rootScope.$watch 'gradebook_id', () ->
+  $rootScope.$on 'load gradebook', () ->
     # check that its not null
     if not $rootScope.gradebook_id
       return
@@ -55,6 +57,8 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
       class_id = $rootScope.gradebook_id
       # compute the averages
       $rootScope.$broadcast 'recalculateAverages'
+      # make the gradebook ui element show
+      $scope.hideGradebook = false
 
     # track if the weights need to be reloaded
     refreshWeights = true

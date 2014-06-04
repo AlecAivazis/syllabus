@@ -16,11 +16,34 @@ angular.module('gsc', [])
 .controller 'gscCtrl', [ '$scope', '$http', '$rootScope', ($scope, $http, $rootScope) ->
 
   # compute the letter grade corresponding to a score
-  $scope.computeGrade = (score) ->
-    letter = _.sortBy(_.filter($scope.gradingScale.categories, (category) ->
-      return category.lower < score
-    ), (num) ->
-      return num.lower).reverse()[0].value
+  $scope.computeGrade = (score_obj) ->
+    # turn the given argument into a float
+    score = parseFloat(score_obj)
+    # alert the console
+    console.log 'computing grade for ' + score
+    # check if the grading scale exists
+    if not $scope.gradingScale      
+      console.log 'need to refresh gradingScale'
+      $scope.loadGradingScale().success (result) ->
+        console.log 'loaded scale'
+        grade = _.sortBy(_.filter($scope.gradingScale.categories, (category) ->
+          return category.lower < parseFloat(score)
+        ), (num) ->
+          return num.lower
+        ).reverse()[0].value
+
+        console.log 'computed grade as ' + grade.value
+        return grade
+    else
+       console.log 'gradingScale is good'         
+       grade = _.sortBy(_.filter($scope.gradingScale.categories, (category) ->
+          return category.lower < parseFloat(score)
+        ), (num) ->
+          return num.lower
+        ).reverse()[0]
+        
+       return grade
+
 
   # load the grading scale from the syllabus api
   $scope.loadGradingScale = () ->
@@ -44,6 +67,7 @@ angular.module('gsc', [])
         # move on to the next category
         cont= false
 
+      # cont will be false for only the first category
       if cont
         # grab the previous category
         prev = $scope.gradingScale.categories[key-1]    
@@ -62,7 +86,8 @@ angular.module('gsc', [])
         category.lower = 0
         # move on to the next category
         cont = false
-
+      
+      # cont will be false for only the first category
       if cont
         # grab the next category
         next = $scope.gradingScale.categories[key+1]    

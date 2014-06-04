@@ -63,7 +63,7 @@
     <div id="gradebook" ng-show="gradebook_id">
       <!-- breadcrumb -->
       <span id="gradebookBreadCrumbs" class="{{gradebook_id}}">
-        {{breadcrumb[0]}} 
+        {{breadcrumb[0]}} {{hideGradebook}}
       </span>
 
       <!-- toolbar -->
@@ -104,8 +104,7 @@
       
       <!-- gradebook table -->
       <div gradebook ng-hide="hideGradebook"></div>
-      <!-- when the gradebook is hidden, show the stats view -->
-      <div id="statistics" ng-show="hideGradebook"></div>
+      <div ng-show="hideGradebook" utility-view></div>
 
     </div>
   </article>
