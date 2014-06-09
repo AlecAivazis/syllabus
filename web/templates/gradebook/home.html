@@ -41,13 +41,13 @@
 <div id="gradebook" ng-app="gradebook-app">
 
   <!-- Sidebar: select a class to view the appropriate gradebook -->
-  <aside id="gradebookClassSelect" class="sidebar" ng-controller="ClassSelect" >
+  <aside id="gradebookClassSelect" class="sidebar" ng-controller="ClassSelect">
     <ul>
       <li ng-repeat="class in classes"  id="{{class.id}}" class="gradebookClass"
           ng-click="loadGradeBook(class.id)">
           <!-- <img onclick="viewSections(event, {{class.id}})" 
                src="/resources/images/sidebarArrow.png"> -->
-          {{class.name}}
+          {{class.name}} 
       </li>
     </ul>
   </aside>
@@ -62,8 +62,8 @@
     <!-- content -->
     <div id="gradebook" ng-show="gradebook_id">
       <!-- breadcrumb -->
-      <span id="gradebookBreadCrumbs" class="{{gradebook_id}}">
-        {{breadcrumb[0]}} {{hideGradebook}}
+      <span id="gradebookBreadCrumbs" class="{{gradebook_id}}"  ng-click="count++">
+        {{breadcrumb[0]}} {{count}}
       </span>
 
       <!-- toolbar -->
@@ -93,7 +93,9 @@
               ng-show="isolateStudent = true"> 
           Show All Students
         </span>
-        <span class="gradebookTool" ng-init="isolateStudent=false"> {{isolateStudent}} </span>
+        <span class="gradebookTool" ng-init="isolateStudent=false"> 
+          {{isolateStudent}} 
+        </span>
         -->
       </span>
       
@@ -103,7 +105,7 @@
       <div utilities></div>
       
       <!-- gradebook table -->
-      <div gradebook ng-hide="hideGradebook"></div>
+      <div gradebook ng-hide="hideGradebook" ng-init="hideGradebook = false"></div>
       <div ng-show="hideGradebook" utility-view></div>
 
     </div>

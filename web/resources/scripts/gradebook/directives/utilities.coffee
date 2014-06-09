@@ -89,5 +89,6 @@ angular.module('utilities', [])
 # the view to be used by different utilities
 .directive 'utilityView', () ->
   restrict : 'AE',
-  templateUrl: '../templates/gradebook/figure.html'
+  templateUrl: '../templates/gradebook/figure.html',
+
         

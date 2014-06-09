@@ -30,6 +30,10 @@ angular.module('gradebook', [])
 
   # user interface functions
 
+  # toggle the gradebook
+  $scope.toggleGradebook = () ->
+    $scope.hideGradebook = !$scope.hideGradebook
+
   # update the event category in the database with its current value
   $scope.updateEventCategory = (eventId) ->
     # get the event we care about
@@ -135,7 +139,7 @@ angular.module('gradebook', [])
       # the letter is given by the grading scale control
       # the score is totalScore rounded to 1 decimal place
       student.totalGrade =
-        letter: $scope.computeGrade(totalScore)
+        letter: $scope.computeGrade(totalScore).value
         score: totalScore.toFixed(1)
 
   # recalculate the grade of each student

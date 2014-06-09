@@ -21,6 +21,9 @@
       $rootScope.$on('recalculateGrades', function() {
         return $scope.recalculateGrades();
       });
+      $scope.toggleGradebook = function() {
+        return $scope.hideGradebook = !$scope.hideGradebook;
+      };
       $scope.updateEventCategory = function(eventId) {
         var event;
         event = _.where($scope.events, {
@@ -115,7 +118,7 @@
             return totalScore += parseFloat((grade / parseInt(event.possiblePoints)) * event.weight);
           });
           return student.totalGrade = {
-            letter: $scope.computeGrade(totalScore),
+            letter: $scope.computeGrade(totalScore).value,
             score: totalScore.toFixed(1)
           };
         });
