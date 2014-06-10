@@ -24,13 +24,10 @@ angular.module('utilities', [])
       if not scope.gradingScale
          # load it      
          scope.loadGradingScale().success (result) ->
-           console.log 'loaded grading scale:'
-           console.log scope.gradingScale
            # and then compute the histograms
            scope.computeHistograms()
       # otherwise
       else
-         console.log 'scale is good'
          # compute the histograms
          scope.computeHistograms()
     
@@ -78,6 +75,8 @@ angular.module('utilities', [])
 
     # plot the averages of each event
     scope.timeline = () ->
+      # hide the utilities ui element
+      scope.showUtilities = false
       # store the data in a list
       data = []
       # keep the index of the loop iteration

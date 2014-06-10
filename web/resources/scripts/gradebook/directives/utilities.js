@@ -15,12 +15,9 @@
           console.log('opening up histogram');
           if (!scope.gradingScale) {
             return scope.loadGradingScale().success(function(result) {
-              console.log('loaded grading scale:');
-              console.log(scope.gradingScale);
               return scope.computeHistograms();
             });
           } else {
-            console.log('scale is good');
             return scope.computeHistograms();
           }
         };
@@ -65,6 +62,7 @@
         };
         return scope.timeline = function() {
           var data, index;
+          scope.showUtilities = false;
           data = [];
           index = 0;
           angular.forEach(scope.events, function(event) {
