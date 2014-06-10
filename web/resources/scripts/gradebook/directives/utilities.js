@@ -24,26 +24,16 @@
             return scope.computeHistograms();
           }
         };
-        return scope.computeHistograms = function() {
+        scope.computeHistograms = function() {
           var data, i, max;
-          console.log('computing histograms');
-          console.log('students:');
-          console.log(scope.students);
           i = 0;
-          console.log('starting student loop');
           data = _.countBy(scope.students, function(student) {
             var grade;
-            console.log('student ' + i + ': ');
-            console.log(student.totalGrade);
             grade = scope.computeGrade(student.totalGrade.score);
-            console.log('computed letter: ' + grade.value);
             return grade.lower;
           });
-          console.log('histogram:');
-          console.log(data);
-          scope.hideGradebook = true;
-          max = 110;
-          return $.plot($("#figure"), [
+          max = 100;
+          $.plot($("#figure"), [
             {
               label: null,
               data: _.pairs(data)
@@ -71,6 +61,45 @@
               }
             }
           });
+          return scope.hideGradebook = true;
+        };
+        return scope.timeline = function() {
+          var data, index;
+          data = [];
+          index = 0;
+          angular.forEach(scope.events, function(event) {
+            data.push([index, event.average]);
+            return index++;
+          });
+          $.plot($("#figure"), [
+            {
+              label: null,
+              data: data
+            }
+          ], {
+            series: {
+              lines: {
+                show: true,
+                fill: false
+              },
+              points: {
+                show: true,
+                fill: false
+              },
+              color: '#00a8ff'
+            },
+            xaxis: {
+              ticks: 10,
+              min: 0
+            },
+            grid: {
+              backgroundColor: {
+                colors: ["#fff", "#f8f8f8"]
+              },
+              hoverable: true
+            }
+          });
+          return scope.hideGradebook = true;
         };
       }
     };

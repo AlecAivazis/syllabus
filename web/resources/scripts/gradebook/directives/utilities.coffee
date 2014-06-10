@@ -37,30 +37,17 @@ angular.module('utilities', [])
     # display a histogram to organize the frequency of grades
     scope.computeHistograms = () ->
     
-      console.log 'computing histograms'    
-      console.log 'students:'
-      console.log scope.students
       # counter for the student output
       i = 0
-      console.log 'starting student loop'
       # build a histogram
       data = _.countBy scope.students, (student) ->
-        console.log 'student ' + i + ': '
-        console.log student.totalGrade
         # based on the letter grade
         grade = scope.computeGrade student.totalGrade.score
-        console.log 'computed letter: ' + grade.value
+        # binned by the lower value
         return grade.lower
 
-      console.log 'histogram:'              
-      console.log data                             
-      
-
-      # hide the histogram / show the stats
-      scope.hideGradebook = true
-
-      # maximum value to plot is 110
-      max = 110
+      # set the maximum value for the plot
+      max = 100
       # draw the histogram using flot
       $.plot $("#figure"),
 
@@ -85,6 +72,49 @@ angular.module('utilities', [])
       , grid:
           backgroundColor: 
             colors: ["#fff", "#f8f8f8"] 
+
+      # hide the gradebook / show the stats
+      scope.hideGradebook = true
+
+    # plot the averages of each event
+    scope.timeline = () ->
+      # store the data in a list
+      data = []
+      # keep the index of the loop iteration
+      index = 0
+      angular.forEach scope.events, (event) ->
+        # add the necessary data to the list
+        data.push([index, event.average])
+        # increment index
+        index++
+
+      # draw the histogram using flot
+      $.plot $("#figure"),
+
+       [
+         {
+           label: null, 
+           data: data
+         }
+       ] 
+       , series: 
+         lines: 
+           show: true,
+           fill: false
+         , points:
+           show: true,
+           fill: false
+         , color: '#00a8ff'
+       , xaxis: 
+           ticks: 10,
+           min: 0,
+       , grid:
+           backgroundColor: 
+             colors: ["#fff", "#f8f8f8"]
+           , hoverable: true
+ 
+      # hide the gradebook / show the stats
+      scope.hideGradebook = true
 
 # the view to be used by different utilities
 .directive 'utilityView', () ->
