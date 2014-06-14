@@ -230,8 +230,6 @@ def newEventForm(request):
     for qlass in classes:
         sections.append(qlass.sections.all())
     
-    
-    
     return render_to_response('calendar/newEventForm.html', locals())
 
 def calendarAjax(request):
