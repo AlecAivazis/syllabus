@@ -18,3 +18,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db',  'db.sqlite3'),
     }
 }
+
+# django compressor setting only to be used in development
+COMPRESS_DEBUG_TOGGLE = 'foo'

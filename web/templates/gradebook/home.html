@@ -24,19 +24,10 @@
 <script type="text/javascript"
         src="/static/scripts/gradebook/directives/utilities.js"></script>
 <script type="text/javascript" src="/static/scripts/gradebook/app.js"></script>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-  
-  $('.gradebookClass').click(function(event){
-  selectClass(this, $(this).attr('id'));
-  });
-  {% if selectedClass is defined %}$('#{{selectedClass}}').trigger('click');{% endif %}});
-</script>
 {% endblock %}
 
 {% block content %}
-{% raw %}
+{% verbatim %}
 
 <div id="gradebook" ng-app="gradebook-app">
 
@@ -112,5 +103,5 @@
   </article>
 </div>
 
-{% endraw %}
+{% endverbatim %}
 {% endblock %}

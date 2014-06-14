@@ -379,7 +379,7 @@ def calendarHome(request, which='month', year=datetime.date.today().year, number
         else :
             year = today.year
             
-        return render_to_response('calendar/calendar.html', locals())
+        return render_to_response('calendar/home.html', locals())
     elif which == "week":
         
         intMonth = number

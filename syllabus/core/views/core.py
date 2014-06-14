@@ -7,6 +7,7 @@ from ...classroom.models import State
 
 @ensure_csrf_cookie
 def sentry(request):
+    print(request.session)
     if request.user.is_authenticated():
         return render_to_response('base.html', locals())
     else:

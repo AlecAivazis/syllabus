@@ -44,6 +44,7 @@ COMPRESS_PRECOMPILERS =(
     ('text/coffeescript', 'coffee --compile --stdio'),
 )
 
+
 COMPRESS_JS_COMPRESSOR = 'compressor.js.JsCompressor'
 COMPRESS_CSS_COMPRESSOR = 'compressor.css.CssCompressor'
 

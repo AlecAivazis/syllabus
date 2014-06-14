@@ -10,26 +10,22 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+# points to the 'products' folder
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-ROOT = os.path.join(BASE_DIR, 'packages', 'syllabus')
-
 
 # important folders
-
+ROOT = os.path.join(BASE_DIR, 'packages', 'syllabus').replace('\\','/')
 TEMPLATES = os.path.join(BASE_DIR, 'templates').replace('\\','/')
 RESOURCES = os.path.join(BASE_DIR, 'resources').replace('\\','/')
 STATIC = os.path.join(RESOURCES, 'static').replace('\\','/')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'u2me%mqm!-lo&9((-$_c3$+b0=ws&izb44x#=1faq-u+^sgilr'
-
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
 )
 
 # the directories that contains my templates
@@ -81,6 +77,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# debug is off by default
+DEBUG = False
 
 # Resource settings
 
