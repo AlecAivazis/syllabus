@@ -57,12 +57,12 @@ angular.module('wc', [])
       # you cannot
       return false
       
-    # remove a given index from the weights
-    $scope.removeCategory = (index) ->
-      # remove the index
-      $scope.weights.categories.splice(index, 1)
-      # update the submit button
-      $scope.canSubmitWidget = $scope.canSubmit()
+  # remove a given index from the weights
+  $scope.removeCategory = (index) ->
+    # remove the index
+    $scope.weights.categories.splice(index, 1)
+    # update the submit button
+    $scope.canSubmitWidget = $scope.canSubmit()
 
   # update the weights on the database and recalculate the grades
   $scope.updateWeights = () ->

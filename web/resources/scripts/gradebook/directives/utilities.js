@@ -9,10 +9,9 @@
       restrict: 'AE',
       templateUrl: '../templates/gradebook/utilities.html',
       link: function(scope, element, attrs) {
-        scope.figureTitle = 'Histogram';
         scope.histogram = function() {
+          scope.figureTitle = 'Histogram';
           scope.showUtilities = false;
-          console.log('opening up histogram');
           if (!scope.gradingScale) {
             return scope.loadGradingScale().success(function(result) {
               return scope.computeHistograms();
@@ -60,8 +59,9 @@
           });
           return scope.hideGradebook = true;
         };
-        return scope.timeline = function() {
+        scope.timeline = function() {
           var data, index;
+          scope.figureTitle = 'Timeline';
           scope.showUtilities = false;
           data = [];
           index = 0;
@@ -98,6 +98,9 @@
             }
           });
           return scope.hideGradebook = true;
+        };
+        return scope.performance = function() {
+          return console.log('you want to look at the classes performance');
         };
       }
     };

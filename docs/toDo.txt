@@ -57,6 +57,7 @@ Graduation Requirements
 
 Gradebook
     download user submission 
+    delete the class's weights if they are overwritten and have no name
 
 WishList  
     

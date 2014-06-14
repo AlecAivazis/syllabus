@@ -13,13 +13,14 @@ angular.module('utilities', [])
   templateUrl: '../templates/gradebook/utilities.html',
   link: (scope, element, attrs) ->
 
-    scope.figureTitle = 'Histogram'
-
     # safely load the grading scale in order to compute the histogram
     scope.histogram = () ->
+
+      # set the figure title
+      scope.figureTitle = 'Histogram'
       # hide the utilities ui element
       scope.showUtilities = false
-      console.log 'opening up histogram'
+
       # if the grading scale does not exist
       if not scope.gradingScale
          # load it      
@@ -75,8 +76,12 @@ angular.module('utilities', [])
 
     # plot the averages of each event
     scope.timeline = () ->
+
+      # set the figure title
+      scope.figureTitle = 'Timeline'
       # hide the utilities ui element
       scope.showUtilities = false
+
       # store the data in a list
       data = []
       # keep the index of the loop iteration
@@ -114,6 +119,14 @@ angular.module('utilities', [])
  
       # hide the gradebook / show the stats
       scope.hideGradebook = true
+
+      # tooltips are implemented in the old gradebook.js
+
+    # track the grade as a function of time by event
+    scope.performance = () ->
+      console.log 'you want to look at the classes performance'
+
+      
 
 # the view to be used by different utilities
 .directive 'utilityView', () ->

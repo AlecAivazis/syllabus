@@ -10,41 +10,8 @@ from syllabus.classroom.models import (Class, Section, Grade, Event, Weight, Wei
 from django.db.models import Count
 
 def gradebookHome(request):
-    
-    classes = []
-    sections = []
-    for qlass in Class.objects.filter(professor = request.user):
-        for section in qlass.sections.all():
-            sections.append(section)
-            
-    for section in sections:
-        if section.qlass not in classes:
-            classes.append(section.qlass)
-            
-    if not classes:
-        for section in Section.objects.filter(tas = request.user):
-            if section.qlass not in classes:
-                classes.append(section.qlass)
-                
-    if 'selectedClass' in request.GET:
-        selectedClass = request.GET['selectedClass']
-        
+  
     return render_to_response('gradebook/home.html', locals())
-
-def viewGradeBook(request):
-    
-    return render_to_response('gradebook/gradebook.html', locals())
-
-def sectionsForClass(request):
-    
-    id = request.GET['id']
-    
-    sections = Section.objects.filter(qlass__id__exact = int(id))
-    
-    if not sections :
-        sections = Section.objects.filter(qlass__id__exact = int(id)).filter(tas = request.user)
-        
-    return render_to_response('gradebook/sectionsForClass.html', locals())
 
 def eventsForClass(request, classId, sectionId = False):
     
@@ -89,13 +56,6 @@ def addGrade(request):
             return HttpResponse('sucess')
         else:
             return HttpResponse('fail')
-
-def loadEvent(request):
-    
-    id = request.GET['id']
-    event = Event.objects.get(id = int(id))
-    
-    return render_to_response('gradebook/loadEvent.html', locals())
 
 def changePossiblePoints(request):
     
@@ -155,7 +115,7 @@ def assignWeights(request):
     # create an empty weight group
     weight = Weight()
     # with the supplied name if there is one
-    weight.name = "hello" #post['weights']['name'] if 'name' in post['weights'] else ''
+    weight.name = post['weights']['name'] if 'name' in post['weights'] else ''
     # save the group to the database
     weight.save()
 
@@ -178,74 +138,6 @@ def assignWeights(request):
 
     return HttpResponse('success')
 
-def removeWeight(request):
-    
-    if 'section' in request.POST:
-        section = section.objects.filter(id=request.POST['section']).filter(qlass__professor = request.user).all()[0]
-        weight = section.weight
-        section.weight = None
-        weight.remove()
-    elif 'class' in request.POST:
-        for section in Class.objects.filter(id=request.POST['class']).filter(professor = request.user).all()[0].sections.all():
-            weight = section.weights
-            section.weight = None
-            weight.delete()
-            section.save()
-            
-    return HttpResponse('success')
-
-def eventWeight(request):
-    
-    event = Event.objects.get(id=request.GET['id'])
-    
-    return HttpResponse(event.calculateWorth())
-    
-def totalGrade(request):
-    qlass = Class.objects.filter(id=int(request.GET['classId'])).filter(sections__students__id__exact = request.GET['studentId'])
-    if qlass:
-        tup = qlass[0].totalGrade(request.GET['studentId'])
-        if tup[0] != 'n/a':
-            return HttpResponse('<span style="float: left;">' + tup[0] + '</span><span style="float: right;" class="score">' + str(tup[1]) + '%</span>')
-        else:
-            return HttpResponse(tup[0])
-            
-def count(request):
-    
-    sort = sorted
-    data = request.GET['data'].split(',')
-    histogram = collections.Counter()
-    
-    if 'scale' in request.GET:
-        scale = GradingScale.objects.get(id=request.GET['scale'])
-    else:
-        scale = GradingScale.objects.get(name='tens')
-        
-    for datum in data:
-        category = scale.gradingCategories.filter(lower__lte = datum).order_by('-lower')[0]
-        histogram[category.lower] += 1
-        
-    return render_to_response('gradebook/count.html', locals())
-
-def gradingScale(request):
-    
-    if 'section' in request.GET:
-        scale = Section.objects.get(id = request.GET['section']).qlass.gradingScale
-    elif 'class' in request.GET: 
-        scale = qlass = (Class.objects.get(id = request.GET['class'])).gradingScale
-    else:
-        scale = GradingScale.objects.get(name = 'default')
-        
-    return render_to_response('gradebook/gradingScale.html', locals())
-
-def viewWeights(request):
-    
-    if 'class' in request.GET: 
-        weights = Class.objects.get(id = request.GET['class']).weights
-    else:
-        weights = []
-        
-    return render_to_response('gradebook/weights.html', locals())
-    
 def setScale(request):
     
     # load the json data
@@ -305,37 +197,4 @@ def setScale(request):
     
                 
     return HttpResponse("success")
-    
-def allStudents(request):
-    
-    users = User.objects.all()
-    
-    return render_to_response('gradebook/assistants.html', locals())
-    
-def selectedAssistants(request):
-    
-    if 'sectionId' in request.GET:
-        tas = Section.objects.get(id = request.GET['sectionId']).tas.all()
-    else:
-        tas=[]
-        for section in Class.objects.get(id=request.GET['classId']).sections.all():
-            for user in section.tas.all():
-                tas.append(user)
-                
-    return render_to_response('/gradebook/preSelectedAssistants.html', locals())
-    
-def setSectionAssistants(request):
-    id = request.GET['id']
-    ids = request.GET['ids']
-    
-    listOfIds = ids.split(',')
-    section = Section.objects.get(id = int(id))
-    section.tas.clear()
-    
-    for varId in listOfIds:
-        if varId != '':
-            student = User.objects.get(id = int(varId))
-            section.tas.add(student)
-            
-    
-    return HttpResponse('success!')
+   
