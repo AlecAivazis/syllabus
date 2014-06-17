@@ -1,15 +1,35 @@
 {% extends "base.html" %}
 
 {% block js%} 
-<script type="text/coffeescript" src="/static/scripts/calendar/app.coffee"></script>        
+<script type="text/javascript" src="/static/scripts/thirdparty/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="/static/scripts/thirdparty/jquery-ui/ui/jquery-ui.js"></script>
+
+<script type="text/javascript" src="/static/scripts/thirdparty/angular/angular.min.js"/>
+<script type="text/javascript"
+        src="/static/scripts/thirdparty/angular-cookies/angular-cookies.js" />
+<script type="text/javascript"
+        src="/static/scripts/thirdparty/angular-ui-calendar/src/calendar.js"/>
+
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/fullcalendar/fullcalendar.js"></script>
+<script type="text/javascript" src="/static/scripts/thirdparty/fullcalendar/gcal.js"></script>
+
+<script type="text/coffeescript" src="/static/scripts/calendar/app.coffee"/>
+<script type="text/coffeescript" src="/static/scripts/calendar/directives/calendar.coffee"/>
 {% endblock %}        
 
 {% block css %}        
 <link type="text/scss" rel="stylesheet" href="/static/styles/calendar.scss" ></link>
 <link type="text/scss" rel="stylesheet" href="/static/styles/tooltipster.scss" ></link>
+<link type="text/css" rel="stylesheet" 
+      href="/static/scripts/thirdparty/fullcalendar/fullcalendar.css" ></link>
 {% endblock %}
+
+<!-- set the content div to be the root of ng-app -->
+{% block contentData %} ng-app="calendar-app" {% endblock %}
 
 {% block content %}
 
+<div id="calendar" calendar></div>
 
 {% endblock %}

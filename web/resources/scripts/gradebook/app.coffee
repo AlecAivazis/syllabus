@@ -49,6 +49,7 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
 
     # load the homework events 
     $http.get('/api/classes/' + $rootScope.gradebook_id + '/gradebook/').success (result)-> 
+      # set the scope variables
       $scope.breadcrumb = result.breadcrumb
       $scope.events = result.events
       $scope.gradebook = result.gradebook
