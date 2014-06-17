@@ -4,6 +4,7 @@ from .views import ClassList, ClassesTaughtByMe, Gradebook, GradingScale
 from .views import SectionList 
 from .views import ClassEventList, HomeworkByClass
 from .views import WeightsList
+from .views import MyCalendar
 
 # define the class api urls
 class_urls = patterns('', 
@@ -34,4 +35,7 @@ urlpatterns = patterns('',
     url(r'(?i)^classes/', include(class_urls)),
     url(r'(?i)^events/', include(event_urls)),
     url(r'(?i)^sections/', include(section_urls)),
+    # return the calendar based on the request user
+    url(r'(?i)^user/me/calendar/',  MyCalendar.as_view(),
+                                    name="api-user-mycalendar")
 )

@@ -2,9 +2,12 @@ from rest_framework import generics, permissions
 from django.http import HttpResponse
 
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
-                          GradebookSerializer, GradingScaleSerializer, WeightSerializer)
+                          GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
+                          CalendarSerializer)
 
 from ..models import Class, Section, Event, GradingScale, Weight
+
+from ...core.models import SyllUser
 
 import django, datetime
 
@@ -98,4 +101,17 @@ class HomeworkByClass(generics.ListCreateAPIView):
                 .exclude(category='lecture')
                 .exclude(category='meeting')
                 .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
+
+# return the calendar of the current user
+class MyCalendar(generics.RetrieveAPIView):
+    model = SyllUser
+    serializer_class = CalendarSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    # return the classes that the user teachers
+    def get_object(self):
+        return self.request.user
+
 

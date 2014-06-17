@@ -14,29 +14,67 @@ angular.module 'calendar', ['ui.calendar']
   controller: 'calendarCtrl'
 
 # the calendar controller
-.controller 'calendarCtrl', ['$scope', ($scope) ->
+.controller 'calendarCtrl', ['$scope', '$http', ($scope, $http, angularMoment) ->
 
   date = new Date()
   d = date.getDate()
   m = date.getMonth()
   y = date.getFullYear()
 
+  # fullCalendar stores the events as a list of lists
   $scope.events = []
-  $scope.events.push [{title: 'All Day Event',start: new Date(y, m, 1)},
-    {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-    {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-    {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-    {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false}
-  ]
+  
+  # load each class taught by me
+  $http.get('/api/user/me/calendar/').success (result) ->
+    $scope.assigned = []
+    # for each event that i assigned
+    angular.forEach result.assigned, (event) ->
+      # add it to the list of events
+      item = 
+        title: event.title,
+        id: event.id,
+        start: moment(event.date + ' ' + event.time).toDate()
+      # add it to the list of assigned events
+      $scope.assigned.push(item)
 
+    # add the assigned events to the list of events shown by the calendar
+    $scope.events.push($scope.assigned)
+  
   # configuration for the user interface
   $scope.uiConfig =
-    calendar:
+    calendar:        
       editable: true,
       header:
         left: 'title',
         center: '',
         right: 'today prev,next'
+      # when an event is dropped, change the date
+      eventDrop: (event, dayDelta, minuteDelta) ->
+        # save the old date so we can revert back if it fails
+        old = moment(event.start).add('days', -dayDelta)
+        # change the date
+        $scope.changeEventDate event, old
+
+  # change the start date of an event
+  $scope.changeEventDate = (event, old) ->
+    # tell the database
+    $http.post '/calendar/moveEvent/',
+      id: event.id,
+      date: moment(event.start).format('YYYY-M-D')
+    # if it fails
+    .error ->
+      # revert the date
+      event.start = new Date(old)
+      # warn the user
+      $scope.alert =
+        type: 'warning',
+        message: 'could not move event ' + event.id + ' to ' + event.start
+    # if it succeeds
+    .success ->
+      # notify the user
+      $scope.alert =
+        type: 'notification',
+        message: 'successfully moved event ' + event.id  + ' to ' + event.start
 
 ]
 

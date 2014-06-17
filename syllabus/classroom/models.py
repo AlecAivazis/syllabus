@@ -62,7 +62,7 @@ class Event(models.Model):
     ))
     
     # string behavior is to return the title
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     # get the weighted grade for the given student

@@ -1,7 +1,10 @@
+# syllabus imports
 from syllabus import *
-
-from syllabus.classroom.models import Class
+from syllabus.classroom.models import Class, Event
 from syllabus.academia.models import RegistrationGroup, Term
+# python imports
+import json
+
 
 def editEventForm(request):
     
@@ -115,9 +118,13 @@ def editEvent(request):
 
 def moveEvent(request):
     
-    id = request.POST['id']
-    targetDate = request.POST['date']
+    # load the json data
+    post = json.loads(bytes.decode(request.body))
+    # load the post
+    id = post['id']
+    targetDate = post['date']
 
+    print(targetDate)
     
     year= targetDate.split('-')[0]
     month = targetDate.split('-')[1]
@@ -127,9 +134,12 @@ def moveEvent(request):
     if event:
         if Class.objects.filter(events=event).filter(professor = request.user):
             event.date = date(int(year), int(month), int(day))
+            print(date(int(year), int(month), int(day)))
             event.save()
+            print('success')
             return HttpResponse('success')
         else:
+            print('You do not have permission to move this event')
             return HttpResponse('You do not have permission to move this event')
     else:
         return HttpResponse('Event could not be found')

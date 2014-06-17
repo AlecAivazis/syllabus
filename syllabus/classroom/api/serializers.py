@@ -30,7 +30,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight', 'date')
+        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight', 'date', 'time')
 
     category = serializers.SerializerMethodField('getSubCategory')
     possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
@@ -214,3 +214,27 @@ class SectionSerializer(serializers.ModelSerializer):
         """ meta class for SectionSerializer """
         model = Section
         fields = ('id', )
+
+class CalendarSerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for the calendar """
+        model = User
+        fields = ('assigned',)
+        
+    assigned = serializers.SerializerMethodField('getAssignedEvents')
+
+    def getAssignedEvents(self, obj):
+        """ return the events that were assigned by the user """
+        # keep the events in a list
+        events = []
+        # for each class that I teach
+        for c in obj.classesTeaching.all():
+            # for each of the gradable events
+            for event in c.getGradableEvents():
+                # serialize the event
+                serialized = EventSerializer(event)
+                # add it to the list
+                events.append(serialized.data)
+
+        # return the list
+        return events
