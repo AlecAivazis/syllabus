@@ -134,12 +134,9 @@ def moveEvent(request):
     if event:
         if Class.objects.filter(events=event).filter(professor = request.user):
             event.date = date(int(year), int(month), int(day))
-            print(date(int(year), int(month), int(day)))
             event.save()
-            print('success')
             return HttpResponse('success')
         else:
-            print('You do not have permission to move this event')
             return HttpResponse('You do not have permission to move this event')
     else:
         return HttpResponse('Event could not be found')
