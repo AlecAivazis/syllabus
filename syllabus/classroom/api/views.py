@@ -73,16 +73,8 @@ class SectionList(generics.ListCreateAPIView):
         permissions.AllowAny
     ]
 
-# return all of the sections
-class EventList(generics.ListCreateAPIView):
-    model = Event
-    serializer_class = EventSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
-
-# return all of the sections
-class EventsByClass(generics.ListCreateAPIView):
+# return all of the events in a class
+class ClassEventList(generics.ListCreateAPIView):
     model = Event
     serializer_class = EventSerializer
     permission_classes = [
@@ -91,7 +83,7 @@ class EventsByClass(generics.ListCreateAPIView):
 
     # return the events from the requested class
     def get_queryset(self):
-        return Event.objects.filter(classes__id=self.kwargs.get('id'))
+        return Class.objects.get(pk = self.kwargs.get('pk')).events.all()
 
 # return all of the homework events that are before and including tomorrow
 class HomeworkByClass(generics.ListCreateAPIView):

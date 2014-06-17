@@ -6,10 +6,10 @@
 import django, datetime
 from rest_framework import serializers
 # syllabus imports
-from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategory, Weight,
-                      WeightCategory)
 from syllabus.core.models import Upload
 from syllabus.core.models import SyllUser as User
+from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategory,
+                      Weight, WeightCategory)
 
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,12 +26,11 @@ class ClassSerializer(serializers.ModelSerializer):
         """return the name of the class"""
         return obj.profile.interest.abbrv + " " + str(obj.profile.number)
 
-
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight')
+        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight', 'date')
 
     category = serializers.SerializerMethodField('getSubCategory')
     possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
