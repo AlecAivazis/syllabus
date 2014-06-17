@@ -63,12 +63,12 @@ angular.module 'calendar', ['ui.calendar']
       date: moment(event.start).format('YYYY-M-D')
     # if it fails
     .error ->
-      # revert the date
-      event.start = new Date(old)
       # warn the user
       $scope.alert =
         type: 'warning',
         message: 'could not move event ' + event.id + ' to ' + event.start
+      # revert the date
+      event.start = new Date(old)
     # if it succeeds
     .success ->
       # notify the user
