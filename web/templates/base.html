@@ -38,9 +38,10 @@
       </div>
       {% block sidebar %}{% endblock %}
       
-      <div id="content" {% block contentData %}{% endblock %}>
+      <div id="content" ng-app="{% block appName %}{% endblock %}">
 	{% block content %}{% endblock %}
       </div>
+      {% block templates %}{%endblock%}
     </div>
   </body>
 </html>

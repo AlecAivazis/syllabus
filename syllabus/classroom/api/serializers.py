@@ -30,7 +30,8 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight', 'date', 'time')
+        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight', 'date', 'time',
+                  'description')
 
     category = serializers.SerializerMethodField('getSubCategory')
     possiblePoints = serializers.SerializerMethodField('getPossiblePoints')

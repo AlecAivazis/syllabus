@@ -124,8 +124,6 @@ def moveEvent(request):
     id = post['id']
     targetDate = post['date']
 
-    print(targetDate)
-    
     year= targetDate.split('-')[0]
     month = targetDate.split('-')[1]
     day = targetDate.split('-')[2]

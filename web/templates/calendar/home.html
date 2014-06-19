@@ -2,36 +2,63 @@
 
 {% block js%} 
 <script type="text/javascript" src="/static/scripts/thirdparty/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="/static/scripts/thirdparty/jquery-ui/ui/jquery-ui.js"></script>
-
 <script type="text/javascript" src="/static/scripts/thirdparty/angular/angular.min.js"/>
+
+<script type="text/javascript" src="/static/scripts/thirdparty/jquery-ui/ui/jquery-ui.js"></script>
+<script type="text/javascript"
+        src="/static/scripts/thirdparty/angular-ui/build/angular-ui.min.js"/>
 <script type="text/javascript"
         src="/static/scripts/thirdparty/angular-cookies/angular-cookies.js" />
-<script type="text/javascript"
-        src="/static/scripts/thirdparty/angular-ui-calendar/src/calendar.js"/>
 
 <script type="text/javascript" 
         src="/static/scripts/thirdparty/fullcalendar/fullcalendar.js"></script>
 <script type="text/javascript" src="/static/scripts/thirdparty/fullcalendar/gcal.js"></script>
 <script type="text/javascript" 
         src="/static/scripts/thirdparty/moment/min/moment-with-langs.min.js"/>
+<script type="text/javascript" src="/static/scripts/thirdparty/qtip2/jquery.qtip.js"/>
+<script type="text/javascript" src="/static/scripts/thirdparty/handlebars/handlebars.js"/>
 
 <script type="text/coffeescript" src="/static/scripts/calendar/app.coffee"/>
 <script type="text/coffeescript" src="/static/scripts/calendar/directives/calendar.coffee"/>
 {% endblock %}        
 
 {% block css %}        
-<link type="text/scss" rel="stylesheet" href="/static/styles/calendar.scss" ></link>
 <link type="text/scss" rel="stylesheet" href="/static/styles/tooltipster.scss" ></link>
+<link type="text/css" rel="stylesheet" href="/static/scripts/thirdparty/qtip2/jquery.qtip.css" ></link>
 <link type="text/css" rel="stylesheet" 
       href="/static/scripts/thirdparty/fullcalendar/fullcalendar.css" ></link>
+<link type="text/scss" rel="stylesheet" href="/static/styles/calendar.scss" ></link>
 {% endblock %}
 
 <!-- set the content div to be the root of ng-app -->
-{% block contentData %} ng-app="calendar-app" {% endblock %}
+{% block appName %}calendar-app{% endblock %}
 
 {% block content %}
-
 <div id="calendar" calendar></div>
-
 {% endblock %}
+
+{% block templates %}{% verbatim %}
+  <script id="tooltip-template" type="text/x-handlebars-template">
+    <div class="tooltipTitle">
+      <!-- small icon that changes depending on the type of the event -->
+      {{#if isAssignment }}
+        <img src="/resources/images/calendar/document.png" width="20px" />
+      {{/if}}
+      {{# if isTest }}
+        <img src="/resources/images/calendar/documentPencil.png" width="20px" />
+      {{else}}
+        <img src="/resources/images/calendar/projector.png" width="20px" />
+      {{/if}}
+      <!-- the event info -->
+      <div class="tooltipHeaderInfo">
+        {{title}} </br>
+        {{#if start }}
+          {{start}} {{#if end }} - end {{/if}}
+        {{/if}}
+      </div>
+    </div><br>
+    <div class="tooltipDescription">
+      {{description}}
+    </div>
+  </script>
+{% endverbatim %}{% endblock %}
