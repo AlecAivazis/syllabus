@@ -36,6 +36,6 @@ urlpatterns = patterns('',
     url(r'(?i)^events/', include(event_urls)),
     url(r'(?i)^sections/', include(section_urls)),
     # return the calendar based on the request user
-    url(r'(?i)^user/me/calendar/',  MyCalendar.as_view(),
+    url(r'(?i)^users/me/calendar/',  MyCalendar.as_view(),
                                     name="api-user-mycalendar")
 )

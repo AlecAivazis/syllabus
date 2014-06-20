@@ -3,10 +3,11 @@
 # author: alec aivazis
 
 # create the angular module
-calendar = angular.module('calendar-app', ['ngCookies', 'calendar'])
+app = angular.module('calendar-app', ['ngCookies', 'calendar'])
 
 # add csrf tokens for proper ajax support
-calendar.run ['$http', '$cookies', ($http, $cookies) -> 
+app.run ['$http', '$cookies', ($http, $cookies) -> 
   $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
   $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 ]
+

@@ -8,7 +8,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
+    "thirdparty",
     "test",
     "tests"
   ],
@@ -23,6 +23,8 @@
     "jquery-ui": "~1.10.4",
     "bootstrap-ui": "~0.11.0",
     "qtip2": "~2.2.0",
-    "handlebars": "~1.3.0"
+    "handlebars": "~1.3.0",
+    "ngModal": "~1.2.2",
+    "ngQuickDate": "~1.3.0"
   }
 }

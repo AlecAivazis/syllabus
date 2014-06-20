@@ -5,7 +5,7 @@
 _ = window._
 
 # the calendar module
-angular.module 'calendar', ['ui.directives']
+calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate']
 
 # add the directive
 .directive 'calendar', () ->
@@ -14,18 +14,14 @@ angular.module 'calendar', ['ui.directives']
   controller: 'calendarCtrl'
 
 # the calendar controller
-.controller 'calendarCtrl', ['$scope', '$http', ($scope, $http, angularMoment) ->
-
-  date = new Date()
-  d = date.getDate()
-  m = date.getMonth()
-  y = date.getFullYear()
+.controller 'calendarCtrl', ['$scope', '$http', ($scope, $http) ->
 
   # fullCalendar stores the events as a list of lists
   $scope.events = []
   
-  # load each class taught by me
-  $http.get('/api/user/me/calendar/').success (result) ->
+  # load my calendar
+  $http.get('/api/users/me/calendar/').success (result) ->
+    # save the events from classes that i teach
     $scope.assigned = []
     # for each event that i assigned
     angular.forEach result.assigned, (event) ->
@@ -36,12 +32,18 @@ angular.module 'calendar', ['ui.directives']
         start: moment(event.date + ' ' + event.time).toDate(),
         description: event.description,
         type: event.type
+        possiblePoints: event.possiblePoints
+        class: event.classes[0]
+        
       # add it to the list of assigned events
       $scope.assigned.push(item)
 
     # add the assigned events to the list of events shown by the calendar
     $scope.events.push($scope.assigned)
-  
+
+    # save the classes that i teach
+    $scope.myClasses = result.classes
+
   # configuration for the user interface
   $scope.uiConfig =
     calendar:        
@@ -50,17 +52,23 @@ angular.module 'calendar', ['ui.directives']
         left: 'title',
         center: '',
         right: 'today prev,next'
-      # when an event is dropped, change the date
+      # when an event is dropped on another date
       eventDrop: (event, dayDelta, minuteDelta) ->
-        # change the date
+        # change the starting date of the event
         $scope.changeEventDate(event, moment(event.start).add('days', dayDelta)
                                                          .add('minutes', minuteDelta))
+      # when an event is clicked 
+      eventClick: (event, jsEvent, view) ->
+        # select it
+        $scope.selectedEvent = event
+        $scope.$apply()
+        
       # when an event gets rendered 
       eventRender: (event, element) ->
         # load the template
         source = $('#tooltip-template').html()
         template = Handlebars.compile source
-        # define the basic context for the template
+        # define the context for the template
         context =
           title: event.title
           id: event.id
@@ -106,6 +114,8 @@ angular.module 'calendar', ['ui.directives']
         type: 'notification',
         message: 'successfully moved event ' + event.id  + ' to ' + event.start
 
+  # apply changes
+  $scope.applyChanges = () ->
+    console.log $scope.selectedEvent.start
+
 ]
-
-

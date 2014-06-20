@@ -18,15 +18,27 @@
 <script type="text/javascript" src="/static/scripts/thirdparty/qtip2/jquery.qtip.js"/>
 <script type="text/javascript" src="/static/scripts/thirdparty/handlebars/handlebars.js"/>
 
+<script type="text/javascript" src="/static/scripts/thirdparty/ngModal/dist/ng-modal.js"/>
+<script type="text/javascript" src="/static/scripts/thirdparty/ngQuickDate/dist/ng-quick-date.js"/>
+
 <script type="text/coffeescript" src="/static/scripts/calendar/app.coffee"/>
 <script type="text/coffeescript" src="/static/scripts/calendar/directives/calendar.coffee"/>
 {% endblock %}        
 
 {% block css %}        
 <link type="text/scss" rel="stylesheet" href="/static/styles/tooltipster.scss" ></link>
-<link type="text/css" rel="stylesheet" href="/static/scripts/thirdparty/qtip2/jquery.qtip.css" ></link>
+<link type="text/css" rel="stylesheet" 
+      href="/static/scripts/thirdparty/qtip2/jquery.qtip.css" ></link>
+<link type="text/css" rel="stylesheet" 
+      href="/static/scripts/thirdparty/ngModal/dist/ng-modal.css" ></link>
+<link type="text/css" rel="stylesheet" 
+      href="/static/scripts/thirdparty/ngQuickDate/dist/ng-quick-date-default-theme.css" >
+<link type="text/css" rel="stylesheet" 
+      href="/static/scripts/thirdparty/ngQuickDate/dist/ng-quick-date.css" >
+</link>
 <link type="text/css" rel="stylesheet" 
       href="/static/scripts/thirdparty/fullcalendar/fullcalendar.css" ></link>
+
 <link type="text/scss" rel="stylesheet" href="/static/styles/calendar.scss" ></link>
 {% endblock %}
 
@@ -34,9 +46,11 @@
 {% block appName %}calendar-app{% endblock %}
 
 {% block content %}
+{{selectedEvent}}
 <div id="calendar" calendar></div>
 {% endblock %}
 
+<!-- templates for handlebars -->
 {% block templates %}{% verbatim %}
   <script id="tooltip-template" type="text/x-handlebars-template">
     <div class="tooltipTitle">

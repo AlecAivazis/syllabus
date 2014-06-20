@@ -11,6 +11,13 @@ from syllabus.core.models import SyllUser as User
 from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategory,
                       Weight, WeightCategory)
 
+
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for SectionSerializer """
+        model = Section
+        fields = ('id', 'name' )
+
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for ClassSerializer """
@@ -18,7 +25,7 @@ class ClassSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'sections')
 
     # the class sections as a list of id's
-    sections = serializers.PrimaryKeyRelatedField(many = True, read_only = True)
+    sections = serializers.SerializerMethodField('getSections')
     # the name of the class
     name = serializers.SerializerMethodField('getName')
     
@@ -26,12 +33,19 @@ class ClassSerializer(serializers.ModelSerializer):
         """return the name of the class"""
         return obj.profile.interest.abbrv + " " + str(obj.profile.number)
 
+    # the categories in a weight group
+    def getSections(self, obj):
+        """ return serialized versions of the section"""
+        sections = obj.sections.all()
+        serializer = SectionSerializer(sections)
+        return serializer.data
+
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for EventSerializer """
         model = Event
-        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight', 'date', 'time',
-                  'description')
+        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight',
+                  'date', 'time','description', 'classes')
 
     category = serializers.SerializerMethodField('getSubCategory')
     possiblePoints = serializers.SerializerMethodField('getPossiblePoints')
@@ -210,17 +224,11 @@ class GradingScaleSerializer(serializers.ModelSerializer):
         return GradingScale(**attrs)
        
 
-class SectionSerializer(serializers.ModelSerializer):
-    class Meta:
-        """ meta class for SectionSerializer """
-        model = Section
-        fields = ('id', )
-
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for the calendar """
         model = User
-        fields = ('assigned',)
+        fields = ('assigned', 'classes')
         
     assigned = serializers.SerializerMethodField('getAssignedEvents')
 

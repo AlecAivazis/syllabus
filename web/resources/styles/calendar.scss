@@ -36,3 +36,35 @@
   clear: both;
 }
 
+label {
+  width: 100px;
+  display: inline-block;
+}
+
+input {
+  width: 250px;
+  display: inline-block;
+}
+
+.formLine {
+  padding: 0px 20px;
+  input {
+    border: none;
+  }
+}
+
+.formControls {
+  margin-top: 20px;
+  text-align: right;
+  padding-bottom: 30px;
+  padding-right: 30px;
+}
+
+.button_cancel {
+  @include button(red, 100px);
+  margin-right: 10px;
+}
+
+.button_confirm {
+  @include button(green, 100px);
+}

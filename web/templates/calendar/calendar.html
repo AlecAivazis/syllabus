@@ -1,1 +1,32 @@
 <div ui-calendar="uiConfig.calendar" ng-model="events"></div>
+
+<modal-dialog show="selectedEvent" dialog-title="Details for {{selectedEvent.title}}">
+  <form id="eventForm">
+    <div class="formLine">
+      <label for="title">title:</label>
+      <input type="text" ng-model="selectedEvent.title" name="title"/>
+    </div>
+    <div class="formLine">
+      <label for="category">type:</label> 
+      <input type="text" name="category"  ng-model="selectedEvent.type"/>
+    </div>
+    <div class="formLine">
+      <label for="possiblePoints">possible points:</label> 
+      <input type="text" ng-model="selectedEvent.possiblePoints" name="possiblePoints"/>
+    </div>
+    <div class="formLine">&nbsp;</div>
+    <div class="formLine">
+      <label for="date">date:</label>
+      <quick-datepicker ng-model="selectedEvent.start" ng-change="applyChanges()"></quick-datepicker>
+    </div>
+    <div class="formLine">&nbsp;</div>
+    <div class="formLine">
+      <label for="description">description:</label>
+      <input type="textarea" ng-model="selectedEvent.description" name="description"/>
+    </div>
+  </form>
+  <div class="formControls">
+    <span class="button_cancel">cancel</span>
+    <span class="button_confirm">accept</span>
+  </div>
+</modal-dialog>
