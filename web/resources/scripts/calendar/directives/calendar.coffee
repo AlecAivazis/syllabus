@@ -168,9 +168,6 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
     else
       console.log 'making a new event'
 
-    # this is to prevent angular from thinking we're accessing a DOM node
-    return
-
   # deselect the selectedEvent
   $scope.deselectEvent = () ->
     $scope.selectedEvent = null

@@ -91,18 +91,25 @@ class Event(models.Model):
         else:
             # use the event category
             category = self.category
-        
+
         # gather the events of this category including matching subCategory
         events = (qlass.events.filter(category = category) | 
                   qlass.events.filter(metaData__key = 'subCategory')
                               .filter(metaData__value = category)).distinct()
+
+        # gather the possible metaData
+        data = self.metaData.filter(key = 'possiblePoints')
+        # if there is no such metaData
+        if not data:
+            return 0
+        
         # the total  number of possible points for this category
         possiblePoints = 0
-        # gather the possible metaData
-        for data in (MetaData.objects.filter(events__in = events)
-                                     .filter(key = 'possiblePoints')):
+
+        # otherwise
+        for entry in data.filter(events__in = events):
             # add up the points
-            possiblePoints += float(data.value)
+            possiblePoints += float(entry.value)
         
         # get a corresponding weight entry
         weightEntry = (WeightCategory.objects.filter(weights__sections = qlass)
@@ -110,7 +117,7 @@ class Event(models.Model):
         if weightEntry:
             percentage = weightEntry[0].percentage
             # grab the events possible points
-            eventPossible = int(self.metaData.get(key='possiblePoints').value)
+            eventPossible = int( self.metaData.get(key='possiblePoints').value )
             # calculate the weight
             weight = (eventPossible/possiblePoints) * percentage
             # return the weight
