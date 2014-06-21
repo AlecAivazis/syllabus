@@ -115,3 +115,22 @@ class MyCalendar(generics.RetrieveAPIView):
         return self.request.user
 
 
+class RetrieveEvent(generics.RetrieveUpdateDestroyAPIView):
+    """ the CRUD interface for syllabus events """
+    model = Event
+    serializer_class = EventSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    # return the event specified by the url
+    def get_object(self):
+        return Event.objects.get(pk = self.kwargs.get('pk'))
+
+class CreateEvent(generics.CreateAPIView):
+    """ create an event """
+    model = Event
+    serializer_class = EventSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]

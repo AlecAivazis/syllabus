@@ -28,10 +28,12 @@
 <script type="text/coffeescript" src="/static/scripts/gradebook/app.coffee"></script>
 {% endblock %}
 
+{% block appName %}gradebook-app{% endblock %}
+
 {% block content %}
 {% verbatim %}
 
-<div id="gradebook" ng-app="gradebook-app">
+<div id="gradebook">
 
   <!-- Sidebar: select a class to view the appropriate gradebook -->
   <aside id="gradebookClassSelect" class="sidebar" ng-controller="ClassSelect">

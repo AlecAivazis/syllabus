@@ -5,6 +5,7 @@ from .views import SectionList
 from .views import ClassEventList, HomeworkByClass
 from .views import WeightsList
 from .views import MyCalendar
+from .views import RetrieveEvent, CreateEvent
 
 # define the class api urls
 class_urls = patterns('', 
@@ -24,6 +25,8 @@ class_urls = patterns('',
 event_urls = patterns('',
     url(r'(?i)^homeworkByClass/(?P<id>[0-9a-zA-Z_-]+)/$', HomeworkByClass.as_view(), 
                                                           name="api-events-byClass"),
+    url(r'(?i)^create/$', CreateEvent.as_view(), name="api-event-create"),
+    url(r'^(?P<pk>[0-9a-zA-Z_-]+)/$', RetrieveEvent.as_view(), name="api-event-retrieve")
 )
 
 # define the class api urls

@@ -53,7 +53,7 @@ class EventSerializer(serializers.ModelSerializer):
     weight = serializers.SerializerMethodField('getWeight')
 
     def getPossiblePoints(self, obj):
-        """ return the total number of possible points associated with this event"""
+        """ return the total number of possible points associated with this event """
         data = obj.metaData.filter(key = 'possiblePoints')
         if data:
             return data[0].value
@@ -61,7 +61,7 @@ class EventSerializer(serializers.ModelSerializer):
             return ''
 
     def getSubCategory(self, obj):
-        """ return the value of meta data entry corresponding to this events subcategory"""
+        """ return the value of meta data entry corresponding to this events subcategory """
         data = obj.metaData.filter(key = 'subCategory')
         if data:
             return data[0].value

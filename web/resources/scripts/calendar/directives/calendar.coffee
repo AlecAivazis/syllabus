@@ -41,9 +41,6 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
     # add the assigned events to the list of events shown by the calendar
     $scope.events.push($scope.assigned)
 
-    # save the classes that i teach
-    $scope.myClasses = result.classes
-
   # configuration for the user interface
   $scope.uiConfig =
     calendar:        
@@ -59,8 +56,15 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
                                                          .add('minutes', minuteDelta))
       # when an event is clicked 
       eventClick: (event, jsEvent, view) ->
-        # select it
-        $scope.selectedEvent = event
+        # load its data into the selected event
+        $scope.selectedEvent = 
+          id: event.id
+          title: event.title
+          type: event.type
+          possiblePoints: event.possiblePoints
+          start: event.start
+          description: event.description
+        # apply the selection
         $scope.$apply()
         
       # when an event gets rendered 
@@ -116,6 +120,59 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
   # apply changes
   $scope.applyChanges = () ->
-    console.log $scope.selectedEvent.start
+
+    # prepare the data for the server
+    data =
+      title: $scope.selectedEvent.title
+      category: $scope.selectedEvent.type
+      date: moment($scope.selectedEvent.start).format('YYYY-M-D')
+      time: moment($scope.selectedEvent.start).format('HH:mm:ss')
+      description: $scope.selectedEvent.description
+      possiblePoints: $scope.selectedEvent.possiblePoints
+
+    # check if the selectedEvent is a copy of an event to be updated
+    if $scope.selectedEvent.id
+      # update the database
+      $http method:'patch', url: '/api/events/' + $scope.selectedEvent.id + '/', data: data
+      # if it succeeds
+      .success (result) ->
+        # update the event
+        # grab the event corresponding to the selected one
+        event = _.findWhere _.flatten($scope.events), id: $scope.selectedEvent.id
+        # set the event attributes
+        event.title = $scope.selectedEvent.title
+        event.type = $scope.selectedEvent.type
+        event.start = $scope.selectedEvent.start
+        event.description = $scope.selectedEvent.description
+        event.possiblePoints = $scope.selectedEvent.possiblePoints
+        # refresh the calendar ui
+        $('#syll_calendar').fullCalendar('rerenderEvents')
+
+        # notify the user
+        $scope.alert = 
+          type: 'notification',
+          message: 'successfully moved event ' + event.id  + ' to ' + event.start
+
+        # deselect the event
+        $scope.selectedEvent = null
+
+      # if it fails
+      .error (result) ->
+        console.log result
+        # notify the user
+        $scope.alert =
+          type: 'warning'
+          message: 'There was a problem while trying to update ' + $scope.selectedEvent.title
+
+    # if no event was selected before
+    else
+      console.log 'making a new event'
+
+    # this is to prevent angular from thinking we're accessing a DOM node
+    return
+
+  # deselect the selectedEvent
+  $scope.deselectEvent = () ->
+    $scope.selectedEvent = null
 
 ]

@@ -1,6 +1,8 @@
-<div ui-calendar="uiConfig.calendar" ng-model="events"></div>
+<div ui-calendar="uiConfig.calendar" ng-model="events" id="syll_calendar">
+loading calendar...
+</div>
 
-<modal-dialog show="selectedEvent" dialog-title="Details for {{selectedEvent.title}}">
+<modal-dialog show="selectedEvent" dialog-title="Details for {{selectedEvent.title}}" >
   <form id="eventForm">
     <div class="formLine">
       <label for="title">title:</label>
@@ -12,21 +14,23 @@
     </div>
     <div class="formLine">
       <label for="possiblePoints">possible points:</label> 
-      <input type="text" ng-model="selectedEvent.possiblePoints" name="possiblePoints"/>
+      <input type="text" ng-model="selectedEvent.possiblePoints" 
+             name="possiblePoints"/>
     </div>
     <div class="formLine">&nbsp;</div>
     <div class="formLine">
       <label for="date">date:</label>
-      <quick-datepicker ng-model="selectedEvent.start" ng-change="applyChanges()"></quick-datepicker>
+      <quick-datepicker ng-model="selectedEvent.start"></quick-datepicker>
     </div>
     <div class="formLine">&nbsp;</div>
     <div class="formLine">
       <label for="description">description:</label>
-      <input type="textarea" ng-model="selectedEvent.description" name="description"/>
+      <input type="textarea" ng-model="selectedEvent.description" 
+             name="description"/>
     </div>
   </form>
   <div class="formControls">
-    <span class="button_cancel">cancel</span>
-    <span class="button_confirm">accept</span>
+    <span class="button_cancel" ng-click="deselectEvent()">cancel</span>
+    <span class="button_confirm" ng-click="applyChanges()">accept</span>
   </div>
 </modal-dialog>
