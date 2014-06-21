@@ -75,8 +75,12 @@ class Event(models.Model):
             metaData = self.metaData.filter(key = 'possiblePoints')
             if metaData:
                 possiblePoints = int(metaData[0].value)
+                if not self.calculateWorth():
+                    worth = 0
+                else:
+                    worth = self.calculateWorth()
 
-                return (grade/possiblePoints) * self.calculateWorth()
+                return (grade/possiblePoints) * worth
     
     # calculate the individual worth of this event based on the weight
     def calculateWorth(self):

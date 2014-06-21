@@ -13,13 +13,20 @@ class MetaDataField(serializers.WritableField):
         """ called to convert the native rep into a primitive datatype """
         # grab the appropriate metaData
         data = obj.filter(key = self.name)
+
         # if it exists
         if data:
-            # return it
-            return data[0].value
-        else:
-            # return a blank string
-            return ' '
+            # and the value is valid
+            if data[0].value:
+                # return it
+                return data[0].value
+
+        # if its asking about the category
+        if self.name == 'subCategory':
+            return self.parent.object.category
+            
+        # otherwise return a blank string
+        return ' '
 
     def from_native(self, data):
         """ called to restore a primitive datatype into its native rep """
