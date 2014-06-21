@@ -31,7 +31,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         id: event.id,
         start: moment(event.date + ' ' + event.time).toDate(),
         description: event.description,
-        type: event.type
+        type: event.category
         possiblePoints: event.possiblePoints
         class: event.classes[0]
         
