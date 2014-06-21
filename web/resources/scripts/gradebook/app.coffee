@@ -54,12 +54,18 @@ gradebook.controller 'gradebook-view', ($scope, $rootScope, $http) ->
       $scope.events = result.events
       $scope.gradebook = result.gradebook
       $scope.students = result.students
+      # make the gradebook ui element show
+      $scope.hideGradebook = false
+      # go over each event
+      #angular.forEach $scope.events, (event) ->
+        # if its category is empty
+      #  if not event.category
+          # set it based on its type
+      #    event.category = event.type
       # register the class for the gradebook
       class_id = $rootScope.gradebook_id
       # compute the averages
       $rootScope.$broadcast 'recalculateAverages'
-      # make the gradebook ui element show
-      $scope.hideGradebook = false
 
     # track if the weights need to be reloaded
     refreshWeights = true

@@ -3,6 +3,8 @@
 
 from rest_framework import serializers
 
+import collections
+
 from .models import MetaData
 
 class MetaDataField(serializers.WritableField):
@@ -21,10 +23,6 @@ class MetaDataField(serializers.WritableField):
                 # return it
                 return data[0].value
 
-        # if its asking about the category
-        if self.name == 'subCategory':
-            return self.parent.object.category
-            
         # otherwise return a blank string
         return ' '
 
@@ -35,7 +33,7 @@ class MetaDataField(serializers.WritableField):
         # check if there is already a metaData item with this name
         replacement = event.metaData.filter(key = self.name)
 
-        # if there is
+        # if there is one
         if replacement:
             # grab the old data
             meta = replacement[0]
