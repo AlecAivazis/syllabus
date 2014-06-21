@@ -186,8 +186,7 @@ class Class(models.Model):
         """ return the events that get a grade """
         return (self.events.all()
                .exclude(category='lecture')
-               .exclude(category='meeting')
-               .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
+               .exclude(category='meeting'))
 
 
     # return the grade of the user with the given id

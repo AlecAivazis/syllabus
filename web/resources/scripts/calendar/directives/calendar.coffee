@@ -21,6 +21,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
   
   # load my calendar
   $http.get('/api/users/me/calendar/').success (result) ->
+    console.log result.assigned
     # save the events from classes that i teach
     $scope.assigned = []
     # for each event that i assigned
@@ -44,11 +45,13 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
   # configuration for the user interface
   $scope.uiConfig =
     calendar:        
-      editable: true,
+      height: 700
+      editable: true
+      buttonIcons: {}
       header:
-        left: 'title',
-        center: '',
-        right: 'today prev,next'
+        left: 'month agendaWeek agendaDay'
+        center: 'prev title next'
+        right: 'today'
       # when an event is dropped on another date
       eventDrop: (event, dayDelta, minuteDelta) ->
         # change the starting date of the event
@@ -158,7 +161,6 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
       # if it fails
       .error (result) ->
-        console.log result
         # notify the user
         $scope.alert =
           type: 'warning'

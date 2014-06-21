@@ -31,6 +31,11 @@ html .fc,
 /* Header
 ------------------------------------------------------------------------*/
 
+.fc-header {
+    float: left;
+    margin-top: -39px;
+}
+
 .fc-header td {
 	white-space: nowrap;
 	}
@@ -38,6 +43,7 @@ html .fc,
 .fc-header-left {
 	width: 25%;
 	text-align: left;
+        margin-top: -25px;
 	}
 	
 .fc-header-center {
@@ -149,12 +155,6 @@ html .fc,
 	cursor: pointer;
 	}
 	
-.fc-state-default { /* non-theme */
-	border: 1px solid;
-	}
-
-
-
 /*
 	Our default prev/next buttons use HTML entities like &lsaquo; &rsaquo; &laquo; &raquo;
 	and we'll try to make them look good cross-browser.
@@ -166,6 +166,10 @@ html .fc,
 	font-family: "Courier New", Courier, monospace;
 	vertical-align: baseline; /* for IE7 */
 	}
+
+.fc-text-arrow {
+        font-size: 1.5em;
+        }
 
 .fc-icon-left-single-arrow:after {
 	content: "\02039";
@@ -205,11 +209,14 @@ html .fc,
 
 .fc-state-hover,
 .fc-state-down,
-.fc-state-active,
-.fc-state-disabled {
+.fc-state-active{
 	color: #333333;
 	background-color: #e6e6e6;
 	}
+
+.fc-state-disabled {
+    display: none;
+}
 
 .fc-state-hover {
 	color: #333333;
