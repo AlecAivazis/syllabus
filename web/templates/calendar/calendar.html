@@ -1,4 +1,4 @@
-<div ui-calendar="uiConfig.calendar" ng-model="events" id="syll_calendar" >
+<div ui-calendar="uiConfig.calendar" ng-model="events" id="syll_calendar">
 loading calendar...
 </div>
 
@@ -30,6 +30,12 @@ loading calendar...
       <label for="description">description:</label>
       <input type="textarea" ng-model="selectedEvent.description" 
              name="description"/>
+    </div>
+    <div class="formLine">
+      <label for="class">Class:</label>
+      <select ng-model="selectedEvent.classes">
+        <option ng-repeat="class in classes" ng-value="class.id">{{class.name}}</option>
+      </select>
     </div>
   </form>
   <div class="formControls">

@@ -18,16 +18,17 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 # the calendar controller
 .controller 'calendarCtrl', ['$scope', '$http', ($scope, $http) ->
 
-  # fullCalendar stores the events as a list of lists
-  $scope.events = []
   # collect the events that were created this session
   $scope.created = []
-  $scope.events.push $scope.created
+  # save the events from classes that i teach
+  $scope.assigned = []
+
+  $scope.events = [$scope.created, $scope.assigned]
   
   # load my calendar
   $http.get('/api/users/me/calendar/').success (result) ->
-    # save the events from classes that i teach
-    $scope.assigned = []
+    # save the list of classes that i teach
+    $scope.classes = result.classes
     # for each event that i assigned
     angular.forEach result.assigned, (event) ->
       # build datetime objects
@@ -43,7 +44,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         type: event.type
         category: event.category
         possiblePoints: event.possiblePoints
-        classes: event.classes
+        classes: event.classes[0]
 
       # add it to the list of assigned events
       $scope.assigned.push(item)
@@ -164,20 +165,31 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
   # apply changes
   $scope.applyChanges = () ->
-
+    # if there was a category given
+    if $scope.selectedEvent.category
+      # use it
+      category = $scope.selectedEvent.category
+    # otherwise
+    else
+      # use the type
+      category = $scope.selectedEvent.type
+    
     # prepare the data for the server
     data =
       title: $scope.selectedEvent.title
-      category: $scope.selectedEvent.category
+      category: category
       type: $scope.selectedEvent.type
       date: moment($scope.selectedEvent.start).format('YYYY-M-D')
       time: moment($scope.selectedEvent.start).format('HH:mm:ss')
       description: $scope.selectedEvent.description
       possiblePoints: $scope.selectedEvent.possiblePoints
-      classes: $scope.selectedEvent.classes
+      classes: [$scope.selectedEvent.classes]
+
+    console.log data
 
     # check if the selectedEvent is a copy of an event to be updated
     if $scope.selectedEvent.id
+      console.log 'you are editing an event' + $scope.selectedEvent.id
       # update the database
       $http method:'patch', url: '/api/events/' + $scope.selectedEvent.id + '/', data: data
       # if it succeeds
@@ -195,7 +207,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         event.possiblePoints = $scope.selectedEvent.possiblePoints
         event.classes = $scope.selectedEvent.classes
         # refresh the calendar ui
-        $('#syll_calendar').fullCalendar('rerenderEvents')
+        $('#syll_calendar').fullCalendar 'rerenderEvents'
 
         # notify the user
         $scope.alert = 
@@ -207,6 +219,8 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
       # if it fails
       .error (result) ->
+        console.log 'ERROR: '
+        console.log result
         # notify the user
         $scope.alert =
           type: 'warning'
@@ -214,13 +228,17 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
     # if no event was selected before
     else
-      console.log 'making a new event'
       # create the event on the database
       $http method:'post', url: '/api/events/create/', data: data
       # if it succeeds
       .success (result) ->
-        # add it to the created list
-        $scope.created.push data
+        console.log 'created a new event'
+        console.log data
+        # copy the selected event to the list with the appropriate id
+        $scope.created.push $.extend({id:result}, $scope.selectedEvent)
+        # deselect the event
+        $scope.deselectEvent()
+        
       # if there was an error
       .error (result) ->
         console.log result

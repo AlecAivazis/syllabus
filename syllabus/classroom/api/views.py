@@ -141,8 +141,6 @@ class CreateEvent(generics.CreateAPIView):
         # grab the posted data
         data = self.request.DATA
         
-        print(data)
-        
         # check that the necessary data is here
         if ('title' not in data or 'description' not in data or 'date' not in data or 
             'time' not in data or 'category' not in data or 'classes' not in data):
@@ -184,4 +182,4 @@ class CreateEvent(generics.CreateAPIView):
             # add the event to the class
             Class.objects.get(pk=pk).events.add(event)
             
-        return HttpResponse('success')
+        return HttpResponse(event.id)

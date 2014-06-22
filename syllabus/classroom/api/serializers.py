@@ -215,6 +215,20 @@ class CalendarSerializer(serializers.ModelSerializer):
         fields = ('assigned', 'classes')
         
     assigned = serializers.SerializerMethodField('getAssignedEvents')
+    classes = serializers.SerializerMethodField('getClasses')
+
+    def getClasses(self, obj):
+        """ return the classes that are taught by the user """
+        classes = []
+        # for each class the user is teaching
+        for c in obj.classesTeaching.all():
+            # build the serialized data
+            classes.append({
+                'id': c.pk,
+                'name': c.profile.interest.abbrv + ' ' + str(c.profile.number)
+            })
+        # return the data
+        return classes
 
     def getAssignedEvents(self, obj):
         """ return the events that were assigned by the user """
