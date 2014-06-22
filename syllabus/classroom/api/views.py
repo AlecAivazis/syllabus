@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
@@ -7,7 +7,7 @@ from .serializers import (ClassSerializer, SectionSerializer, EventSerializer,
 
 from ..models import Class, Section, Event, GradingScale, Weight
 
-from ...core.models import SyllUser
+from ...core.models import SyllUser, MetaData
 
 import django, datetime
 
@@ -134,3 +134,54 @@ class CreateEvent(generics.CreateAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
+
+    # handle the creation of an event to add various meta data
+    def create(self, *args, **kwargs):
+
+        # grab the posted data
+        data = self.request.DATA
+        
+        print(data)
+        
+        # check that the necessary data is here
+        if ('title' not in data or 'description' not in data or 'date' not in data or 
+            'time' not in data or 'category' not in data or 'classes' not in data):
+            return HttpResponseBadRequest 
+
+        # create the event
+        event = Event()
+        event.title = data['title']
+        event.description = data['description']
+        event.date = data['date']
+        event.time = data['time']
+        event.category = data['category']
+        event.save()
+
+        # add the possiblePoints metaData
+        if 'possiblePoints' in data:
+            # create the metaData entry
+            meta = MetaData()
+            meta.key = 'possiblePoints'
+            meta.value = data['possiblePoints']
+            meta.save()
+
+            # add the metaData to the entry
+            event.metaData.add(meta)
+
+        # add the sub category
+        if 'category' in data:
+            # create the metaData entry
+            meta = MetaData()
+            meta.key = 'subCategory'
+            meta.value = data['category']
+            meta.save()
+
+            # add the metaData to the entry
+            event.metaData.add(meta)
+
+        # for each class that this event belongs to
+        for pk in data['classes']:
+            # add the event to the class
+            Class.objects.get(pk=pk).events.add(event)
+            
+        return HttpResponse('success')

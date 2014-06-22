@@ -45,6 +45,25 @@ ClassProfile = 'academia.ClassProfile'
 # Classroom
 # -----------------------------
 
+class EventQuerySet(models.QuerySet):
+    """ manage the event django api """
+
+    def assignments(self):
+        """ return the assignments """
+        return self.filter(category = 'assignment')
+
+    def tests(self):
+        """ return the tests """
+        return self.filter(category = 'test')
+
+    def lectures(self):
+        """ return the lectures """
+        return self.filter(category = 'lecture')
+
+    def meetings(self):
+        """ return the meetings """
+        return self.filter(category = 'meeting')
+
 # the fundamental element of a teachers syllabus
 # can be one of assignment, lecture, test, meeting
 class Event(models.Model):
@@ -60,6 +79,9 @@ class Event(models.Model):
         ('lecture','lecture'),
         ('meeting','meeting'),
     ))
+
+    # set the object manager
+    objects = EventQuerySet.as_manager()
     
     # string behavior is to return the title
     def __str__(self):

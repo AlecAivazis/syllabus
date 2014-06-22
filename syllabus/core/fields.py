@@ -30,34 +30,38 @@ class MetaDataField(serializers.WritableField):
         """ called to restore a primitive datatype into its native rep """
         # store the event were serializing
         event = self.parent.object
-        # check if there is already a metaData item with this name
-        replacement = event.metaData.filter(key = self.name)
+        # if the event hasn't been created yet
+        if event:
+            # check if there is already a metaData item with this name
+            replacement = event.metaData.filter(key = self.name)
 
-        # if there is one
-        if replacement:
-            # grab the old data
-            meta = replacement[0]
-            # change its value
-            meta.value = data
-            # save the changes
-            meta.save()
+            # if there is one
+            if replacement:
+                # grab the old data
+                meta = replacement[0]
+                # change its value
+                meta.value = data
+                # save the changes
+                meta.save()
 
-        #otherwise
+            #otherwise
+            else:
+                # create an empty meta data object
+                meta = MetaData()
+                # with the appropriate attributes
+                meta.key = self.name
+                meta.value = data 
+                # save it to the database
+                meta.save()
+                # add it to the events metaData
+                event.metaData.add(meta)
+
+            # return the metaData list 
+            return event.metaData.all()
         else:
-            # create an empty meta data object
-            meta = MetaData()
-            # with the appropriate attributes
-            meta.key = self.name
-            meta.value = data 
-            # save it to the database
-            meta.save()
-            # add it to the events metaData
-            event.metaData.add(meta)
-
-        # return the events metaData list
-        return event.metaData.all()
+            return None
 
     def __init__(self, name):
         """ save the name that will be used as the key to return the value """
         self.name = name
-        super().__init__(source = 'metaData')
+        super().__init__(source = 'metaData', required = False)
