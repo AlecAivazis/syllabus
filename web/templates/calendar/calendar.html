@@ -9,8 +9,13 @@ loading calendar...
       <input type="text" ng-model="selectedEvent.title" name="title"/>
     </div>
     <div class="formLine">
-      <label for="category">type:</label> 
-      <input type="text" name="category"  ng-model="selectedEvent.type"/>
+      <label for="type">type:</label> 
+      <select name="type" ng-model="selectedEvent.type">
+        <option ng-value="assignment">assignment</option>
+        <option ng-value="lecture">lecture</option>
+        <option ng-value="meeting">meeting</option>
+        <option ng-value="test">test</option>
+      </select>
     </div>
     <div class="formLine">
       <label for="possiblePoints">possible points:</label> 
@@ -34,7 +39,8 @@ loading calendar...
     <div class="formLine">
       <label for="class">Class:</label>
       <select ng-model="selectedEvent.classes">
-        <option ng-repeat="class in classes" ng-value="class.id">{{class.name}}</option>
+        <option ng-repeat="class in classes" ng-value="class.id" 
+                ng-selected="class.id == selectedEvent.classes">{{class.name}}</option>
       </select>
     </div>
   </form>
