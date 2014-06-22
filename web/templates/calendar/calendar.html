@@ -21,6 +21,9 @@ loading calendar...
     <div class="formLine">
       <label for="date">date:</label>
       <quick-datepicker ng-model="selectedEvent.start"></quick-datepicker>
+      <span class="dateRangeEnd"  ng-if="isSelectedDayRange()" > 
+        -  <quick-datepicker ng-model="selectedEvent.end"></quick-datepicker>
+      </span>
     </div>
     <div class="formLine">&nbsp;</div>
     <div class="formLine">

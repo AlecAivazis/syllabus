@@ -4,6 +4,10 @@
 <script type="text/javascript" src="/static/scripts/thirdparty/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="/static/scripts/thirdparty/angular/angular.min.js"/>
 <script type="text/javascript" src="/static/scripts/thirdparty/underscore/underscore.js"/>
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/moment/min/moment-with-langs.min.js"/>
+
+<script type="text/javascript" src="/static/scripts/thirdparty/moment-range/lib/moment-range.js"/>
 
 <script type="text/javascript" src="/static/scripts/thirdparty/jquery-ui/ui/jquery-ui.js"></script>
 <script type="text/javascript"
@@ -12,10 +16,8 @@
         src="/static/scripts/thirdparty/angular-cookies/angular-cookies.js" />
 
 <script type="text/javascript" 
-        src="/static/scripts/thirdparty/fullcalendar/fullcalendar.js"></script>
+        src="/static/scripts/thirdparty/fullcalendar/dist/fullcalendar.js"></script>
 <script type="text/javascript" src="/static/scripts/thirdparty/fullcalendar/gcal.js"></script>
-<script type="text/javascript" 
-        src="/static/scripts/thirdparty/moment/min/moment-with-langs.min.js"/>
 <script type="text/javascript" src="/static/scripts/thirdparty/qtip2/jquery.qtip.js"/>
 <script type="text/javascript" src="/static/scripts/thirdparty/handlebars/handlebars.js"/>
 
@@ -36,8 +38,7 @@
 <link type="text/css" rel="stylesheet" 
       href="/static/scripts/thirdparty/ngQuickDate/dist/ng-quick-date.css" >
 </link>
-<link type="text/css" rel="stylesheet" 
-      href="/static/styles/fc.css" ></link>
+<link type="text/css" rel="stylesheet" href="/static/styles/fc.css" ></link>
 
 <link type="text/scss" rel="stylesheet" href="/static/styles/calendar.scss" ></link>
 {% endblock %}
@@ -46,7 +47,6 @@
 {% block appName %}calendar-app{% endblock %}
 
 {% block content %}
-{{selectedEvent}}
 <div id="calendar" calendar></div>
 {% endblock %}
 
@@ -58,7 +58,7 @@
       {{#if isAssignment }}
         <img src="/resources/images/calendar/document.png" width="20px" />
       {{/if}}
-      {{# if isTest }}
+      {{#if isTest }}
         <img src="/resources/images/calendar/documentPencil.png" width="20px" />
       {{else}}
         <img src="/resources/images/calendar/projector.png" width="20px" />

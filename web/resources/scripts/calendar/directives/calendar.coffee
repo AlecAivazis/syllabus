@@ -9,9 +9,11 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
 # add the directive
 .directive 'calendar', () ->
-  restrict: 'AE',
-  templateUrl: '../templates/calendar/calendar.html',
+  restrict: 'AE'
+  templateUrl: '../templates/calendar/calendar.html'
   controller: 'calendarCtrl'
+  link: (scope, element, attr) ->
+    $('.fc-header-right').append 'hello world'
 
 # the calendar controller
 .controller 'calendarCtrl', ['$scope', '$http', ($scope, $http) ->
@@ -21,21 +23,24 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
   
   # load my calendar
   $http.get('/api/users/me/calendar/').success (result) ->
-    console.log result.assigned
     # save the events from classes that i teach
     $scope.assigned = []
     # for each event that i assigned
     angular.forEach result.assigned, (event) ->
+      # build datetime objects
+      eventStart = moment(event.date + ' ' + event.time).toDate()
+      eventEnd = false
       # add it to the list of events
       item = 
-        title: event.title,
-        id: event.id,
-        start: moment(event.date + ' ' + event.time).toDate(),
-        description: event.description,
+        title: event.title
+        id: event.id
+        start: eventStart
+        end: if eventEnd then eventEnd else eventStart
+        description: event.description
         type: event.category
         possiblePoints: event.possiblePoints
         class: event.classes[0]
-        
+
       # add it to the list of assigned events
       $scope.assigned.push(item)
 
@@ -46,12 +51,16 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
   $scope.uiConfig =
     calendar:        
       height: 700
-      editable: true
-      buttonIcons: {}
       header:
         left: 'month agendaWeek agendaDay'
         center: 'prev title next'
-        right: 'today'
+        right: 'newEvent today'
+      weekMode: 'liquid'
+
+      editable: true
+      selectable: true
+      unselectAuto: false
+
       # when an event is dropped on another date
       eventDrop: (event, dayDelta, minuteDelta) ->
         # change the starting date of the event
@@ -66,13 +75,15 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
           type: event.type
           possiblePoints: event.possiblePoints
           start: event.start
+          end: event.end
           description: event.description
         # apply the selection
         $scope.$apply()
-        
+
+
       # when an event gets rendered 
       eventRender: (event, element) ->
-        # load the template
+        # load the tooltip template
         source = $('#tooltip-template').html()
         template = Handlebars.compile source
         # define the context for the template
@@ -99,6 +110,30 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
           # add a custom class
           , style:
             classes: 'tooltip'
+
+      # when a date/range is selected
+      select: (start, end) ->
+        # set the local variables
+        $scope.selectedDayStart = moment(start)
+        $scope.selectedDayEnd = moment(end)
+        # show the newEvent button
+        $('.fc-button-newEvent').show()
+      # when a date/range is unselected
+      unselect: () ->
+        # hide the newEvent button
+        $('.fc-button-newEvent').hide()
+        # clear the local variables
+        $scope.selectedDayStart = null
+        $scope.selectedDayEnd = null
+        
+      # when the new event button is clicked
+      newEvent: () ->
+        # select an empty event over the appropriate days
+        $scope.selectedEvent =
+          start: $scope.selectedDayStart.toDate()
+          end: $scope.selectedDayEnd.toDate()
+        # apply the change
+        $scope.$apply()
 
   # change the start date of an event
   $scope.changeEventDate = (event, old) ->
@@ -146,6 +181,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         event.title = $scope.selectedEvent.title
         event.type = $scope.selectedEvent.type
         event.start = $scope.selectedEvent.start
+        event.end = $scope.selectedEvent.end
         event.description = $scope.selectedEvent.description
         event.possiblePoints = $scope.selectedEvent.possiblePoints
         # refresh the calendar ui
@@ -173,5 +209,15 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
   # deselect the selectedEvent
   $scope.deselectEvent = () ->
     $scope.selectedEvent = null
+
+  $scope.isSelectedDayRange = () ->
+    # if theres no event selected
+    if not $scope.selectedEvent
+      return false
+    # if the selected event has no end
+    if not $scope.selectedEvent.end
+      return false
+    # a range is defined as when the start and end are not the same
+    return not moment($scope.selectedEvent.start).isSame($scope.selectedEvent.end)
 
 ]
