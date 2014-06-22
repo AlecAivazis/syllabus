@@ -49,9 +49,6 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
       # add it to the list of assigned events
       $scope.assigned.push(item)
 
-    # add the assigned events to the list of events shown by the calendar
-    $scope.events.push($scope.assigned)
-
   # configuration for the user interface
   $scope.uiConfig =
     calendar:        
@@ -185,11 +182,8 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
       possiblePoints: $scope.selectedEvent.possiblePoints
       classes: [$scope.selectedEvent.classes]
 
-    console.log data
-
     # check if the selectedEvent is a copy of an event to be updated
     if $scope.selectedEvent.id
-      console.log 'you are editing an event' + $scope.selectedEvent.id
       # update the database
       $http method:'patch', url: '/api/events/' + $scope.selectedEvent.id + '/', data: data
       # if it succeeds
@@ -232,15 +226,14 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
       $http method:'post', url: '/api/events/create/', data: data
       # if it succeeds
       .success (result) ->
-        console.log 'created a new event'
-        console.log data
         # copy the selected event to the list with the appropriate id
-        $scope.created.push $.extend({id:result}, $scope.selectedEvent)
+        $scope.created.push $.extend {id:result}, $scope.selectedEvent
         # deselect the event
         $scope.deselectEvent()
         
       # if there was an error
       .error (result) ->
+        console.log 'ERROR:'
         console.log result
 
   # deselect the selectedEvent
