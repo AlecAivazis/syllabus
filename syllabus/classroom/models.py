@@ -95,14 +95,35 @@ class Event(models.Model):
             grade = grades[0].score
             # check if there is a entry for possible points
             metaData = self.metaData.filter(key = 'possiblePoints')
+            # if so
             if metaData:
+                # grab the possible points
                 possiblePoints = int(metaData[0].value)
                 if not self.calculateWorth():
                     worth = 0
                 else:
                     worth = self.calculateWorth()
-
+                    
                 return (grade/possiblePoints) * worth
+            # since there is no metaData for possible points
+            else:
+                return 0
+        else:
+            return 0
+
+    def getPossiblePoints(self):
+        """ return the possible points in this event, otherwise return 0 """
+        if not self.metaData:
+            return 0
+        # search for a meata data for possible points
+        data = self.metaData.filter(key='possiblePoints')
+        # if it exists
+        if data:
+            # return its value
+            return float(data[0].value)
+        else:
+            return 0
+        
     
     # calculate the individual worth of this event based on the weight
     def calculateWorth(self):
@@ -122,28 +143,22 @@ class Event(models.Model):
         events = (qlass.events.filter(category = category) | 
                   qlass.events.filter(metaData__key = 'subCategory')
                               .filter(metaData__value = category)).distinct()
-
-        # gather the possible metaData
-        data = self.metaData.filter(key = 'possiblePoints')
-        # if there is no such metaData
-        if not data:
-            return 0
         
         # the total  number of possible points for this category
         possiblePoints = 0
 
-        # otherwise
-        for entry in data.filter(events__in = events):
-            # add up the points
-            possiblePoints += float(entry.value)
+        # for each such event
+        for event in events.all():
+            # add up the possible points
+            possiblePoints += event.getPossiblePoints()
         
         # get a corresponding weight entry
         weightEntry = (WeightCategory.objects.filter(weights__sections = qlass)
-                                        .filter(category = category))
+                                             .filter(category = category))
         if weightEntry:
             percentage = weightEntry[0].percentage
             # grab the events possible points
-            eventPossible = int( self.metaData.get(key='possiblePoints').value )
+            eventPossible = self.getPossiblePoints()
             # calculate the weight
             weight = (eventPossible/possiblePoints) * percentage
             # return the weight

@@ -9,6 +9,13 @@ loading calendar...
       <input type="text" ng-model="selectedEvent.title" name="title"/>
     </div>
     <div class="formLine">
+      <label for="date">date:</label>
+      <quick-datepicker ng-model="selectedEvent.start"></quick-datepicker>
+      <span class="dateRangeEnd"  ng-if="isSelectedDayRange()" > 
+        -  <quick-datepicker ng-model="selectedEvent.end"></quick-datepicker>
+      </span>
+    </div>
+    <div class="formLine">
       <label for="type">type:</label> 
       <select name="type" ng-model="selectedEvent.type">
         <option ng-value="assignment">assignment</option>
@@ -17,25 +24,29 @@ loading calendar...
         <option ng-value="test">test</option>
       </select>
     </div>
-    <div class="formLine">
-      <label for="possiblePoints">possible points:</label> 
-      <input type="text" ng-model="selectedEvent.possiblePoints" 
-             name="possiblePoints"/>
-    </div>
     <div class="formLine">&nbsp;</div>
     <div class="formLine">
-      <label for="date">date:</label>
-      <quick-datepicker ng-model="selectedEvent.start"></quick-datepicker>
-      <span class="dateRangeEnd"  ng-if="isSelectedDayRange()" > 
-        -  <quick-datepicker ng-model="selectedEvent.end"></quick-datepicker>
-      </span>
+      <label for="category">sub-category:</label> 
+      <input type="text" ng-model="selectedEvent.category" 
+             name="category"/>
+    </div>
+    <!-- gradable specific lines -->
+    <div ng-if="selectedEvent.type == 'assignment' || selectedEvent.type == 'test'">
+      <div class="formLine" >
+        <label for="possiblePoints">possible points:</label> 
+        <input type="text" ng-model="selectedEvent.possiblePoints" 
+               name="possiblePoints"/>
+      </div>
     </div>
     <div class="formLine">&nbsp;</div>
+    
+    <!-- misc lines -->
     <div class="formLine">
       <label for="description">description:</label>
       <input type="textarea" ng-model="selectedEvent.description" 
              name="description"/>
     </div>
+    <div class="formLine">&nbsp;</div>
     <div class="formLine">
       <label for="class">Class:</label>
       <select ng-model="selectedEvent.classes">

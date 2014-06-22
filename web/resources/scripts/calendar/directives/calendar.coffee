@@ -71,17 +71,8 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
       # when an event is clicked 
       eventClick: (event, jsEvent, view) ->
         # load its data into the selected event
-        $scope.selectedEvent = 
-          id: event.id
-          title: event.title
-          type: event.type
-          category: event.category
-          possiblePoints: event.possiblePoints
-          start: event.start
-          end: event.end
-          description: event.description
-          classes: event.classes
-        # apply the selection
+        $scope.selectedEvent = $.extend {}, event
+        # apply the change
         $scope.$apply()
 
 
@@ -91,6 +82,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         source = $('#tooltip-template').html()
         template = Handlebars.compile source
         # define the context for the template
+        console.log event.type
         context =
           title: event.title
           id: event.id
@@ -191,7 +183,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         # update the event
         # grab the event corresponding to the selected one
         event = _.findWhere _.flatten($scope.events), id: $scope.selectedEvent.id
-        # set the event attributes
+        # set the event attributes (deep copy)
         event.title = $scope.selectedEvent.title
         event.type = $scope.selectedEvent.type
         event.category = $scope.selectedEvent.category
@@ -213,7 +205,6 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 
       # if it fails
       .error (result) ->
-        console.log 'ERROR: '
         console.log result
         # notify the user
         $scope.alert =
@@ -227,13 +218,12 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
       # if it succeeds
       .success (result) ->
         # copy the selected event to the list with the appropriate id
-        $scope.created.push $.extend {id:result}, $scope.selectedEvent
+        $scope.created.push $.extend {id: result}, $scope.selectedEvent
         # deselect the event
         $scope.deselectEvent()
         
       # if there was an error
       .error (result) ->
-        console.log 'ERROR:'
         console.log result
 
   # deselect the selectedEvent
