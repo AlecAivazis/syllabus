@@ -134,9 +134,8 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
   # change the start date of an event
   $scope.changeEventDate = (event, old) ->
     # tell the database
-    $http.post '/calendar/moveEvent/',
-      id: event.id,
-      date: moment(event.start).format('YYYY-M-D')
+    $http(method:'patch', url: '/api/events/' + event.id + '/', data:
+        date: moment(event.start).format('YYYY-M-D'))
     # if it fails
     .error ->
       # warn the user

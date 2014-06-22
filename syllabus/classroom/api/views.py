@@ -177,6 +177,17 @@ class CreateEvent(generics.CreateAPIView):
             # add the metaData to the entry
             event.metaData.add(meta)
 
+        # add the associated reading
+        if 'associatedReading' in data:
+            # create the metaData entry
+            meta = MetaData()
+            meta.key = 'associatedReading'
+            meta.value = data['associatedReading']
+            meta.save()
+
+            # add the metaData to the entry
+            event.metaData.add(meta)
+
         # for each class that this event belongs to
         for pk in data['classes']:
             # add the event to the class
