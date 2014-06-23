@@ -1,16 +1,12 @@
 # syllabus imports
 from syllabus import *
-from syllabus.classroom.models import Class, Event
 from syllabus.academia.models import RegistrationGroup, Term
-# python imports
-import json
 
 def moveLabel(request):
     
     id = request.POST['id']
     targetDate = request.POST['date']
 
-    
     year= targetDate.split('-')[0]
     month = targetDate.split('-')[1]
     day = targetDate.split('-')[2]
@@ -49,3 +45,6 @@ def moveLabel(request):
         else:
             return HttpResponse('Term could not be found')
 
+def home(request):
+    return render_to_response('calendar/home.html', locals())
+    

@@ -15,30 +15,58 @@
 
     {% compress js %}
     <script src="/static/scripts/thirdparty/jquery/dist/jquery.min.js"></script>
+    <script src="/static/scripts/thirdparty/angular/angular.min.js"></script>
+    <script src="/static/scripts/thirdparty/angular.ng-modules.js"></script>
     <script src="/static/scripts/csrf.js"></script>
-    <script src="/static/scripts/syll.js"></script>
+    <script type="text/coffeescript" src="/static/scripts/syll.coffee"></script>
     <script type="text/javascript" src="/static/scripts/overlay.js"></script>
     <script type="text/javascript" src="/static/scripts/multi.js"></script>
     {% block js%}{% endblock %}
     {% endcompress %}
+
     {% block head %}{% endblock %}
   </head>
   
   <body>
-    <div id="gutter">
-      <div id="nav">
+    <div id="gutter" ng-module="syllabus-nav {% block appName %}{% endblock %}">
+      <div id="nav" ng-init="roles = [
+        {% for group in request.user.groups.all %}
+          '{{group.name}}' {% if not forloop.last %},
+        {% endif %} {% endfor %}]" 
+           ng-controller="navCtrl">
 	<img id="branding" src="/resources/images/branding.png">
-	{% for pair in request.session.links %}
-	<a id="nav_{{pair.0}}"
-	   href='{{pair.1}}'><img src="/resources/images/{{pair.0}}.png"></a>
-	
-        {% empty %}
-        error: could not load permissions middleware to get links
-	{% endfor %}
+        <a id="nav_home" href="/">
+          <img src="/resources/images/home.png" />
+        </a>
+        <a id="nav_myhomework" href="/myHomework?when=today" ng-if="isAdmin() || isStudent()">
+          <img src="/resources/images/myhomework.png" />
+        </a>
+        <a id="nav_calendar" href="/calendar/" ng-if="isTeacher() || isAdmin()">
+          <img src="/resources/images/calendar.png" />
+        </a>
+        <a id="nav_myclasses" href="/myclasses/schedule" ng-if="isAdmin()  || isStudent()">
+          <img src="/resources/images/myclasses.png" />
+        </a>
+        <a id="nav_users" href="/registrar/users" ng-if="isAdmin()  || isRegistrar()">
+          <img src="/resources/images/users.png" />
+        </a>
+        <a id="nav_classes" href="/registrar/classes" ng-if="isAdmin()  || isRegistrar()">
+          <img src="/resources/images/myclasses.png" />
+        </a>
+        <a id="nav_graduationRequirements" href="/registrar/graduationRequirements" 
+           ng-if="isAdmin()  || isRegistrar()">
+          <img src="/resources/images/graduationrequirements.png" />
+        </a>
+        <a id="nav_announcements" href="/announcements" >
+          <img src="/resources/images/announcements.png" />
+        </a>
+        <a id="nav_myprofile" href="/myprofile" >
+          <img src="/resources/images/myprofile.png" />
+        </a>
+        
       </div>
-      {% block sidebar %}{% endblock %}
       
-      <div id="content" ng-app="{% block appName %}{% endblock %}">
+      <div id="content">
 	{% block content %}{% endblock %}
       </div>
       {% block templates %}{%endblock%}

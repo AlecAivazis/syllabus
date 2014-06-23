@@ -9,7 +9,6 @@
 {% block js %}
 <script src="/static/scripts/thirdparty/flot/jquery.flot.js"></script>
 <script src="/static/scripts/thirdparty/flot/jquery.flot.resize.js"></script>
-<script type="text/javascript" src="/static/scripts/thirdparty/angular/angular.min.js"></script>
 <script type="text/javascript"
         src="/static/scripts/thirdparty/angular-cookies/angular-cookies.js"></script>
 <script type="text/javascript"
@@ -28,7 +27,7 @@
 <script type="text/coffeescript" src="/static/scripts/gradebook/app.coffee"></script>
 {% endblock %}
 
-{% block appName %}gradebook-app{% endblock %}
+{% block appName %}, gradebook-app{% endblock %}
 
 {% block content %}
 {% verbatim %}

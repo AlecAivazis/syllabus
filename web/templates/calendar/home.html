@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
 {% block js%} 
-<script type="text/javascript" src="/static/scripts/thirdparty/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="/static/scripts/thirdparty/angular/angular.min.js"/>
 <script type="text/javascript" src="/static/scripts/thirdparty/underscore/underscore.js"/>
 <script type="text/javascript" 
         src="/static/scripts/thirdparty/moment/min/moment-with-langs.min.js"/>
@@ -44,7 +42,7 @@
 {% endblock %}
 
 <!-- set the content div to be the root of ng-app -->
-{% block appName %}calendar-app{% endblock %}
+{% block appName %}, calendar-app{% endblock %}
 
 {% block content %}
 <div id="calendar" calendar></div>

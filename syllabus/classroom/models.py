@@ -64,6 +64,10 @@ class EventQuerySet(models.QuerySet):
         """ return the meetings """
         return self.filter(category = 'meeting')
 
+    def gradable(self):
+        """ return the events that should have a grade """
+        return self.all().exclude(category='lecture').exclude(category='meeting')
+
 # the fundamental element of a teachers syllabus
 # can be one of assignment, lecture, test, meeting
 class Event(models.Model):
@@ -225,10 +229,7 @@ class Class(models.Model):
 
     def getGradableEvents(self):
         """ return the events that get a grade """
-        return (self.events.all()
-               .exclude(category='lecture')
-               .exclude(category='meeting'))
-
+        return self.events.gradable().all()
 
     # return the grade of the user with the given id
     def totalGrade(self, id):

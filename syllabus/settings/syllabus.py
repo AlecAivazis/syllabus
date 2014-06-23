@@ -13,7 +13,6 @@ INSTALLED_APPS += (
 
 MIDDLEWARE_CLASSES = ( 
     'syllabus.core.middlewares.UAC',
-    'syllabus.core.middlewares.GetLinks',
 ) + MIDDLEWARE_CLASSES
 
 # the url permissions of the various user groups (to be moved somewhere else)
