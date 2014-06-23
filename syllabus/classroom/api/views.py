@@ -1,9 +1,11 @@
 from rest_framework import generics, permissions
 from django.http import HttpResponse, HttpResponseBadRequest
 
+
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
                           CalendarSerializer)
+print('hello')
 
 from ..models import Class, Section, Event, GradingScale, Weight
 
@@ -102,8 +104,8 @@ class HomeworkByClass(generics.ListCreateAPIView):
                 .exclude(category='meeting')
                 .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
 
-# return the calendar of the current user
 class MyCalendar(generics.RetrieveAPIView):
+    """ return the calendar of the current user """
     model = SyllUser
     serializer_class = CalendarSerializer
     permission_classes = [
@@ -123,10 +125,35 @@ class RetrieveEvent(generics.RetrieveUpdateDestroyAPIView):
         permissions.AllowAny
     ]
 
-    # return the event specified by the url
     def get_object(self):
+        """ return the event specified by the url """
         return Event.objects.get(pk = self.kwargs.get('pk'))
 
+class HomeworkForUser(generics.ListAPIView):
+    """ return the homework of the user designated by the url """
+    model = Event
+    serializer_class = EventSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    def get_queryset(self):
+        """ return the gradable events that are due before or on tomorrow """
+        # store the requested pk 
+        pk = self.kwargs.get('pk')
+        # if they asked for 'me' then replace it with the users pk
+        if pk == 'me':
+            # if so
+            pk = self.request.user.pk
+
+        # grab the appropriate user
+        user = SyllUser.objects.get(pk = pk)
+        # get the sections that the user is a member of
+        sections = Section.objects.filter(students = user).order_by('qlass')
+        # return the gradable events in those sections
+        return Event.objects.filter(classes__section = sections).gradable()
+
+        
 class CreateEvent(generics.CreateAPIView):
     """ create an event """
     model = Event
@@ -193,4 +220,5 @@ class CreateEvent(generics.CreateAPIView):
             # add the event to the class
             Class.objects.get(pk=pk).events.add(event)
             
+        # return the id of the event
         return HttpResponse(event.id)

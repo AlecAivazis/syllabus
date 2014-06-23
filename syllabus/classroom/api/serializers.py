@@ -138,7 +138,7 @@ class GradebookSerializer(serializers.ModelSerializer):
 
     def getGradableEvents(self, obj):
         """ return the events that are gradable """
-        # gradable events are not lectures or meetings that are due before tomorrow
+        # gradable events are not lectures or meetings that are due before tomorrows
         events = obj.getGradableEvents()
         # serialize the events
         serializer = EventSerializer(events)
