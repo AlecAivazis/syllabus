@@ -44,6 +44,9 @@
         <a id="nav_calendar" href="/calendar/" ng-if="isTeacher() || isAdmin()">
           <img src="/resources/images/calendar.png" />
         </a>
+        <a id="nav_gradebook" href="/gradebook/" ng-if="isTeacher() || isAdmin()">
+          <img src="/resources/images/gradebook.png" />
+        </a>
         <a id="nav_myclasses" href="/myclasses/schedule" ng-if="isAdmin()  || isStudent()">
           <img src="/resources/images/myclasses.png" />
         </a>
