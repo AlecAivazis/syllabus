@@ -149,9 +149,18 @@ class HomeworkForUser(generics.ListAPIView):
         # grab the appropriate user
         user = SyllUser.objects.get(pk = pk)
         # get the sections that the user is a member of
-        sections = Section.objects.filter(students = user).order_by('qlass')
-        # return the gradable events in those sections
-        return Event.objects.filter(classes__section = sections).gradable()
+        sections = Section.objects.filter(students = user).order_by('Glass')
+        # save the gradable events from those sections
+        events =  Event.objects.filter(classes__section = sections).gradable()
+        
+        # save the starting date for the event range
+        start = self.request.QUERY_PARAMS.get('start', None)
+        # if it was given
+        if start is not None:
+            print(start)
+
+        return events
+        
 
         
 class CreateEvent(generics.CreateAPIView):
