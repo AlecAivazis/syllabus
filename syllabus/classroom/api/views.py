@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
-                          CalendarSerializer)
+                          CalendarSerializer, HomeworkSerializer)
 print('hello')
 
 from ..models import Class, Section, Event, GradingScale, Weight
@@ -132,7 +132,7 @@ class RetrieveEvent(generics.RetrieveUpdateDestroyAPIView):
 class HomeworkForUser(generics.ListAPIView):
     """ return the homework of the user designated by the url """
     model = Event
-    serializer_class = EventSerializer
+    serializer_class = HomeworkSerializer
     permission_classes = [
         permissions.AllowAny
     ]

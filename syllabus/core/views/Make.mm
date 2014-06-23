@@ -21,7 +21,6 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
     core.py \
-    myHomework.py \
     myProfile.py \
     __init__.py
 

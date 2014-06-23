@@ -37,12 +37,12 @@ urlpatterns = patterns('',
 
     # load the myClasses urls
     url(r'(?i)^myClasses/', include(classroom.urls.myClasses)),
+    
+    # Show my homework
+    url(r'(?i)^myHomework/', classroom.views.myHomework.myHomework ),
 
     # load the tutor urls
     url(r'(?i)^tutors/', include(socialservice.urls.meetings)),
-
-    # load the myHomework urls
-    url(r'(?i)^myHomework/', include(core.urls.myHomework)),
 
     # load the myProfile urls
     url(r'(?i)^myProfile/', include(core.urls.myProfile)),

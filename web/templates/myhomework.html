@@ -1,114 +1,12 @@
 {% extends "base.html" %}
 
-{% block head %}<script src="/resources/scripts/assignments.js"></script>
-{% compress css %}
-	    <link type="text/scss" rel="stylesheet" href="/static/styles/assignments.scss">
-{% endcompress %}
+{% block js %}
 {% endblock %}
 
-{% block myHomeworkClass%}current{%endblock%}
+{% block css %}
+<link type="text/scss" rel="stylesheet" href="/static/styles/assignments.scss">
+{% endblock %}
 
 {%block content %}
-    <div id="myHomeworkGutter">
-        <ul id="assignmentSelector" class="sidebar">
-            <a id="today" href="?when=today"><li>Today</li></a>
-            <a id="tomorrow" href="?when=tomorrow"><li>Tomorrow</li></a>
 
-        </ul>
-        <div id="assignments">
-        {% if events%}
-            {% for section,eventList in events.items() %}
-                <div class="class" id="class{{section.id}}">
-                    <div class="classTitle">
-                        <div class="classTitleName">
-                            {{section.qlass.profile.interest}} {{section.qlass.profile.number}}
-                        </div>
-                        <div class="section">
-                            section {{section.name}}
-                            
-                        </div>
-                    </div>
-                    <div class="classDesc">
-                        {% for event in eventList %}
-                        <div class="assignment">
-                            <span class="assignmentTitle">
-                                    <span style="width: 80%; float: left;">
-                                    {{event.title}}
-                                    {% if label == 'Late Assignments'%}
-                                    <div class="ignore">
-                                            <a onclick="ignoreEvent(this, {{event.id}}, '{{request.user}}')">Ignore</a>
-                                    </div>
-                                    {% endif %}
-                                    
-                            {% if event.files.all() %}
-                                <div class="eventFiles">
-                                        <span class="eventFilesHeader">Posted Files:</span>
-                                        {% for file in event.files.all() %}
-                                                <span class="eventFile"><a href="/{{oz.path.relpath(file.fileName, fileRoot)}}">{{oz.path.basename(file.fileName)}}</a></span> 
-                                        {% endfor %}
-                                </div> 
-                            {% endif %}
-                                    </span>
-                                    
-                                    
-                            </span>
-                            <div class="assignmentDesc">
-                                     <span>{{event.description | safe}}</span>
-                                     
-                            </div>
-                            
-                            <span class="submitArea">
-                                {% if uploads[event.id] %}
-                                    <div class="turnedInHeader">Uploaded:</div>
-                                    <div class="turnedIn">
-                                            
-                                            {% for upload in uploads[event.id]%}
-                                                    {{oz.path.basename(upload.file)}}<br>
-                                            {% endfor %}
-                                            
-                                            <div id="turnInFormContainer{{event.id}}"{% if event.id in completed %}style="display: none;"{% endif %}>
-                                                    <form action="/myhomework/turnIn/?event={{event.id}}" id="turnInForm{{event.id}}" method="POST" target="invisible" enctype="multipart/form-data" class="submitEventForm">
-                                                            <span onclick="$(this).siblings('#fileSubmit{{event.id}}').trigger('click');" class="turnIn">
-                                                                    Upload Another Document
-                                                            </span>
-                                                            <input onchange="selectedFile(this)" style="display: none;" id="fileSubmit{{event.id}}" type=file name="files">
-                                                            <span class="turnInSubmit" style="display: none;" onclick="document.forms['turnInForm{{event.id}}'].submit();"> upload </span>
-                                                    </form>
-                                            </div>
-                                    </div>
-                                    {% else %}
-                                    
-                                    <div class="turnedIn">
-								<div id="turnInFormContainer{{event.id}}" {% if event.id in completed %}style="display: none;"{% endif %}>
-										<form action="/myhomework/turnIn/?event={{event.id}}" id="turnInForm{{event.id}}" method="POST" target="invisible" enctype="multipart/form-data">
-												<span onclick="$(this).siblings('#fileSubmit{{event.id}}').trigger('click');" class="turnIn">
-														Upload Document
-												</span>
-												<input onchange="selectedFile(this)" style="display: none;" id="fileSubmit{{event.id}}" type=file name="files">
-												<span class="turnInSubmit" style="display: none;" onclick="document.forms['turnInForm{{event.id}}'].submit();"> upload </span>
-										</form>
-								</div>
-						</div>
-                                    
-                            {% endif %}
-                                <span class="submitAssignment" style="float: right; text-align: center;" onclick="completeEvent(this, {{event.id}},'{{request.user}}')">
-                                submit
-                            </span>
-                            </span>
-                            
-                            
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                
-            {% endfor %}
-        {%else%}
-                <div class="noAssignments">none</div>
-        {% endif %}         
-        
-        <iframe id="invisible" style="display: none; width: 1px; height: 1px;" src="" name="invisible"></iframe>
-        
-        </div>
-    </div>
 {% endblock %}

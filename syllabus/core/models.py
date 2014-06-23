@@ -129,7 +129,7 @@ class SyllUser(AbstractUser):
                     can = False
         
         return can
-    
+
     # check if the user can register today
     def canRegister(self):
         today = datetime.date.today()

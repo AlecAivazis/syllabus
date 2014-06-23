@@ -57,6 +57,23 @@ class EventSerializer(serializers.ModelSerializer):
         """ return the current weight of the event """
         return obj.calculateWorth()
 
+
+class HomeworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        """ meta class for HomeworkSerializer """
+        model = Event
+        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight',
+                  'date', 'time','description', 'classes')
+
+    category = MetaDataField(name="subCategory")
+    possiblePoints = MetaDataField(name="possiblePoints")
+    type = serializers.CharField(source="category")
+    weight = serializers.SerializerMethodField('getWeight')
+
+    def getWeight(self, obj):
+        """ return the current weight of the event """
+        return obj.calculateWorth()
+
 class WeightCategorySerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for WeightCategorySerializer """
