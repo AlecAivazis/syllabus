@@ -90,20 +90,6 @@ class ClassEventList(generics.ListCreateAPIView):
     def get_queryset(self):
         return Class.objects.get(pk = self.kwargs.get('pk')).events.all()
 
-# return all of the homework events that are before and including tomorrow
-class HomeworkByClass(generics.ListCreateAPIView):
-    model = Event
-    serializer_class = EventSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
-
-    def get_queryset(self):
-        return (Event.objects.filter(classes__id=self.kwargs.get('id'))
-                .exclude(category='lecture')
-                .exclude(category='meeting')
-                .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
-
 class MyCalendar(generics.RetrieveAPIView):
     """ return the calendar of the current user """
     model = SyllUser
@@ -128,6 +114,20 @@ class RetrieveEvent(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         """ return the event specified by the url """
         return Event.objects.get(pk = self.kwargs.get('pk'))
+
+# return all of the homework events that are before and including tomorrow
+class HomeworkByClass(generics.ListCreateAPIView):
+    model = Event
+    serializer_class = EventSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    def get_queryset(self):
+        return (Event.objects.filter(classes__id=self.kwargs.get('id'))
+                .exclude(category='lecture')
+                .exclude(category='meeting')
+                .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
 
 class HomeworkForUser(generics.ListAPIView):
     """ return the homework of the user designated by the url """
@@ -155,9 +155,52 @@ class HomeworkForUser(generics.ListAPIView):
         
         # save the starting date for the event range
         start = self.request.QUERY_PARAMS.get('start', None)
-        # if it was given
-        if start is not None:
-            print(start)
+        # save the ending date for the event range
+        end = self.request.QUERY_PARAMS.get('end', None)
+
+        # handle special strings
+
+        # save the current datetime
+        now = datetime.datetime.now().date()
+        
+        # if  they asked for 'today'
+        if start == 'today':
+            # set the appropriate date
+            start = now
+        if end == 'today':
+            end = now
+
+        # if  they asked for 'tomorrow'
+        if start == 'tomorrow':
+            # set the appropriate date
+            start = now + datetime.timedelta(days=1)
+        if end == 'tomorrow':
+            end = now + datetime.timedelta(days=1)
+
+        # if they asked for 'yesterday'
+        if start == 'yesterday':
+            # set the appropriate date
+            start = now - datetime.timedelta(days=1)
+        if end == 'yesterday':
+            end = now - datetime.timedelta(days=1)
+        
+        # return the events that fall in this range
+
+        # if only a start is given
+        if start is not None and end is None:
+            # return the filtered query set
+            return events.filter(date__gte = start)
+
+        # if only an end is given
+        if end is not None and start is None:
+            # return the filtered query set
+            return events.filter(date__lte = end)
+
+        # if both were given
+        if end and start:
+            # return the filtered query set
+            return events.filter(date__gte = start).filter(date__lte = end)
+
 
         return events
         
