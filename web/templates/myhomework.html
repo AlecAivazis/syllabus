@@ -13,10 +13,9 @@
 {% block appName %}, assignments{% endblock %}
 
 {% block content %}
-<aside ng-controller="DateSelect">
-  <ul>
-    <li ng-repeat="(name, range) in dates">{{name}}hello</li>
-  </ul>
-</aside>
+<ul id="assignmentSelector" class="sidebar">
+  <a id="today" ng-click="select('today')"><li>Today</li></a>
+  <a id="tomorrow" ng-click="select('tomorrow')"><li>Tomorrow</li></a>
+</ul>
 
 {% endblock %}
