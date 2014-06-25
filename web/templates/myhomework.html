@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
 {% block js %}
+<script type="text/coffeescript" src="/static/scripts/assignments/app.coffee"></script>
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/moment/min/moment-with-langs.min.js"/>
 {% endblock %}
 
 {% block css %}
 <link type="text/scss" rel="stylesheet" href="/static/styles/assignments.scss">
 {% endblock %}
 
-{%block content %}
+{% block appName %}, assignments{% endblock %}
+
+{% block content %}
+<aside ng-controller="DateSelect">
+  <ul>
+    <li ng-repeat="(name, range) in dates">{{name}}hello</li>
+  </ul>
+</aside>
 
 {% endblock %}
