@@ -4,7 +4,6 @@ def myHomework(request):
 
     return render_to_response('myhomework.html', locals())
 
-"""
 def myHomework_old(request):
     oz = os
     fileRoot = settings.ROOT
@@ -76,4 +75,3 @@ def turnIn(request):
     if overwrite:
         script = "top.turnedIn('"+ str(event.id)+ "','" + os.path.basename(upload.file) + "', 1);"
     return HttpResponse('<script type="text/javascript">' + script + '</script>')
-"""

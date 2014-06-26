@@ -11,6 +11,8 @@ from ...core.models import SyllUser as User
 from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategory,
                       Weight, WeightCategory)
 
+from ...classroom.models import State
+
 from ...core.fields import MetaDataField
 
 class SectionSerializer(serializers.ModelSerializer):
@@ -63,12 +65,13 @@ class HomeworkSerializer(serializers.ModelSerializer):
         """ meta class for HomeworkSerializer """
         model = Event
         fields = ('id', 'possiblePoints', 'title', 'category', 'date', 'time',
-                  'description', 'classes')
+                  'description', 'classes', 'status' )
 
     category = MetaDataField(name="subCategory")
     possiblePoints = MetaDataField(name="possiblePoints")
     type = serializers.CharField(source="category")
     classes = serializers.SerializerMethodField('getClassNames')
+    status = serializers.SerializerMethodField('getStatus')
 
     def getWeight(self, obj):
         """ return the current weight of the event """
@@ -84,6 +87,21 @@ class HomeworkSerializer(serializers.ModelSerializer):
 
         # return the list
         return classNames
+       
+    def getStatus(self, obj):
+        """ return the most recent status of the event """
+        # store the current user
+        user =  self.context['request'].user
+        # grab the most recent state
+        state = State.objects.filter(event = obj).filter(owner = user).order_by('-date')
+        # if there is a state
+        if state:
+            # return its status
+            return state[0].status
+        # otherwise
+        else:
+            # return a blank string
+            return ''
             
 
 class WeightCategorySerializer(serializers.ModelSerializer):
