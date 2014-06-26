@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block js %}
-<script type="text/coffeescript" src="/static/scripts/assignments/app.coffee"></script>
 <script type="text/javascript" 
         src="/static/scripts/thirdparty/moment/min/moment-with-langs.min.js"/>
+<script type="text/javascript"
+        src="/static/scripts/thirdparty/underscore/underscore.js"></script>
+
+<script type="text/coffeescript" src="/static/scripts/assignments/app.coffee"></script>
 {% endblock %}
 
 {% block css %}
@@ -13,9 +16,17 @@
 {% block appName %}, assignments{% endblock %}
 
 {% block content %}
-<ul id="assignmentSelector" class="sidebar">
-  <a id="today" ng-click="select('today')"><li>Today</li></a>
-  <a id="tomorrow" ng-click="select('tomorrow')"><li>Tomorrow</li></a>
+<ul id="assignmentSelector" class="sidebar" ng-controller="DateSelect">
+  <a id="today" ng-click="selectHomeworkRange(null, 'today')"><li>Today</li></a>
+  <a id="tomorrow" ng-click="selectHomeworkRange(null, 'tomorrow')"><li>Tomorrow</li></a>
 </ul>
 
+{{assignments}}
+
+<div id="assignments">
+  <div class="class" ng-repeat="(class, events) in assignments">
+    {{class}}
+    <div ng-repeat="event in events"> hello </div>
+  </div>
+</div>
 {% endblock %}
