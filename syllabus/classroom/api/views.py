@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
                           CalendarSerializer, HomeworkSerializer)
-print('hello')
 
 from ..models import Class, Section, Event, GradingScale, Weight
 
@@ -149,7 +148,7 @@ class HomeworkForUser(generics.ListAPIView):
         # grab the appropriate user
         user = SyllUser.objects.get(pk = pk)
         # get the sections that the user is a member of
-        sections = Section.objects.filter(students = user).order_by('Glass')
+        sections = Section.objects.filter(students = user).order_by('Qlass')
         # save the gradable events from those sections
         events =  Event.objects.filter(classes__section = sections).gradable()
         
@@ -161,7 +160,10 @@ class HomeworkForUser(generics.ListAPIView):
         # handle special strings
 
         # save the current datetime
-        now = datetime.datetime.now().date()
+        now = datetime.date.today()
+
+        print('now:')
+        print(now)
         
         # if  they asked for 'today'
         if start == 'today':
@@ -183,8 +185,13 @@ class HomeworkForUser(generics.ListAPIView):
             start = now - datetime.timedelta(days=1)
         if end == 'yesterday':
             end = now - datetime.timedelta(days=1)
+
+        print(start)
+        print(end)
         
         # return the events that fall in this range
+        print('start: ' + start.strftime('%d, %b %Y'))
+        print('end: ' + end.strftime('%d, %b %Y'))
 
         # if only a start is given
         if start is not None and end is None:
@@ -193,15 +200,15 @@ class HomeworkForUser(generics.ListAPIView):
 
         # if only an end is given
         if end is not None and start is None:
-            # return the filtered query set
+            # return the events that were before the end
             return events.filter(date__lte = end)
 
         # if both were given
         if end and start:
-            # return the filtered query set
-            return events.filter(date__gte = start).filter(date__lte = end)
+            # return the events that were after the start
+            return events.filter(date__gte = start)
 
-
+        # otherwise return the events
         return events
         
 

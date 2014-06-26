@@ -207,6 +207,16 @@ class Event(models.Model):
             if case('ignored'):
                 return False
             
+class ClassQuerySet(models.QuerySet):
+    """ manage the event django api """
+
+    def byUserAsStudent(self, user):
+        """ return the classes that have the user in their section """
+        return self.filter(sections__students = user)
+
+    def byEvent(self, event):
+        """ return the classes that have the requested event """
+        return self.filter(events = event)
 
 # the main connection between the teacher and the student
 class Class(models.Model):
@@ -223,9 +233,16 @@ class Class(models.Model):
     maxOccupancy = models.IntegerField()
     term = models.ForeignKey(Term)
     
+    # set the object manager
+    objects = ClassQuerySet.as_manager()
+    
     # string behavior is to return {interest}-{number} ie PHYS-21
     def __unicode__(self):
-        return self.profile.interest + '-' + str(self.profile.number)  
+        return self.getTitle()
+
+    def getTitle(self):
+        """ return the title of the class """
+        return self.profile.interest + ' ' + str(self.profile.number)  
 
     def getGradableEvents(self):
         """ return the events that get a grade """

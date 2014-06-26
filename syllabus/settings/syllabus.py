@@ -61,4 +61,3 @@ COMPRESS_STORAGE = 'compressor.storage.CompressorFileStorage'
 COMPRESS_VERBOSE = False
 
 COMPRESS_ENABLED = False
-

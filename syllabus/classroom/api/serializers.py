@@ -62,17 +62,29 @@ class HomeworkSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for HomeworkSerializer """
         model = Event
-        fields = ('id', 'possiblePoints', 'title', 'category', 'type', 'weight',
-                  'date', 'time','description', 'classes')
+        fields = ('id', 'possiblePoints', 'title', 'category', 'date', 'time',
+                  'description', 'classes')
 
     category = MetaDataField(name="subCategory")
     possiblePoints = MetaDataField(name="possiblePoints")
     type = serializers.CharField(source="category")
-    weight = serializers.SerializerMethodField('getWeight')
+    classes = serializers.SerializerMethodField('getClassNames')
 
     def getWeight(self, obj):
         """ return the current weight of the event """
         return obj.calculateWorth()
+
+    def getClassNames(self, obj):
+        """ return a list of the names that this event is a member of """
+        classNames = []
+        # for each class that this user is a student in
+        for klass in Class.objects.byEvent(obj):
+            # add the name to the list
+            classNames.append(klass.getTitle())
+
+        # return the list
+        return classNames
+            
 
 class WeightCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -155,10 +167,8 @@ class GradebookSerializer(serializers.ModelSerializer):
 
     def getGradableEvents(self, obj):
         """ return the events that are gradable """
-        # gradable events are not lectures or meetings that are due before tomorrows
-        events = obj.getGradableEvents()
-        # serialize the events
-        serializer = EventSerializer(events)
+        # serialize the gradable events
+        serializer = EventSerializer(obj.getGradableEvents())
         # return the serialized data
         return serializer.data
 

@@ -1,2 +1,1 @@
-from . import core, myProfile, myHomework
-
+from . import core, myProfile
