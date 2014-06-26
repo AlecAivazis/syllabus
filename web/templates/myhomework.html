@@ -17,16 +17,35 @@
 
 {% block content %}
 <ul id="assignmentSelector" class="sidebar" ng-controller="DateSelect">
-  <a id="today" ng-click="selectHomeworkRange(null, 'today')"><li>Today</li></a>
-  <a id="tomorrow" ng-click="selectHomeworkRange(null, 'tomorrow')"><li>Tomorrow</li></a>
+  <a id="today" ng-click="selectHomeworkRange('today', 'today')"><li>Today</li></a>
+  <a id="tomorrow" ng-click="selectHomeworkRange('tomorrow', 'tomorrow')"><li>Tomorrow</li></a>
 </ul>
 
-{{assignments}}
-
+{% verbatim %}
 <div id="assignments">
   <div class="class" ng-repeat="(class, events) in assignments">
-    {{class}}
-    <div ng-repeat="event in events"> hello </div>
+    <div class="classTitle">
+      {{class}}
+    </div>
+    <div class="classDescription">
+      <div class="assignment" ng-repeat="assignment in events">
+        <div class="assignmentHeader">
+          <span class="assignmentTitle ">
+            {{assignment.title}}
+          </span>
+          <!-- placeholder for listing the associated files -->
+        </div>
+        <div class="assignmentDescription">
+          {{assignment.description}}
+        </div>
+        <div class="assignmentFooter">
+          <span class="submitAssignment" >
+            submit
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+{% endverbatim %}
 {% endblock %}

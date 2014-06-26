@@ -1,3 +1,5 @@
+@import "base";
+
 a {
   color: #008aff;
 }
@@ -43,26 +45,13 @@ a:visited {
   position: relative;
   float: left;
   width: 100%;
-  padding-left: 40px;
+  padding-left: 60px;
   padding-top: 20px;
-}
-
-.classTitleName {
   color: #373737;
-  font-size: 45px;
-  float: left;
-  margin-left: 8px;
+  font-size: 32;
 }
 
-.section {
-  float: left;
-  font-size: 35px;
-  color: #8e8e8e;
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
-.classDesc {
+.classDescription {
   padding: 0px;
   float: left;
   width: 100%;
@@ -87,16 +76,15 @@ a:visited {
 }
 
 .assignmentTitle {
-  width: 25%;
   font-size: 20px;
   color: #8e8e8e;
   text-align: center;
   padding: 3px;
   float: left;
-  padding-left: 40px;
+  padding-left: 50px;
 }
 
-.assignmentDesc {
+.assignmentDescription {
   margin-top: 3px;
   margin-left: 10px;
   width: 50%;
@@ -214,13 +202,18 @@ form {
   margin-bottom: 0;
 }
 
-.assignmentsHeader {
+.assignmentHeader {
   float: left;
   clear: both;
   font-size: 18px;
   text-shadow: 3px 3px 1px #FFFFFF;
   color: #3a3a3a;
   margin-bottom: 10px;
+}
+
+.assignmentFooter {
+  clear: both;
+  text-align: right;
 }
 
 .noAssignments {
@@ -262,12 +255,6 @@ form {
 }
 
 .submitAssignment {
-  background: #54b55e;
-  width: 80px;
-  height: 30px;
-  color: white;
-  padding-top: 10px;
+  @include button(green, 100px);
   margin-right: 100px;
-  border-radius: 3px;
-  cursor: pointer;
 }

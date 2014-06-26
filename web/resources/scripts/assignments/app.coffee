@@ -26,15 +26,13 @@ app.controller 'DateSelect', [ '$scope', '$http', '$rootScope' , ($scope, $http,
        # add it to the object
        data['end'] = end
 
-    # get the appropriate dates from the server
+    # get the appropriate events from the server
     $http.get '/api/users/me/homework/', data
-    # if it suceeded
+    # if it suceeds
     .success (result) ->
-      # set the local variable
-      $rootScope.assignments = _.groupBy result, (num) ->
-        # return the various classes that this event belongs to
-        return num.classes
-      console.log $rootScope.assignments
-
+      # store the results grouped by
+      $rootScope.assignments =  _.groupBy result, (event) ->
+        # their class 
+        return event.classes
     
 ]
