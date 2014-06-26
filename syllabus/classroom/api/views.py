@@ -190,8 +190,10 @@ class HomeworkForUser(generics.ListAPIView):
         print(end)
         
         # return the events that fall in this range
-        print('start: ' + start.strftime('%d, %b %Y'))
-        print('end: ' + end.strftime('%d, %b %Y'))
+        if start:
+            print('start: ' + start.strftime('%d, %b %Y'))
+        if end:
+            print('end: ' + end.strftime('%d, %b %Y'))
 
         # if only a start is given
         if start is not None and end is None:

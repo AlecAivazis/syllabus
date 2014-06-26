@@ -27,7 +27,7 @@ app.controller 'DateSelect', [ '$scope', '$http', '$rootScope' , ($scope, $http,
        data['end'] = end
 
     # get the appropriate events from the server
-    $http.get '/api/users/me/homework/', data
+    $http.get '/api/users/me/homework/', params: data
     # if it suceeds
     .success (result) ->
       # store the results grouped by
