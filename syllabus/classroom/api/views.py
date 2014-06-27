@@ -162,9 +162,6 @@ class HomeworkForUser(generics.ListAPIView):
         # save the current datetime
         now = datetime.date.today()
 
-        print('now:')
-        print(now)
-        
         # if  they asked for 'today'
         if start == 'today':
             # set the appropriate date
@@ -185,15 +182,6 @@ class HomeworkForUser(generics.ListAPIView):
             start = now - datetime.timedelta(days=1)
         if end == 'yesterday':
             end = now - datetime.timedelta(days=1)
-
-        print(start)
-        print(end)
-        
-        # return the events that fall in this range
-        if start:
-            print('start: ' + start.strftime('%d, %b %Y'))
-        if end:
-            print('end: ' + end.strftime('%d, %b %Y'))
 
         # if only a start is given
         if start is not None and end is None:

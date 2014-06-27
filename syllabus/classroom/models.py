@@ -183,20 +183,20 @@ class Event(models.Model):
         if now < eventDateTime:
             return True
         # since its pastdue, check if there is any states
-        states = self.state.filter(owner=student)
-        # if there arent
+        states = self.state.filter(user = student)
+        # if there arent 
         if not states:
             # then its not on time
             return False
 
         # get the most recent activity by the student
-        recentState = self.state.filter(owner=student).order_by('-date')[0]
+        recentState = states.order_by('-date')[0]
         
-        for case in switch(recentStatus.status):
+        for case in switch(recentState.status):
             # if it was turned in most recently
             if case('turned-in'):
                 # and that was after the due date
-                if state.date <= eventDateTime:
+                if recentState.date <= eventDateTime:
                     return True
                 else:
                     return False
@@ -364,7 +364,6 @@ class Grade(models.Model):
 # {states} track a users progress of an {event}
 class State(models.Model):
     user = models.ForeignKey(User)
-    owner = models.ForeignKey(User, related_name="owner")
     event = models.ForeignKey(Event, related_name="state")
     status = models.CharField(max_length=100)
     date = models.DateTimeField(auto_now_add=True)

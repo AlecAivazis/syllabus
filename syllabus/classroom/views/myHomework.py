@@ -1,8 +1,40 @@
-from django.shortcuts import render_to_response
+# this file contains the views that handle a detailed view of users gradable assignments
+# author: alec aivazis
+
+# python imports
+import json
+# django imports
+from django.shortcuts import render_to_response, HttpResponse
+# syllabus models
+from ..models import Event, State
 
 def myHomework(request):
-
+    """ return a detailed list of the current users homework """
     return render_to_response('myhomework.html', locals())
+
+def turnIn(request):
+    """ handle the turnIn of an individual assignment by a particular user """
+    # load the json data
+    post = json.loads(bytes.decode(request.body))
+
+    # grab the requested id for the target event
+    id = post['eventId']
+    # and the corresponding event object
+    event = Event.objects.get(pk = id)
+
+    # create a state object to log the user turning in this assignment
+    state = State()
+    state.status = "turned-in"
+    # register the user
+    state.user = request.user
+    # associate the event with this action
+    state.event = event
+    # save the record
+    state.save()
+
+    # return a success
+    return HttpResponse('success')
+
 
 def myHomework_old(request):
     oz = os
@@ -45,7 +77,7 @@ def myHomework_old(request):
     
     return render_to_response('myhomework.html', locals())
 
-def turnIn(request):
+def turnIn_old(request):
     
     event = Event.objects.get(id = request.GET['event'])
     overwrite = False

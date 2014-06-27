@@ -258,3 +258,8 @@ form {
   @include button(green, 100px);
   margin-right: 100px;
 }
+
+.revokeAssignment {
+  @include button(red, 100px);
+  margin-right: 100px;
+}

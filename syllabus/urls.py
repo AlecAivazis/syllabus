@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     url(r'(?i)^myClasses/', include(classroom.urls.myClasses)),
     
     # Show my homework
-    url(r'(?i)^myHomework/', classroom.views.myHomework.myHomework ),
+    url(r'(?i)^myHomework/', include(classroom.urls.myHomework)),
 
     # load the tutor urls
     url(r'(?i)^tutors/', include(socialservice.urls.meetings)),

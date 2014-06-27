@@ -6,6 +6,8 @@
 <script type="text/javascript"
         src="/static/scripts/thirdparty/underscore/underscore.js"></script>
 
+<script type="text/coffeescript" 
+        src="/static/scripts/assignments/directives/homeworkItemList.coffee"></script>
 <script type="text/coffeescript" src="/static/scripts/assignments/app.coffee"></script>
 {% endblock %}
 
@@ -16,36 +18,17 @@
 {% block appName %}, assignments{% endblock %}
 
 {% block content %}
+{% verbatim %}
 <ul id="assignmentSelector" class="sidebar" ng-controller="DateSelect">
   <a id="today" ng-click="selectHomeworkRange('today', 'today')"><li>Today</li></a>
   <a id="tomorrow" ng-click="selectHomeworkRange('tomorrow', 'tomorrow')"><li>Tomorrow</li></a>
 </ul>
 
-{% verbatim %}
 <div id="assignments">
-  <div class="class" ng-repeat="(class, events) in assignments">
-    <div class="classTitle">
-      {{class}}
-    </div>
-    <div class="classDescription">
-      <div class="assignment" ng-repeat="assignment in events">
-        <div class="assignmentHeader">
-          <span class="assignmentTitle ">
-            {{assignment.title}}
-          </span>
-          <!-- placeholder for listing the associated files -->
-        </div>
-        <div class="assignmentDescription">
-          {{assignment.description}}
-        </div>
-        <div class="assignmentFooter">
-          <span class="submitAssignment" >
-            submit
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div homework-item-list container="assignments" id="assignmentsList" 
+       button-text="'submit'" button-class="'submitAssignment'"></div>
+  <div homework-item-list container="turnedIn" id="turnedInList" 
+       button-text="'revoke'" button-class="'revokeAssignment'"></div>
 </div>
 {% endverbatim %}
 {% endblock %}

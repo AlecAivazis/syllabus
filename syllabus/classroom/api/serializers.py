@@ -93,7 +93,7 @@ class HomeworkSerializer(serializers.ModelSerializer):
         # store the current user
         user =  self.context['request'].user
         # grab the most recent state
-        state = State.objects.filter(event = obj).filter(owner = user).order_by('-date')
+        state = State.objects.filter(event = obj).filter(user = user).order_by('-date')
         # if there is a state
         if state:
             # return its status

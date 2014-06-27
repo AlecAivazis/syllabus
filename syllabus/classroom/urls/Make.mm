@@ -23,6 +23,7 @@ EXPORT_PYTHON_MODULES = \
     gradebook.py \
     massageboard.py \
     myClasses.py \
+    myHomework.py \
     spaces.py \
     __init__.py
 
