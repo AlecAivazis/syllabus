@@ -44,12 +44,25 @@ app.controller 'DateSelect', [ '$scope', '$http', '$rootScope', ($scope, $http, 
         # return the result (this is some coffeescript weirdness i think
         return isTurnedIn
 
-      # store the two lists
-      $rootScope.turnedIn = _.groupBy dataSplit[0], (event) ->
-        return event.classes
-      $rootScope.assignments = _.groupBy dataSplit[1], (event) ->
-        return event.classes
-      
+      # store the raw lists to move in between the categories
+      $rootScope.turnedInRaw = dataSplit[0]
+      $rootScope.assignmentsRaw = dataSplit[1]
+
+      $rootScope.buildLists = () ->
+        # return a tailored dictionary of the events for the view
+        groupList = (container) ->
+          # group them by
+          return _.groupBy container, (event) ->
+            # their class
+            return event.classes
+
+        # build the lists used by the interface out of the raw data
+        $rootScope.assignments = groupList $rootScope.assignmentsRaw
+        $rootScope.turnedIn = groupList $rootScope.turnedInRaw
+
+      # build the initial view
+      $rootScope.buildLists()
+
       
   # the initial state of this page is to display todays homework
   $scope.selectHomeworkRange 'today', 'today'

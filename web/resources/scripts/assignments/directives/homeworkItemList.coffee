@@ -29,20 +29,35 @@ angular.module('homeworkItemList', [])
   # turn in an assignment
   $scope.turnIn = (id) ->
     # post the request to the server
-    $http.post '/myHomework/turnIn/', eventId: id
+    $http.post '/myHomework/updateEventState/',
+      eventId: id
+      status: 'turned-in'
     # if it succedes
     .success (result) ->
-      # grab the appropriate javascript event
-      event = _.findWhere $rootScope.assignments, id: id
-      console.log event
+       # grab the appropriate event
+      event = _.findWhere $rootScope.assignmentsRaw, id: id
+      # remove it from the raw list of assignments
+      $rootScope.assignmentsRaw = _.without $rootScope.assignmentsRaw, event
+      # add it to the raw list of turned in events
+      $rootScope.turnedInRaw.push event
+      # refresh the user interface
+      $rootScope.buildLists()
 
   $scope.revoke = (id) ->
-    console.log $rootScope.turnedIn
-    console.log 'you want to revoke this event'
-    # grab the appropriate javascript event
-    event = _.findWhere $rootScope.turnedIn, id: id
-    console.log event
-    
+    # post the request to the server
+    $http.post '/myHomework/updateEventState/',
+      eventId: id
+      status: 'revoked'
+    # if it succedes
+    .success (result) ->
+      # grab the appropriate event
+      event = _.findWhere $rootScope.turnedInRaw, id: id
+      # remove it from the raw list of turned in events
+      $rootScope.turnedInRaw = _.without $rootScope.turnedInRaw, event
+      # add it to the raw list of assignments
+      $rootScope.assignmentsRaw.push event
+      # refresh the user interface
+      $rootScope.buildLists()
 
 ]
 

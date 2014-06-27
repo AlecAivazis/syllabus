@@ -10,9 +10,9 @@ from ..models import Event, State
 
 def myHomework(request):
     """ return a detailed list of the current users homework """
-    return render_to_response('myhomework.html', locals())
+    return render_to_response('myhomework/myhomework.html', locals())
 
-def turnIn(request):
+def updateEventState(request):
     """ handle the turnIn of an individual assignment by a particular user """
     # load the json data
     post = json.loads(bytes.decode(request.body))
@@ -24,7 +24,7 @@ def turnIn(request):
 
     # create a state object to log the user turning in this assignment
     state = State()
-    state.status = "turned-in"
+    state.status = post['status']
     # register the user
     state.user = request.user
     # associate the event with this action

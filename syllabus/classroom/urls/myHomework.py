@@ -4,6 +4,6 @@ from ..views.myHomework import *
 
 # calendar urls
 urlpatterns = patterns('', 
-    url(r'(?i)^turnIn/$', turnIn),    
+    url(r'(?i)^updateEventState/$', updateEventState),    
     url(r'(?i)^$', myHomework),
 )
