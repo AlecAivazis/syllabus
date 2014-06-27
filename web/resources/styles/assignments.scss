@@ -94,55 +94,10 @@ a:visited {
   float: left;
 }
 
-#outlook {
-  float: right;
-  width: 15%;
-  margin-top: 25px;
-  .header {
-    font-size: 18px;
-    text-shadow: 3px 3px 1px #FFFFFF;
-    color: #3a3a3a;
-  }
-}
-
-.outlookDay {
-  margin-left: 15px;
-  font-size: 16px;
-  text-shadow: 3px 3px 1px #FFFFFF;
-  color: #3a3a3a;
-}
-
 .dayEvent {
   color: black;
   font-size: 14px;
   margin-left: 15px;
-  cursor: pointer;
-}
-
-#finishedSections {
-  width: 80%;
-  float: left;
-  clear: left;
-}
-
-#nextWeek {
-  margin-top: 25px;
-}
-
-.nextCategory {
-  margin-left: 15px;
-  cursor: pointer;
-  font-size: 16px;
-  text-shadow: 3px 3px 1px #FFFFFF;
-  color: #3a3a3a;
-  text-transform: capitalize;
-}
-
-.nextWeekEvent {
-  display: none;
-  margin-left: 15px;
-  color: black;
-  font-size: 14px;
   cursor: pointer;
 }
 
@@ -174,33 +129,6 @@ a:visited {
   }
 }
 
-.turnIn {
-  color: #008AFF;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.turnedIn {
-  width: 100%;
-  font-size: 14px;
-  color: #373737;
-  margin-bottom: 28px;
-  margin-left: 10px;
-}
-
-.turnedInHeader {
-  font-size: 14px;
-  color: #373737;
-}
-
-.turnInSubmit {
-  font-size: 15px;
-  cursor: pointer;
-}
-
-form {
-  margin-bottom: 0;
-}
 
 .assignmentHeader {
   float: left;
@@ -214,25 +142,6 @@ form {
 .assignmentFooter {
   clear: both;
   text-align: right;
-}
-
-.noAssignments {
-  float: left;
-  clear: both;
-  font-size: 18px;
-  text-shadow: 3px 3px 1px #FFFFFF;
-  color: #3a3a3a;
-  margin: -10px 0px 10px 20px;
-}
-
-.ignore {
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.submitArea {
-  float: right;
-  margin-right: 25px;
 }
 
 #assignmentSelector {
@@ -262,4 +171,10 @@ form {
 .revokeAssignment {
   @include button(red, 100px);
   margin-right: 100px;
+}
+
+.assignmentSectionHeader {
+  font-size: 18px;
+  color: #3a3a3a;
+  margin-bottom: 25px;
 }

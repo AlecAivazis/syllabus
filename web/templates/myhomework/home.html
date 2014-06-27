@@ -25,10 +25,15 @@
 </ul>
 
 <div id="assignments">
-  <div homework-item-list container="assignments" id="assignmentsList" 
+  <div homework-item-list container="assignments"
        button-text="'submit'" button-class="'submitAssignment'"></div>
-  <div homework-item-list container="turnedIn" id="turnedInList" 
-       button-text="'revoke'" button-class="'revokeAssignment'"></div>
+  <div id="completedAssignments" ng-show="turnedInRaw.length"> 
+    <div class="assignmentSectionHeader">
+      Completed Assignments:
+    </div>
+    <div homework-item-list container="turnedIn"
+         button-text="'revoke'" button-class="'revokeAssignment'"></div>
+  </div>
 </div>
 {% endverbatim %}
 {% endblock %}
