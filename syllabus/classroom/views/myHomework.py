@@ -10,7 +10,7 @@ from ..models import Event, State
 
 def myHomework(request):
     """ return a detailed list of the current users homework """
-    return render_to_response('myhomework/myhomework.html', locals())
+    return render_to_response('myHomework/home.html', locals())
 
 def updateEventState(request):
     """ handle the turnIn of an individual assignment by a particular user """
