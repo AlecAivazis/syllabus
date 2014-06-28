@@ -3,6 +3,10 @@ Syllabus To-Do List
 Angular:
     make a blur-changed directive
 
+General:
+    if a states last status was ignored, return the one right before
+      - unless you want the ignored ones (special filter)?
+
 Catalog:
     
     clock widget for time select
