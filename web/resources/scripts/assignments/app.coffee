@@ -37,11 +37,16 @@ app.controller 'DateSelect', [ '$scope', '$http', '$rootScope', ($scope, $http, 
     $http.get '/api/users/me/homework/', params: data
     # if it suceeds
     .success (result) ->
-      # separate the data if it
-      dataSplit = _.partition result, (event) ->
+
+      # collect the ignored events
+      ignored = _.filter result, (event) ->
+        return event.status == 'ignored'
+
+      # separate the data, ignoring the ignored events, if
+      dataSplit = _.partition _.without(result, ignored) , (event) ->
         # has been turned in already
         isTurnedIn = event.status is 'turned-in'
-        # return the result (this is some coffeescript weirdness i think
+        # return the result (this is some coffeescript weirdness i think)
         return isTurnedIn
 
       # store the raw lists to move in between the categories

@@ -10,7 +10,7 @@ angular.module('homeworkItemList', [])
 # the gradebook directive
 .directive 'homeworkItemList', () ->
   restrict: 'AE'
-  templateUrl: '../templates/myhomework/homeworkItemList.html'
+  templateUrl: '../templates/myHomework/homeworkItemList.html'
   controller: 'homeworkItemListCtrl'
   scope:
     container: '='
@@ -25,6 +25,7 @@ angular.module('homeworkItemList', [])
     switch text
       when 'submit' then $scope.turnIn id
       when 'revoke' then $scope.revoke id
+      when 'ignore' then $scope.ignore id
   
   # turn in an assignment
   $scope.turnIn = (id) ->
@@ -56,6 +57,30 @@ angular.module('homeworkItemList', [])
       $rootScope.turnedInRaw = _.without $rootScope.turnedInRaw, event
       # add it to the raw list of assignments
       $rootScope.assignmentsRaw.push event
+      # refresh the user interface
+      $rootScope.buildLists()
+
+  $scope.ignore = (id) ->
+    # post the request to the server
+    $http.post '/myHomework/updateEventState/',
+      eventId: id
+      status: 'ignored'
+    # if it succedes
+    .success (result) ->
+      # grab the appropriate event from the turnedIn list
+      event = _.findWhere $rootScope.turnedInRaw, id: id
+      # if it exists
+      if event
+        # remove it from the raw list of turned in events
+        $rootScope.turnedInRaw = _.without $rootScope.turnedInRaw, event
+
+      # grab the appropriate event from the turnedIn list
+      event = _.findWhere $rootScope.assignmentsRaw, id: id
+      # if it exists
+      if event
+        # remove it from the raw list of assignments
+        $rootScope.assignmentsRaw = _.without $rootScope.assignmentsRaw, event
+
       # refresh the user interface
       $rootScope.buildLists()
 

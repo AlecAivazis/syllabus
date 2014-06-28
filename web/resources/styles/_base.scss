@@ -27,13 +27,13 @@
     border: 1px solid #980000;
     color: white;
   }@else if $color == tan {
-    @include vGradient(#ec3ba8, #bd1717);
+    @include vGradient(#C1BA8E, #A59A6D);
 
     box-shadow: inset 0 1px 0 #f0727;
     -moz-box-shadow: inset 0 1px 0 #f0727;
     -webkit-box-shadow: inset 0 1px 0 #f0727;
 
-    border: 1px solid #980000;
+    border: 1px solid #9C9783;
     color: white;
   }
 

@@ -173,6 +173,11 @@ a:visited {
   margin-right: 100px;
 }
 
+.ignoreAssignment {
+  @include button(tan, 100px);
+  margin-right: 20px;
+}
+
 .assignmentSectionHeader {
   font-size: 18px;
   color: #3a3a3a;

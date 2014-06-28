@@ -14,8 +14,11 @@
         {{assignment.description}}
       </div>
       <div class="assignmentFooter">
+        <span class="ignoreAssignment" ng-click="eventAction('ignore', assignment.id)">
+          ignore
+        </span>
         <span ng-class="buttonClass" ng-click="eventAction(buttonText, assignment.id)" >
-          {{buttonText}}
+          {{buttonText}} 
         </span>
       </div>
     </div>
