@@ -150,7 +150,7 @@ class HomeworkForUser(generics.ListAPIView):
         # get the sections that the user is a member of
         sections = Section.objects.filter(students = user).order_by('Qlass')
         # save the gradable events from those sections
-        events =  Event.objects.filter(classes__section = sections).gradable().removeIgnored()
+        events =  Event.objects.filter(classes__section = sections).gradable()
                                 
         
         # save the starting date for the event range

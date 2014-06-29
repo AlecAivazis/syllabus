@@ -1,45 +1,34 @@
 {% extends "myClasses/home.html" %}
 
-{% block MChead %}
-    
-    <link rel='stylesheet' type='text/css' href='/resources/weekCalendar/libs/css/smoothness/jquery-ui-1.8.11.custom.css' />
+{% block js %}
 
-
-	<link rel='stylesheet' type='text/css' href='/resources/weekCalendar/jquery.weekcalendar.css' />
-									
-	<link rel='stylesheet' type='text/css' href='/resources/weekCalendar/skins/default.css' />
-
-    <script type='text/javascript' src='/resources/weekCalendar/libs/jquery-1.4.4.min.js'></script>
-    <script type='text/javascript' src='/resources/weekCalendar/libs/jquery-ui-1.8.11.custom.min.js'></script>
-    
-    <script type="text/javascript" src="/resources/weekCalendar/libs/date.js"></script>
-    <script type='text/javascript' src='/resources/weekCalendar/jquery.weekcalendar.js'></script>
-    <script type='text/javascript' src='/resources/scripts/mySchedule.js'></script>
-
-    
-    
 {% endblock %}
 
-{% block MCbody %}
-    
-    
+{% block appName %}, mySchedule{% endblock %}
+
+{% block myClasses_content %}
 <div id="alertArea">&nbsp;</div>
+
+<div weekly-schedule> </div>
+
 <div id="myScheduleHeader">
     {{term.name}} {{term.start.year}}
 </div>
-<div {% if term %} year="{{term.start.year}}" name="{{term.name}}" {% endif %} id="calendar"></div>
+<div id="calendar"></div>
 
 <div id="myScheduleSideBar">
     <div id="scheduleSelector" style="float: left;">
 	<div id="selectorTitle">
         Pick a term
     </div>    
-	{% for year, names in terms.items() %}
-	    <div class="selectorYear" >
-		<span> {{year}}</span> {% for name in names %}<span onclick="refreshCalendar('{{name}}',{{year}})">{{name[0]}}</span>{% endfor %}
-	    </div>
-	{% endfor %}
+	<div class="selectorYear" >
+	  <span> 
+            {{year}}
+          </span> 
+          {% for name in names %}
+          <span onclick="refreshCalendar('{{name}}',{{year}})"></span>
+          {% endfor %}
+	</div>
     </div>
-    
 </div>
 {% endblock %}
