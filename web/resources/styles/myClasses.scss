@@ -6,6 +6,7 @@
 #myClassesContent {
   padding-top: 25px;
   margin-left: 240px;
+  position: relative;
 }
 
 #myClassesSelector {
@@ -79,8 +80,7 @@
 }
 
 #scheduleSelector {
-  float: left;
-  margin-top: -48px;
+  float: right;
   padding-bottom: 10px;
   background: #fffae1;
   margin-left: 5px;
@@ -131,6 +131,7 @@ td.scheduleSection {
 }
 
 #myScheduleHeader {
+  float: left;
   width: 60%;
   padding-left: 20px;
   padding-top: 20px;
@@ -140,6 +141,9 @@ td.scheduleSection {
   margin-left: 50px;
   font-size: 24px;
   color: #cccccc;
+}
+
+#mySchedule {
 }
 
 #calendar {
@@ -262,7 +266,6 @@ td.scheduleSection {
 }
 
 #alertArea {
-  display: none;
   padding: 5px;
   background: #CCFFD2;
   margin-bottom: 5px;

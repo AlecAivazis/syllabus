@@ -1,0 +1,23 @@
+<span id="myScheduleContent">
+  <span id="myScheduleHeader">
+    {{term.name}}&nbsp;{{term.start.year}}
+  </span>
+  
+  <div id="calendar">&nbsp;</div>
+  
+  <aside id="myScheduleSideBar">
+    <span id="scheduleSelector">
+      <span id="selectorTitle">
+        Pick a term
+      </span>    
+      <span class="selectorYear" ng-repeat="year in years">
+	<span> 
+          {{year}}
+        </span> 
+        <span ng-repeat="name in terms[year]" ng-click="selectTerm(name, year)">
+          {{name}}
+        </span>
+      </span>
+    </span>
+  </aside>
+</span>

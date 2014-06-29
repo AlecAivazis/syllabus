@@ -1,34 +1,14 @@
-{% extends "myClasses/home.html" %}
+{% extends "myClasses/base.html" %}
 
 {% block js %}
-
+<script type="text/coffeescript" src="/static/scripts/myClasses/directives/mySchedule.coffee"></script>
 {% endblock %}
 
 {% block appName %}, mySchedule{% endblock %}
 
 {% block myClasses_content %}
-<div id="alertArea">&nbsp;</div>
+<div id="alertArea" ng-show="alert" ng-class="alert.type">{{alert.message}}</div>
 
-<div weekly-schedule> </div>
+<div my-schedule id="mySchedule"> </div>
 
-<div id="myScheduleHeader">
-    {{term.name}} {{term.start.year}}
-</div>
-<div id="calendar"></div>
-
-<div id="myScheduleSideBar">
-    <div id="scheduleSelector" style="float: left;">
-	<div id="selectorTitle">
-        Pick a term
-    </div>    
-	<div class="selectorYear" >
-	  <span> 
-            {{year}}
-          </span> 
-          {% for name in names %}
-          <span onclick="refreshCalendar('{{name}}',{{year}})"></span>
-          {% endfor %}
-	</div>
-    </div>
-</div>
 {% endblock %}
