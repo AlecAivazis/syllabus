@@ -293,43 +293,43 @@ def run():
     from syllabus.core.models import Timeslot
 
     Syllabus_timeslot_1 = Timeslot()
-    Syllabus_timeslot_1.day = u'1'
+    Syllabus_timeslot_1.day = 1
     Syllabus_timeslot_1.start = datetime.time(10, 55)
     Syllabus_timeslot_1.end = datetime.time(12, 15)
     Syllabus_timeslot_1.save()
 
     Syllabus_timeslot_2 = Timeslot()
-    Syllabus_timeslot_2.day = u'1'
+    Syllabus_timeslot_2.day = 1
     Syllabus_timeslot_2.start = datetime.time(12, 30)
     Syllabus_timeslot_2.end = datetime.time(15, 45)
     Syllabus_timeslot_2.save()
 
     Syllabus_timeslot_3 = Timeslot()
-    Syllabus_timeslot_3.day = u'1'
+    Syllabus_timeslot_3.day = 1
     Syllabus_timeslot_3.start = datetime.time(15, 30)
     Syllabus_timeslot_3.end = datetime.time(16, 45)
     Syllabus_timeslot_3.save()
 
     Syllabus_timeslot_4 = Timeslot()
-    Syllabus_timeslot_4.day = u'1'
+    Syllabus_timeslot_4.day = 1
     Syllabus_timeslot_4.start = datetime.time(16, 30)
     Syllabus_timeslot_4.end = datetime.time(17, 35)
     Syllabus_timeslot_4.save()
 
     Syllabus_timeslot_5 = Timeslot()
-    Syllabus_timeslot_5.day = u'1'
+    Syllabus_timeslot_5.day = 1
     Syllabus_timeslot_5.start = datetime.time(17, 35)
     Syllabus_timeslot_5.end = datetime.time(18, 34)
     Syllabus_timeslot_5.save()
 
     Syllabus_timeslot_6 = Timeslot()
-    Syllabus_timeslot_6.day = u'1'
+    Syllabus_timeslot_6.day = 1
     Syllabus_timeslot_6.start = datetime.time(4, 30)
     Syllabus_timeslot_6.end = datetime.time(5, 35)
     Syllabus_timeslot_6.save()
 
     Syllabus_timeslot_7 = Timeslot()
-    Syllabus_timeslot_7.day = u'2'
+    Syllabus_timeslot_7.day = 2
     Syllabus_timeslot_7.start = datetime.time(15, 30)
     Syllabus_timeslot_7.end = datetime.time(16, 45)
     Syllabus_timeslot_7.save()

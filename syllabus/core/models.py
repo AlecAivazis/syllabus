@@ -34,30 +34,31 @@ class Upload(models.Model):
 
 
 # a {timeslot} is a {start} and {end} time on a particular {day}
+# {day} is represented by an integer where 1 is monday and 7 is sunday
 class Timeslot (models.Model):
-    day = models.CharField(max_length=10)
+    day = models.IntegerField()
     start = models.TimeField()
     end = models.TimeField()
     
     def __unicode__(self):
         return str(self.day + ": " + self.start.strftime('%I:%M')) + ' - ' + str(self.end.strftime('%I:%M %p'))
     
-    # return the abbreviation for the requested part of the timeslot
+    # return the string representation for the requested part of the timeslot
     def abrreviation(self, char):
         if char == 1 :
-            if self.day.lower() == 'monday':
+            if self.day.lower() == 1:
                 return 'M'
-            if self.day.lower() == 'tuesday':
+            elif self.day.lower() == 2:
                 return 'T'
-            if self.day.lower() == 'wednesday':
+            elif self.day.lower() == 3:
                 return 'W'
-            if self.day.lower() == 'thursday':
+            elif self.day.lower() == 4:
                 return 'R'
-            if self.day.lower() == 'friday':
+            elif self.day.lower() == 5:
                 return 'F'
-            if self.day.lower() == 'saturday':
+            elif self.day.lower() == 6:
                 return 'Sat'
-            if self.day.lower() == 'sunday':
+            elif self.day.lower() == 7:
                 return 'Sun'
 
 
