@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url, include
 
-from .views import ClassList, ClassesTaughtByMe, Gradebook, GradingScale
+from .views import ClassList, ClassesTaughtByMe, Gradebook, GradingScale, ClassScheduleForUser
 from .views import SectionList 
 from .views import ClassEventList, HomeworkByClass
 from .views import WeightsList
@@ -42,6 +42,8 @@ urlpatterns = patterns('',
     # return the calendar based on the request user
     url(r'(?i)^users/me/calendar/',  MyCalendar.as_view(),
                                     name="api-user-mycalendar"),
+    url(r'(?i)^users/(?P<pk>[0-9a-zA-Z_-]+)/schedule/',  ClassScheduleForUser.as_view(),
+                                    name="api-user-homework")
     url(r'(?i)^users/(?P<pk>[0-9a-zA-Z_-]+)/homework/',  HomeworkForUser.as_view(),
                                     name="api-user-homework")
 )

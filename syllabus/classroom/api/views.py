@@ -20,6 +20,23 @@ class ClassList(generics.ListCreateAPIView):
         permissions.AllowAny
     ]
 
+class ClassScheduleForUser(generics.ListAPIView):
+    """ return the sections and classes of requested user in the requested term """
+    model = User
+    serializer_class = UserClassSchedule
+    permission_classes = [
+        permissions.AllowAny
+    ]
+   
+    # store the requested pk 
+    pk = self.kwargs.get('pk')
+    # if they asked for 'me' then replace it with the users pk
+    if pk == 'me':
+        # if so
+        pk = self.request.user.pk
+        
+    # grab the appropriate user
+    user = SyllUser.objects.get(pk = pk)
 
 # return the weights of a class
 class WeightsList(generics.RetrieveUpdateDestroyAPIView):
@@ -128,7 +145,7 @@ class HomeworkByClass(generics.ListCreateAPIView):
                 .exclude(category='meeting')
                 .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
 
-class HomeworkForUser(generics.ListAPIView):
+class HomeworkForUser(generics.RetrieveAPIView):
     """ return the homework of the user designated by the url """
     model = Event
     serializer_class = HomeworkSerializer
@@ -142,7 +159,7 @@ class HomeworkForUser(generics.ListAPIView):
         pk = self.kwargs.get('pk')
         # if they asked for 'me' then replace it with the users pk
         if pk == 'me':
-            # if so
+            # if so get the current users pk
             pk = self.request.user.pk
 
         # grab the appropriate user
