@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
-                          CalendarSerializer, HomeworkSerializer)
+                          CalendarSerializer, HomeworkSerializer, UserClassSchedule)
 
 from ..models import Class, Section, Event, GradingScale, Weight
 
@@ -20,23 +20,25 @@ class ClassList(generics.ListCreateAPIView):
         permissions.AllowAny
     ]
 
-class ClassScheduleForUser(generics.ListAPIView):
+class ClassScheduleForUser(generics.RetrieveAPIView):
     """ return the sections and classes of requested user in the requested term """
-    model = User
+    model = SyllUser
     serializer_class = UserClassSchedule
     permission_classes = [
         permissions.AllowAny
     ]
    
-    # store the requested pk 
-    pk = self.kwargs.get('pk')
-    # if they asked for 'me' then replace it with the users pk
-    if pk == 'me':
-        # if so
-        pk = self.request.user.pk
+    # return the classes that the user teachers
+    def get_object(self):
+        # store the requested pk 
+        pk = self.kwargs.get('pk')
+        # if they asked for 'me' then replace it with the users pk
+        if pk == 'me':
+            # if so use grab the current users pk
+            pk = self.request.user.pk
         
-    # grab the appropriate user
-    user = SyllUser.objects.get(pk = pk)
+        # grab the appropriate user
+        return SyllUser.objects.get(pk = pk)
 
 # return the weights of a class
 class WeightsList(generics.RetrieveUpdateDestroyAPIView):

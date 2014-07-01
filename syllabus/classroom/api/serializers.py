@@ -252,6 +252,52 @@ class GradingScaleSerializer(serializers.ModelSerializer):
             return instance
         return GradingScale(**attrs)
        
+class UserClassSchedule(serializers.ModelSerializer):
+    """ return the classes and sections of the serialized user """
+    class Meta:
+        """ meta class for a user schedule """
+        model = User
+        fields = ('classes', 'sections')
+
+    classes = serializers.SerializerMethodField('getClasses')
+    sections = serializers.SerializerMethodField('getSections')
+
+    def getClasses(self, obj):
+        """ return the actual classes that the user is a part of """
+        data = []
+        # for every class that this user is a member of
+        for c in Class.objects.filter(sections__students = obj):
+            # for each meeting time
+            for time in c.times.all():
+                # add the necessary data to the list
+                data.append({
+                    'name': c.profile.interest.abbrv + " " + str(c.profile.number),
+                    'day': time.day,
+                    'start': time.start,
+                    'end': time.end
+                })
+
+        # return the data
+        return data
+        
+
+    def getSections(self, obj):
+        """ return the sections that this user is a member of """
+        data = []
+        # for each section that the user is a member of
+        for section in Section.objects.filter(students = obj):
+            # for each different time that this section occurs
+            for time in section.times.all():
+                # add the necessary data to the list
+                data.append({
+                    'name': section.name,
+                    'day': time.day,
+                    'start': time.start,
+                    'end': time.end
+                })
+
+        # return the 'serialized' data
+        return data
 
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:

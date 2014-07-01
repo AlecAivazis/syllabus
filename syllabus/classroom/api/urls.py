@@ -43,7 +43,7 @@ urlpatterns = patterns('',
     url(r'(?i)^users/me/calendar/',  MyCalendar.as_view(),
                                     name="api-user-mycalendar"),
     url(r'(?i)^users/(?P<pk>[0-9a-zA-Z_-]+)/schedule/',  ClassScheduleForUser.as_view(),
-                                    name="api-user-homework")
+                                    name="api-user-schedule"),
     url(r'(?i)^users/(?P<pk>[0-9a-zA-Z_-]+)/homework/',  HomeworkForUser.as_view(),
                                     name="api-user-homework")
 )
