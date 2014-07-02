@@ -32,8 +32,12 @@ def classPage(request):
     return render_to_response('/spaces/space.html', locals())
     
     
-    
 def schedule(request):
+    
+    return render_to_response('myClasses/schedule.html', locals())
+
+    
+def schedule_old(request):
     
     terms = defaultdict(list)
     termz = []

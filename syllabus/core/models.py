@@ -34,7 +34,7 @@ class Upload(models.Model):
 
 
 # a {timeslot} is a {start} and {end} time on a particular {day}
-# {day} is represented by an integer where 1 is monday and 7 is sunday
+# {day} is represented by an integer where 0 is sunday and 6 is saturday
 class Timeslot (models.Model):
     day = models.IntegerField()
     start = models.TimeField()
