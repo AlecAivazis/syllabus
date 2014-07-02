@@ -284,8 +284,11 @@ class UserClassSchedule(serializers.ModelSerializer):
 
         # grab the requested term
         GET =  self.context['request'].GET
-        term = Term.objects.filter(start__year = GET['year']).get(name = GET['name'])
-        print(term)
+        # if they asked for a specific term
+        if 'name' in GET and 'year' in GET:
+            term = Term.objects.filter(start__year = GET['year']).get(name = GET['name'])
+        else:
+            term = Term.objects.getCurrentTerm()
 
         data = []
         # for every class that this user is a member of

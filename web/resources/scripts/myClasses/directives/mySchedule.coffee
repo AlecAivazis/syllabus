@@ -10,7 +10,10 @@ angular.module 'mySchedule', []
   templateUrl: '/templates/myClasses/mySchedule.html'
   controller: 'myScheduleCtrl'
 # controller for mySchedule
-.controller 'myScheduleCtrl', [ '$scope', ($scope) ->
-  console.log 'starting mySchedule control'
+.controller 'myScheduleCtrl', [ '$scope', '$http', ($scope, $http) ->
+  # grab the users current schedule
+  $http.get '/api/users/me/schedule/', (result) ->
+    console.log result
+
 ]
 

@@ -130,6 +130,13 @@ class MajorExemption(models.Model):
 # Registration
 # -----------------------------
     
+class TermQuerySet(models.QuerySet):
+    """ manage the django Term api """
+
+    def getCurrentTerm(self):
+        """ return the current term based on todays date """
+        return self
+
 # a term groups classes taken simulatenously for a given time period
 class Term(models.Model):
     name = models.CharField(max_length=50)
