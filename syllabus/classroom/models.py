@@ -231,7 +231,7 @@ class Class(models.Model):
     weights = models.ForeignKey(Weight, related_name='sections', null=True, blank=True)
     messageBoard = models.ManyToManyField(Topic, related_name="qlass", blank=True)
     maxOccupancy = models.IntegerField()
-    term = models.ForeignKey(Term)
+    term = models.ForeignKey(Term, related_name="classes")
     
     # set the object manager
     objects = ClassQuerySet.as_manager()

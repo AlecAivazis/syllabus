@@ -12,6 +12,7 @@ from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategor
                       Weight, WeightCategory)
 
 from ...classroom.models import State
+from ...academia.models import Term
 
 from ...core.fields import MetaDataField
 
@@ -257,19 +258,41 @@ class UserClassSchedule(serializers.ModelSerializer):
     class Meta:
         """ meta class for a user schedule """
         model = User
-        fields = ('classes', 'sections')
+        fields = ('classes', 'sections', 'terms')
 
     classes = serializers.SerializerMethodField('getClasses')
     sections = serializers.SerializerMethodField('getSections')
+    terms = serializers.SerializerMethodField('getTerms')
+
+    def getTerms(self, obj):
+        """ return the terms in which the user has sections """
+        data = []
+        # for every term with a section that has this `student
+        for term in Term.objects.filter(classes__sections__students = obj):
+            # serialize the term
+            data.append({
+                'name': term.name,
+                'start': term.start,
+                'end': term.end
+            })
+
+        # return the serialized data
+        return data
 
     def getClasses(self, obj):
         """ return the actual classes that the user is a part of """
+
+        # grab the requested term
+        GET =  self.context['request'].GET
+        term = Term.objects.filter(start__year = GET['year']).get(name = GET['name'])
+        print(term)
+
         data = []
         # for every class that this user is a member of
         for c in Class.objects.filter(sections__students = obj):
             # for each meeting time
             for time in c.times.all():
-                # add the necessary data to the list
+                # serialize the timeslots
                 data.append({
                     'name': c.profile.interest.abbrv + " " + str(c.profile.number),
                     'day': time.day,
@@ -288,7 +311,7 @@ class UserClassSchedule(serializers.ModelSerializer):
         for section in Section.objects.filter(students = obj):
             # for each different time that this section occurs
             for time in section.times.all():
-                # add the necessary data to the list
+                # serialize the timeslots
                 data.append({
                     'name': section.name,
                     'day': time.day,
