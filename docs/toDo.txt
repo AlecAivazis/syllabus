@@ -1,5 +1,10 @@
 Syllabus To-Do List
 
+Live Lectures
+Note taking section
+Teacher discussion on books, lectures, etc.
+    with wikipedia like collaboration of experts 
+
 Angular:
     make a blur-changed directive
 
@@ -9,10 +14,8 @@ General:
 
 Catalog:
     
-    clock widget for time select
     registration passes
     exemptions codes
-    
     
     filter by
         instructor
@@ -72,10 +75,10 @@ Add nextTerm() to term object
 
 add flags for assignments that need grading
 check javasript form submits before submit
-Access Middleware (add links into a list via a series of if statements)
 waitlist
 help overlay as guide
 add announcements to class pages (maybe first view)
-tutors (GradesFirst)aisolate grade row (so teachers can show students)
+tutors (GradesFirst)
+isolate grade row (so teachers can show students)
 templates for school year (anchored on beginning and end of term)
 inline assignment editing/grading
