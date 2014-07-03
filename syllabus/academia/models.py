@@ -1,5 +1,7 @@
 from django.db import models
 
+import datetime
+
 Book = 'classroom.Book'
 User = 'core.SyllUser'
 Section = 'classroom.Section'
@@ -135,7 +137,9 @@ class TermQuerySet(models.QuerySet):
 
     def getCurrentTerm(self):
         """ return the current term based on todays date """
-        return self
+        # grab the current date
+        today = datetime.date.today()
+        return self.filter(start__lte = today).order_by('-start')[0]
 
 # a term groups classes taken simulatenously for a given time period
 class Term(models.Model):
@@ -146,6 +150,11 @@ class Term(models.Model):
     # default string behavior is {name} - {start.year}
     def __unicode__(self):
         return  self.name + ' - ' + str(self.start.year)
+    
+    # set the object manager
+    objects = TermQuerySet.as_manager()
+    
+        
 
 # the preRequesite class for a certain class
 class PreRequisite(models.Model):
