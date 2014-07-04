@@ -5,19 +5,17 @@
   
   <div id="calendar">&nbsp;</div>
   
-  <aside id="myScheduleSideBar">
-    <span id="scheduleSelector">
-      <span id="selectorTitle">
-        Pick a term
-      </span>    
-      <span class="selectorYear" ng-repeat="year in years">
-	<span> 
-          {{year}}
-        </span> 
-        <span ng-repeat="name in terms[year]" ng-click="selectTerm(name, year)">
-          {{name}}
-        </span>
+  <aside id="scheduleSelector">
+    <div id="selectorTitle">
+      Pick a term
+    </div>    
+    <div class="selectorYear" ng-repeat="(year, terms) in termList">
+      <span> 
+        {{year}}
+      </span> 
+      <span ng-repeat="term in terms" ng-click="selectTerm(term.name, year)">
+        {{term.name}}
       </span>
-    </span>
+    </div>
   </aside>
 </span>

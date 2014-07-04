@@ -1,7 +1,12 @@
 {% extends "myClasses/base.html" %}
 
 {% block js %}
-<script type="text/coffeescript" src="/static/scripts/myClasses/directives/mySchedule.coffee"></script>
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/underscore/underscore.js"></script>
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/moment/moment.js"></script>
+<script type="text/coffeescript" 
+        src="/static/scripts/myClasses/directives/mySchedule.coffee"></script>
 {% endblock %}
 
 {% block appName %}, mySchedule{% endblock %}

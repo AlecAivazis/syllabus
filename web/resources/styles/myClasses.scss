@@ -80,7 +80,8 @@
 }
 
 #scheduleSelector {
-  float: right;
+  float: left;
+  margin-left: 10px;
   padding-bottom: 10px;
   background: #fffae1;
   margin-left: 5px;
@@ -191,10 +192,6 @@ td.scheduleSection {
   padding-left: 50px;
 }
 
-#myScheduleSideBar {
-  float: left;
-  margin-left: 10px;
-}
 
 .gradesClassName {
   width: 300px;
