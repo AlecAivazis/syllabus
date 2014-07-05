@@ -6,12 +6,17 @@
 _ = window._
 
 # create the angular module
-angular.module 'mySchedule', []
+angular.module 'mySchedule', ['ui.directives']
 # add the module
-.controller 'myScheduleCtrl', [ '$scope', '$http', '$rootScope',  ($scope, $http, $rootScope) ->
+.controller 'myScheduleCtrl', [ '$scope', '$http',  ($scope, $http) ->
 
+  # store the events to be displayed by the schedule
+  $scope.events = []
+        
   # load a specific terms calendar for the user
   $scope.selectTerm = (name, year) ->
+    # clear the current list of events
+    $scope.events = []
     # prepare the request data if its empty 
     data =
       name: name
@@ -20,15 +25,13 @@ angular.module 'mySchedule', []
     $http.get '/api/users/me/schedule/', params: data
     # if it was successful
     .success (result) ->
-      # save the result
-      $scope.classes = serializeClasses result.classes
-      $scope.sections = serializeClasses result.sections
+      # load the events into the user interface
+      $scope.events.push serializeClasses result.classes
+      $scope.events.push serializeClasses result.sections
       # group the terms by year
       $scope.termList = _.groupBy result.terms, (term) ->
         # use moment to get the year from the string // overkill??
         return moment(term.start).year()
-      # load the events into the user interface
-      $scope.events = [$scope.classes, $scope.sections]
 
   # default view is to select the current term
   $scope.selectTerm()
@@ -44,12 +47,16 @@ angular.module 'mySchedule', []
     angular.forEach list, (event) ->
       # grab the appropriate day
       day = startofWeek.add 'days', event.day
+      # build the start and end days
+      # add the day string to the time and parse it in moment
+      start = moment day.format('YYYY-MM-DD:Z') + ' ' + event.start , 'YYYY-MM-DD:Z H:mm:ss'
+      end = moment day.format('YYYY-MM-DD:Z') + ' ' + event.end , 'YYYY-MM-DD:Z H:mm:ss'
       # add the appropriate data to the list
       data.push
         title: event.name
-        # add the day string to the time and parse it in moment
-        start: moment day.format('YYYY-MM-DD:Z') + ' ' + event.start , 'YYYY-MM-DD:Z H:mm:ss'
-        end: moment day.format('YYYY-MM-DD:Z') + ' ' + event.end , 'YYYY-MM-DD:Z H:mm:ss'
+        start: start.format()
+        end: end.format()
+        allDay: false
 
     # return the serialized data
     return data
@@ -57,10 +64,17 @@ angular.module 'mySchedule', []
 
   # configure the weekly calendar
   $scope.weeklyCalendar =
-    height: 400
+    defaultView: 'agendaWeek'
+    minTime: '8:00 am'
+    maxTime: '8:00 pm'
+    header:
+      left: ''
+      center: ''
+      right: ''
+    height: 600
     weekMode: 'liquid'
     editable: false    
-       
+
 ]
 
 

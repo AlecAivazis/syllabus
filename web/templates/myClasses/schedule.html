@@ -16,7 +16,12 @@
 <script type="text/coffeescript" src="/static/scripts/myClasses/mySchedule.coffee"></script>
 {% endblock %}
 
-{% block appName %}, myClasses, mySchedule{% endblock %}
+{% block css %}
+<link type="text/css" rel="stylesheet" href="/static/styles/fc.css" ></link>
+<link type="text/scss" rel="stylesheet" href="/static/styles/myClasses.scss" ></link>
+{% endblock %}
+
+{% block appName %}, mySchedule{% endblock %}
 
 {% block myClasses_content %}
 

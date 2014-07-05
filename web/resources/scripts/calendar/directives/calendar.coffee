@@ -75,7 +75,6 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
         # apply the change
         $scope.$apply()
 
-
       # when an event gets rendered 
       eventRender: (event, element) ->
         # load the tooltip template
