@@ -5,15 +5,44 @@
         src="/static/scripts/thirdparty/underscore/underscore.js"></script>
 <script type="text/javascript" 
         src="/static/scripts/thirdparty/moment/moment.js"></script>
-<script type="text/coffeescript" 
-        src="/static/scripts/myClasses/directives/mySchedule.coffee"></script>
+<script type="text/javascript" src="/static/scripts/thirdparty/jquery-ui/ui/jquery-ui.js"></script>
+<script type="text/javascript"
+        src="/static/scripts/thirdparty/angular-ui/build/angular-ui.min.js"/>
+
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/fullcalendar/dist/fullcalendar.js"></script>
+<script type="text/javascript" src="/static/scripts/thirdparty/fullcalendar/dist/gcal.js"></script>
+<script type="text/coffeescript" src="/static/scripts/myClasses/app.coffee"/>
+<script type="text/coffeescript" src="/static/scripts/myClasses/mySchedule.coffee"></script>
 {% endblock %}
 
-{% block appName %}, mySchedule{% endblock %}
+{% block appName %}, myClasses, mySchedule{% endblock %}
 
 {% block myClasses_content %}
+
+{% verbatim %}
 <div id="alertArea" ng-show="alert" ng-class="alert.type">{{alert.message}}</div>
 
-<div my-schedule id="mySchedule"> </div>
+<span id="myScheduleContent" ng-controller="myScheduleCtrl">
+  <span id="myScheduleHeader">
+    {{term.name}}&nbsp;{{term.start.year}}
+  </span>
+  
+  <div id="calendar" ui-calendar="weeklyCalendar" ng-model="events" >&nbsp;</div>
 
+  <aside id="scheduleSelector">
+    <div id="selectorTitle">
+      Pick a term
+    </div>    
+    <div class="selectorYear" ng-repeat="(year, terms) in termList">
+      <span> 
+        {{year}}
+      </span> 
+      <span ng-repeat="term in terms" ng-click="selectTerm(term.name, year)">
+        {{term.name}}
+      </span>
+    </div>
+  </aside>
+</span>
+{% endverbatim %}
 {% endblock %}

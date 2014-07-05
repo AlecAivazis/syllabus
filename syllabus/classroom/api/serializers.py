@@ -285,7 +285,7 @@ class UserClassSchedule(serializers.ModelSerializer):
         # grab the requested term
         GET =  self.context['request'].GET
         # if they asked for a specific term
-        if 'name' in GET and 'year' in GET:
+        if 'name' in GET and 'year' in GET and GET['name'] and GET['year']:
             term = Term.objects.filter(start__year = GET['year']).get(name = GET['name'])
         else:
             term = Term.objects.getCurrentTerm()
