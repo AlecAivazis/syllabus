@@ -132,7 +132,7 @@ class MajorExemption(models.Model):
 # Registration
 # -----------------------------
     
-class TermQuerySet(models.QuerySet):
+class nermQuerySet(models.QuerySet):
     """ manage the django Term api """
 
     def getCurrentTerm(self):

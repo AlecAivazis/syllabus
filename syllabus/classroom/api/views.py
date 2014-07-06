@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
-                          CalendarSerializer, HomeworkSerializer, UserClassSchedule)
+                          CalendarSerializer, HomeworkSerializer, UserClassSchedule, 
+                          UserGradeSerializer)
 
 from ..models import Class, Section, Event, GradingScale, Weight
 
@@ -64,6 +65,26 @@ class ClassesTaughtByMe(generics.ListCreateAPIView):
     def get_queryset(self):
         return Class.objects.filter(professor = self.request.user)
 
+class GradesForUser(generics.RetrieveAPIView):
+    """ return a grade summary of the users classes as well as graduation information """
+    model = SyllUser
+    serializer_class = UserGradeSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    # turn 'me' into a proper pk
+    def get_object(self):
+        # store the requested pk 
+        pk = self.kwargs.get('pk')
+        # if they asked for 'me' then replace it with the users pk
+        if pk == 'me':
+            # if so get the current users pk
+            pk = self.request.user.pk
+
+        # grab the appropriate user
+        return SyllUser.objects.get(pk = pk)
+       
 # return the data necessary for a gradebook (read-only)
 class Gradebook(generics.RetrieveAPIView):
     model = Class
@@ -147,7 +168,7 @@ class HomeworkByClass(generics.ListCreateAPIView):
                 .exclude(category='meeting')
                 .filter(date__lte = django.utils.timezone.now() + datetime.timedelta(days = 1)))
 
-class HomeworkForUser(generics.RetrieveAPIView):
+class HomeworkForUser(generics.ListAPIView):
     """ return the homework of the user designated by the url """
     model = Event
     serializer_class = HomeworkSerializer

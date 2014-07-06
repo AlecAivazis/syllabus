@@ -31,85 +31,22 @@ def classPage(request):
     
     return render_to_response('/spaces/space.html', locals())
     
-    
 def schedule(request):
-    
+    """ return the current users weekly schedule """
     return render_to_response('myClasses/schedule.html', locals())
 
-    
-def schedule_old(request):
-    
-    terms = defaultdict(list)
-    termz = []
-    
-    classes = []
-    
-    for section in Section.objects.filter(students = request.user):
-        term = section.qlass.term
-        if not term.name in terms[str(term.start.year)]:
-            terms[str(term.start.year)].append(term.name)
-        
-        if section.qlass.term not in termz:    
-            termz.append(term)
-            
-        if section.qlass not in classes:
-            classes.append(section.qlass)
-    
-    currentTerm = ''
-    
-    for term in termz:
-        if term.start <= datetime.date.today() < term.end:
-            currentTerm = term
-    
-    string = str
-    
-        
-    times = collections.OrderedDict()
-    
-    
-    for qlass in classes:
-        times[qlass]=collections.OrderedDict()
-        for time in qlass.times.all():
-            if (time.start, time.end) not in times[qlass]:
-                times[qlass][(time.start,time.end)]=[dayDict[time.day]]
-            else:
-                times[qlass][(time.start,time.end)].append(dayDict[time.day])
-                
-        for section in qlass.sections.all():
-            times[section]=collections.OrderedDict()
-            for time in section.times.all():
-                if (time.start, time.end) not in times[section]:
-                    times[section][(time.start,time.end)]=[dayDict[time.day]]
-                else:
-                    times[section][(time.start,time.end)].append(dayDict[time.day])    
-        
-    return render_to_response('myClasses/schedule.html', locals())
+def grades(request):
+    """ return a summary of the current users grades and graduation standing """
+    return render_to_response('myClasses/grades.html' locals())
 
 def confDrop(request):
     
     qlass = Class.objects.get(pk=request.GET['id'])
     
     return render_to_response('myClasses/confDrop.html', locals())
-    
-def getSchedule(request):
-    year = int(request.GET['year'])
-    name = request.GET['term']
-    user = request.user
-    term = Term.objects.filter(name=name,start__year=year)
-    
-    sectionDict = defaultdict(list)
-    
-    sectionz = Section.objects.filter(students = request.user).filter(qlass__term=term)
-    classes = Class.objects.filter(sections__students = request.user).filter(term=term)
-    sections = []
 
-    for section in sectionz:
-        if section not in sections:
-            sections.append(section)
-            
-    return render_to_response('myClasses/getSchedule.html', locals())
     
-def grades(request):
+def grades_old(request):
     grades = {}
     colleges = []    
     

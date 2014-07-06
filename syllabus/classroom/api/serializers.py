@@ -139,12 +139,50 @@ class UserSerializer(serializers.ModelSerializer):
         """ return the name of the user """
         return obj.first_name + ' ' + obj.last_name
 
+class UserGradeSerializer(serializers.ModelSerializer):
+    """ collect the grades and graduation information of the user """
+    class Meta:
+        model = User
+        fields = ('requirements', 'grades')
+
+    requirements = serializers.SerializerMethodField('getRequirements')
+    grades = serializers.SerializerMethodField('getGrades')
+
+    def getRequirements(self, obj):
+        """ return the graduation requirements of the user being serialized """
+        return "hello"
+
+    def getGrades(self, obj):
+        """ return a summary of all of the grades for the user """
+        data = []
+        # go over every class
+        for c in Class.objects.filter(sections__students = obj):
+            # save the term
+            term = c.term
+            # and the grade
+            grade = c.totalGrade(obj.pk)
+            # collect the data
+            data.append({
+                'name' : c.getTitle(),
+                'grade': {
+                    'letter': grade[0],
+                    'score': grade[1]
+                },
+                'term': {
+                    'name': term.name,
+                    'start': term.start
+                }
+            })
+
+        # return the serialized data
+        return data
+
 class GradebookSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for GradebookSerializer """
         model = Class
         fields = ('breadcrumb', 'events', 'gradebook', 'students')
-    
+
     # the meta data of students in the class
     students = serializers.SerializerMethodField('getStudents')
     # the meta data of gradable events in the class

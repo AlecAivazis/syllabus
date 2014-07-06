@@ -6,9 +6,10 @@ from .views import ClassEventList, HomeworkByClass
 from .views import WeightsList
 from .views import MyCalendar
 from .views import RetrieveEvent, CreateEvent, HomeworkForUser
+from .views import GradesForUser
 
 
-# define the class api urls
+# the class api urls
 class_urls = patterns('', 
     url(r'(?i)^(?P<pk>[0-9a-zA-Z_-]+)/events/$', ClassEventList.as_view(),
                                                     name="api-classes-gradebook"),
@@ -22,7 +23,7 @@ class_urls = patterns('',
     url(r'^$', ClassList.as_view(), name="api-classes-list")
 )
 
-# define the event api urls
+# the event api urls
 event_urls = patterns('',
     url(r'(?i)^homeworkByClass/(?P<id>[0-9a-zA-Z_-]+)/$', HomeworkByClass.as_view(), 
                                                           name="api-events-byClass"),
@@ -30,7 +31,20 @@ event_urls = patterns('',
     url(r'^(?P<pk>[0-9a-zA-Z_-]+)/$', RetrieveEvent.as_view(), name="api-event-retrieve")
 )
 
-# define the class api urls
+# urls added to the user api
+user_urls = patterns('', 
+    # return the calendar based on the request user
+    url(r'(?i)^me/calendar/',  MyCalendar.as_view(),
+                                    name="api-user-mycalendar"),
+    url(r'(?i)^(?P<pk>[0-9a-zA-Z_-]+)/schedule/',  ClassScheduleForUser.as_view(),
+                                    name="api-user-schedule"),
+    url(r'(?i)^(?P<pk>[0-9a-zA-Z_-]+)/homework/',  HomeworkForUser.as_view(),
+                                    name="api-user-homework"),
+    url(r'(?i)^(?P<pk>[0-9a-zA-Z_-]+)/grades/',  GradesForUser.as_view(),
+                                    name="api-user-grades")
+)
+
+# the class api urls
 section_urls = patterns('', 
     url(r'^$', SectionList.as_view(), name="api-sections-list")
 )
@@ -39,11 +53,5 @@ urlpatterns = patterns('',
     url(r'(?i)^classes/', include(class_urls)),
     url(r'(?i)^events/', include(event_urls)),
     url(r'(?i)^sections/', include(section_urls)),
-    # return the calendar based on the request user
-    url(r'(?i)^users/me/calendar/',  MyCalendar.as_view(),
-                                    name="api-user-mycalendar"),
-    url(r'(?i)^users/(?P<pk>[0-9a-zA-Z_-]+)/schedule/',  ClassScheduleForUser.as_view(),
-                                    name="api-user-schedule"),
-    url(r'(?i)^users/(?P<pk>[0-9a-zA-Z_-]+)/homework/',  HomeworkForUser.as_view(),
-                                    name="api-user-homework")
+    url(r'(?i)^users/', include(user_urls)),
 )
