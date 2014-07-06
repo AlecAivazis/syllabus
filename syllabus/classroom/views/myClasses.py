@@ -37,7 +37,7 @@ def schedule(request):
 
 def grades(request):
     """ return a summary of the current users grades and graduation standing """
-    return render_to_response('myClasses/grades.html' locals())
+    return render_to_response('myClasses/grades.html', locals())
 
 def confDrop(request):
     

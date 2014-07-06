@@ -1,60 +1,31 @@
-{% extends "myClasses/home.html" %}
+{% extends "myClasses/base.html" %}
 
-{% block MChead %}
-    <script type="text/javascript" src="/resources/scripts/grades.js"></script>
+{% block js %}
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/moment/moment.js"></script>
+<script type="text/javascript" 
+        src="/static/scripts/thirdparty/underscore/underscore.js"></script>
+<script type="text/coffeescript" src="/static/scripts/myClasses/grades.coffee"></script>
 {% endblock %}
 
-{% block MCbody %}
+{% block css %}
+<link type="text/scss" rel="stylesheet" href="/static/styles/myClasses.scss" ></link>
+{% endblock %}
+
+{% block appName %}, myGrades {% endblock %}
+
+{% block myClasses_content %}
+{% verbatim %}
 <div id="myGradesTitle">My Grades</div>
-<div id="units">Units Completed: {{request.user.unitsCompleted()}} Units Transfered: {{request.user.unitsCompleted()}} </div>
-{% for year, classes in grades.items() %}
-<div class="gradesYear">
-    <div class="yearTitle">{{year}}</div> 
-    {% for qlass in classes %}
-    <div class="myGradesClass">
-        <span class="grade">{{qlass.totalGrade(request.user.id)[0]}}</span>
-        <span class="gradesClassName">{{qlass.profile.interest}} {{qlass.profile.number }} - {{qlass.profile.name}}</span>
-        
-    </div>
-    {% endfor %}
+<div ng-controller="myGrades">
+  <div id="units">Units Completed: {{unitsCompleted}}</div>
+  <div class="gradesYear" ng-repeat="(year, classes) in grades">
+      <div class="yearTitle">{{year}}</div> 
+      <div class="myGradesClass" ng-repeat="class in classes">
+          <span class="grade">{{class.grade.letter}}</span>
+          <span class="gradesClassName">{{class.name}}</span>
+      </div>
+  </div>
 </div>
-<div id="requirements">
-    <div id="requirementsHeader">
-        Graduation Requirements
-    </div>
-    <div class="requirementsList">
-        {% for college in colleges %}
-        <div class="requirementTitle">GE Requirements</div>
-        <ul>
-        {% for requirement in college.requirements.all() %}
-            <li class="requirement"> <img {%if request.user.satisfiesRequirement(requirement) %}src="/resources/images/tick.png"{% else %}src="/resources/images/tickGreyedOut.png"{% endif %}>Area {{requirement.abbrv}} - {{requirement.name}}</li>
-        {% endfor %}
-        </ul>
-        {% endfor %}
-    </div>
-    <div class="requirementsList">
-        {% for major in request.user.major.all() %}
-        <div class="requirementTitle">Department Requirements</div>
-        <ul>
-        {% for requirement in major.major.all() %}
-            <li class="requirement"> <img {%if request.user.satisfiesRequirement(requirement) %}src="/resources/images/tick.png"{% else %}src="/resources/images/tickGreyedOut.png"{% endif %}>
-            {% for profile in requirement.courses.all() %}
-            {{profile.interest}} {{profile.number}} {% if not loop.last %}{% if requirement.courses.count() == requirement.number %}, {% else %} or {%endif%}{% endif %}
-            {% endfor %}
-            </li>
-        {% endfor %}
-        </ul>
-        </div>
-        {% endfor %}
-        {% if request.user.canGraduate() %}
-        <div style="text-align: center;">
-            <span id="declareGraduation" onclick="declareCandidacy()">
-                Declare Candidacy
-            </span>
-        </div>
-        {% endif %}
-    </div>
-   
-</div>
-{% endfor %}
+{% endverbatim %}
 {% endblock %}

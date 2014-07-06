@@ -143,19 +143,28 @@ class UserGradeSerializer(serializers.ModelSerializer):
     """ collect the grades and graduation information of the user """
     class Meta:
         model = User
-        fields = ('requirements', 'grades')
+        fields = ('requirements', 'grades', 'unitsCompleted', 'canGraduate')
 
     requirements = serializers.SerializerMethodField('getRequirements')
     grades = serializers.SerializerMethodField('getGrades')
+    unitsCompleted = serializers.SerializerMethodField('getUnitsCompleted')
+    canGraduate = serializers.SerializerMethodField('canGrad')
 
     def getRequirements(self, obj):
         """ return the graduation requirements of the user being serialized """
+        data = []
+        # for each of th
+        # go over every
         return "hello"
+
+    def canGrad(self, obj):
+        """ return wether or not the user has satisfied all of their requirements """
+        return obj.canGraduate()
 
     def getGrades(self, obj):
         """ return a summary of all of the grades for the user """
         data = []
-        # go over every class
+        # go over every class with the user in a section
         for c in Class.objects.filter(sections__students = obj):
             # save the term
             term = c.term
@@ -176,6 +185,10 @@ class UserGradeSerializer(serializers.ModelSerializer):
 
         # return the serialized data
         return data
+
+    def getUnitsCompleted(self, obj):
+        """ return the number of units that this user has completed """
+        return obj.unitsCompleted()
 
 class GradebookSerializer(serializers.ModelSerializer):
     class Meta:
