@@ -266,6 +266,15 @@ class UserClassSchedule(serializers.ModelSerializer):
 
     def getTerms(self, obj):
         """ return the terms in which the user has sections """
+
+        # grab the requested term
+        GET =  self.context['request'].GET
+        # if they asked for a specific term
+        if 'name' in GET and 'year' in GET and GET['name'] and GET['year']:
+            term = Term.objects.filter(start__year = GET['year']).get(name = GET['name'])
+        else:
+            term = Term.objects.getCurrentTerm()
+
         data = []
         # for every term with a section that has this `student
         for term in Term.objects.filter(classes__sections__students = obj):
@@ -277,7 +286,10 @@ class UserClassSchedule(serializers.ModelSerializer):
             })
 
         # return the serialized data
-        return data
+        return {
+            'selected': term.name + ' ' + str(term.start.year),
+            'list': data,
+        }
 
     def getClasses(self, obj):
         """ return the actual classes that the user is a part of """

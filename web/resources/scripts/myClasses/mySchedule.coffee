@@ -28,8 +28,10 @@ angular.module 'mySchedule', ['ui.directives']
       # load the events into the user interface
       $scope.events.push serializeClasses result.classes
       $scope.events.push serializeClasses result.sections
+      # set the title of the schedule
+      $scope.title = result.terms.selected
       # group the terms by year
-      $scope.termList = _.groupBy result.terms, (term) ->
+      $scope.termList = _.groupBy result.terms.list, (term) ->
         # use moment to get the year from the string // overkill??
         return moment(term.start).year()
 
