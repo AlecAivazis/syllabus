@@ -107,6 +107,9 @@ class MajorRequirement(models.Model):
     number = models.IntegerField()
     minGrade = models.IntegerField()
 
+    def __str__(self):
+        return self.getTitle()
+
     # return a list of the interests that compose this requirement group
     def getInterests(self):
         interests = []
@@ -115,6 +118,10 @@ class MajorRequirement(models.Model):
                 interests.append(course.interest)
         
         return interests
+
+    def getTitle(self):
+        """ return the title of the requirement """
+        return self.abbrv + ' - ' + self.name
 
 # a major consists of major and premajor requirements
 class Major(models.Model):

@@ -12,9 +12,11 @@ from ..models import (Class, Event, Section, Grade, GradingScale, GradingCategor
                       Weight, WeightCategory)
 
 from ...classroom.models import State
-from ...academia.models import Term
+from ...academia.models import Term, College, MajorRequirement
 
 from ...core.fields import MetaDataField
+
+from collections import defaultdict
 
 class SectionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -152,10 +154,59 @@ class UserGradeSerializer(serializers.ModelSerializer):
 
     def getRequirements(self, obj):
         """ return the graduation requirements of the user being serialized """
-        data = []
-        # for each of th
-        # go over every
-        return "hello"
+        # grab the users majors
+        majors = obj.major.all()
+        # grab the colleges that these majors belong to
+        colleges = College.objects.filter(majors = majors)
+
+        collegeRequirements = defaultdict(list)
+        majorRequirements = defaultdict(list)
+        preMajorRequirements = defaultdict(list)
+
+        for college in colleges:
+            for requirement in college.requirements.all():
+                courseNames = []
+                # collect the names for this requirement
+                for course in requirement.courses.all():
+                    courseNames.append(course.name)
+                # serialize the requirement and add it to the list
+                collegeRequirements[college.name].append({
+                    'name' : requirement.getTitle(),
+                    'satisfied' : obj.satisfiesRequirement(requirement),
+                    'classes' : courseNames
+                })
+                
+        for major in obj.major.all():
+            for requirement in major.major.all():
+                # collect the names of the courses for this requirement
+                courseNames = []
+                for course in requirement.courses.all():
+                    courseNames.append(course.name)
+                # serialize the requirement and add it to the list
+                majorRequirements[major.name].append({
+                    'name' : requirement.getTitle(),
+                    'satisfied' : obj.satisfiesRequirement(requirement),
+                    'classes' : courseNames
+                })
+            
+            for requirement in major.preMajor.all():
+                # collect the names of the courses for this requirement
+                courseNames = []
+                for course in requirement.courses.all():
+                    courseNames.append(course.name)
+                # serialize the requirement and add it to the list
+                preMajorRequirements[major.name].append({
+                    'name' : requirement.getTitle(),
+                    'satisfied' : obj.satisfiesRequirement(requirement),
+                    'classes' : courseNames
+                })
+
+               
+        return {
+            'college' : collegeRequirements,
+            'major' : majorRequirements,
+            'preMajor' : preMajorRequirements,
+        }
 
     def canGrad(self, obj):
         """ return wether or not the user has satisfied all of their requirements """
