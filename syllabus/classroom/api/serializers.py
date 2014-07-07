@@ -141,6 +141,18 @@ class UserSerializer(serializers.ModelSerializer):
         """ return the name of the user """
         return obj.first_name + ' ' + obj.last_name
 
+def serializeRequirement(requirement, user):
+    # collect the names of the courses for this requirement
+    courseNames = []
+    for course in requirement.courses.all():
+        courseNames.append(course.name)
+    # return the data
+    return {
+        'name' : requirement.getTitle(),
+        'satisfied' : user.satisfiesRequirement(requirement),
+        'classes' : courseNames
+    }
+
 class UserGradeSerializer(serializers.ModelSerializer):
     """ collect the grades and graduation information of the user """
     class Meta:
@@ -164,42 +176,22 @@ class UserGradeSerializer(serializers.ModelSerializer):
         preMajorRequirements = defaultdict(list)
 
         for college in colleges:
+            # save the colleges name
+            name = college.name
             for requirement in college.requirements.all():
-                courseNames = []
-                # collect the names for this requirement
-                for course in requirement.courses.all():
-                    courseNames.append(course.name)
-                # serialize the requirement and add it to the list
-                collegeRequirements[college.name].append({
-                    'name' : requirement.getTitle(),
-                    'satisfied' : obj.satisfiesRequirement(requirement),
-                    'classes' : courseNames
-                })
+                collegeRequirements[name].append(serializeRequirement(requirement, obj))
                 
         for major in obj.major.all():
+            # save the majors name
+            name = major.name
+            # for each major requirement
             for requirement in major.major.all():
-                # collect the names of the courses for this requirement
-                courseNames = []
-                for course in requirement.courses.all():
-                    courseNames.append(course.name)
-                # serialize the requirement and add it to the list
-                majorRequirements[major.name].append({
-                    'name' : requirement.getTitle(),
-                    'satisfied' : obj.satisfiesRequirement(requirement),
-                    'classes' : courseNames
-                })
-            
+                # add the serialized requirement to the list
+                majorRequirements[name].append(serializeRequirement(requirement, obj))
+            # for each preMajor requirement
             for requirement in major.preMajor.all():
-                # collect the names of the courses for this requirement
-                courseNames = []
-                for course in requirement.courses.all():
-                    courseNames.append(course.name)
-                # serialize the requirement and add it to the list
-                preMajorRequirements[major.name].append({
-                    'name' : requirement.getTitle(),
-                    'satisfied' : obj.satisfiesRequirement(requirement),
-                    'classes' : courseNames
-                })
+                # add the serialized requirement to the list
+                preMajorRequirements[name].append(serializeRequirement(requirement, obj))
 
                
         return {
