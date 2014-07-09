@@ -5,6 +5,8 @@
         src="/static/scripts/thirdparty/moment/moment.js"></script>
 <script type="text/javascript" 
         src="/static/scripts/thirdparty/underscore/underscore.js"></script>
+<script type="text/coffeescript" 
+        src="/static/scripts/myClasses/directives/requirementList.coffee"></script>
 <script type="text/coffeescript" src="/static/scripts/myClasses/grades.coffee"></script>
 {% endblock %}
 
@@ -16,8 +18,8 @@
 
 {% block myClasses_content %}
 {% verbatim %}
-<div id="myGradesTitle">My Grades</div>
 <div ng-controller="myGrades">
+<div id="myGradesTitle">My Grades</div>
   <div id="units">Units Completed: {{unitsCompleted}}</div>
   <div class="gradesYear" ng-repeat="(year, classes) in grades">
       <div class="yearTitle">{{year}}</div> 
@@ -26,15 +28,32 @@
           <span class="gradesClassName">{{class.name}}</span>
       </div>
   </div>
-</div>
 
-<div id="requirements">
-  <div id="requirementsHeader">
-    graduation requirements
-  </div>
-  <div class="requirementsList">
-    <div class="collegeRequirements" ng-repeat="college in colleges">
-      
+  <div id="requirements">
+    <div id="requirementsHeader">
+      graduation requirements
+    </div>
+    <div class="requirementsList">
+      <!-- list all of the college GE's first -->
+      <div ng-repeat="(college, requirements) in collegeRequirements">
+        <div class="requirementTitle">
+          GE Requirements ({{college}})
+        </div>
+        <div requirement-list list="requirements"></div>
+      </div>
+      <!-- and then the major requirements -->
+      <div ng-repeat="(major, requirements) in majorRequirements">
+        <div class="requirementTitle">
+          Major Requirements ({{major}})
+        </div>
+        <div requirement-list list="requirements.premajor"></div>
+        <div requirement-list list="requirements.major"></div>
+      </div>
+      <div id="requirementListFooter">
+        <span id="declareGraduation" ng-if="canGraduate">
+          Delcare Candidacy
+        </span>
+      </div>
     </div>
   </div>
 </div>

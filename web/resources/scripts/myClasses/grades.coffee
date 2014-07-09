@@ -6,7 +6,7 @@
 _ = window._
 
 # create the angular module
-angular.module 'myGrades', []
+angular.module 'myGrades', ['requirementList']
 # add the module
 .controller 'myGrades', [ '$scope', '$http',  ($scope, $http) ->
   console.log 'starting up my grades'
@@ -14,12 +14,16 @@ angular.module 'myGrades', []
   $http.get '/api/users/me/grades/'
   # if it was successful
   .success (result) ->
-    # group the grades by the year of the term
-    console.log result
+    # save the result
     $scope.canGraduate = result.canGraduate
     $scope.unitsCompleted = result.unitsCompleted
+    # group the grades by the year of the term
     $scope.grades = _.groupBy result.grades, (classGrade) ->
       return moment(classGrade.term.start).format 'YYYY'
+    # save the graduation requirements
+    $scope.collegeRequirements = result.requirements.college
+    $scope.majorRequirements = result.requirements.major
+    
 
 ]
 

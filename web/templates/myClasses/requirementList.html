@@ -1,0 +1,7 @@
+<ul>
+  <li ng-repeat="requirement in list" class="requirement">
+    <img ng-if="requirement.satisfied == true" src="/static/images/tick.png">
+    <img ng-if="requirement.satisfied == false" src="/static/images/tickGreyedOut.png">
+    {{requirement.name}}
+  </li>
+</ul>

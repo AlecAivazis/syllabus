@@ -172,8 +172,7 @@ class UserGradeSerializer(serializers.ModelSerializer):
         colleges = College.objects.filter(majors = majors)
 
         collegeRequirements = defaultdict(list)
-        majorRequirements = defaultdict(list)
-        preMajorRequirements = defaultdict(list)
+        majorRequirements = {}
 
         for college in colleges:
             # save the colleges name
@@ -184,20 +183,20 @@ class UserGradeSerializer(serializers.ModelSerializer):
         for major in obj.major.all():
             # save the majors name
             name = major.name
-            # for each major requirement
+            majorRequirements[name] = defaultdict(list)
+            # build the major requirements
             for requirement in major.major.all():
                 # add the serialized requirement to the list
-                majorRequirements[name].append(serializeRequirement(requirement, obj))
-            # for each preMajor requirement
+                majorRequirements[name]['major'].append(serializeRequirement(requirement, obj))
+            # build the pre-major requirements
             for requirement in major.preMajor.all():
                 # add the serialized requirement to the list
-                preMajorRequirements[name].append(serializeRequirement(requirement, obj))
+                majorRequirements[name]['premajor'].append(serializeRequirement(requirement, obj))
 
                
         return {
             'college' : collegeRequirements,
-            'major' : majorRequirements,
-            'preMajor' : preMajorRequirements,
+            'major' : majorRequirements
         }
 
     def canGrad(self, obj):
