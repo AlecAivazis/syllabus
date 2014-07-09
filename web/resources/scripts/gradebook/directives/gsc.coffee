@@ -10,7 +10,7 @@ angular.module('gsc', [])
 # grading scale window directive
 .directive 'gsc', () ->
   restrict : 'AE',
-  templateUrl: '../templates/gradebook/gradingScale.html',
+  templateUrl: '/templates/gradebook/gradingScale.html',
   controller: 'gscCtrl'
 # grading scale controller
 .controller 'gscCtrl', [ '$scope', '$http', '$rootScope', ($scope, $http, $rootScope) ->

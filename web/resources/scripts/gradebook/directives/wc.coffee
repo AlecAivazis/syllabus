@@ -10,7 +10,7 @@ angular.module('wc', [])
 # grading scale window directive
 .directive 'wc', () -> 
   restrict : 'AE',
-  templateUrl: '../templates/gradebook/weights.html',
+  templateUrl: '/templates/gradebook/weights.html',
   controller: 'wcCtrl'
 # grading scale controller
 .controller 'wcCtrl', [ '$scope' ,'$http', '$rootScope', ($scope, $http, $rootScope) ->

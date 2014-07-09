@@ -10,7 +10,7 @@ angular.module('gradebook', [])
 # the gradebook directive
 .directive 'gradebook', () ->
   restrict: 'AE',
-  templateUrl: '../templates/gradebook/gradebook.html',
+  templateUrl: '/templates/gradebook/gradebook.html',
   controller: 'gradebookCtrl'
 
 # the gradebook controller

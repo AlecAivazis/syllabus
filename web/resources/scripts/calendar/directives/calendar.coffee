@@ -10,7 +10,7 @@ calendar = angular.module 'calendar', ['ui.directives', 'ngModal', 'ngQuickDate'
 # add the directive
 .directive 'calendar', () ->
   restrict: 'AE'
-  templateUrl: '../templates/calendar/calendar.html'
+  templateUrl: '/templates/calendar/calendar.html'
   controller: 'calendarCtrl'
   link: (scope, element, attr) ->
     $('.fc-header-right').append 'hello world'

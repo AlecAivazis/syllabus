@@ -10,7 +10,7 @@ angular.module('utilities', [])
 # utilities directive
 .directive 'utilities', () ->
   restrict : 'AE',
-  templateUrl: '../templates/gradebook/utilities.html',
+  templateUrl: '/templates/gradebook/utilities.html',
   link: (scope, element, attrs) ->
 
     # safely load the grading scale in order to compute the histogram
