@@ -9,6 +9,7 @@ from .serializers import (ClassSerializer, SectionSerializer, EventSerializer,
 from ..models import Class, Section, Event, GradingScale, Weight
 
 from ...core.models import SyllUser, MetaData
+from ...academia.models import Term
 
 import django, datetime
 
@@ -19,6 +20,30 @@ class ClassList(generics.ListCreateAPIView):
     permission_classes = [
         permissions.AllowAny
     ]
+
+class CurrentClassesForUser(generics.ListAPIView):
+    """ return the current terms classes that this user is a part of """
+    model = Class
+    serializer_class = ClassSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    def get_queryset(self):
+        # store the requested pk 
+        pk = self.kwargs.get('pk')
+        # if they asked for 'me' then replace it with the users pk
+        if pk == 'me':
+            # if so use grab the current users pk
+            pk = self.request.user.pk
+        
+        # grab the appropriate user
+        user =  SyllUser.objects.get(pk = pk)
+        # get the current term
+        term = Term.objects.getCurrentTerm()
+        # return the classes that this user is a part of in the right term
+        return Class.objects.filter(sections__students = user).filter(term = term)
+        
 
 class ClassScheduleForUser(generics.RetrieveAPIView):
     """ return the sections and classes of requested user in the requested term """
