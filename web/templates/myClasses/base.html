@@ -6,7 +6,7 @@
 
 {% block content %}
 <div id="myClassesGutter">
-  <ul class="sidebar">
+  <ul class="sidebar" ng-controller="sidebarCtrl">
     <a href="/myClasses/schedule">
       <li>
         <div class="liContainer">
@@ -34,17 +34,11 @@
     <li class="sidebarLabel">
       classes
     </li>
-    {% comment %}
-    {% for enrollment in request.user.enrollments.filter(grade="") %}
-    <a href="/myClasses/classPage?id={{enrollment.section.qlass.id}}">
+    <a ng-repeat="class in myClasses" href="/myClasses/classPage?id={{class.id}}">
       <li>
-        <div class="liContainer">
-          {{enrollment.section.qlass.profile.interest}} {{enrollment.section.qlass.profile.number}}
-        </div>
+        {{class.name}}
       </li>
     </a>
-    {% endfor %}
-    {% endcomment %}
   </ul>
   <div id="myClassesContent">
     {% block myClasses_content %} {% endblock %}
