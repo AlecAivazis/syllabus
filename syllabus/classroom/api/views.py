@@ -1,7 +1,6 @@
 from rest_framework import generics, permissions
 from django.http import HttpResponse, HttpResponseBadRequest
 
-
 from .serializers import (ClassSerializer, SectionSerializer, EventSerializer, 
                           GradebookSerializer, GradingScaleSerializer, WeightSerializer, 
                           CalendarSerializer, HomeworkSerializer, UserClassSchedule, 

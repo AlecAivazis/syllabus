@@ -1,0 +1,88 @@
+{% extends "myClasses/base.html" %}
+
+{% block css %}
+    <link type="text/scss" rel="stylesheet" href="/static/styles/catalog.scss"></link>
+{% endblock %}
+
+{% block myClasses_content %}
+    <div id="catalogToolBar">
+      <span id="wishlistButton">Manage Wishlist</span>
+    </div>
+    <div id="catalogFilter" >
+        <div id="catalogDefaultValues">
+            <span class="filterAttribute">
+                Term (required): 
+                <span>
+                  <select name="term">
+                    {%for term in terms %}<option value={{term.id}}>
+                      {{term}}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </span>
+            </span>
+            
+            <span class="filterAttribute">
+                Subject Area: 
+                <span>
+                  <select name="interest">
+                    <option value="">--</option>
+                    {%for interest in interests %}
+                    <option value="{{interest.id}}">{{interest}}</option>
+                    {% endfor %}
+                  </select>
+                </span>
+            </span>
+            
+            <span class="filterAttribute">
+                Course #: <span><input name="courseNumber" size=11></span>
+            </span>
+            <span onclick="toggleAdvancedFilters()" id="advancedFilters">Toggle Advanced Filters</span>
+        </div>
+        <div id="catalogAdvancedFilter" ng-show="showAdvanced">
+            <div>
+                <span class="filterAttribute">
+                    Meets Between (24 hr) 
+                    <span>
+                      <input type="text" size="5" name="timeStart">
+                      &nbsp;and&nbsp;
+                      <input size="5" type="text" name="timeEnd">
+                    </span>
+                </span>
+                <span class="filterAttribute">
+                    Meets on 
+                    <input type="checkbox" name="day" value="7"> Sun 
+                    <input type="checkbox" name="day" value="1"> M 
+                    <input type="checkbox" name="day" value="2"> T 
+                    <input type="checkbox" name="day" value="3"> W 
+                    <input type="checkbox" name="day" value="4"> Th 
+                    <input type="checkbox" name="day" value="5"> Fri 
+                    <input type="checkbox" name="day" value="6"> Sat
+                </span>
+            </div>
+            <div>
+                
+                <span class="filterAttribute">
+                    Units: &nbsp;
+                    <span>
+                      between 
+                      <input type="text" name="unitsLower" size=2> 
+                      and 
+                      <input type="text" name="unitsUpper" size=2>
+                    </span>
+                </span>
+                                
+                <span class="filterAttribute">
+                    Enroll Code: 
+                    <span>
+                      <input type="text" size=11 name="enrollCode">
+                    </span>
+                </span>
+            </div>
+
+        </div>
+    </div>
+    <div id="catalog">
+      not yet implemented. waiting on django-filter to catch up to django1.7
+    </div>
+{% endblock %}

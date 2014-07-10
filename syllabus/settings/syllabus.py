@@ -61,3 +61,8 @@ COMPRESS_STORAGE = 'compressor.storage.CompressorFileStorage'
 COMPRESS_VERBOSE = False
 
 COMPRESS_ENABLED = False
+
+# rest framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS' : ('rest_framework.filters.DjangoFilterBackend', )
+}

@@ -104,7 +104,9 @@ def runTask(request):
 
     
 def catalog(request):
-    
+    """ return a list of the classes that meet a given criteria """
+    return render_to_response('myClasses/catalog.html', locals())
+
     terms = Term.objects.all()
     
     currentTerm = ''
