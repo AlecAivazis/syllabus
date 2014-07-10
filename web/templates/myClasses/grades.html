@@ -8,13 +8,14 @@
 <script type="text/coffeescript" 
         src="/static/scripts/myClasses/directives/requirementList.coffee"></script>
 <script type="text/coffeescript" src="/static/scripts/myClasses/grades.coffee"></script>
+<script type="text/coffeescript" src="/static/scripts/myClasses/app.coffee"></script>
 {% endblock %}
 
 {% block css %}
 <link type="text/scss" rel="stylesheet" href="/static/styles/myClasses.scss" ></link>
 {% endblock %}
 
-{% block appName %}, myGrades {% endblock %}
+{% block appName %}, myClasses, myGrades {% endblock %}
 
 {% block myClasses_content %}
 {% verbatim %}

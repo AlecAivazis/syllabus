@@ -4,6 +4,12 @@
     <link type="text/scss" rel="stylesheet" href="/static/styles/catalog.scss"></link>
 {% endblock %}
 
+{% block js %}
+    <script type="text/coffeescript" src="/static/scripts/myClasses/app.coffee">
+{% endblock %}
+
+{% block appName %}, myClasses{% endblock %}
+
 {% block myClasses_content %}
     <div id="catalogToolBar">
       <span id="wishlistButton">Manage Wishlist</span>
@@ -37,7 +43,9 @@
             <span class="filterAttribute">
                 Course #: <span><input name="courseNumber" size=11></span>
             </span>
-            <span onclick="toggleAdvancedFilters()" id="advancedFilters">Toggle Advanced Filters</span>
+            <span onclick="toggleAdvancedFilters()" id="advancedFilters">
+              Toggle Advanced Filters
+            </span>
         </div>
         <div id="catalogAdvancedFilter" ng-show="showAdvanced">
             <div>
