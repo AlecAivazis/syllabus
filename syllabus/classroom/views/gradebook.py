@@ -40,8 +40,6 @@ def viewGradeBook(request):
     qlass = Class.objects.get(id= int(classId))
     sections = Section.objects.filter(qlass = qlass)
     
-    
-    
     students = []
     breadcrumb = []
     
@@ -50,8 +48,6 @@ def viewGradeBook(request):
     possiblePoints = {}
     
     tas = []
-    
-    
     
     if sectionId :
         
@@ -117,9 +113,15 @@ def viewGradeBook(request):
             else:
                 files[student][event] = False
                 
+            # states are for multiple people to point to one event since students can be at different
+            # parts of a single event
             if event.state.all():
                 # if the most recent status='turned-in' is less than the due date then it is on time
-                eventDateTime = datetime.datetime(year = event.date.year, month = event.date.month, day = event.date.day, hour = event.time.hour, minute = event.time.minute)
+                eventDateTime = datetime.datetime(year = event.date.year, 
+                                                  month = event.date.month, 
+                                                  day = event.date.day, 
+                                                  hour = event.time.hour, 
+                                                  minute = event.time.minute)
                 #if it was never turned in, it's late
                 if event.state.filter(status = 'turned-in').all():
                     if event.state.filter(status='turned-in').filter(owner=student):
@@ -170,7 +172,7 @@ def viewGradeBook(request):
         
     else:
         totalAverage = 'n/a'
-    
+
     length = len
     
     

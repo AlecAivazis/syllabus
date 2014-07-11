@@ -175,16 +175,15 @@ function loadCalendar(which, year, number){
 	async: false,
 	data: 'which=' + which + "&year=" + year + '&number=' + number,
 	success: function(data) {
-	    var id = $('.selectedDay').attr('id');
-	    $('#calendar').replaceWith(data);
-	    selectDay(id);
-            
-            
+	    // save the currently selected day
+            var id = $('.selectedDay').attr('id');
+            // update the calendar
+            $("#calendar").replaceWith(data);
+            // create the tooltips
             $('.tooltip').tooltipster({
                 interactive: true,
                 theme: 'eventTooltip'             
             });
-
     	}
     });
 }
@@ -195,8 +194,6 @@ function refreshCalendar(){
     var number = $('#calendar').attr('number');
     
     loadCalendar(which, year, number);
-    
-    
 }
 
 function loadPrevCalendar(){
@@ -229,8 +226,6 @@ function loadPrevCalendar(){
 	    }
 	}
     }
-    
-    
 }
 
 function loadNextCalendar(){
@@ -338,7 +333,6 @@ function selectView(which){
     if (selectedDayId){
 	
 	if (which == 'month'){
-	    
 	    if (calWhich == 'month'){
 		return;
 		
@@ -389,7 +383,6 @@ function selectView(which){
 			var number = getWeekNumber($('#calendar').find('.calendarDay').eq(3).attr('id'));
 			
 			loadCalendar(which, year, number);
-
 		    }
 		}
 	    }

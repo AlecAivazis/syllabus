@@ -60,14 +60,6 @@ class Timeslot (models.Model):
             if self.day.lower() == 'sunday':
                 return 'Sun'
 
-# a generic adjective to associate with an object at a particular time
-class State(models.Model):
-    user = models.ForeignKey('SyllUser')
-    owner = models.ForeignKey('SyllUser', related_name="owner")
-    event = models.ForeignKey(Event, related_name="state")
-    status = models.CharField(max_length=100)
-    date = models.DateTimeField(auto_now_add=True)
-
 
 # User
 # --------------------
