@@ -1,7 +1,9 @@
 from syllabus import *
 
-from syllabus.classroom.models import Class
+from syllabus.classroom.models import Class, Section, Event
+from syllabus.core.models import MetaData
 from syllabus.academia.models import RegistrationGroup, Term
+from django.views.decorators.csrf import csrf_exempt
 
 def editEventForm(request):
     
@@ -398,6 +400,7 @@ def context(request):
     
     return render_to_response('calendar/calendarContext.html', locals())
 
+@csrf_exempt
 def createEvent(request):
     year = request.POST['year']
     month = request.POST['month']

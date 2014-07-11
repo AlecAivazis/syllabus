@@ -35,6 +35,7 @@ distclean::
 
 EXPORT_PYTHON_MODULES = \
     admin.py \
+    jinja2_for_django.py \
     forms.py \
     middlewares.py \
     models.py \

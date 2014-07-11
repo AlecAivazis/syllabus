@@ -27,9 +27,19 @@ STATIC = os.path.join(RESOURCES, 'static').replace('\\','/')
 SECRET_KEY = 'u2me%mqm!-lo&9((-$_c3$+b0=ws&izb44x#=1faq-u+^sgilr'
 
 
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+                               "django.core.context_processors.csrf",
+                               "django.core.context_processors.debug",
+                               "django.core.context_processors.i18n",
+                               "django.core.context_processors.media",
+                               "django.core.context_processors.static",
+                               "django.core.context_processors.tz",
+                               "django.contrib.messages.context_processors.messages")
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.Loader',
+    'django_jinja.loaders.AppLoader',
+    'django_jinja.loaders.FileSystemLoader',
 )
 
 # the directories that contains my templates
@@ -54,7 +64,10 @@ DJANGO_APPS = (
 THIRD_PARTY = (
     'django_extensions',
     'compressor',
+    'django_jinja',
 )
+
+DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.html'
 
 # Application definition
 INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY 
