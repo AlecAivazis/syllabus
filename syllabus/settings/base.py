@@ -38,8 +38,10 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django_jinja.loaders.AppLoader',
-    'django_jinja.loaders.FileSystemLoader',
+    ('pyjade.ext.django.Loader' , (
+        'django_jinja.loaders.AppLoader',
+        'django_jinja.loaders.FileSystemLoader',
+    )),
 )
 
 # the directories that contains my templates

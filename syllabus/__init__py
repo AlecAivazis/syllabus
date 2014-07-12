@@ -24,7 +24,7 @@ from datetime import date
 
 template_dirs = getattr(settings,'TEMPLATE_DIRS')
 default_mimetype = getattr(settings, 'DEFAULT_CONTENT_TYPE')
-env = Environment(loader=FileSystemLoader(template_dirs), extensions=['jinja2.ext.with_','jinja2.ext.do', CompressorExtension])
+env = Environment(loader=FileSystemLoader(template_dirs), extensions=['jinja2.ext.with_','jinja2.ext.do', CompressorExtension, 'pyjade.ext.jinja.PyJadeExtension'])
 
 env.globals['perms']=settings.PERMS
 

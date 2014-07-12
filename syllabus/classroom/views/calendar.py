@@ -315,7 +315,7 @@ def calendarMonth(request):
         termDates[term.end].append((term, 'End'))
          
     # render the template
-    return render_to_response('calendar/calendarMonthAjax.html', locals())
+    return render_to_response('calendar/calendarMonth.jade', locals())
         
 
 def calendarAjax(request):
