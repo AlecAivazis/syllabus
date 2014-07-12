@@ -386,7 +386,7 @@ def calendarAjax(request):
 
             day = day + datetime.timedelta(days = 1) 
         
-        return render_to_response('calendar/calendarWeekAjax.html', locals())
+        return render_to_response('calendar/calendarWeek.html', locals())
 
 def iso_year_start(iso_year):
     "The gregorian calendar date of the first day of the given ISO year"
@@ -412,7 +412,7 @@ def calendarHome(request, which='month', year=datetime.date.today().year, number
         else :
             year = today.year
             
-        return render_to_response('calendar/calendar.html', locals())
+        return render_to_response('calendar/home.html', locals())
     elif which == "week":
         
         intMonth = number
@@ -422,7 +422,7 @@ def calendarHome(request, which='month', year=datetime.date.today().year, number
         if not year:
             year = today.year
         
-        return render_to_response('calendar/calendar.html', locals())
+        return render_to_response('calendar/home.html', locals())
     else:
         return HttpResponse(which + year + number)
     

@@ -1,8 +1,0 @@
-{% for qlass,value in order(eventDict.items()) %}
-<span class="sidebarClassTitle">{{qlass.profile.interest}} {{qlass.profile.number }} - {{qlass.profile.name}}</span>
-	{% for event in value %}
-<div class="sidebarEvent" id="sidebarEvent{{event.id}}" onclick="selectSidebarEvent({{event.id}})">{{event.title}}</div>
-	{% endfor %}
-{% else %}
-There are no events scheduled for this day.
-{% endfor %}
