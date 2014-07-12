@@ -14,7 +14,15 @@
     <div id="catalogFilter" >
         <div id="catalogDefaultValues">
             <span class="filterAttribute">
-                Term (required): <span><select name="term">{%for term in terms %}<option value={{term.id}}>{{term}}</option>{% endfor %}</select></span>
+                Term (required): 
+                <select name="term">
+                  <option selected="selected"> select a term </option>
+                  {%for term in terms %}
+                  <option value={{term.id}}>
+                    {{term.getTitle()}}
+                  </option>
+                  {% endfor %}
+                </select>
             </span>
             
             <span class="filterAttribute">

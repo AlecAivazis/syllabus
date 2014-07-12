@@ -20,6 +20,7 @@ all: export
 
 EXPORT_PYTHON_MODULES = \
     classManagement.py \
+    core.py \
     gradRequirements.py \
     userManagement.py \
     __init__.py

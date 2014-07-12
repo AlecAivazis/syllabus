@@ -5,7 +5,7 @@ from .syllabus import *
 DEBUG = True
 
 # add django_toolbar to installed apps
-INSTALLED_APPS += ("debug_toolbar", )
+#INSTALLED_APPS += ("debug_toolbar", )
 
 # add the debug_toolbar middleware
 MIDDLEWARE_CLASSES += \

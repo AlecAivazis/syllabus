@@ -222,6 +222,13 @@ class Grade(models.Model):
     def __unicode__(self):
         return self.score 
  
+# {states} track a users progress of an {event}
+class State(models.Model):
+    user = models.ForeignKey(User)
+    owner = models.ForeignKey(User, related_name="owner")
+    event = models.ForeignKey(Event, related_name="state")
+    status = models.CharField(max_length=100)
+    date = models.DateTimeField(auto_now_add=True)
 
 # Class profile
 # -----------------------------

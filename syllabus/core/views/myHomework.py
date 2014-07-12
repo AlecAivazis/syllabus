@@ -1,7 +1,8 @@
 from syllabus import *
 
 from syllabus.classroom.models import Section
-from syllabus.core.models import State, Upload
+from syllabus.core.models import Upload
+from ...classroom.models import State
 
 def myHomework(request):
     oz = os

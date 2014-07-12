@@ -5,6 +5,7 @@ from syllabus.classroom.models import Section, Class
 from syllabus.academia.models import Term, Department, Interest, ClassProfile
 from syllabus.core.models import Timeslot
 
+
 dayDict={
     '1':'M',
     '2':'T',
@@ -166,15 +167,7 @@ def catalog(request):
     
     terms = Term.objects.all()
     
-    currentTerm = ''
-    
-    for term in terms:
-    
-        if term.start <= datetime.date.today() and datetime.date.today() <= term.end:
-            currentTerm = terms[0]
-            
-    if not currentTerm:
-        currentTerm = terms.filter('-end')[0]
+    currentTerm = Term.objects.getCurrentTerm()
     
     departments = Department.objects.all()
     

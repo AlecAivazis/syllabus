@@ -1,106 +1,168 @@
 <div id="gradeBookView{{qlass.id}}" class="gradeBookView">
-	<div id="gradeBookError" style="display: none">
-		
-	</div>
-	<span id="gradeBookBreadCrumbs" class="{{qlass.id}}" {% if sectionId %} section="{{sectionId}}"{% endif %}>
-		<span id="gradeBookBreadCrumbsParent">{{breadcrumb[0]}}{{breadcrumb[1]}}</span>{% for child in breadcrumb[2] %}<span class="gradeBookBreadCrumbsChild" style="color: #{{ loop.cycle('669cff') }}">{{child}}</span>{% endfor %}
-	</span>
-	<span class="gradeBookViewToolBar">
-		<span class="gradeBookTool" id="scaleTool" onclick="showGradingScale()"><img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
-				Grading Scale
-		</span>
-                <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()"> Isolate Highlighted Student </span>
-                <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()"> Show
-                All Students</span>
-		<span class="gradeBookTool" id="statsTool"><img src="/resources/images/icons/stats.png">
-				Statistics
-				<ul id="statsList" style="display: none;">
-					<li class='statChoice' onclick="histogram()"> <img src="/resources/images/icons/stats.png"> Histogram</li>
-					<li class='statChoice' onclick="performance()"> <img src="/resources/images/icons/stats.png"> Performance</li>
-					<li class='statChoice' onclick="timeline()"> <img src="/resources/images/icons/stats.png"> Timeline</li>
-				</ul>
-		</span>
-		<span class="gradeBookTool" id="optionsTool" onclick="weights()"><img src="/resources/images/icons/scale.png">
-				{% if not qlass.weights %}Assign {%endif%}Weights
-		</span>
-	</span>
-	<div id="gradeBookViewBody">
-	
-	{% if request.user in section.qlass.professor.all() and sectionId %}
-	<div id="gradeBookTAs">
-		Assistants: {% if tas %}{% for user in tas %}{{user.first_name}} {{user.last_name}}{% endfor%}{% else %} none {% endif %} <span class="manageAssistants" onclick="manageAssistants()">manage</span>
-		
-	</div>
-	{% endif %}
-	<table id="gradeBookTable" cellspacing="0" cellpadding="0">
-		
-		<thead id="gradeBookHeaders">
+  <div id="gradeBookError" style="display: none">
+  </div>
+
+{# toolbar controls #}
+
+  <span id="gradeBookBreadCrumbs" class="{{qlass.id}}"
+        {% if sectionId %} section="{{sectionId}}"{% endif %}>
+    <span id="gradeBookBreadCrumbsParent">
+      {{breadcrumb[0]}}{{breadcrumb[1]}}
+    </span>
+    {% for child in breadcrumb[2] %}
+      <span class="gradeBookBreadCrumbsChild" style="color: #{{ loop.cycle('669cff') }}">
+        {{child}}
+      </span>
+    {% endfor %}
+  </span>
+  <span class="gradeBookViewToolBar">
+    <span class="gradeBookTool" id="scaleTool" onclick="showGradingScale()">
+      <img style="margin-top: 6px" src="/resources/images/icons/clipboard.png">
+      Grading Scale
+    </span>
+    <span class="gradeBookTool" id="isolate" onclick="isolateHighlightedStudent()">
+      Isolate Highlighted Student </span>
+    <span class="gradeBookTool" id="unisolate" onclick="showAllStudents()">
+      Show All Students
+    </span>
+    <span class="gradeBookTool" id="statsTool"><img src="/resources/images/icons/stats.png">
+      Statistics
+      <ul id="statsList" style="display: none;">
+	<li class='statChoice' onclick="histogram()"> 
+          <img src="/resources/images/icons/stats.png"> 
+          Histogram
+        </li>
+	<li class='statChoice' onclick="performance()">
+          <img src="/resources/images/icons/stats.png">
+          Performance
+        </li>
+	<li class='statChoice' onclick="timeline()">
+          <img src="/resources/images/icons/stats.png">
+          Timeline
+        </li>
+      </ul>
+    </span>
+    <span class="gradeBookTool" id="optionsTool" onclick="weights()">
+      <img src="/resources/images/icons/scale.png">
+      {% if not qlass.weights %}Assign {%endif%}Weights
+    </span>
+  </span>
+
+  <!-- gradebook content -->
+
+  <div id="gradeBookViewBody">
+    
+{# TA management #}
+
+    {% if request.user in section.qlass.professor.all() and sectionId %}
+      <div id="gradeBookTAs">
+        Assistants: 
+        {% if tas %}
+          {% for user in tas %}
+            {{user.first_name}} {{user.last_name}}
+          {% endfor%}
+        {% else %} 
+          none 
+        {% endif %} 
+        <span class="manageAssistants" onclick="manageAssistants()">manage</span>
+      </div>
+    {% endif %}
+
+{# begin actual gradebook #}
+
+    <table id="gradeBookTable" cellspacing="0" cellpadding="0">
+
+      <!-- header shows event info -->
+
+      <thead id="gradeBookHeaders">
+        <tr style="position: relative">
+          <th id="gradeBookGutterLabels">category: 
+            <br> possible points: 
+            <span id="weightLabel" {% if qlass.weights %}style="display: inline;"{% endif %}>
+              weight: 
+            </span>
+          </th>
+	  <th class="totalGradeLabel">Grades</th>
+	  {% for event in eventsSorted %}{% with %}
+	  {% set grade = gradeBook[student][event] %}
+	  {% set subCat = event.metaData.filter(key='subCategory')%}
+	  <th value="{{event.id}}" 
+              possiblePoints="{{possiblePoints[event.id]}}" class="eventLabel">
+	    <span class="eventTitle">{{event.title}}</span>
+	    <div value="{{event.id}}" contentEditable="True" class="eventCategory">
+              {% if subCat %}
+                {{subCat[0].value}}
+              {% else %}
+                {{event.category}}
+              {% endif %}
+            </div>
+	    <div value="{{event.id}}" contentEditable="True" class="eventPossiblePoints">
+              {{possiblePoints[event.id]}}
+            </div>
+	    <div class="eventWeight" {% if section.weights %}style="display: block"{%endif%}>
+              {% if section.weights %}
+                {{event.calculateWorth()}}%
+              {% endif %}
+            </div>
+	  </th>	 
+	  {% endwith %}{% endfor %}
+      </thead>
+
+      <!-- body shows individual student info -->
+
+      <tbody>
 	{% for student in gradeBook %}
 	{% with %}
-	{% set stu = student  %}
-	
-	{% if loop.first %}
-		<tr style="position: relative">
-			<th id="gradeBookGutterLabels">category: <br> possible points: <span id="weightLabel" {% if qlass.weights %}style="display: inline;"{% endif %}>weight: </span></th>
-			<th class="totalGradeLabel"> Grades </th>
-			{% for event in eventsSorted %}{% with %}
-			{% set grade = gradeBook[student][event] %}
-			{% set subCat = event.metaData.filter(key='subCategory')%}
-			<th value="{{event.id}}" possiblePoints="{{possiblePoints[event.id]}}" class="eventLabel">
-				<span class="eventTitle">{{event.title}}</span>
-				<div value="{{event.id}}" contentEditable="True" class="eventCategory">{% if subCat %}{{subCat[0].value}}{% else %}{{event.category}}{% endif %}</div>
-				<div value="{{event.id}}" contentEditable="True" class="eventPossiblePoints">{{possiblePoints[event.id]}}</div>
-				<div class="eventWeight" {% if section.weights %}style="display: block"{%endif%}>{% if section.weights %}{{event.calculateWorth()}}%{% endif %}</div>
-			</th>	 
-			{% endwith %}{% endfor %}
-	
-		</tr>
-		</thead>
-		<tbody>
-	{% endif %}
 	<tr class="gradeBookStudent">
-		<td class="studentName" value="{{student.id}}">{{student.first_name}} {{student.last_name}}</td>
-		<td class="totalGrade">
-				<span {% if totalGrade[student.id][0] != 'n/a' %} style="float: left" {% endif %}>{{totalGrade[student.id][0]}}</span>{% if totalGrade[student.id][1] %}<span style="float: right;">{{totalGrade[student.id][1]}}%</span>{% endif %}	
-		</td>
-		{% for event in eventsSorted %}
-			{% set grade = gradeBook[student].get(event) %}
-			{% set time = onTime[student][event] %}
-			{% set filez = files[student][event]%}
-			<td  class="entry {% if time %} onTime {% else %} late {% endif %}">
-                          <span contentEditable="True" style="width: 70%; float: right;">
-                            {% if grade %}
-                            {{grade.score}}
-                            {% else %}
-                            __
-                            {% endif %}
-                          </span>
-                          {% if filez %}
-                          <a title="download attached submission"
-                             href="/downloadSubmission/?event={{event.id}}&student={{student.id}}">
-                            <img {% if time %} src="/resources/images/downloadArrow.png"
-                                 {%else %} src="/resources/images/downloadArrowWhite.png" {% endif %}
-                            />
-                          </a>
-                          {% endif %}
-                          <span class="comment" {% if grade.comment %}
-                          title="{{grade.comment}}" {%endif%}>C</span>
-                        </td>	
-		{% endfor %}
+	  <td class="studentName" value="{{student.id}}">
+            {{student.first_name}} {{student.last_name}}
+          </td>
+	  <td class="totalGrade">
+	    <span {% if totalGrade[student.id][0] != 'n/a' %} style="float: left" {% endif %}>
+              {{totalGrade[student.id][0]}}
+            </span>
+            {% if totalGrade[student.id][1] %}
+            <span style="float: right;">
+              {{totalGrade[student.id][1]}}%
+            </span>
+            {% endif %}	
+	  </td>
+	  {% for event in eventsSorted %}
+	  {% set grade = gradeBook[student].get(event) %}
+	  {% set time = onTime[student][event] %}
+	  {% set filez = files[student][event]%}
+	  <td  class="entry {% if time %} onTime {% else %} late {% endif %}">
+            <span contentEditable="True" style="width: 70%; float: right;">
+              {% if grade %}
+              {{grade.score}}
+              {% else %}
+              __
+              {% endif %}
+            </span>
+            {% if filez %}
+            <a title="download attached submission"
+               href="/downloadSubmission/?event={{event.id}}&student={{student.id}}">
+              <img {% if time %} src="/resources/images/downloadArrow.png"
+                   {%else %} src="/resources/images/downloadArrowWhite.png" {% endif %} />
+            </a>
+            {% endif %}
+            <span class="comment" 
+                  {% if grade.comment %} title="{{grade.comment}}" {%endif%}>
+              C
+            </span>
+          </td>	
+	  {% endfor %}
 	</tr>	
 	{% endwith %}
-{% endfor %}
-    <tr id="averages">
-		<td id="averageLabel"> averages: </td>
-		<td id="totalAverage" class="average">{{totalAverage}}</td> 
-		{% for event in eventsSorted %}
-		    <td class="average"> &nbsp; </td> {% endfor %}
+        {% endfor %}
+        <tr id="averages">
+	  <td id="averageLabel"> averages: </td>
+	  <td id="totalAverage" class="average">{{totalAverage}}</td> 
+	  {% for event in eventsSorted %}
+	    <td class="average"> &nbsp; </td> 
+          {% endfor %}
 	</tr>
- 	</tbody>
- 	</table>
- 	
- 	
-	
-	
-	</div>
+      </tbody>
+    </table>
+  </div>
 </div>

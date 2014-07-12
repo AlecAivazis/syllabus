@@ -34,6 +34,19 @@ function userProfile(id){
     });
 }
 
+function updateInterestCourses(id){
+    $.ajax({
+        url: '/registrar/getInterestClasses/',
+        method: "GET",
+        data: {
+            id: id
+        },
+        success: function(data){
+            alert("hello");
+        }
+    });
+}
+
 function refreshUserList(){
     $.ajax({
         url:'/registrar/users/list/',

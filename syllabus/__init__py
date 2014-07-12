@@ -1,6 +1,6 @@
 # this file contains common imports among all of the views
 
-from django.shortcuts import HttpResponseRedirect, HttpResponse 
+from django.shortcuts import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 import jinja2
@@ -25,6 +25,7 @@ from datetime import date
 template_dirs = getattr(settings,'TEMPLATE_DIRS')
 default_mimetype = getattr(settings, 'DEFAULT_CONTENT_TYPE')
 env = Environment(loader=FileSystemLoader(template_dirs), extensions=['jinja2.ext.with_','jinja2.ext.do', CompressorExtension])
+
 env.globals['perms']=settings.PERMS
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
@@ -44,7 +45,6 @@ dayDict = {
     '6':'Sat',
     '7':'Sun'
 }
-
 
 def render_to_response(filename, context={}):
     template = env.get_template(filename)

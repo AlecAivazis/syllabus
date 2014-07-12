@@ -1,5 +1,7 @@
 from django.db import models
 
+import datetime
+
 Book = 'classroom.Book'
 User = 'core.SyllUser'
 Section = 'classroom.Section'
@@ -44,7 +46,7 @@ class Interest(models.Model):
     def __unicode__(self):
         return self.__str__() 
     
-    # should add like a string
+    # should add to a string
     def __add__(self, other):
         if isinstance(other, str):
             return self.abbrv + other
@@ -130,6 +132,16 @@ class MajorExemption(models.Model):
 # Registration
 # -----------------------------
     
+  
+class TermQuerySet(models.QuerySet):
+    """ manage the django Term api """
+
+    def getCurrentTerm(self):
+        """ return the current term based on todays date """
+        # grab the current date
+        today = datetime.date.today()
+        return self.filter(start__lte = today).order_by('-start')[0]
+
 # a term groups classes taken simulatenously for a given time period
 class Term(models.Model):
     name = models.CharField(max_length=50)
@@ -138,7 +150,14 @@ class Term(models.Model):
     
     # default string behavior is {name} - {start.year}
     def __unicode__(self):
+        return getTitle()
+    
+    def getTitle(self):
+        """ return the title of the term """
         return  self.name + ' - ' + str(self.start.year)
+
+    # set the object manager
+    objects = TermQuerySet.as_manager()
 
 # the preRequesite class for a certain class
 class PreRequisite(models.Model):
