@@ -75,6 +75,10 @@ class SyllUser(AbstractUser):
     unitsTransfered = models.IntegerField(null=True)
     wishList = models.ManyToManyField(ClassProfile, through=WishList)
 
+    def getName(self):
+        """ return the full name of the user """
+        return self.first_name + ' ' + self.last_name
+
     # calculate how many units this user has completed
     def unitsCompleted(self):
         units = 0

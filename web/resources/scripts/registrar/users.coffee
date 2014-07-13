@@ -2,6 +2,11 @@
 
 $(document).ready ->
 
+  # run dataTable on the user list to make sortable
+  $('#usersTable').dataTable
+    aaSorting: [[ 1, "asc" ]]
+    sDom: '<"userTableToolBar">frtip'
+
   # add watermarks to filters
   $('#name').watermark 'Enter Name...'
   $('#perm').watermark 'Enter Perm Number...'
@@ -23,6 +28,7 @@ userProfile = (id) ->
       id: id
     success: (data) ->
       overlay(data)
+
 
 # update the courses of an interest
 updateInterestCourses = (id) ->

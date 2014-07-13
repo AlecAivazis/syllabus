@@ -1,0 +1,76 @@
+#userProfile
+  #userName
+   {{user.getName()}}
+  #userContent  
+    span#userInfo
+      .line
+        span.label
+          | Username
+        {{user.username}}
+      .line
+        span.label
+          | Email
+        {{user.email}}
+      .line
+        span.label
+          | Role
+
+    span#userData
+      #userExemptions
+        .line.title
+          Major Requirement Exemptions
+
+        // show the exemptions that are already in place
+        -for exemption in exemptions
+          div.line.exemption(id="exemption{{exemption.id}}" )
+            | Replace
+            select
+              option(value="0")
+                 | Required Course
+              -for course in courses
+                option (selected="if {{course[0].id}} == {{exemption.profile.id}}", )
+                  {{course[0].interest.abbrv}} {{course[0].number}}
+            | with
+            select( onchange="updateCourseNumbers({{exemption.id}})", )
+              option(value="0")
+                none
+              -for interest in interests
+                option ( value="{{interest.id}}", )
+                  {{interest.abbrv}}
+
+            select.courseNumbers
+              -for course in exemption.getReplacement().interest.courses.all() 
+                option
+                  {{course.number}}
+
+        // line to add new exemption
+        div.line.exemption
+          | Replace
+          select
+            option(value="0") 
+              Required Course
+            -for course in courses
+              option
+                {{course[0].interest.abbrv}} {{course[0].number}}
+
+          |  with
+          select(onchange="updateInterestClasses()")
+            option(selected)
+              none
+            -for interest in interests
+              option(onclick="updateInterestCourses({{interest.id}})", value="{{interest.id}}")
+                {{interest.abbrv}}
+          select.exemptionNumber
+            option
+              | select one
+      .line
+      #addCodes
+        .line.title
+          Outstanding Registration Passes
+        -for pass in passes
+          .line.registrationPass
+            {{pass.profile}}
+
+  #profileToolbar
+    span#submitForm 
+      | submit

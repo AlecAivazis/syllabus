@@ -60,7 +60,7 @@ def userProfile(request):
 
     interests = Interest.objects.all()
 
-    return render_to_response('registrar/users/userProfile.html', locals())
+    return render_to_response('registrar/users/userProfile.jade', locals())
 
 
 def addExemption(request):
