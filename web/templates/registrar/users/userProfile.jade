@@ -48,7 +48,7 @@
           | Replace
           select
             option(value="0") 
-              Required Course
+              | Required Course
             -for course in courses
               option
                 {{course[0].interest.abbrv}} {{course[0].number}}
@@ -56,17 +56,17 @@
           |  with
           select(onchange="updateInterestClasses()")
             option(selected)
-              none
+              | none
             -for interest in interests
               option(onclick="updateInterestCourses({{interest.id}})", value="{{interest.id}}")
                 {{interest.abbrv}}
           select.exemptionNumber
             option
-              | select one
+              | select an interest
       .line
       #addCodes
         .line.title
-          Outstanding Registration Passes
+          | Outstanding Registration Passes
         -for pass in passes
           .line.registrationPass
             {{pass.profile}}

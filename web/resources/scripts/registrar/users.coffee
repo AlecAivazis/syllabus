@@ -37,7 +37,7 @@ updateInterestCourses = (id) ->
     data:
       id: id
     success: (data) ->
-      alert 'hello'
+      console.log data
 
 
 # refresh the user list off of the database
