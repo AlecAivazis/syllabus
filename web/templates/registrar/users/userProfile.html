@@ -26,14 +26,17 @@
           <select>
             <option value=0>Required Course </option>
             {% for course in courses %}
-            <option {% if course[0].id == exemption.profile.id  %} selected {% endif %}> {{course[0].interest.abbrv}} {{course[0].number}} </option>
+            <option {% if course[0].id == exemption.profile.id  %} selected {% endif %}>
+              {{course[0].interest.abbrv}} {{course[0].number}} 
+            </option>
             {% endfor %}
           </select>
           with 
           <select onchange="updateCourseNumbers({{exemption.id}})">
             <option value=0 > none </option>
             {%for interest in interests%}
-            <option {%if interest.id == exemption.getReplacement().interest.id %}selected{% endif %} value={{interest.id}}>
+            <option {%if interest.id == exemption.getReplacement().interest.id %}selected{% endif %} 
+                    value={{interest.id}}>
               {{interest.abbrv}}
             </option>
             {%endfor%}

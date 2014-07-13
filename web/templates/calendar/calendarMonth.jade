@@ -28,7 +28,7 @@
           -for day in week
             td.calendarDay( id="{{day}}", onclick="selectDay('{{day}}')", valign="top" 
                             ondrop="eventDropMoveEvent(this, event)",
-                            ondragover="event.preventDefault()")
+                            ondragover="event.preventDefault()" )
               .calendarDayStatus: {{day.day}}
               .calendarDayBody
                 -for event in eventDict[day.__str__()]
