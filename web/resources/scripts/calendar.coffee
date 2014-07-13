@@ -10,11 +10,8 @@ selectDay = (date) ->
 
 # when the event drag begins save the id and type to the DOM event
 eventDrag = (target, event) ->
-  console.log 'drag start'
-
   # extract the type and pk from the element id
   info = target.id.split ':'
-
   # save the data to the DOM event
   event.dataTransfer.setData 'id', info[1]
   event.dataTransfer.setData 'type', info[0]
@@ -22,7 +19,6 @@ eventDrag = (target, event) ->
 
 # when an events is dropped on a particular date
 eventDropMoveEvent = (target, event) ->
-  console.log 'drag end (drop)'
   # grab the target date
   date = $(target).attr 'id'
   # save the event type
@@ -46,11 +42,8 @@ eventDropMoveEvent = (target, event) ->
         when 'group' then targetElement = $(target).find('.calendarDayLabel')
         when 'term' then targetElement = $(target).find('.calendarDayLabel')
 
-      # construct the id of the moved element
-      sourceId = type + ':' + id
-
       # add the event to the target element
-      $(targetElement).append($('#' + sourceId));
+      $('#' + type + '\\:' + id).remove().appendTo(targetElement)
 
 
 # remove the event from the database and then the UI

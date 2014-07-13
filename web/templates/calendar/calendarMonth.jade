@@ -26,10 +26,10 @@
         tr
           // - var dayClass = ( {{day}} === {{intMonth}} ? 'calendarDay' : 'calendarDay other' )
           -for day in week
-            td.calendarDay( id="{{day}}", ondragenter="return false", onclick="selectDay('{{day}}')",
-                            ondrop="eventDropMoveEvent(this, event)", valign="top" )
+            td.calendarDay( id="{{day}}", onclick="selectDay('{{day}}')", valign="top" 
+                            ondrop="eventDropMoveEvent(this, event)",
+                            ondragover="event.preventDefault()")
               .calendarDayStatus: {{day.day}}
-              // use {type:pk} as id for these elements
               .calendarDayBody
                 -for event in eventDict[day.__str__()]
                   div( id="event:{{event.id}}" title="{% include '/calendar/eventTooltip.html' %}", 
