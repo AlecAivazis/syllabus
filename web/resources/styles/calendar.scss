@@ -2,10 +2,15 @@
 @import "base";
 
 #calendar {
-  margin: 125px 20px;
-  margin-bottom: 0;
-  position: relative;
   background: white;
+  position: absolute; 
+  top: 125px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  table {
+    height: 95%;
+  } 
 }
 
 .calendarMonth {
@@ -23,7 +28,7 @@
   text-decoration: bold;
   font-family: 'Arial';
   font-size: 16pt;
-  height: 35px;
+  height: 5%;
 }
 
 .calendarDayStatus {

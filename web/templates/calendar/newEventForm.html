@@ -51,9 +51,9 @@
         <div id="selectSection">
         <div style="float: left;">
             <select id="classId" name="classId" onChange="loadSections()">
-                <option onclick="loadSectionByClassId('0');">Choose a Class</option>
+                <option onclick="loadSectionsByClassId('0');">Choose a Class</option>
                 {% for class in classes %}
-                <option onclick="loadSectionByClassId({{class.id}});" value="{{class.id}}">{{class.profile.interest}} {{class.profile.number}}</option>
+                <option onclick="loadSectionsByClassId({{class.id}});" value="{{class.id}}">{{class.profile.interest}} {{class.profile.number}}</option>
                 {% endfor %}
                 
             </select>

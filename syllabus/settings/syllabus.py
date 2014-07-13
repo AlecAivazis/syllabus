@@ -41,6 +41,7 @@ COMPRESS_URL = '/static/'
 
 COMPRESS_PRECOMPILERS =(
     ('text/scss', 'sass {infile} > {outfile}'),
+    ('text/coffeescript', 'coffee --compile --bare --stdio'),
 )
 
 COMPRESS_JS_COMPRESSOR = 'compressor.js.JsCompressor'

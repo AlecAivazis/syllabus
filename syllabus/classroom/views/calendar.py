@@ -133,69 +133,77 @@ def editEvent(request):
 
 def moveEvent(request):
     
+    # grab the POST data
     id = request.POST['id']
     targetDate = request.POST['date']
+    type = request.POST['type']
 
-    
+    # parse the date string
     year= targetDate.split('-')[0]
     month = targetDate.split('-')[1]
     day = targetDate.split('-')[2]
-    
-    event = Event.objects.get(id=int(id))
-    if event:
-        if Class.objects.filter(events=event).filter(professor = request.user):
+
+    # if they asked to move an event
+    if type == 'event':
+        # grab the appropriate event
+        event = Event.objects.get(pk=int(id))
+        # if it exists
+        if event:
+            # permission:
+            # if Class.objects.filter(events=event).filter(professor = request.user):
+            
+            # change its date
             event.date = date(int(year), int(month), int(day))
+            # save the change
             event.save()
+            # report the success
             return HttpResponse('success')
-        else:
-            return HttpResponse('You do not have permission to move this event')
-    else:
-        return HttpResponse('Event could not be found')
 
-def moveLabel(request):
-    
-    id = request.POST['id']
-    targetDate = request.POST['date']
+    if type == 'term':
+        # terms have special rules about their id to determine the bound that was moved
+        # id = info[0]
+        # which = info[1]
+        info = id.split('|')
 
-    
-    year= targetDate.split('-')[0]
-    month = targetDate.split('-')[1]
-    day = targetDate.split('-')[2]
-    
-    if request.POST['type'] == 'group':
-        group = RegistrationGroup.objects.get(id=int(id))
-        if group:
-        
-            which = request.POST['which']
-
-            if which == 'start':
-                group.start = date(int(year), int(month), int(day))
-            else:
-                group.end =  date(int(year), int(month), int(day))
-
-            group.save()
-            
-            return HttpResponse('success')
-        else:
-            return HttpResponse('Group could not be found')
-
-    elif request.POST['type'] == 'term':
-        term = Term.objects.get(id=int(id))
+        # grab the approprirate group
+        term = Term.objects.get(pk=int(info[0]))
+        # if it exists
         if term:
-        
-            which = request.POST['which']
-
-            if which == 'start':
+            # if they asked for the starting date
+            if info[1] == 'start':
+                # change the startng date
                 term.start = date(int(year), int(month), int(day))
+            # otherwise
             else:
+                # change the ending date
                 term.end =  date(int(year), int(month), int(day))
-
+            # save the changes
             term.save()
-            
-            return HttpResponse('success')
-        else:
-            return HttpResponse('Term could not be found')
+            # report a success
+            return HttpResponse('success')  
 
+    if type == 'group':
+        # groups have special rules about their id to determine the bound that was moved
+        # id = info[0]
+        # which = info[1]
+        info = id.split('|')
+
+        # grab the approprirate group
+        group = RegistrationGroup.objects.get(pk=int(info[0]))
+        # if it exists
+        if group:
+            # if they asked for the starting date
+            if info[1] == 'start':
+                # change the starting date
+                group.start = date(int(year), int(month), int(day))
+            # otherwise
+            else:
+                # change the ending date
+                group.end =  date(int(year), int(month), int(day))
+            # save the changes
+            group.save()
+            # report a success
+            return HttpResponse('success')       
 
 def deleteEvent(request):
     

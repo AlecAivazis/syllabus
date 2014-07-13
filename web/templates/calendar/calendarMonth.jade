@@ -1,15 +1,14 @@
-// this file is a jade template for the calendar view
-// author: alec aivazis
+// this is the syllabus calendar month view implemented as a jade template
 
 #calendar( class="calendarMonth" which="{{which}}", number="{{number}}", year="{{year}}", )
 
   // calendar title and selector
   #calendarTitle
     span#prevMonthSelector
-      img( src="/resources/images/calendar/prevArrow.png" )
+      img( src="/resources/images/calendar/prevArrow.png" , onclick="loadPrevCalendar()")
     {{monthName}} {{year}}
     span#nextMonthSelector
-      img( src="/resources/images/calendar/nextArrow.png" )
+      img( src="/resources/images/calendar/nextArrow.png" , onclick="loadNextCalendar()")
 
   // calendar table
   table( cellpadding="0px", cellspacing="0px", width="100%", height="80%" )
@@ -28,19 +27,19 @@
           // - var dayClass = ( {{day}} === {{intMonth}} ? 'calendarDay' : 'calendarDay other' )
           -for day in week
             td.calendarDay( id="{{day}}", ondragenter="return false", onclick="selectDay('{{day}}')",
-                            ondrop="eventDropMoveEvent(this, event)", valign="top")
-              .calendarDayStatus 
-                {{day.day}}
+                            ondrop="eventDropMoveEvent(this, event)", valign="top" )
+              .calendarDayStatus: {{day.day}}
+              // use {type:pk} as id for these elements
               .calendarDayBody
                 -for event in eventDict[day.__str__()]
-                  div( id="{{event.id}}" title="{% include '/calendar/eventTooltip.html' %}", 
+                  div( id="event:{{event.id}}" title="{% include '/calendar/eventTooltip.html' %}", 
                       class="calendarEvent {{event.category}} tooltip", draggable="true", 
                       ondragstart="eventDrag(this,event)" )
                     {{event.title}}
               .calendarDayLabel
                 -if day in groups
                   -for group in groups[day]
-                    p group {{group}} here
+                    p(id="group:{{group[0]}}|{{group[1]}}") group {{group}} here
                 -if day in termDates
                   -for term in termDates[day]
-                    p term {{term}} here
+                    p(id="term:{{term[0]}}|{{term[1]}}") term {{term}} here

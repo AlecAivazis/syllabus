@@ -1,6 +1,5 @@
-# These scrips handle the user interface for the calendar view that displays the current users
+# These scripts handle the user interface for the calendar and displays the current users
 # events (homework, lectures, meetings, etc.)
-# author: alec aivazis
 
 
 # when a day is selected add the appropriate class
@@ -12,595 +11,452 @@ selectDay = (date) ->
 # when the event drag begins save the id and type to the DOM event
 eventDrag = (target, event) ->
   console.log 'drag start'
-  # save the id
-  id = target.id
-  event.dataTransfer.setData 'id', id
 
-  # the default type is event
-  type = 'event'
-  # see if it is a label for a student group
-  if id.split('label')[1]
-    type = 'label'
-    event.dataTransfer.setData 'id', id.split
-  # do the same with term 
-  else if id.split('term')[1]
-    type = 'term'
-  # save it to the DOM event
-  event.dataTransfer.setData 'type', type
-  
-                id: term[1].split('-')[0],
-                which: term[1].split('-')[1],
+  # extract the type and pk from the element id
+  info = target.id.split ':'
+
+  # save the data to the DOM event
+  event.dataTransfer.setData 'id', info[1]
+  event.dataTransfer.setData 'type', info[0]
 
 
 # when an events is dropped on a particular date
 eventDropMoveEvent = (target, event) ->
   console.log 'drag end (drop)'
+  # grab the target date
+  date = $(target).attr 'id'
+  # save the event type
+  type = event.dataTransfer.getData 'type'
+  # save the id of the event
+  id = event.dataTransfer.getData 'id'
+
   # make the ajax request
   $.ajax
-    url: '/calendar/move/'
+    url: '/calendar/moveEvent/'
     type: 'POST'
     data:
-      id: 
+      date: date
+      id: id
+      type: type
+    # if it succeeds
+    success: (data) ->
+      # grab the appropriate spot in the target container
+      switch type
+        when 'event' then targetElement = $(target).find('.calendarDayBody')
+        when 'group' then targetElement = $(target).find('.calendarDayLabel')
+        when 'term' then targetElement = $(target).find('.calendarDayLabel')
+
+      # construct the id of the moved element
+      sourceId = type + ':' + id
+
+      # add the event to the target element
+      $(targetElement).append($('#' + sourceId));
+
+
+# remove the event from the database and then the UI
+deleteEvent = (id) ->
+  if confirm 'Are you sure you want to delete this event?'
+    $.ajax
+      url: '/calendar/deleteEvent/'
+      type: 'POST'
+      data:
+        id: id
+      success: (data) ->
+        which = $('#calendar').attr 'which'
+        number = $('#calendar').attr 'number'
+        year = $('#calendar').attr 'year'
+
+        loadCalendar which, year, number
+
+        $('#' + id).remove()
+
+
+# pull up the edit event form
+editEvent = (id) ->
+  $.ajax
+    url: '/calendar/editEventForm/'
+    data:
+      id: id
+    success: (data) ->
+      overlay data
+
+
+# validate the event form
+validateEventForm = (id) ->
+  submitEventForm id
+
+
+# submit the event form
+submitEventForm = (id) ->
+  # send the request to the server
+  $.ajax
+    url: '/calendar/editEvent/'
+  	type: 'POST'
+  	data:
+      id: id
+      title: $('#editEventTitle').val()
+      date: $('#editEventDate').val()
+      time: $('#editEventTime').val()
+      possiblePoints: $('#possiblePoints').val()
+      associatedReading: $('#associatedReading').val()
+      description: $('#editEventDescription').val()
+    success: (data) ->
+      refreshCalendar()
+      closeOverlay()
+
+
+# switch views 
+loadView = (which) ->
+  loadCalendar which, $('calendar').attr 'year', $('#calendar').attr 'number'
+
+
+# load a specific calendar from the
+loadCalendar = (which, year, number) ->
+  $.ajax
+    url: '/calendar/ajax/'
+    data:
+      which: which
+      year: year
+      number: number
+    success: (data) ->
+      # load the new calendar
+      $('#calendar').replaceWith data
+      # create the tooltips
+      $('.tooltip').tooltipster
+        interactive: true
+        theme: 'eventTooltip'
 
   
-function eventDropMoveEvent(target, event){
-    var label = event.dataTransfer.getData('id').split('label');
-    var term = event.dataTransfer.getData('id').split('term');
-    var date = $(target).attr('id');
-
-    if (label[1]){
-        
-	$.ajax({
-	    url: '/calendar/moveLabel/',
-	    type: 'POST',
-	    data:{ 
-                id: label[1].split('-')[0],
-                which: label[1].split('-')[1],
-                date: date,
-                type: 'group'
-            },
-	    success: function(data) {
-	        $(target).find('.calendarDayLabel').append($('#'+ event.dataTransfer.getData('id')));
-                
-            }
-        });
-    } else if(term[1]) {
-        $.ajax({
-	    url: '/calendar/moveLabel/',
-	    type: 'POST',
-	    data:{ 
-                id: term[1].split('-')[0],
-                which: term[1].split('-')[1],
-                date: date,
-                type: 'term'
-            },
-	    success: function(data) {
-	        $(target).find('.calendarDayLabel').append($('#'+ event.dataTransfer.getData('id')));
-                
-            }
-        });
-    } else {
-        
-        var id =  event.dataTransfer.getData('id');
-
-	$.ajax({
-	    url: '/calendar/moveEvent/',
-	    type: 'POST',
-	    data:{ 
-                id: id,
-                date: date
-            }, 
-	    success: function(data) {
-	        $(target).find('.calendarDayBody').append($('#' + id));
-	        $(target).find('.calendarWeekEvents').append($('#' + id));
-            }
-        });	
-    }
-    
-    event.preventDefault();
-}
-
-function eventDropDeleteEvent(target, event){
-    var id = event.dataTransfer.getData('id');
-    deleteEvent(id);
-    event.preventDefault();
-}
-
-function deleteEvent (id){
-
-    if (confirm('Are you sure you want to delete this event?')){
-	$.ajax({
-	    url: '/calendar/deleteEvent/',
-	    type: 'POST',
-	    data: 'id=' +id,
-	    success: function(data) {
-		var which = $('#calendar').attr('which');
-		var number = $('#calendar').attr('number');
-		var year = $('#calendar').attr('year');
-		
-		
-		loadCalendar(which, year, number);
-		$('#' + id).remove();
-	    }
-	});	
-    }
-}
-
-function editEvent(id){
-    
-    $.ajax({
-	url: '/calendar/editEventForm/',
-	data: 'id=' + id,
-	success: function(data) {
-	    overlay(data);
-	}
-    });
-}
-
-function submitEditEventForm(id){
-    
-    var dataString = "";
-    
-    var title = $('#editEventTitle').val();
-    if (title != ""){
-	dataString += "title=" + title;
-    } else {
-	$('#id_title').focus();
-	return;
-    }
-    
-    
-    var category = $('#editEventCategory').val();
-    if (category !=""){
-	dataString += "&category=" + category;
-    }else {
-	$('#id_category').focus();
-	return;
-    }
-    
-    var date = $('#editEventDate').val();
-    if (date !=""){
-	dataString += "&date=" + date;
-    }
-    
-    var time = $('#editEventTime').val();
-    if (time !=""){
-	dataString += "&time=" + time;
-    }
-    
-    if ($('#possiblePoints').length > 0){
-	var possiblePoints = $('#possiblePoints').val();
-	dataString += "&possiblePoints=" + possiblePoints;
-    }
-    
-    if ($('#associatedReading').length > 0){
-	var associatedReading = $('#associatedReading').val();
-	dataString += "&associatedReading=" + associatedReading;
-    }
-    
-    var description = $('#editEventDescription').val();
-    dataString += "&description=" + description;
-    
-    $.ajax({
-	url: "/calendar/editEvent/",
-	type: "POST",
-	async: false,
-	data: dataString + "&id=" + id,
-	success: function(data) {
-	    
-	    var which = $('#calendar').attr('which');
-	    var number = $('#calendar').attr('number');
-	    var year = $('#calendar').attr('year');
-	    
-	    closeOverlay();
-	    loadCalendar(which, year, number);
-    	}
-    });
-}
-
-function loadView(which){
-    loadCalendar(which, $('#calendar').attr('year'), $('#calendar').attr('number'));
-}
-
-function loadCalendar(which, year, number){
-    $.ajax({
-	url: '/calendar/ajax/',
-	async: false,
-	data: 'which=' + which + "&year=" + year + '&number=' + number,
-	success: function(data) {
-	    // save the currently selected day
-            var id = $('.selectedDay').attr('id');
-            // update the calendar
-            $("#calendar").replaceWith(data);
-            // create the tooltips
-            $('.tooltip').tooltipster({
-                interactive: true,
-                theme: 'eventTooltip'             
-            });
-    	}
-    });
-}
-
-function refreshCalendar(){
-    var which = $('#calendar').attr('which');
-    var year = $('#calendar').attr('year');
-    var number = $('#calendar').attr('number');
-    
-    loadCalendar(which, year, number);
-}
-
-function loadPrevCalendar(){
-    var which = $('#calendar').attr('which');
-    var number = $('#calendar').attr('number');
-    var year = $('#calendar').attr('year');	
-    
-    if (which == 'month'){
-	if (parseInt(number) == 1){
-	    newYear = parseInt(year) - 1
-	    if (which == "month"){
-		loadCalendar(which, newYear, 12);
-	    }
-	}
-	else {
-	    newNumber = parseInt(number) - 1;
-	    if (which == "month"){
-		loadCalendar(which, year, newNumber);
-	    }
-	}
-    } else {
-	if (which == 'week'){
-	    if (number > 1){
-		var numberNew = parseInt(number) - 1;	
-		loadCalendar(which, year, numberNew);
-	    } else {
-		var numberNew = 52;
-		var yearNew = parseInt(year) - 1;
-		loadCalendar(which, yearNew, numberNew);
-	    }
-	}
-    }
-}
-
-function loadNextCalendar(){
-    var which = $('#calendar').attr('which');
-    var number = $('#calendar').attr('number');
-    var year = $('#calendar').attr('year');	
-    
-    if (which == 'month'){
-	if (parseInt(number) == 12){
-	    newYear = parseInt(year) + 1
-	    if (which == "month"){
-		loadCalendar(which, newYear, 1);
-	    }
-	}
-	else {
-	    newNumber = parseInt(number) + 1;
-	    if (which == "month"){
-		loadCalendar(which, year, newNumber);
-	    }
-	}
-    } else {
-	if (which = 'week'){
-	    var numberNew = parseInt(number) + 1;	
-	    loadCalendar(which, year, numberNew);
-	}
-    }
-}
-
-function loadTodayCalendar(){
-    var which = $('#calendar').attr('which');
-    var number = $('#calendar').attr('todaynumber');
-    var year = $('#calendar').attr('todayyear');
-    
-    loadCalendar(which, year, number);
-}
-
-function deleteEventFromButtonClick(){
-    deleteEvent($('.selectedSidebarEvent').attr('id').substring(12));
-}
-
-function newEvent(category){
-    var date = $('.selectedDay').attr('id');
-    if (date != undefined){
-	$.ajax({
-	    data: {
-		date: date,
-		category: category
-	    },
-	    url: '/calendar/newEventForm/',
-	    success: function(data) {
-		overlay(data);
-	    }
-	});
-    } else{
-	alert('Please select a day');
-    }
-}
-
-function selectSidebarEvent(id){
-    $('.selectedSidebarEvent').removeClass('selectedSidebarEvent');
-    $('#sidebarEvent' + id).addClass('selectedSidebarEvent');
-}
-
-function loadSections(){
-    loadSectionByClassId($('#classId').find(':selected').attr('value'));
-}
-
-function closeEventForm(year, month, day){
-    var which = $('#calendar').attr('which');
-    var number = $('#calendar').attr('number');
-    var year = $('#calendar').attr('year');
-    var date = "" + year + "-" + month + "-" + day;
-    closeOverlay();
-    loadCalendar(which, year, number);
-}
-
-function removeFileUpload(self, id){
-    var fileName = $(self).parent().children().eq(0).html();
-    $(self).parent().empty().append($('<span/>').addClass('deletedFile').html('removed ' + fileName));
-    $('[name="deletedFiles"]').attr('value', $('[name="deletedFiles"]').attr('value') + id + ',');
-}
-
-function loadSectionByClassId(id){
-    if (id >0){
-	$.ajax({
-	    url: '/calendar/getSectionsById/',
-	    data: 'id=' + id,
-	    success: function(data) {
-		
-		$('#newEventFormSectionChoice').empty().prepend(data);
-	    }
-	    
-	});
-    } else {
-	$('#newEventFormSectionChoice').empty();
-    }
-}
-
-function selectView(which){
-    
-    var selectedDayId = $('.selectedDay').attr('id');
-    var calWhich = $('#calendar').attr('which');
-    
-    // did they select a day?
-    if (selectedDayId){
-	
-	if (which == 'month'){
-	    if (calWhich == 'month'){
-		return;
-		
-	    } else {
-		if (calWhich == 'week'){
-		    var year = $('#calendar').attr('year');
-		    var number = selectedDayId.split('-')[1];
-		    
-		    loadCalendar(which, year, number);
-		}	
-	    }
-	} else {
-	    if (which == 'week'){
-		
-		if (calWhich == 'week'){
-		    return;
-		} else{
-		    if (calWhich == 'month'){
-			var year = $('#calendar').attr('year');
-			var number = getWeekNumber($('#' + selectedDayId).attr('id'));
-			
-			loadCalendar(which, year, number);
-		    }
-		}
-		
-		
-	    }
-	}
-    } else{
-	if (which == 'month'){
-	    if (calWhich == 'month'){
-		return;
-	    } else {
-		if (calWhich == 'week'){
-		    var year = $('#calendar').attr('year');
-		    var number = $('#calendar').find('.calendarWeekDay').eq(4).attr('id').split('-')[1]
-		    
-		    loadCalendar(which, year, number);
-		}
-	    } 
-	}else{
-	    if (which == 'week'){
-		if (calWhich == 'week'){
-		    return;
-		} else {
-		    if (calWhich == 'month'){
-			var year = $('#calendar').attr('year');
-			var number = getWeekNumber($('#calendar').find('.calendarDay').eq(3).attr('id'));
-			
-			loadCalendar(which, year, number);
-		    }
-		}
-	    }
-	}
-    }
-}
-
-function getWeekNumber(date) {
-    
-    var d = new Date(date);
-    
-    var day = d.getDay();
-    if(day == 0) day = 7;
-    d.setDate(d.getDate() + (4 - day));
-    var year = d.getFullYear();
-    var ZBDoCY = Math.floor((d.getTime() - new Date(year, 0, 1, -6)) / 86400000);
-    return 1 + Math.floor(ZBDoCY / 7);
-}
+# reload the calendar with the current values (ie refresh)
+refreshCalendar = () ->
+  # grab the current date values off of the calendar
+  which = $('#calendar').attr 'which'
+  number = $('#calendar').attr 'number'
+  year = $('#calendar').attr 'year'
+  # reload the calendar
+  loadCalendar which, year, number
 
 
-function viewEventInfo(id){
-    $.ajax({
-	url: '/viewEvent/?id=' + id,
-	success: function(data){
-	    overlay(data);
-	}
-    });
-}
+# load the previous calendar for either view
+loadPrevCalendar = () ->
+  # grab the current date values off of the calendar
+  which = $('#calendar').attr 'which'
+  number = $('#calendar').attr 'number'
+  year = $('#calendar').attr 'year'
 
-function startTerm(){
-    var date = $('.selectedDay').eq(0).attr('id')
-    if (date) {
-        $.ajax({
-            url: '/calendar/newTermStart/',
-            data: {
-                date : date 
-            }, 
-            success: function (data) {
-                overlay(data);
-            } 
+  # the meaning of prev depends on the type of calendar
+  switch which
+    when 'month'
+      # if the current month is january
+      if parseInt(number) == 1
+        # load the december calendar of the previous year
+        loadCalendar which, parseInt(year) - 1, 12
+      # current month is not january (safe to subtract one)
+      else
+        # load the previous calendar
+        loadCalendar which, year, parseInt(number) - 1
+    when 'week'
+      # if we're at the first week of the year
+      if number <= 1
+        # load the last week of the previous year
+        loadCalendar which, parseInt(year) - 1, 52 
+      # we're not at the beginning of the year
+      else
+        # load the previous calendar
+        loadCalendar which, year, parseInt(number) - 1
+  
+# load the next calendar
+loadNextCalendar = () ->
+  # grab the current date values off of the calendar
+  which = $('#calendar').attr 'which'
+  number = $('#calendar').attr 'number'
+  year = $('#calendar').attr 'year'
 
-        });
-    } else {
-        alert('please select a day to start the term on');
-    }
-}
-
-function endTerm(){
-    var date = $('.selectedDay').eq(0).attr('id')
-    if (date) {
-        $.ajax({
-            url: '/calendar/newTermEnd/',
-            data: {
-                date : date 
-            }, 
-            success: function (data) {
-                overlay(data);
-            } 
-
-        });
-    } else {
-        alert('please select a day to startend the term on');
-    }
-}
-
-function createTermEnd(date){
-    $.ajax({
-        url: '/calendar/createTermEnd/',
-        type: 'POST',
-        data: {
-            date: date,
-            id: $('#term').val()
-        },
-        success: function(data){
-            refreshCalendar();
-            closeOverlay();
-        }
-    });
-}
-
-function createTerm(date){
-    $.ajax({
-        url: '/calendar/createTerm/',
-        type: 'POST',
-        data: {
-            date: date,
-            name: $('#name').val()
-        },
-        success: function(data){
-            refreshCalendar();
-            closeOverlay();
-        }
-    });
-}
-
-function startRegistration(){
-    var date = $('.selectedDay').eq(0).attr('id')
-
-    if (date){
-        $.ajax({
-            url: '/calendar/startRegistration/',
-            data: {
-                date: date
-            },
-            success: function(data){
-                overlay(data);
-            }
-        });
-        
-    } else {
-        alert('Please select a day to start registration on');
-    }
-}
-
-function endRegistration(){
-    var date = $('.selectedDay').eq(0).attr('id')
-
-    if (date){
-        $.ajax({
-            url: '/calendar/endRegistrationForm/',
-            data: {
-                date: date
-            },
-            success: function(data){
-                overlay(data);
-            }
-        });
-        
-    } else {
-        alert('Please select a day to start registration on');
-    }
-}
-
-function createRegistration(date){
-    $.ajax({
-        url: '/calendar/createRegistration/',
-        data: {
-            date: date,
-            name : $('#name').val(),
-            term : $('#term').val()
-        },
-        type: 'POST',
-        success: function(data){
-            refreshCalendar();
-            closeOverlay();
-        }
-    });
-}
-
-function setEndRegistration(date){
-    $.ajax({
-        url: '/calendar/endRegistration/',
-        data: {
-            date: date,
-            id : $('#id').val(),
-            term : $('#term').val()
-        },
-        type: 'POST',
-        success: function(data){
-            refreshCalendar();
-            closeOverlay();
-        }
-    });
-}
+  # the meaning of prev depends on the type of calendar
+  switch which
+    when 'month'
+      # if the current month is december
+      if parseInt(number) == 12
+        # load the january calendar of the next year
+        loadCalendar which, parseInt(year) + 1, 1
+      # current month is not december (safe to add one)
+      else
+        # load the next calendar
+        loadCalendar which, year, parseInt(number) + 1
+    when 'week'
+      # if we're at the last week of the year
+      if number == 52
+        # load the last week of the previous year
+        loadCalendar which, parseInt(year) + 1, 1
+      # we're not at the beginning of the year
+      else
+        # load the previous calendar
+        loadCalendar which, year, parseInt(number) + 1
 
 
-$(document).ready(function(){
-    var which = $('#calendar').attr('which');
-    var number = $('#calendar').attr('number');
-    var year = $('#calendar').attr('year');
-    
-    loadCalendar(which, year, number);
-    
-    $(document).on('click', '#prevMonthSelector', function () {
-        loadPrevCalendar();
-    });
+# load todays calendar
+loadTodayCalendar = () ->
+  # grab todays data from the calendar 
+  which = $('#calendar').attr 'which'
+  number = $('#calendar').attr 'todaynumber'
+  year = $('#calendar').attr 'todayyear'
+  # load the appropriate calendar
+  loadCalendar which, year, number
+  
 
-    $(document).on('click', '#nextMonthSelector', function () {
-        loadNextCalendar();
-    });
+# bring up the new event form
+newEvent = (category) ->
+  date = $('.selectedDay').attr 'id'
+  # if it had a valid id
+  if date?
+    # make the ajax request
+    $.ajax
+      url: '/calendar/newEventForm/'
+      data:
+        date: date
+        category: category
+      success: (data) ->
+        overlay data
+  else
+    alert 'please select a day'
 
-    $(document).on('click', '#todayMonthSelector', function () {
-        loadTodayCalendar();
-    });
-    
-    setInterval( "refreshCalendar()", 300000 );
-    
-});
+
+# load the sections of a class for the new event form
+loadSectionsByClassId = (id) ->
+  # if the id is zero
+  if id == 0
+    # clear the ui element
+    $('#newEventFormSectionChoice').empty()
+  # if the id is non zero
+  else
+    # load the sections of the class into the ui element
+    $.ajax
+      url: '/calendar/getSectionsById/'
+      data:
+        id: id
+      success: (data) ->
+        $('#newEventFormSectionChoice').empty().prepend data
+      
+
+# load the sections of the selected class
+loadSections = () ->
+  loadSectionByClassId $('#classId').find(':selected').attr 'value'
+
+
+# close the event form
+closeEventForm = () ->
+  # refresh the calendar to get changes
+  refreshCalendar()
+  # close the overlay
+  closeOverlay()
+
+
+# remove the uploaded file from the upload list in the event form
+removeFileUpload = (self, id) ->
+  # grab the file name
+  fileName = $(self).parent().children().eq(0).html()
+  # add the removed tag
+  $(self).parent().empty().append $('</span>').addClass('selectedFile').html('removed ' + fileName)
+  # add the id to the list of deleted files so that they can be removed on the database
+  $('[name="deletedFiles"]').attr('value', $('[name="deletedFiles"]').attr('value') + id + ',')
+
+
+# return the week number of the date
+getWeekNumber = (date) ->
+  d = new Date(date)
+  day = d.getDay()
+  if day == 0
+    day = 7
+  d.setDate(d.getDate() + (4-day))
+  year = d.getFullYear()
+  ZBDoCY = Math.floor((d.getTime() - new Date(year, 0, 1, -6)) / 86400000)
+  return 1 + Math.floor(ZBDoCY / 7)
+
+
+# select a particular view focused on the selected day if it exists
+selectView = (which) ->
+  # if they asked to see the view already displayed
+  if  which == $('#calendar').attr 'which'  
+    # do nothing
+    return
+
+  # grab the selected date
+  selectedDate = $('.selectedDay').attr 'id'
+  # if it exists
+  if selectedDate
+    # check what view they asked for
+    switch which
+      when 'month'
+        year = $('#calendar').attr 'year'
+        number = selectedDate.split('-')[1]
+        # load the appropriate calendar
+        loadCalendar which, year, number
+      when 'week'
+        year = $('#calendar').attr 'year'
+        number = getWeekNumber selectedDate
+        # load the appropriate calendar
+        loadCalendar which, year, number
+
+  # they did not select a day
+  else
+    # check what view they asked for
+    switch which
+      when 'month'
+        year = $('#calendar').attr 'year'
+        number = $('#calendar').find('.calendarWeekDay').eq(4).attr('id').aplit('-')[1]
+        # load the appropriate calendar
+        loadCalendar which, year, number
+      when 'week'
+        year = $('#calendar').attr 'year'
+        number = getWeekNumber $('#calendar').find('.calendarDay').eq(3).attr('id')
+        # load the appropriate calendar
+        loadCalendar which, year, number
+
+
+# bring up a detailed view of the event info
+viewEventInfo = () ->
+  $.ajax
+    # make the ajax request
+    url: '/viewEvent/'
+    data:
+      id: id
+    success: (data) ->
+      # display it in an overlay
+      overlay(data)
+
+
+# display the start of term form
+startTerm = ()->
+  # grab the selected date
+  date = $('.selectedDay').eq(0).attr 'id'
+  # if it exist
+  if date
+    # grab the form off of the server
+    $.ajax
+      url: '/calendar/newTermStart/'
+      data:
+        date: date
+      success: (data) ->
+        overlay data
+  # they didn't select a date
+  else
+    alert 'please select a term to begin the term on'
+  
+  
+# display the end of term form
+endTerm = () ->
+  # grab the selected date
+  date = $('.selectedDay').eq(0).attr 'id'
+  # if it exists
+  if date
+    # grab the form from the server
+    $.ajax
+      url: '/calendar/newTermEnd/'
+      data:
+        date: date
+      success: (data) ->
+        # display the form in an overlay
+        overlay(data)
+
+
+# submit the end of new term form
+createTermEnd = (date) ->
+  $.ajax
+    url: '/calendar/createTermEnd/'
+    type: 'POST'
+    data:
+      date: date
+      id: $('#term').val()
+    # if it succeeded 
+    success: (data) ->
+      refreshCalendar()
+      closeOverlay()
+
+
+# submit the create term form
+createTerm = (date) ->
+  $.ajax
+    url: '/calendar/createTerm/'
+    type: 'POST',
+    data:
+      date: date
+      name: $('#name').val()
+    # if it succeeds
+    success: (data) ->
+      refreshCalendar()
+      closeOverlay()
+
+
+# bring up the begin registration group form
+startRegistration = () ->
+  # grab the selected day
+  date =  $('.selectedDay').eq(0).attr 'id'
+  # get the form from the server
+  if date
+    $.ajax
+      url: '/calendar/startRegistration/'
+      data:
+        date: date
+      success: (data) ->
+        # show it in an overlay
+        overlay(data)
+   else
+     alert 'please select a day to start registration on'
+
+
+# bring up the end registration group form
+endRegistration = () ->
+  # grab the selected day
+  date =  $('.selectedDay').eq(0).attr 'id'
+  # get the form from the server
+  if date
+    $.ajax
+      url: '/calendar/endRegistration/'
+      data:
+        date: date
+      success: (data) ->
+        # show it in an overlay
+        overlay(data)
+   else
+     alert 'please select a day to end registration on'
+  
+
+# create the beginning of a registration group (submit the form)
+createRegistration = (date) ->
+  $.ajax
+    url: '/calendar/createRegistration/'
+    type: 'POST'
+    data:
+      date: date
+      name: $('#name').val()
+      term: $('#term').val()
+    success: (data) ->
+      refreshCalendar()
+      closeOverlay()
+
+
+# set the end of the registration period for a given group
+setEndRegistrationDate = (date) ->
+  # submit the form to the server
+  $.ajax
+    url: '/calendar/endRegistration/'
+    type: 'POST'
+    data:
+      date: date
+      id: $('#id').val()
+      term: $('#term').val()
+    # if it succeeds
+    success: (data) ->
+      refreshCalendar()
+      closeOverlay()
+
+# when the document loads
+$(document).ready ->
+  # display the current calendar
+  refreshCalendar()
+
+  # refresh the calendar every 5 minutes
+  setInterval ->
+    'refreshCalendar()'
+  , 300000  
+
