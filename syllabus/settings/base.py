@@ -64,12 +64,13 @@ DJANGO_APPS = (
 
 # third party apps
 THIRD_PARTY = (
-    'django_extensions',
     'compressor',
+    'django_extensions',
     'django_jinja',
+    'rest_framework'
 )
 
-DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.html'
+# DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.html'
 
 # Application definition
 INSTALLED_APPS = DJANGO_APPS +  THIRD_PARTY 

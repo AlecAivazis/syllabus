@@ -13,16 +13,16 @@
         {{user.email}}
       .line
         span.label
-          | Role
+          | Role(s)
 
     span#userData
       #userExemptions
         .line.title
-          Major Requirement Exemptions
+          | Major Requirement Exemptions
 
         // show the exemptions that are already in place
         -for exemption in exemptions
-          div.line.exemption(id="exemption{{exemption.id}}" )
+          .line.exemption(id="exemption{{exemption.id}}" )
             | Replace
             select
               option(value="0")

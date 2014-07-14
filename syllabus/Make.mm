@@ -12,13 +12,14 @@ PROJ_TIDY = *~ .*~ *.pyc
 PROJ_CLEAN += $(EXPORT_MODULEDIR)
 
 RECURSE_DIRS = \
+    api \
     academia \
     classroom \
     core \
     messages \
-    wishlist \
     socialservice \
     settings \
+    wishlist \
 
 # CAUTION: settings must be last so the entire model is built before migrating
 

@@ -18,7 +18,7 @@ RECURSE_DIRS = \
 
 #--------------------------------------------------------------------------
 #
-run: all server 
+run: all
 
 server:
 	manage.py runserver_plus

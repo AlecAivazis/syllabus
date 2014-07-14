@@ -3,12 +3,13 @@ from .base import *
 
 # add the neccessary apps
 INSTALLED_APPS += (
-    'syllabus.core',
     'syllabus.academia',
+    'syllabus.api',
     'syllabus.classroom',
+    'syllabus.core',
     'syllabus.messages',
-    'syllabus.wishlist',
     'syllabus.socialservice',
+    'syllabus.wishlist',
 )
 
 MIDDLEWARE_CLASSES = ( 

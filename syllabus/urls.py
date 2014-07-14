@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, include, url
 
 # import the syllabus apps
-from syllabus import messages, classroom, core, academia, socialservice 
+from syllabus import api, academia, classroom, core, messages,  socialservice 
 
 # import django admin module
 from django.contrib import admin
@@ -46,6 +46,10 @@ urlpatterns = patterns('',
 
     # load the myProfile urls
     url(r'(?i)^myProfile/', include(core.urls.myProfile)),
+
+
+    # load the api urls
+    url(r'(?i)^api/', include(api.urls)),
 
     # load the miscillaneous urls in core
     url(r'', include(core.urls.core)),

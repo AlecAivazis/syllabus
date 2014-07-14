@@ -19,6 +19,30 @@ ClassProfile = 'academia.ClassProfile'
 # Classroom
 # -----------------------------
 
+class EventQuerySet(models.QuerySet):
+    """ manage the event django api """
+
+    def assignments(self):
+        """ return the assignments """
+        return self.filter(category = 'assignment')
+
+    def tests(self):
+        """ return the tests """
+        return self.filter(category = 'test')
+
+    def lectures(self):
+        """ return the lectures """
+        return self.filter(category = 'lecture')
+
+    def meetings(self):
+        """ return the meetings """
+        return self.filter(category = 'meeting')
+
+    def gradable(self):
+        """ return the events that should have a grade """
+        return self.all().exclude(category='lecture').exclude(category='meeting')
+
+
 # the fundamental element of a teachers syllabus
 # can be one of assignment, lecture, test, meeting
 class Event(models.Model):
@@ -34,6 +58,13 @@ class Event(models.Model):
         ('lecture','lecture'),
         ('meeting','meeting'),
     ))
+   
+    # set the object manager
+    objects = EventQuerySet.as_manager()
+    
+    # string behavior is to return the title
+    def __str__(self):
+        return self.title
     
     # string behavior is to return the title
     def __unicode__(self):
@@ -88,6 +119,19 @@ class Event(models.Model):
             else:   
                 return 0
 
+
+
+class ClassQuerySet(models.QuerySet):
+    """ manage the event django api """
+
+    def byUserAsStudent(self, user):
+        """ return the classes that have the user in their section """
+        return self.filter(sections__students = user)
+
+    def byEvent(self, event):
+        """ return the classes that have the requested event """
+        return self.filter(events = event)
+
 # the main connection between the teacher and the student
 class Class(models.Model):
     professor = models.ManyToManyField(User, related_name="classesTeaching")
@@ -103,6 +147,14 @@ class Class(models.Model):
     maxOccupancy = models.IntegerField()
     term = models.ForeignKey(Term)
     
+    # set the object manager
+    objects = ClassQuerySet.as_manager()
+    
+    @property
+    def title(self):
+        """ return the title of the class """
+        return self.profile.interest + ' ' + str(self.profile.number)  
+
     # string behavior is to return {interest}-{number} ie PHYS-21
     def __unicode__(self):
         return self.profile.interest + '-' + str(self.profile.number)  

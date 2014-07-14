@@ -67,6 +67,14 @@ class ClassProfile(models.Model):
     books = models.ManyToManyField(Book, related_name="books", blank=True)
     prerequisites = models.ManyToManyField('PreRequisiteGroup', related_name="prereqs", symmetrical=False, blank=True)
     interest = models.ForeignKey('Interest', related_name="courses")
+
+    # default string behavior is to return its abbreviation
+    def __str__(self):
+        return str(self.pk) + ':' + self.name
+    def __unicode__(self):
+        return self.__str__() 
+    
+
        
 # the membership of a student in a section is handled a manager to associate a grade
 class Enrollment(models.Model):
