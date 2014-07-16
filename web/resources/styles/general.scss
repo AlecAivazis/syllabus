@@ -149,6 +149,7 @@ body {
   top: 80px;
   bottom: 0px;
   li {
+    padding-left: 10px;
     border-bottom: 1px solid #CAC7B7;
     border-top: 1px solid #DFDCCE;
     font-family: sans-serif;
@@ -158,14 +159,6 @@ body {
     &.current {
       background: rgb(223, 221, 210);
     }
-  }
-}
-
-.liContainer {
-  padding: 3px;
-  padding-left: 15px;
-  &:hover {
-    background: rgb(223, 221, 210);
   }
 }
 

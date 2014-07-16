@@ -49,10 +49,12 @@ section_urls = patterns('',
 
 from rest_framework import routers
 
-from .viewsets import InterestViewset
+from .viewsets import InterestViewset, ExemptionViewset, TermTemplateViewset
 
 router = routers.DefaultRouter()
-router.register(r'interests', InterestViewset)
+router.register(r'interests',       InterestViewset)
+router.register(r'majorExemptions', ExemptionViewset)
+router.register(r'termTemplates',   TermTemplateViewset)
 
 # combine the various urls
 urlpatterns = patterns('', 
@@ -60,6 +62,6 @@ urlpatterns = patterns('',
     url(r'(?i)^events/',   include(event_urls)),
     url(r'(?i)^sections/', include(section_urls)),
     url(r'(?i)^users/',    include(user_urls)),
-    url(r'(?i)^',    include(router.urls)),
+    url(r'(?i)^',          include(router.urls)),
 )
  

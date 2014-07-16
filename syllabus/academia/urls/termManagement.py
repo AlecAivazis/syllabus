@@ -1,6 +1,7 @@
 from django.conf.urls import  url, patterns
 
-from ..views.core import *
+from ..views.termManagement import *
 
 urlpatterns = patterns('', 
+    (r'(?i)^$', home),
 )

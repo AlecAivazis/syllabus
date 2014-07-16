@@ -1,0 +1,35 @@
+- extends "base.html" 
+
+- block js
+  script(type="text/coffeescript", src="/static/scripts/registrar/termsManagement.coffee")
+
+- block css
+  link(type="text/scss", rel="stylesheet", href="/static/styles/general.scss")
+  link(type="text/scss", rel="stylesheet", href="/static/styles/registrar/termTemplates.scss")
+
+- block content
+  #termTemplateSelect.sidebar
+    ul
+      li.sidebarLabel
+        | Term Templates
+
+  #template
+    .templateHeader
+        | Template name
+
+    .region.top
+      .templateListing.anchor
+        .newEntry
+          | Add an event before the beginning of the term
+        | Term Starts
+        .newEntry
+          | Add an event after the beginning of the term
+
+    .region.bottom
+      .templateListing.anchor
+        .newEntry
+          | Add an event before the end of the term
+        | Term Ends
+        .newEntry
+          | Add an event after the end of the term
+    

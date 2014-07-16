@@ -12,7 +12,8 @@ from ..classroom.models import (Class, Event, Section, Grade, GradingScale, Grad
                       Weight, WeightCategory)
 
 from ..classroom.models import State
-from ..academia.models import Term, College, MajorRequirement, Interest
+from ..academia.models import (Term, College, MajorRequirement, Interest, MajorExemption, 
+                               TermTemplate)
 
 from ..core.fields import MetaDataField
 
@@ -46,13 +47,42 @@ class ClassSerializer(serializers.ModelSerializer):
         serializer = SectionSerializer(sections)
         return serializer.data
 
+class TermTemplateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TermTemplate
+        fields = ('name', 'entries')
+
+class ExemptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MajorExemption
+        fields = ('user', 'replace', 'replacement') 
+
+    user = serializers.PrimaryKeyRelatedField()
+    replace = serializers.PrimaryKeyRelatedField(source="replace", many=True)
+    replacement = serializers.PrimaryKeyRelatedField(source="profile")
+
 class InterestSerializer(serializers.ModelSerializer):
     class Meta:
         """ meta class for InterestSerializer """
         model = Interest
         fields = ('courses', 'name', 'abbrv')
 
-    courses = serializers.RelatedField(many=True)
+    courses = serializers.SerializerMethodField('getCourses')
+
+    def getCourses(self, obj):
+        # keep the serialized data in a list
+        data = []
+        # for each course of this interest
+        for profile in obj.courses.all():
+            # serialzie the class
+            data.append({
+                'id' : profile.pk,
+                'name' : profile.name,
+                'number' : profile.number
+            })
+        # return the data
+        return data
+
     
 
 class EventSerializer(serializers.ModelSerializer):

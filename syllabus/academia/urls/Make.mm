@@ -22,6 +22,7 @@ EXPORT_PYTHON_MODULES = \
     classManagement.py \
     core.py \
     gradRequirements.py \
+    termManagement.py \
     userManagement.py \
     __init__.py
 

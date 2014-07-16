@@ -1,5 +1,8 @@
 from syllabus import *
 
+from ..models import Tutor 
+from ...academia.models import ClassProfile
+
 def home(request):
     userTutor = Tutor.objects.get(user=request.user)
     tutors = Tutor.objects.all()

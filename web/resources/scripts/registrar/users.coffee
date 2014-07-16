@@ -31,13 +31,35 @@ userProfile = (id) ->
 
 
 # update the courses of an interest
-updateInterestCourses = (id) ->
+updateInterestCourses = (self) ->
+  console.log 'updating interests'
+  # save the value to grab the approprite classes
+  id = $(self).val()
+  # store the element that provides the options for course number
+  target = $(self).siblings('.replacement')
+  # empty the target
+  $(target).empty()
+
+  # check if id is invalid
+  if id == '0'
+    # put the empty option back
+    target.append $('<option>&nbsp;</option>')
+    # dont do anything else
+    return 
+
+  # since the id is valid
+
+  # get the interest info off of the api
   $.ajax
-    url: '/registrar/getInterestClasses/'
+    url: '/api/interests/' + id + '/',
     data:
       id: id
     success: (data) ->
-      console.log data
+      target.empty()
+      # for each class that this interest has
+      _.each data.courses, (course) ->
+        # add the course elemnt to the select
+        target.append $('<option value="' + course.id + '">' + course.number + '</option>')
 
 
 # refresh the user list off of the database
@@ -55,8 +77,19 @@ refreshUserList = () ->
       # hide on mouseleave
       .on 'mouseleave', ->
         $(this).children('.userTools').eq(0).children().hide()
-    
 
+# check each exemption and remove it if {eq} is 0
+checkForExemptionOpenings = (eq) ->
+  console.log 'checking for new exemption'
+  $('.exemption').each ->
+    replace = $(this).children('replace').eq(0).val() == 0 
+    replacement = $(this).children('replacement').eq(0).val() == 0 
+    # check if there is an opening
+    if  replace == "0" or replacement == "0"
+      # if so dont do anything
+      return true
+    
+ 
 # filter the list of users based on the sidebar parameters
 filterList = () ->
   # show all of the users
@@ -154,16 +187,6 @@ viewProfile = (id) ->
       $('#classes').empty().append data
 
 
-# get the course numbers in a given interest
-getInterestCoruseNumbers = (id, self) ->
-  $.ajax
-    url: '/registrar/users/getInterestCourseNumbers'
-    data:
-      id: id
-    success: (data) ->
-      $(this).parent().siblings('.courseNumbers').empty().append data
-
-
 # bring up the exemption form for a particular user
 newExemption = (id) ->
   $.ajax
@@ -173,12 +196,3 @@ newExemption = (id) ->
     success: (data) ->
       $('#userInfo').hide()
       $('#exemptionForm').empty().append(data).show()
-
-# return the possible classes for a given exemption
-getPossibleClasses = (id) ->
-  $.ajax
-    url: '/registrar/users/getPossibleClassesForExemption/',
-    data:
-      id: id
-    success: (data) ->
-      console.log data 

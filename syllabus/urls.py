@@ -30,10 +30,13 @@ urlpatterns = patterns('',
     url(r'(?i)^gradebook/', include(classroom.urls.gradebook)),
 
     # load the academia urls
-    url(r'(?i)^registrar/classes/', include(academia.urls.classManagement)),
-    url(r'(?i)^registrar/graduationRequirements/', include(academia.urls.gradRequirements)),
-    url(r'(?i)^registrar/users/', include(academia.urls.userManagement)),
-    url(r'(?i)^registrar/', include(academia.urls.core)),
+    url(r'(?i)^registrar/', include([
+        url(r'(?i)^classes/', include(academia.urls.classManagement)),
+        url(r'(?i)^graduationRequirements/', include(academia.urls.gradRequirements)),
+        url(r'(?i)^users/', include(academia.urls.userManagement)),
+        url(r'(?i)^terms/', include(academia.urls.termManagement)),
+        url(r'(?i)^', include(academia.urls.core)),
+    ])),
 
     # load the myClasses urls
     url(r'(?i)^myClasses/', include(classroom.urls.myClasses)),
@@ -46,7 +49,6 @@ urlpatterns = patterns('',
 
     # load the myProfile urls
     url(r'(?i)^myProfile/', include(core.urls.myProfile)),
-
 
     # load the api urls
     url(r'(?i)^api/', include(api.urls)),

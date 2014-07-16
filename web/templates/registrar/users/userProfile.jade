@@ -24,45 +24,45 @@
         -for exemption in exemptions
           .line.exemption(id="exemption{{exemption.id}}" )
             | Replace
-            select
+            select.replace
               option(value="0")
                  | Required Course
               -for course in courses
-                option (selected="if {{course[0].id}} == {{exemption.profile.id}}", )
+                option(selected="if {{course[0].id}} == {{exemption.profile.id}}", )
                   {{course[0].interest.abbrv}} {{course[0].number}}
-            | with
-            select( onchange="updateCourseNumbers({{exemption.id}})", )
+            |  with
+            select( onchange="updateInterestCourses(this)", )
               option(value="0")
-                none
+                | none
               -for interest in interests
-                option ( value="{{interest.id}}", )
+                option( value="{{interest.id}}", selected="if {{interest.id}} == {{exemption.profile.interest.id}}" )
                   {{interest.abbrv}}
 
-            select.courseNumbers
+            select.replacement
               -for course in exemption.getReplacement().interest.courses.all() 
                 option
                   {{course.number}}
 
         // line to add new exemption
-        div.line.exemption
+        .line.exemption
           | Replace
-          select
+          select.replace
             option(value="0") 
               | Required Course
             -for course in courses
-              option
+              option(value="{{course[0].pk}}")
                 {{course[0].interest.abbrv}} {{course[0].number}}
 
           |  with
-          select(onchange="updateInterestClasses()")
-            option(selected)
+          select(onchange="updateInterestCourses(this)")
+            option(selected, value="0")
               | none
             -for interest in interests
-              option(onclick="updateInterestCourses({{interest.id}})", value="{{interest.id}}")
+              option(value="{{interest.id}}")
                 {{interest.abbrv}}
-          select.exemptionNumber
+          select.replacement
             option
-              | select an interest
+              | &nbsp;
       .line
       #addCodes
         .line.title

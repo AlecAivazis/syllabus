@@ -1,0 +1,65 @@
+@import "../base.scss";
+
+#template {
+  position: absolute;
+  left: 239px;
+  bottom: 0;
+  right: 0;
+  top: 80px;
+  padding: 15px;
+}
+
+$headerHeight: 30px;
+
+.templateHeader {
+  height: $headerHeight;
+}
+
+.region {
+  position: absolute;
+  right: 20px;
+  left: 20px;
+
+  &.top {
+    top: $headerHeight + 15px;
+  }
+  
+  &.bottom {
+    bottom: 0px;
+    padding-bottom: 15px;
+  }
+}
+
+.newEntry {
+  background: none;
+  padding: 3px;
+  height: 15px;
+  text-align: center;
+  color: #d3d0c1;
+  cursor: pointer;
+  &:hover {
+    color: black;
+  }
+}
+
+.templateListing {
+  padding: 20px;
+  margin: 10px 0px;
+  text-align: center;
+  @include border-radius(7px); 
+  background: #fffae1;
+
+  &.newEntry {
+    color: #fffae1;
+  }
+
+  &.anchor {
+    background: #d3d0c1;
+    margin: 0;
+    padding: 0;
+    &.newEntry {
+      color: #d3d0c1;
+    }
+  }          
+  
+}

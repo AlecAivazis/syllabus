@@ -1,1 +1,1 @@
-from . import userManagement, classManagement, gradRequirements, core
+from . import core, classManagement, gradRequirements, termManagement, userManagement

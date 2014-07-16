@@ -1,5 +1,24 @@
 Syllabus To-Do List
 
+Make prereqs into a self-referencing many to many with a manager class
+
+Change announcements to alerts and include registrar notices of grades, etc.
+View registration dates (link somewhere in catalog tab)
+
+Add nextTerm() to term object
+
+branch individual term entries off of each other (5 days after asking for grades, etc.)
+
+add flags for assignments that need grading
+check javasript form submits before submit
+waitlist
+help overlay as guide
+add announcements to class pages (maybe first view)
+tutors (GradesFirst)
+templates for school year (anchored on beginning and end of term)
+inline assignment editing/grading
+
+
 Catalog:
     
     clock widget for time select
@@ -56,18 +75,3 @@ Gradebook
     download user submission 
 
 WishList  
-    
-
-View registration dates (link somewhere in catalog tab)
-
-Add nextTerm() to term object
-
-add flags for assignments that need grading
-check javasript form submits before submit
-Access Middleware (add links into a list via a series of if statements)
-waitlist
-help overlay as guide
-add announcements to class pages (maybe first view)
-tutors (GradesFirst)aisolate grade row (so teachers can show students)
-templates for school year (anchored on beginning and end of term)
-inline assignment editing/grading

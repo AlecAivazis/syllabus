@@ -1,5 +1,12 @@
 @import "mixins";
 
+@mixin border-radius($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -khtml-border-radius: $radius;
+  border-radius: $radius;
+}
+
 @mixin button ($color, $width){
   padding: 5px 10px;
   display: inline-block;
