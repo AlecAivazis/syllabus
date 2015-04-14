@@ -1,0 +1,8 @@
+web/resources/cache/
+web/resources/thirdparty/
+db/homepage.sqlite3
+web/resources/uploads/
+__pycache__
+**/.DS_Store
+*.pyc
+static/
