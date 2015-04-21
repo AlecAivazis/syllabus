@@ -7,7 +7,6 @@
 browserify = require('browserify')
 watchify = require('watchify')
 gulp = require('gulp')
-rename = require('gulp-rename')
 source = require('vinyl-source-stream')
 sourcemaps = require('gulp-sourcemaps')
 assign = require('lodash.assign')
@@ -71,10 +70,7 @@ watch = ->
 gulp.task('lint', lint)
 gulp.task('watch', watch)
 gulp.task('scripts', ['lint'],  scripts)
-
-# the default task for gulp
 gulp.task('default', ['watch'])
-
 
 
 # end of file
