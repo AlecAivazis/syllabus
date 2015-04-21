@@ -4,17 +4,17 @@
 'use strict'
 
 # imports
+assign = require('lodash.assign')
+babelify = require('babelify')
 browserify = require('browserify')
-watchify = require('watchify')
+buffer = require('vinyl-buffer')
 gulp = require('gulp')
+eslint = require('gulp-eslint')
+gutil = require('gulp-util')
+livereload = require('gulp-livereload')
 source = require('vinyl-source-stream')
 sourcemaps = require('gulp-sourcemaps')
-assign = require('lodash.assign')
-gutil = require('gulp-util')
-buffer = require('vinyl-buffer')
-babelify = require('babelify')
-livereload = require('gulp-livereload')
-eslint = require('gulp-eslint')
+watchify = require('watchify')
 
 # browserify configuration
 customOpts = 
