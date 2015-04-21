@@ -15,6 +15,7 @@ gutil = require('gulp-util')
 buffer = require('vinyl-buffer')
 babelify = require('babelify')
 livereload = require('gulp-livereload')
+eslint = require('gulp-eslint')
 
 # browserify configuration
 customOpts = 
@@ -26,6 +27,15 @@ opts = assign({}, watchify.args, customOpts)
 b = watchify(browserify(opts).transform(babelify))
 # if browserify needs to log something then do so through the terminal
 b.on('log', gutil.log)
+
+
+# perform various linting techniques on the javascript files
+lint = ->
+    # look at all javascript files
+    gulp.src('src/**/*.js')
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError())
 
 
 # build the scripts necessary for the application
@@ -58,8 +68,9 @@ watch = ->
 
 
 # gulp tasks
-gulp.task('scripts', scripts)
+gulp.task('lint', lint)
 gulp.task('watch', watch)
+gulp.task('scripts', ['lint'],  scripts)
 
 # the default task for gulp
 gulp.task('default', ['watch'])
