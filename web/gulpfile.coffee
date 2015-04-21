@@ -32,8 +32,11 @@ b.on('log', gutil.log)
 lint = ->
     # look at all javascript files
     gulp.src('src/**/*.js')
+        # lint the files
         .pipe(eslint())
+        # output the lint results to the console
         .pipe(eslint.format())
+        # if there's an error don't do anything else
         .pipe(eslint.failOnError())
 
 
@@ -69,7 +72,7 @@ watch = ->
 # gulp tasks
 gulp.task('lint', lint)
 gulp.task('watch', watch)
-gulp.task('scripts', ['lint'],  scripts)
+gulp.task('scripts', ['lint'],  scripts) 
 gulp.task('default', ['watch'])
 
 
