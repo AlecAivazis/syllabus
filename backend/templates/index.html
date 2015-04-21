@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{%  load staticfiles compress %}
+
+{% block css %}
+    {{block.super}}
+    <link rel="stylesheet" href="{% static 'thirdparty/normalize.css/normalize.css' %}"/>
+    {% compress css %}
+        <link rel="stylesheet" type="text/stylus" href="{% static 'styles/default.styl' %}"/>
+    {% endcompress %}
+{% endblock %}
+
+{% block js %}
+    {{block.super}}
+    <script src="{% static 'thirdparty/jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'thirdparty/underscore/underscore.js' %}"></script>
+    {% compress js %}
+    <script src="{% static 'scripts/core.coffee' %}" type="text/coffeescript"></script>
+    {% endcompress %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{
+  "name": "syllabus",
+  "version": "0.0.0",
+  "authors": [
+    "{%= author_name %}"
+  ],
+  "description": "frontend for syllabus",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "latest",
+    "underscore": "latest",
+    "normalize.css": "latest"
+  }
+}

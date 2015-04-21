@@ -1,0 +1,9 @@
+django
+django-compressor
+django-debug-toolbar
+django-extensions
+livereload
+pyjade
+gunicorn
+psycopg2
+Fabric
