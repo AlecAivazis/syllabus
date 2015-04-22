@@ -9,6 +9,7 @@
   "author": "alec aivazis",
   "license": "MIT",
   "dependencies": {
+    "babel": "^5.1.11",
     "babelify": "^6.0.2",
     "browserify": "^9.0.8",
     "coffee-script": "^1.9.2",
