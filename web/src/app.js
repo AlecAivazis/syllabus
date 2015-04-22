@@ -2,7 +2,22 @@
 
 'use strict';
 
-import $ from 'jquery';
+import NavBar from './navigation/navBar'
+import NavItem from './navigation/navItem'
 
-console.log($(document) + ' sucks but ');
+// the base application component for syllabus
 
+class SyllabusRoot extends React.Component{
+    render() {
+        return (
+            <NavBar>
+                <NavItem/>
+            </NavBar>
+        )
+    }
+}
+
+// render the application to the body 
+React.render(<SyllabusRoot/>, document.body)
+
+// end of file
