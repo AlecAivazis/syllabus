@@ -7,7 +7,7 @@ import _ from 'lodash'
 'use strict'
 
 // the current user's role (for now)
-let roles = ['admin'];
+let roles = ['teacher'];
 
 // the navigation bar component
 class NavBar extends React.Component {
@@ -22,41 +22,29 @@ class NavBar extends React.Component {
     // return the posible navigation items for the current user
     get_nav_routes(){
 
-        // define the possible routes 
-        let all_routes = new Map([
-            ['registrar', [
-                {
-                    name: 'hello',
-                    test: 'hello',
-                }
+        // the potential routes for each role
+        let all_routes = [
+            {
+                name: 'hello',
+                test: 'hello',
+                roles: ['teacher', 'student']
+            }, 
+            {
+                name: 'goodbye',
+                test: 'goodbye',
+                roles: ['student']
+            }
+        ];
 
-            ]],
-            ['teacher', [
-                {
-                    name: 'hello',
-                    test: 'hello',
-                }
-
-            ]],
-            ['student', [
-                {
-                    name: 'hello',
-                    test: 'hello',
-                }
-            
-            ]]
-        ]);
-
-        for (var [key, value] of all_routes.entries()){
-            console.log(key);
-        }
-
-        // the routes the user can visit
+        // figure out the routes for the user
         let routes = [];
-        // for each role of the user        
-        _.each(roles, role => {
-            // add the routes for this role to the list
-            routes = _.union(routes, all_routes.get(role));
+        // for each potential route
+        _.each(all_routes, route => {
+            // if the user satisfies the role requirement
+            if (_.intersection(route.roles, roles).length || _.contains(roles, 'admin') ){
+                // add the route to the list
+                routes.push(route);
+            }
         });
 
         // return the list of routes
