@@ -17,6 +17,7 @@
     "gulp-livereload": "^3.8.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.4",
+    "lodash": "^3.7.0",
     "lodash.assign": "^3.1.0",
     "merge-stream": "^0.1.7",
     "vinyl-buffer": "^1.0.0",
