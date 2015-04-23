@@ -2,15 +2,10 @@
 
 'use strict';
 
-// react: https://github.com/facebook/react
-import React from 'react'
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash'
 // local imports
 import CalendarRoot from './calendar/index'
-
-// the current user's role (for now)
-let roles = ['admin'];
 
 // the potential routes for each role (actual routes are defined in index.js)
 let all_routes = [
@@ -18,24 +13,30 @@ let all_routes = [
         name: 'hello',
         path: 'hello',
         handler: CalendarRoot,
-        roles: ['teacher', 'student']
+        allowed_roles: ['teacher', 'student'], 
+        show_in_nav: true
     }, 
     {
         name: 'goodbye',
         test: 'goodbye',
-        roles: ['student']
+        allowed_roles: ['student'],
+        show_in_nav: true
     }
 ];
 
+// the current user's role (for now)
+let roles = ['admin'];
+
 // return the posible navigation items for the current user
-let get_routes_for_user = function(){
+function get_routes_for_user(){
 
     // figure out the routes for the user
     let routes = [];
     // for each potential route
     _.each(all_routes, route => {
         // if the user satisfies the role requirement
-        if (_.intersection(route.roles, roles).length || _.contains(roles, 'admin') ){
+        if (_.intersection(route.allowed_roles, roles).length 
+            || _.contains(roles, 'admin') ){
             // add the route to the list
             routes.push(route);
         }
@@ -45,10 +46,7 @@ let get_routes_for_user = function(){
     return routes;
 }
 
-
-module.exports = {
-    nav_routes: get_routes_for_user()
-}
-
+// export the list of routes
+export default get_routes_for_user();
 
 // end of file
