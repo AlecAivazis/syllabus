@@ -6,8 +6,6 @@
 import React from 'react';
 // react-router: https://github.com/rackt/react-router
 import {RouteHandler} from 'react-router';
-// lodash: https://github.com/lodash/lodash
-import _ from 'lodash';
 // local imports
 import NavBar from './navigation/navBar';
 
