@@ -7,7 +7,7 @@ import 'babel/polyfill';
 // react: https://github.com/facebook/react
 import React from 'react';
 // react-router: https://github.com/rackt/react-router
-import Router, {Route} from 'react-router'
+import Router, {Route} from 'react-router';
  // local imports
 import {route_elements} from './routes';
  

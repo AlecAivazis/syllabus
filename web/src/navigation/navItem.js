@@ -5,6 +5,7 @@ import React from 'react'
 
 'use strict'
 
+// the actual component
 class NavItem extends React.Component {
     render() {
         return (

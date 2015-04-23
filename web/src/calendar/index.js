@@ -1,6 +1,6 @@
 // the root component for the calendar view
 
-import React from 'react'
+import React from 'react';
 
 'use strict'
 
