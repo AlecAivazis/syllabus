@@ -8,7 +8,7 @@ class CalendarRoot extends React.Component {
     render() {
         return (
             <div>
-                Caldendar
+                Calendar
             </div>
         )
     }

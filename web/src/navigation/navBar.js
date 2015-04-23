@@ -1,9 +1,12 @@
 // the navigation bar used by syllabus
 
 // imports
-import React from 'react'
-import NavItem from './navItem'
-import _ from 'lodash'
+import React from 'react';
+import _ from 'lodash';
+
+// local imports
+import NavItem from './navItem';
+import {nav_routes} from '../routes';
 
 'use strict'
 
@@ -18,7 +21,9 @@ class NavBar extends React.Component {
 
         return (
             <div>
-                { this.props.children } 
+                { _.map( nav_routes, function(item) {
+                    return <NavItem message={item.name} key={item.name}/>
+                })}
             </div>
         )
     }
