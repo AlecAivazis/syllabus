@@ -33,6 +33,6 @@ class NavBar extends React.Component {
 }
 
 // export the component
-module.exports = NavBar;
+export default NavBar;
 
 // end of file

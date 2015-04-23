@@ -16,6 +16,6 @@ class NavItem extends React.Component {
 }
 
 // export the class
-module.exports = NavItem;
+export default NavItem;
 
 // end of file

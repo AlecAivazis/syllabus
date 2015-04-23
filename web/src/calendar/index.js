@@ -15,6 +15,6 @@ class CalendarRoot extends React.Component {
 }
 
 // export the class
-module.exports = CalendarRoot;
+export default CalendarRoot;
 
 // end of file
