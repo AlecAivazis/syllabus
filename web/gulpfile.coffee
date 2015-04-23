@@ -23,9 +23,9 @@ customOpts =
 opts = assign({}, watchify.args, customOpts)
 
 # create a watchify wrapper around browserify
-b = watchify(browserify(opts).transform(babelify))
+application = watchify(browserify(opts).transform(babelify))
 # if browserify needs to log something then do so through the terminal
-b.on('log', gutil.log)
+application.on('log', gutil.log)
 
 
 # perform various linting techniques on the javascript files
@@ -43,23 +43,24 @@ lint = ->
 # build the scripts necessary for the application
 scripts = ->
     # bundle the application
-    b.bundle()
-    # call it app.js
-    .pipe(source('app.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(sourcemaps.write('./')) 
-    # write the file to the assets directory
-    .pipe(gulp.dest('./assets'))
-    .pipe(livereload())
+    application.bundle()
+        .pipe(source('app.js'))
+        .pipe(buffer())
+        # create sourcemaps
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(sourcemaps.write('./')) 
+        # write the file to the assets directory
+        .pipe(gulp.dest('./assets'))
+        # tell the livereload server to restart
+        .pipe(livereload())
 
 
-# watch for changes in the javascript application
+# watch for changes in the javascript files
 watch = ->
     # start the livereload server
     livereload.listen();
     # when browserify needs to update then rerun the scripts
-    b.on 'update', ->
+    application.on 'update', ->
         # tell the user we saw the change
         console.log 'rebuilding application...'
         # recompile the javascript
