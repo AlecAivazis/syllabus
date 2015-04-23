@@ -18,7 +18,7 @@ watchify = require('watchify')
 
 # browserify configuration
 customOpts = 
-    entries: './src/index.js'
+    entries: './src/app.js'
     debug: true
 opts = assign({}, watchify.args, customOpts)
 

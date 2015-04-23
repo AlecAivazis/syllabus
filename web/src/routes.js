@@ -10,7 +10,7 @@ import {Route} from 'react-router'
 import _ from 'lodash';
 // local imports
 import CalendarRoot from './calendar/index';
-import SyllabusRoot from './app'
+import SyllabusRoot from './index'
 
 // the potential routes for each role (actual routes are defined in index.js)
 let all_routes = [
