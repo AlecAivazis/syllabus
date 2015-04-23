@@ -2,6 +2,8 @@
  
 'use strict'
  
+// babel es6 polyfill: https://babeljs.io/docs/usage/polyfill/
+import 'babel/polyfill';
 // react: https://github.com/facebook/react
 import React from 'react';
 // react-router: https://github.com/rackt/react-router
