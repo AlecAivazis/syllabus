@@ -1,4 +1,4 @@
-// the main entry point for the syllabus front end
+// the main entry point for the syllabus frontend
 
 'use strict'
 
@@ -6,21 +6,8 @@
 import React from 'react';
 // react-router: https://github.com/rackt/react-router
 import Router, {Route} from 'react-router'
-// lodash: https://github.com/lodash/lodash
-import _ from 'lodash'
 // local imports
-import nav_routes from './routes';
-import SyllabusRoot from './app'
-
-// the application routes 
-// done here to avoid circular dependence... I thought es6 took care of this?
-let route_elements = (
-    <Route handler={SyllabusRoot} path="/">
-        { _.map( nav_routes, function(item) {
-            return <Route name={item.name} path={item.path} handler={item.handler} />
-        })}
-    </Route>
-)
+import {route_elements} from './routes';
 
 // run the application with the appropriate routes based on the user
 Router.run(route_elements, Handler => {

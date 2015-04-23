@@ -1,24 +1,30 @@
-// launch the application
+// the application routes
 
 'use strict';
 
+// react: https://github.com/facebook/react
+import React from 'react';
+// react-router: https://github.com/rackt/react-router
+import {Route} from 'react-router'
 // lodash: https://github.com/lodash/lodash
-import _ from 'lodash'
+import _ from 'lodash';
 // local imports
-import CalendarRoot from './calendar/index'
+import CalendarRoot from './calendar/index';
+import SyllabusRoot from './app'
 
 // the potential routes for each role (actual routes are defined in index.js)
 let all_routes = [
     {
         name: 'hello',
-        path: 'hello',
+        path: '/',
         handler: CalendarRoot,
         allowed_roles: ['teacher', 'student'], 
         show_in_nav: true
     }, 
     {
         name: 'goodbye',
-        test: 'goodbye',
+        path: '/goodbye',
+        handler: CalendarRoot,
         allowed_roles: ['student'],
         show_in_nav: true
     }
@@ -45,6 +51,15 @@ function get_routes_for_user(){
     // return the list of routes
     return routes;
 }
+
+// export the route elements for the current user
+export let route_elements = (
+    <Route handler={SyllabusRoot}>
+        { _.map( get_routes_for_user(), function(item) {
+            return <Route name={item.name} path={item.path} handler={item.handler} />
+        })}
+    </Route>
+)
 
 // export the list of routes
 export default get_routes_for_user();
