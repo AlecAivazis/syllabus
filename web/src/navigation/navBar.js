@@ -1,12 +1,12 @@
 // the navigation bar used by syllabus
 
-// imports
+// react: https://github.com/facebook/react
 import React from 'react';
+// lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
-
 // local imports
 import NavItem from './navItem';
-import {nav_routes} from '../routes';
+import nav_routes from '../routes';
 
 'use strict'
 
@@ -22,14 +22,17 @@ class NavBar extends React.Component {
         return (
             <div>
                 { _.map( nav_routes, function(item) {
-                    return <NavItem message={item.name} key={item.name}/>
+                    if(item.show_in_nav){
+                        return <NavItem message={item.name} key={item.name}/>
+                    }
+                    
                 })}
             </div>
         )
     }
 }
 
-// export the class
+// export the component
 module.exports = NavBar;
 
 // end of file

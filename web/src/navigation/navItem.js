@@ -1,7 +1,7 @@
 // the navigation item for the syllabus frontend
 
+// react: https://github.com/facebook/react
 import React from 'react'
-
 
 'use strict'
 

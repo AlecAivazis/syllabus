@@ -2,9 +2,9 @@
 
 'use strict';
 
-// react:
+// react: https://github.com/facebook/react
 import React from 'react';
-// react-router:
+// react-router: https://github.com/rackt/react-router
 import {RouteHandler} from 'react-router';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
@@ -25,5 +25,7 @@ class SyllabusRoot extends React.Component{
     }
 }
 
+// export the component
 export default SyllabusRoot;
+
 // end of file

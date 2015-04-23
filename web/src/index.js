@@ -4,14 +4,13 @@
 
 // react: https://github.com/facebook/react
 import React from 'react';
-// react-router: https://github.com/facebook/react
+// react-router: https://github.com/rackt/react-router
 import Router, {Route} from 'react-router'
-// local imports
-import {nav_routes} from './routes';
-import SyllabusRoot from './app'
-
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash'
+// local imports
+import nav_routes from './routes';
+import SyllabusRoot from './app'
 
 // the application routes 
 // done here to avoid circular dependence... I thought es6 took care of this?
@@ -27,3 +26,5 @@ let route_elements = (
 Router.run(route_elements, Handler => {
     React.render(<Handler />, document.body);
 });
+
+// end of file
