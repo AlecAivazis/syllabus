@@ -21,6 +21,8 @@
     "lodash": "^3.7.0",
     "lodash.assign": "^3.1.0",
     "merge-stream": "^0.1.7",
+    "react": "^0.13.2",
+    "react-router": "^0.13.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.1.1"

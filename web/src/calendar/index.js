@@ -1,21 +1,20 @@
-// the navigation item for the syllabus frontend
+// the root component for the calendar view
 
 import React from 'react'
 
-
 'use strict'
 
-class NavItem extends React.Component {
+class CalendarRoot extends React.Component {
     render() {
         return (
             <div>
-                {this.props.message}
+                Caldendar
             </div>
         )
     }
 }
 
 // export the class
-module.exports = NavItem;
+module.exports = CalendarRoot;
 
 // end of file
