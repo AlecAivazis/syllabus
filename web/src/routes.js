@@ -5,12 +5,12 @@
 // react: https://github.com/facebook/react
 import React from 'react';
 // react-router: https://github.com/rackt/react-router
-import {Route} from 'react-router'
+import {Route} from 'react-router';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
 // local imports
 import CalendarRoot from './calendar/index';
-import SyllabusRoot from './index'
+import SyllabusRoot from './index';
 
 // the potential routes for each role (actual routes are defined in index.js)
 let all_routes = [
@@ -59,7 +59,7 @@ export let route_elements = (
             return <Route name={item.name} path={item.path} handler={item.handler} />
         })}
     </Route>
-)
+);
 
 // export the list of routes
 export default get_routes_for_user();

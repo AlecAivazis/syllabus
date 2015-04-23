@@ -10,7 +10,7 @@ import {RouteHandler} from 'react-router';
 import NavBar from './navigation/navBar';
 
 // the base application component for the frontend
-class Index extends React.Component{
+class SyllabusRoot extends React.Component{
 
     // render the application
     render() {
@@ -24,6 +24,6 @@ class Index extends React.Component{
 }
 
 // export the component
-export default Index;
+export default SyllabusRoot;
 
 // end of file
