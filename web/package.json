@@ -4,7 +4,8 @@
   "description": "the front end of syllabus, a complete web solution for the modern university",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress --colors --watch"
   },
   "author": "alec aivazis",
   "license": "MIT",
