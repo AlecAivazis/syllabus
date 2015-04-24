@@ -12,7 +12,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: "eslint-loader?{rules:[{semi:0}]}",
-                exclude: /node_modules/,
+                exclude: /node_modules/
             },
         ],
         loaders: [
