@@ -17,7 +17,7 @@ let all_routes = [
     {
         name: 'hello',
         path: '/',
-        handler: CalendarRoot,
+        handler: SyllabusRoot,
         allowed_roles: ['teacher', 'student'], 
         show_in_nav: true
     }, 
@@ -56,7 +56,7 @@ function get_routes_for_user(){
 export let route_elements = (
     <Route handler={SyllabusRoot}>
         { _.map( get_routes_for_user(), function(item) {
-            return <Route name={item.name} path={item.path} handler={item.handler} />
+            return <Route name={item.name} path={item.path} handler={item.handler} key={item.name} />
         })}
     </Route>
 );
