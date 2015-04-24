@@ -4,7 +4,7 @@
   "description": "the front end of syllabus, a complete web solution for the modern academic environment",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --colors --watch"
+    "build": "webpack -d --watch"
   },
   "author": "alec aivazis",
   "license": "MIT",
