@@ -1,4 +1,5 @@
 // frontend build configuration using webpack
+// reference: https://github.com/petehunt/webpack-howto
 
 module.exports = {
     entry: './src/app.js',
