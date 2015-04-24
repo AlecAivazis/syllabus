@@ -7,11 +7,9 @@ import _ from 'lodash';
 // local imports
 import NavItem from '../navItem/component';
 import nav_routes from '../../routes';
+import style from './style';
 
 'use strict'
-
-// the current user's role (for now)
-let roles = ['teacher'];
 
 // the navigation bar component
 class NavBar extends React.Component {
