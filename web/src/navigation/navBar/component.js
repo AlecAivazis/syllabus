@@ -5,8 +5,8 @@ import React from 'react';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
 // local imports
-import NavItem from './navItem';
-import nav_routes from '../routes';
+import NavItem from '../navItem/component';
+import nav_routes from '../../routes';
 
 'use strict'
 
@@ -17,8 +17,6 @@ let roles = ['teacher'];
 class NavBar extends React.Component {
 
     render() {
-        // get the current user's role
-
         return (
             <div>
                 { _.map( nav_routes, function(item) {
