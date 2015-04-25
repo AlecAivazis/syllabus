@@ -6,7 +6,6 @@ class DataTypes:
     """
     Supported data types of `Metadata.type`.
     """
-    
     types = {
         'INTEGER': 'int',
         'FLOAT': 'flt',
@@ -36,7 +35,6 @@ class Metadata(models.Model):
     """
     Encapsulates generic metadata about an object as a key value pair with a type.
     """
-
     # acts as an container for supported value types
     types = DataTypes()
 

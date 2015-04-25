@@ -8,7 +8,6 @@ class Interest(models.Model):
     related fields: 
         `course_profiles` from .CourseProfile  
     """
-
     name = models.CharField(max_length=1020)
     abbrv = models.CharField(max_length=10)
 

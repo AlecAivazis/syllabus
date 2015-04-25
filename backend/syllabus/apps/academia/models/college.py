@@ -10,7 +10,6 @@ class College(models.Model):
     related fields: 
         `departments` from .Department 
     """
-    
     name = models.CharField(max_length=1020)
     # requirements = models.ManyToManyField('Requirement', related_name="colleges", blank=True)
     university = models.ForeignKey('University', related_name="colleges")
