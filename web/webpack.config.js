@@ -22,7 +22,8 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.styl']
+        extensions: ['', '.js', '.styl', '.css'],
+        root: require('path').resolve('.')
     },
     eslint: {
         configFile: '.eslintrc'

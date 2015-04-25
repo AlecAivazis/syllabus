@@ -8,8 +8,9 @@ import _ from 'lodash';
 import normalize from 'react-style-normalizer';
 // local imports
 import NavItem from '../navItem/component';
-import nav_routes from '../../../routes';
+import nav_routes from 'src/routes';
 import stylesheet from './style';
+import 'styles/noise.css'
 
 'use strict'
 
@@ -21,7 +22,7 @@ class NavBar extends React.Component {
         let style = normalize(stylesheet);
 
         return (
-            <div style={style}>
+            <div style={style} className="noise-020">
                 { _.map( nav_routes, function(item) {
                     if(item.show_in_nav){
                         return <NavItem message={item.name} key={item.name}/>
