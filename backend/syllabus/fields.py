@@ -9,9 +9,10 @@ class GradeField(models.DecimalField):
     """
 
     def __init__(self, *args, **kwargs):
-        """
-        Restrict the field to 2 digits.
-        """
-        return super(max_digits=2, *args, **kwargs)
+        # Restrict the field to 4 digits.
+        kwargs['max_digits'] = 4
+        # Restrict the field to 2 decimal places.
+        kwargs['decimal_places'] = 2
+        return super().__init__(*args, **kwargs)
 
 # end of file

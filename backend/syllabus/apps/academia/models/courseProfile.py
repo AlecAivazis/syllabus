@@ -1,7 +1,8 @@
 # django imports
 from django.db import models
 
-class ClassProfile(models.Model):
+
+class CourseProfile(models.Model):
     """
     the profile of a given class - separated from a particular class because it changes every 5 yrs
 

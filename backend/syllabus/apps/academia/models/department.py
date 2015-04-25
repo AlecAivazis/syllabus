@@ -9,7 +9,7 @@ class Department(models.Model):
         `interests` from .Interest  
     """
     name = models.CharField(max_length=1020)
-    college = models.ForeignKey('College', related_named="departments")
+    college = models.ForeignKey('College', related_name="departments")
     # majors = models.ManyToManyField('Major', related_name="college", blank=True)
 
     def __str__(self):
