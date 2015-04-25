@@ -6,7 +6,7 @@ class Interest(models.Model):
     An `interest` is a subsection of a `department` used to filter `courseProfiles`.
 
     related fields: 
-        `interests` from .Interest  
+        `course_profiles` from .CourseProfile  
     """
 
     name = models.CharField(max_length=1020)
