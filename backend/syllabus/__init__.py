@@ -9,5 +9,7 @@ import os
 # geography
 home = os.path.dirname(__file__)
 
+from . import apps
+
 
 # end of file
