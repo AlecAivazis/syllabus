@@ -61,6 +61,8 @@ third_party_apps = (
  )
 
 syllabus_apps = (
+    'syllabus.apps.academia',
+    'syllabus.apps.metadata',
 )
 
 INSTALLED_APPS = syllabus_apps + third_party_apps + django_apps
