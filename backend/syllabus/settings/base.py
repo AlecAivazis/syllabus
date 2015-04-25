@@ -20,8 +20,8 @@ import syllabus
 # folder definitions
 BASE = os.path.abspath(os.path.join(syllabus.home, os.pardir))
 # important folder definitions
-TEMPLATES = os.path.join(BASE, 'templates')
-RESOURCES = os.path.join(BASE, 'assets')
+TEMPLATES = os.path.join(BASE, 'syllabus', 'templates')
+RESOURCES = os.path.join(BASE, 'syllabus', 'assets')
 STATIC_DIR = os.path.join(BASE, 'static')
 UPLOADS = os.path.join(STATIC_DIR, 'uploads')
 

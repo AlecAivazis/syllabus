@@ -2,8 +2,8 @@ __pycache__
 **/.DS_Store
 **/*.pyc
 
-backend/assets/cache/
-backend/assets/thirdparty/
+backend/syllabus/assets/cache/
+backend/syllabus/assets/thirdparty/
 backend/db/syllabus.sqlite3
 backend/static/
 

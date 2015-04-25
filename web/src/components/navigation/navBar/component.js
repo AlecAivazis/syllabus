@@ -4,10 +4,12 @@
 import React from 'react';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
+// react-style-normalizer: https://github.com/radubrehar/react-style-normalizer
+import normalize from 'react-style-normalizer';
 // local imports
 import NavItem from '../navItem/component';
 import nav_routes from '../../../routes';
-import style from './style';
+import stylesheet from './style';
 
 'use strict'
 
@@ -15,8 +17,11 @@ import style from './style';
 class NavBar extends React.Component {
 
     render() {
+        // normalize the stylesheet
+        let style = normalize(stylesheet);
+
         return (
-            <div>
+            <div style={style}>
                 { _.map( nav_routes, function(item) {
                     if(item.show_in_nav){
                         return <NavItem message={item.name} key={item.name}/>

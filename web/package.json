@@ -17,6 +17,7 @@
     "lodash": "^3.7.0",
     "react": "^0.13.2",
     "react-router": "^0.13.2",
+    "react-style-normalizer": "^1.2.7",
     "webpack": "^1.8.9"
   }
 }
