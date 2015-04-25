@@ -6,8 +6,11 @@
 import React from 'react';
 // react-router: https://github.com/rackt/react-router
 import {RouteHandler} from 'react-router';
+// normalize.css: http://necolas.github.io/normalize.css/
+import 'normalize.css'
 // local imports
 import NavBar from './components/navigation/navBar/component';
+
 
 // the base application component for the frontend
 class SyllabusRoot extends React.Component{

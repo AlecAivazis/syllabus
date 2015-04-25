@@ -16,6 +16,7 @@
     "eslint": "^0.19.0",
     "eslint-loader": "^0.10.0",
     "lodash": "^3.7.0",
+    "normalize.css": "^3.0.3",
     "react": "^0.13.2",
     "react-router": "^0.13.2",
     "react-style-normalizer": "^1.2.7",
