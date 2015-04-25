@@ -4,6 +4,9 @@ from django.db import models
 class ClassProfile(models.Model):
     """
     the profile of a given class - separated from a particular class because it changes every 5 yrs
+
+    related fields:
+        `required_by` from requirements.Requirement
     """
     name = models.CharField(max_length=1020)
     full_name = models.CharField(max_length=1020)
