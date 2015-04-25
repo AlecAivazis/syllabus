@@ -7,7 +7,7 @@ import React from 'react';
 // react-router: https://github.com/rackt/react-router
 import {RouteHandler} from 'react-router';
 // normalize.css: http://necolas.github.io/normalize.css/
-import 'normalize.css'
+require('normalize.css');
 // local imports
 import NavBar from './components/navigation/navBar/component';
 

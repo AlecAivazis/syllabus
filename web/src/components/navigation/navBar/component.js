@@ -10,7 +10,9 @@ import normalize from 'react-style-normalizer';
 import NavItem from '../navItem/component';
 import nav_routes from 'src/routes';
 import stylesheet from './style';
-import 'styles/noise.css'
+
+// make sure the noise stylesheet is loaded
+require('styles/noise.css');
 
 'use strict'
 
