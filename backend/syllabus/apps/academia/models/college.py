@@ -5,7 +5,10 @@ class College(models.Model):
     """
     The `college` of a `university` has many `departments` and some `requirements`.
 
-    Requirements at this level are most likely GEs.
+    Requirements at this level are most likely GEs
+
+    related fields: 
+        `departments` from .Department 
     """
     
     name = models.CharField(max_length=1020)

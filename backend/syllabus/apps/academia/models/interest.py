@@ -3,7 +3,10 @@ from django.db import models
 
 class Interest(models.Model):
     """
-    an `interest` is a subsection of a `department` used to filter `classProfiles`
+    An `interest` is a subsection of a `department` used to filter `courseProfiles`.
+
+    related fields: 
+        `interests` from .Interest  
     """
 
     name = models.CharField(max_length=1020)

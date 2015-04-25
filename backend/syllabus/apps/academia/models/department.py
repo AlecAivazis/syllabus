@@ -4,6 +4,9 @@ from django.db import models
 class Department(models.Model):
     """
     a `department` of a `college` with some `interests`
+
+    related fields: 
+        `interests` from .Interest  
     """
     name = models.CharField(max_length=1020)
     college = models.ForeignKey('College', related_named="departments")
