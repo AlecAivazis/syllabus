@@ -9,9 +9,7 @@ class College(models.Model):
     """
     
     name = models.CharField(max_length=1020)
-    # requirements = models.ManyToManyField('MajorRequirement', related_name="colleges", blank=True)
-    # majors = models.ManyToManyField('Major', related_name="college", blank=True)
-    departments = models.ManyToManyField('Department', related_name="college", blank=True)
+    # requirements = models.ManyToManyField('Requirement', related_name="colleges", blank=True)
     university = models.ForeignKey('University', related_name="colleges")
 
 # end of file
