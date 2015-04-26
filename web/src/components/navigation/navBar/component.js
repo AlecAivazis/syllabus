@@ -10,7 +10,6 @@ import normalize from 'react-style-normalizer';
 import NavItem from '../navItem/component';
 import NavBranding from '../navBranding/component';
 import nav_routes from 'src/routes';
-import stylesheet from './style';
 
 // make sure the noise stylesheet is loaded
 require('styles/noise.css');
@@ -40,6 +39,15 @@ class NavBar extends React.Component {
         )
     }
 }
+
+//// styles ////
+
+// component styles
+let stylesheet = {
+    position: 'relative',
+    height: '80px',
+    background: 'linear-gradient(to bottom,  #353a42 31%,#21252a 100%)'
+};
 
 // remove unncessary styling on lists
 let list_style = {

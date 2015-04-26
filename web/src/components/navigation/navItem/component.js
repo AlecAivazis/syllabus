@@ -7,7 +7,6 @@ import normalize from 'react-style-normalizer';
 // react-router: https://github.com/rackt/react-router/blob/master/docs/api/components/Link.md
 import {Link} from 'react-router';
 // local imports
-import stylesheet from './style';
 import Icon from 'src/components/misc/icon';
 // make sure the necessary stylesheets are loaded
 require('styles/noise.css');
@@ -30,6 +29,19 @@ class NavItem extends React.Component {
             </Link>
         )
     }
+}
+
+//// styles ////
+
+// the component stylesheet
+let stylesheet = {
+    "display": "inline-block",
+    "margin": "15% 10px 0px 10px",
+    "textAlign": "center",
+    "fontSize": "12px",
+    "lineHeight": "28px",
+    "textTransform": "capitalize",
+    "textShadow": "1px 1px 1px #000000",
 }
 
 // export the class
