@@ -5,14 +5,14 @@ import React from 'react';
 
 'use strict'
 
+import image from 'images/branding.png';
+
 // the navbranding component
 class NavBranding extends React.Component {
 
     render() {
-        // the source of the branding image
-        let source = '';
         // return the image
-        return <img src={source}/>
+        return <img src={image} style={{float: 'left'}}/>
     }
 }
 

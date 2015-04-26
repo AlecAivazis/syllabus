@@ -16,17 +16,21 @@ import SyllabusRoot from './index';
 let all_routes = [
     {
         name: 'hello',
+        route: 'hello',
         path: '/',
         handler: CalendarRoot,
         allowed_roles: ['teacher', 'student'], 
-        show_in_nav: true
+        show_in_nav: true,
+        icon: 'calendar',
     }, 
     {
         name: 'goodbye',
+        route: 'goodbye',
         path: '/goodbye',
         handler: CalendarRoot,
         allowed_roles: ['student'],
-        show_in_nav: true
+        show_in_nav: true,
+        icon: 'graduation-cap',
     }
 ];
 

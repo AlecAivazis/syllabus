@@ -4,7 +4,9 @@
 import colors from 'styles/colors'
 
 export default {
-    background: 'red',
+    position: 'relative',
+    height: '80px',
+    background: 'linear-gradient(to bottom,  #353a42 31%,#21252a 100%)'
 };
 
 // end of file
