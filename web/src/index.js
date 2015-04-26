@@ -10,6 +10,7 @@ import {RouteHandler} from 'react-router';
 require('normalize.css');
 // local imports
 import NavBar from './components/navigation/navBar/component';
+require('styles/noise.css');
 
 
 // the base application component for the frontend
@@ -20,11 +21,26 @@ class SyllabusRoot extends React.Component{
         return (
             <div>
                 <NavBar/>
-                <RouteHandler/>
+                <div style={mainContainerStyle} className="noise-004">
+                    <RouteHandler/>
+                </div>
             </div>
         )
     }
 }
+
+//// styles ////
+
+let mainContainerStyle = {
+    position: 'fixed',
+    left: '0px',
+    right: '0px',
+    bottom: '0px', 
+    // make sure we line up with the NavBar component
+    top: require('./components/navigation/navBar/styles').nav_style.height,
+    background: '#dfddd1'
+}
+
 
 // export the component
 export default SyllabusRoot;
