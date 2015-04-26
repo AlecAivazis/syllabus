@@ -4,6 +4,6 @@ export default {
     "textAlign": "center",
     "fontSize": "12px",
     "lineHeight": "28px",
-    "text-transform": "capitalize",
-    "text-shadow": "1px 1px 1px #000000",
+    "textTransform": "capitalize",
+    "textShadow": "1px 1px 1px #000000",
 }
