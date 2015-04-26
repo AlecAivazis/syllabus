@@ -8,6 +8,7 @@ import _ from 'lodash';
 import normalize from 'react-style-normalizer';
 // local imports
 import NavItem from '../navItem/component';
+import NavBranding from '../navBranding/component';
 import nav_routes from 'src/routes';
 import stylesheet from './style';
 
@@ -24,16 +25,25 @@ class NavBar extends React.Component {
         let style = normalize(stylesheet);
 
         return (
-            <div style={style} className="noise-020">
-                { _.map( nav_routes, function(item) {
-                    if(item.show_in_nav){
-                        return <NavItem message={item.name} key={item.name}/>
-                    }
-                    
-                })}
-            </div>
+            <nav style={style} className="noise-020">
+                <NavBranding />
+                <ul style={list_style}>
+                    { _.map( nav_routes, function(item) {
+                        if(item.show_in_nav){
+                            return <NavItem name={item.name} key={item.name}/>
+                        }
+                        
+                    })}
+                </ul>
+            </nav>
         )
     }
+}
+
+// remove unncessary styling on lists
+let list_style = {
+    padding: "0px",
+    margin: "0px"
 }
 
 // export the component

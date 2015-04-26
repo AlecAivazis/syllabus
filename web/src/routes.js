@@ -17,7 +17,7 @@ let all_routes = [
     {
         name: 'hello',
         path: '/',
-        handler: SyllabusRoot,
+        handler: CalendarRoot,
         allowed_roles: ['teacher', 'student'], 
         show_in_nav: true
     }, 
