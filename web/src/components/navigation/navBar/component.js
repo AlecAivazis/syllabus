@@ -10,6 +10,7 @@ import normalize from 'react-style-normalizer';
 import NavItem from '../navItem/component';
 import NavBranding from '../navBranding/component';
 import nav_routes from 'src/routes';
+import {nav_style, list_style} from  './styles';
 
 // make sure the noise stylesheet is loaded
 require('styles/noise.css');
@@ -21,7 +22,7 @@ class NavBar extends React.Component {
 
     render() {
         // normalize the stylesheet
-        let style = normalize(stylesheet);
+        let style = normalize(nav_style);
 
         return (
             <nav style={style} className="noise-005">
@@ -38,24 +39,6 @@ class NavBar extends React.Component {
             </nav>
         )
     }
-}
-
-//// styles ////
-
-// component styles
-let stylesheet = {
-    position: 'relative',
-    height: '80px',
-    background: 'linear-gradient(to bottom,  #353a42 31%,#21252a 100%)'
-};
-
-// remove unncessary styling on lists
-let list_style = {
-    padding: "0px",
-    margin: "0px",
-    display: "inline-block",
-    height: '100%',
-    marginLeft: '20px',
 }
 
 // export the component

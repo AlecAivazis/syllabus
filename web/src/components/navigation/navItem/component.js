@@ -8,6 +8,7 @@ import normalize from 'react-style-normalizer';
 import {Link} from 'react-router';
 // local imports
 import Icon from 'src/components/misc/icon';
+import {list_element_style} from './styles'
 // make sure the necessary stylesheets are loaded
 require('styles/noise.css');
 require('./navItem.styl');
@@ -18,7 +19,7 @@ require('./navItem.styl');
 class NavItem extends React.Component {
     render() {
         // normalize the stylesheet
-        let style = normalize(stylesheet);
+        let style = normalize(list_element_style);
         return (
             <Link to={this.props.route} className="navItem">
                 <li style={style}>
@@ -33,16 +34,6 @@ class NavItem extends React.Component {
 
 //// styles ////
 
-// the component stylesheet
-let stylesheet = {
-    "display": "inline-block",
-    "margin": "15% 10px 0px 10px",
-    "textAlign": "center",
-    "fontSize": "12px",
-    "lineHeight": "28px",
-    "textTransform": "capitalize",
-    "textShadow": "1px 1px 1px #000000",
-}
 
 // export the class
 export default NavItem;
