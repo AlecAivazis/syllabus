@@ -9,7 +9,7 @@ import {RouteHandler} from 'react-router';
 // normalize.css: http://necolas.github.io/normalize.css/
 require('normalize.css');
 // local imports
-import NavBar from './components/navigation/navBar/component';
+import NavBar from '../components/navigation/navBar/component';
 require('styles/noise.css');
 
 
@@ -37,7 +37,7 @@ let mainContainerStyle = {
     right: '0px',
     bottom: '0px', 
     // make sure we line up with the NavBar component
-    top: require('./components/navigation/navBar/styles').nav_style.height,
+    top: require('../components/navigation/navBar/styles').nav_style.height,
     background: '#dfddd1'
 }
 

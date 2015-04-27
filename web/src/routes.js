@@ -9,13 +9,13 @@ import {Route} from 'react-router';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
 // local imports
-import CalendarRoot from './calendar/index';
-import SyllabusRoot from './index';
+import CalendarRoot from './views/calendar/index';
+import SyllabusRoot from './views/index';
 
 // the potential routes for each role (actual routes are defined in index.js)
 let all_routes = [
     {
-        name: 'calendar',
+        name: 'my calendar',
         route: 'calendar',
         path: '/',
         handler: CalendarRoot,
@@ -51,7 +51,7 @@ function get_routes_for_user(){
 export let route_elements = (
     <Route handler={SyllabusRoot}>
         { _.map( get_routes_for_user(), function(item) {
-            return <Route name={item.name} path={item.path} handler={item.handler} key={item.name} />
+            return <Route name={item.route} path={item.path} handler={item.handler} key={item.name} />
         })}
     </Route>
 );
