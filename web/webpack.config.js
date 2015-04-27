@@ -1,6 +1,12 @@
 // frontend build configuration using webpack
 // reference: https://github.com/petehunt/webpack-howto
 
+// the directories with source code
+var path = require('path');
+var current_location = path.resolve('.');
+var src_dir = path.join(current_location, 'src');
+
+// export the configuration
 module.exports = {
     entry: './src/app.js',
     output: {
@@ -25,7 +31,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['', '.js', '.styl', '.css'],
-        root: require('path').resolve('.')
+        root: [current_location, src_dir]
     },
     eslint: {
         configFile: '.eslintrc'
