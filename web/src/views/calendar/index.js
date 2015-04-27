@@ -3,7 +3,7 @@
 // react: https://github.com/facebook/react
 import React from 'react';
 // local imports
-import TabPanel from 'components/tabs/tabPanel/component';
+import TabContainer from 'components/tabs/TabContainer/component';
 import Tab from 'components/tabs/tab/component';
 
 
@@ -11,12 +11,7 @@ import Tab from 'components/tabs/tab/component';
 
 class CalendarRoot extends React.Component {
     render() {
-        return (
-            <TabPanel>
-                <Tab>Hello</Tab>
-                <Tab>Goodbye</Tab>
-            </TabPanel>
-        )
+        return <span>calendar</span>
     }
 }
 
