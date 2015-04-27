@@ -9,7 +9,6 @@ import React from 'react';
 class Tab extends React.Component {
 
     render() {
-        console.log(this.props.children);
         // return the image
         return (
             <div>

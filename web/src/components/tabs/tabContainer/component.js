@@ -2,40 +2,106 @@
 
 // react: https://github.com/facebook/react
 import React from 'react';
+// lodash: https://github.com/lodash/lodash
+import _ from 'lodash';
+    
 
 'use strict'
 
 // the navbranding component
 class TabContainer extends React.Component {
 
-    constructor(){
+    constructor(props){
         // instantiate this
-        super();
+        super(props);
         // bind various functions to the class instance
-        this.getMenuItems = this.getMenuItems.bind(this);
+        this.getMenu = this.getMenu.bind(this);
+        this.getSelectedTab = this.getSelectedTab.bind(this);
+        this.selectTab = this.selectTab.bind(this);
+        // set initial state
+        this.state = {
+            selectedTab: props.defaultTab
+        };
     }
 
-    render() {
 
-        let menuItems = this.getMenuItems();
+    render() {
         return (
             <div>
-                {menuItems}
+                {this.getMenu()}
+                {this.getSelectedTab()}
             </div> 
         )
     }
 
-    // return the menu 
-    getMenuItems(){
+
+    // called immediately before the initial rendering occurs
+    componentWillMount(){
         // if the user did not specify any children
         if (!this.props.children){
-            console.log('is actually throwing error');
             // throw an error
             throw new Error('TabContainer must contain at least one Tab');
         }
-        // 
+    }
+
+
+    // return the menu that toggles the selected panel  
+    getMenu(){
+
+        // create list elements for each tab child
+        let index = 0;
+        let list_elements = _.map(this.props.children, (tab) => {
+            let element_key = ++index;
+            // make sure each tab can select a panel
+            return (
+                <li onClick={this.selectTab.bind(this, element_key)} key={element_key}> 
+                    {tab.props.title} 
+                </li>
+            )
+        });
+        // return the navigation element
+        return (
+            <ul ref="menu">
+                {list_elements}
+            </ul>
+        )
+    }
+
+
+    // return the selected panel
+    getSelectedTab(){
+        // figure out the selected tab
+        let index = this.state.selectedTab-1;
+        // render the selected tab in a semantic container
+        return (
+            <article ref='container'>
+                {this.props.children[index]}
+            </article> 
+        )
+    }
+
+
+    // select the tab specified by the index
+    selectTab(index){
+        // set the state variable
+        this.setState({
+            selectedTab: index
+        });
     }
 }
+
+
+// prop types
+TabContainer.propTypes = {
+    defaultTab: React.PropTypes.number
+};
+
+
+// default props
+TabContainer.defaultProps = {
+    defaultTab: 1
+};
+
 
 // export the component
 export default TabContainer;

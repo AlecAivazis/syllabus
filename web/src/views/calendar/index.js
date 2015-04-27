@@ -11,7 +11,16 @@ import Tab from 'components/tabs/tab/component';
 
 class CalendarRoot extends React.Component {
     render() {
-        return <span>calendar</span>
+        return (
+            <TabContainer>
+                <Tab title="hello">
+                    Hello
+                </Tab>
+                <Tab title="goodbye">
+                    Goodbye
+                </Tab>
+            </TabContainer>
+        )
     }
 }
 
