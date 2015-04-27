@@ -51,7 +51,7 @@ describe("TabPanel", () => {
         expect(rendered_component).to.exist;
     });
 
-
+ 
     it('barfs if no tabs are given', function(){
         // check that the component throws if rendered without tabs
         expect(function(){TestUtils.renderIntoDocument(<TabContainer/>)})
@@ -62,7 +62,7 @@ describe("TabPanel", () => {
     it('shows the first tab if no default set', function(){
         // render the component to the DOM
         let rendered_component = TestUtils.renderIntoDocument(panel_component);
-        // check if the first tab is active
+        // check that the first tab is active
         expect(isTabActive(rendered_component, 1)).to.be.true;
     });
 
@@ -77,7 +77,7 @@ describe("TabPanel", () => {
         )
         // render the component to the DOM
         let rendered_component = TestUtils.renderIntoDocument(component);
-        // check if the second tab is active
+        // check that the second tab is active
         expect(isTabActive(rendered_component, 2)).to.be.true;
     });
 
@@ -87,11 +87,16 @@ describe("TabPanel", () => {
         let rendered_component = TestUtils.renderIntoDocument(panel_component);
         // save a reference to the second nav element
         let navElement = TestUtils.findRenderedDOMComponentWithTag(rendered_component, 'ul');
-        let navItem = navElement.getDOMNode().children[1];
-        // click on the navigation element
-        TestUtils.Simulate.click(navItem);
-        // check if the second tab is active
+        let secondTab = navElement.getDOMNode().children[1];
+        // click on the second tab element
+        TestUtils.Simulate.click(secondTab);
+        // check that the second tab is active
         expect(isTabActive(rendered_component, 2)).to.be.true;
+        // click on the first tab
+        let firstTab = navElement.getDOMNode().children[0];
+        TestUtils.Simulate.click(firstTab);
+        // check that the first tab is active
+        expect(isTabActive(rendered_component, 1)).to.be.true;
     });
 });
 
