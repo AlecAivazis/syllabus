@@ -2,6 +2,8 @@
 
 // react: https://github.com/facebook/react
 import React from 'react';
+// local imports
+import {tab_style} from './styles';
 
 'use strict'
 
@@ -11,9 +13,9 @@ class Tab extends React.Component {
     render() {
         // return the image
         return (
-            <div>
+            <article style={tab_style}>
                 {this.props.children}
-            </div> 
+            </article> 
         )
     }
 }

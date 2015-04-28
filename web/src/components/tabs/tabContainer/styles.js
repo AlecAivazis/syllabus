@@ -29,7 +29,6 @@ export let menu_element_active_style = _.assign({}, menu_element_style, {
     zIndex: 2
 });
 
-
 export let menu_element_left_edge_style = {
     backgroundImage: `url('${left_edge_image}')`,
     width: menu_element_edge_width,
@@ -83,12 +82,6 @@ export let header_style = {
 
 export let container_style = {
     padding: '20px',
-};
-
-export let tab_style = {
-    background: 'white',
-    zIndex: '5',
-    display: 'inline'
 };
 
 // end of file

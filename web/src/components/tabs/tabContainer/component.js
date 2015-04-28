@@ -100,6 +100,7 @@ class TabContainer extends React.Component {
                 </li>
             )
         });
+
         // return the navigation element
         return (
             <div style={header_style}  className="clearfix">
@@ -118,12 +119,8 @@ class TabContainer extends React.Component {
     getSelectedTab(){
         // figure out the selected tab
         let index = this.state.selectedTab-1;
-        // render the selected tab in a semantic container
-        return (
-            <article ref='container' style={tab_style}>
-                {this.props.children[index]}
-            </article> 
-        )
+        // return the appropriate tab
+        return this.props.children[index]
     }
 
 
