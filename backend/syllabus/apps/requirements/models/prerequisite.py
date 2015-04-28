@@ -1,10 +1,9 @@
 # django imports
 from django.db import models
 # local imports
-from syllabus.apps.academia.models import CourseProfile
+CourseProfile = 'academia.CourseProfile'
 
-
-class Requirement(models.Model):
+class Prerequisite(models.Model):
     """
     A group of `course_profiles` of which a certain `number` must be taken.
 
