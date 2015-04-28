@@ -11,6 +11,7 @@ require('normalize.css');
 // local imports
 import NavBar from '../components/navigation/navBar/component';
 require('styles/noise.css');
+import {backgroundColor} from 'styles/colors.js'
 
 
 // the base application component for the frontend
@@ -38,7 +39,7 @@ let mainContainerStyle = {
     bottom: '0px', 
     // make sure we line up with the NavBar component
     top: require('../components/navigation/navBar/styles').nav_style.height,
-    background: '#dfddd1'
+    background: backgroundColor
 }
 
 

@@ -35,7 +35,8 @@ module.exports = function(config) {
         module: {
             // use the same loaders as the local webpack config
             loaders: require("./webpack.config.js").module.loaders
-        }
+        }, 
+        resolve: require("./webpack.config.js").resolve
     },
 
     // test results reporter to use

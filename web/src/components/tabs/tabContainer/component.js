@@ -8,9 +8,11 @@ import _ from 'lodash';
 import {menuElementStyle, 
         listContainerStyle, 
         menuToolbarStyle, 
-        headerStyle} from './styles';
+        headerStyle,
+        containerStyle} from './styles';
 
 require('styles/clearfix.styl');
+require('styles/tabs.css');
     
 
 'use strict'
@@ -34,7 +36,7 @@ class TabContainer extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={containerStyle}>
                 {this.getMenu()}
                 {this.getSelectedTab()}
             </div> 
@@ -62,14 +64,16 @@ class TabContainer extends React.Component {
             // make sure each tab can select a panel
             return (
                 <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={menuElementStyle}> 
-                    {tab.props.title} 
+                    <a>
+                        {tab.props.title} 
+                    </a>
                 </li>
             )
         });
         // return the navigation element
         return (
             <div style={headerStyle}  className="clearfix">
-                <ul ref="menu" style={listContainerStyle}>
+                <ul ref="menu" style={listContainerStyle} className="tabs group">
                     {list_elements}
                 </ul>
                 <span style={menuToolbarStyle}>
