@@ -5,14 +5,18 @@ import React from 'react';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
 // local imports
-import {menuElementStyle, 
-        listContainerStyle, 
-        menuToolbarStyle, 
-        headerStyle,
-        containerStyle} from './styles';
+import {menu_element_style, 
+        list_container_style, 
+        menu_toolbar_style, 
+        header_style,
+        container_style,
+        tab_style,
+        menu_element_left_edge_style,
+        menu_element_right_edge_style,
+        menu_element_center_style,
+        menu_element_text_style} from './styles';
 
 require('styles/clearfix.styl');
-require('styles/tabs.css');
     
 
 'use strict'
@@ -36,7 +40,7 @@ class TabContainer extends React.Component {
 
     render() {
         return (
-            <div style={containerStyle}>
+            <div style={container_style}>
                 {this.getMenu()}
                 {this.getSelectedTab()}
             </div> 
@@ -63,20 +67,22 @@ class TabContainer extends React.Component {
             let element_key = ++index;
             // make sure each tab can select a panel
             return (
-                <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={menuElementStyle}> 
-                    <a>
-                        {tab.props.title} 
-                    </a>
+                <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={menu_element_style}> 
+                    <span style={menu_element_left_edge_style}>&nbsp;</span>
+                    <span style={menu_element_center_style}>
+                        {tab.props.title}
+                    </span>
+                    <span style={menu_element_right_edge_style}>&nbsp;</span>
                 </li>
             )
         });
         // return the navigation element
         return (
-            <div style={headerStyle}  className="clearfix">
-                <ul ref="menu" style={listContainerStyle} className="tabs group">
+            <div style={header_style}  className="clearfix">
+                <ul ref="menu" style={list_container_style}>
                     {list_elements}
                 </ul>
-                <span style={menuToolbarStyle}>
+                <span style={menu_toolbar_style}>
                     {this.props.header}
                 </span>
             </div>
@@ -90,7 +96,7 @@ class TabContainer extends React.Component {
         let index = this.state.selectedTab-1;
         // render the selected tab in a semantic container
         return (
-            <article ref='container'>
+            <article ref='container' style={tab_style}>
                 {this.props.children[index]}
             </article> 
         )
