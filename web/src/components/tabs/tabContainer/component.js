@@ -5,16 +5,20 @@ import React from 'react';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
 // local imports
-import {menu_element_style, 
-        list_container_style, 
+import {list_container_style, 
         menu_toolbar_style, 
         header_style,
         container_style,
         tab_style,
+        menu_element_style,
+        menu_element_active_style, 
+        menu_element_text_style,
         menu_element_left_edge_style,
+        menu_element_left_edge_active_style,
         menu_element_right_edge_style,
+        menu_element_right_edge_active_style,
         menu_element_center_style,
-        menu_element_text_style} from './styles';
+        menu_element_center_active_style } from './styles';
 
 require('styles/clearfix.styl');
     
@@ -64,15 +68,35 @@ class TabContainer extends React.Component {
         // create list elements for each tab child
         let index = 0;
         let list_elements = _.map(this.props.children, (tab) => {
+            // increment the counter and use that as the element key
             let element_key = ++index;
+            // define variables for the styles
+            let left_edge_style, center_style, right_edge_style, element_style;
+
+            // highlight the appropriate tab
+            if(index == this.state.selectedTab){
+                // this is the active tab so give it the active styles
+                element_style = menu_element_active_style;
+                left_edge_style = menu_element_left_edge_active_style;
+                right_edge_style = menu_element_right_edge_active_style;
+                center_style = menu_element_center_active_style;
+            // otherwise this is not the current tab
+            } else {
+                // so give it the inactive styles
+                element_style = menu_element_style;
+                left_edge_style = menu_element_left_edge_style;
+                right_edge_style = menu_element_right_edge_style;
+                center_style = menu_element_center_style;
+            }
+
             // make sure each tab can select a panel
             return (
-                <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={menu_element_style}> 
-                    <span style={menu_element_left_edge_style}>&nbsp;</span>
-                    <span style={menu_element_center_style}>
+                <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={element_style}> 
+                    <span style={left_edge_style}>&nbsp;</span>
+                    <span style={center_style}>
                         {tab.props.title}
                     </span>
-                    <span style={menu_element_right_edge_style}>&nbsp;</span>
+                    <span style={right_edge_style}>&nbsp;</span>
                 </li>
             )
         });
