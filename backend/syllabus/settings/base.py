@@ -45,6 +45,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+# set the authentication model
+AUTH_USER_MODEL = 'authentication.SyllabusUser'
+
 # Application definition
 
 django_apps = (
@@ -62,6 +65,7 @@ third_party_apps = (
 
 syllabus_apps = (
     'syllabus.apps.academia',
+    'syllabus.apps.authentication',
     'syllabus.apps.metadata',
     'syllabus.apps.requirements',
 )
