@@ -4,6 +4,13 @@
 import React from 'react';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
+// local imports
+import {menuElementStyle, 
+        listContainerStyle, 
+        menuToolbarStyle, 
+        headerStyle} from './styles';
+
+require('styles/clearfix.styl');
     
 
 'use strict'
@@ -54,16 +61,21 @@ class TabContainer extends React.Component {
             let element_key = ++index;
             // make sure each tab can select a panel
             return (
-                <li onClick={this.selectTab.bind(this, element_key)} key={element_key}> 
+                <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={menuElementStyle}> 
                     {tab.props.title} 
                 </li>
             )
         });
         // return the navigation element
         return (
-            <ul ref="menu">
-                {list_elements}
-            </ul>
+            <div style={headerStyle}  className="clearfix">
+                <ul ref="menu" style={listContainerStyle}>
+                    {list_elements}
+                </ul>
+                <span style={menuToolbarStyle}>
+                    {this.props.header}
+                </span>
+            </div>
         )
     }
 
