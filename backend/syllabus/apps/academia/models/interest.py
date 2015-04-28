@@ -15,9 +15,6 @@ class Interest(models.Model):
         """ default string behavior is to return its abbreviation """
         return self.abbrv
 
-    def __unicode__(self):
-        return self.__str__()
-    
     # should add to a string
     def __add__(self, other):
         if isinstance(other, str):
