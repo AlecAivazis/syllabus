@@ -18,7 +18,7 @@ export let menu_element_style = {
     display: 'inline-block',
     height: menu_element_height,
     cursor: 'pointer',
-    marginLeft: '-10%',
+    marginLeft: '-7.5%',
     lineHeight: menu_element_height,
     zIndex: 1,
     position: 'relative',
