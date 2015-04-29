@@ -20,7 +20,6 @@ import {list_container_style,
         menu_element_center_style,
         menu_element_center_active_style } from './styles';
 
-require('styles/clearfix.styl');
     
 
 'use strict'
@@ -120,7 +119,11 @@ class TabContainer extends React.Component {
         // figure out the selected tab
         let index = this.state.selectedTab-1;
         // return the appropriate tab
-        return this.props.children[index]
+        return (
+            <article> 
+                {this.props.children[index]}
+            </article>
+        )
     }
 
 
