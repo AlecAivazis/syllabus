@@ -5,19 +5,22 @@ import React from 'react';
 // local imports
 import TabContainer from 'components/tabs/TabContainer/component';
 import Tab from 'components/tabs/tab/component';
-
+import MonthCalendar from 'components/calendar/monthCalendar/component.js'
 
 'use strict'
 
 class CalendarRoot extends React.Component {
     render() {
         return (
-            <TabContainer header="hello">
-                <Tab title="hello">
-                    Hello
+            <TabContainer>
+                <Tab title="Month">
+                    <MonthCalendar />
                 </Tab>
-                <Tab title="goodbye">
-                    Goodbye
+                <Tab title="Week">
+                    hello
+                </Tab>
+                <Tab title="Day">
+                    Yea...
                 </Tab>
             </TabContainer>
         )
