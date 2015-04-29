@@ -102,7 +102,7 @@ class MonthCalendar extends React.Component {
         let count = 0;
         return _.map(['sunday', 'monday', 'tuesday', 'wednesday',
                 'thursday', 'friday', 'saturday'], (day) => {
-                return <th style={day_labels_style} key={count++}>{day}</th>
+                return <th className="monthlyCalendarHeader" style={day_labels_style} key={count++}>{day}</th>
         });
     }
 

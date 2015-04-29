@@ -11,7 +11,10 @@ export let day_labels_style = {
     height: '22px',
     fontSize: '14px',
     textTransform: 'capitalize',
-    paddingBottom: '10px',
+    padding: '10px 0',
+    color: colors.darkGrey,
+    fontWeight: 'normal',
+    borderBottom: `1px solid ${colors.blue}`,
 };
 
 export let calendar_container_style = {
