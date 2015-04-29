@@ -10,6 +10,7 @@ import {list_container_style,
         header_style,
         container_style,
         tab_style,
+        table_container_style,
         menu_element_style,
         menu_element_active_style, 
         menu_element_text_style,
@@ -120,7 +121,7 @@ class TabContainer extends React.Component {
         let index = this.state.selectedTab-1;
         // return the appropriate tab
         return (
-            <article> 
+            <article style={table_container_style}> 
                 {this.props.children[index]}
             </article>
         )

@@ -37,6 +37,10 @@ export let menu_element_left_edge_style = {
     display: 'inline-block',
 }
 
+export let table_container_style = {
+
+}
+
 // "inherit" from the non active case
 export let menu_element_left_edge_active_style = _.assign({}, menu_element_left_edge_style, {
     backgroundImage: `url('${left_edge_active_image}')`,
@@ -77,11 +81,12 @@ export let menu_toolbar_style = {
 };
 
 export let header_style = {
-    padding: '10px 40px 0px 40px',
+    padding: '0px 40px 0px 40px',
 };
 
 export let container_style = {
     padding: '20px',
+    height: '100%',
 };
 
 // end of file
