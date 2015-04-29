@@ -30,6 +30,7 @@
     "karma-webpack": "^1.5.0",
     "lodash": "^3.7.0",
     "mocha": "^2.2.4",
+    "moment": "^2.10.2",
     "normalize.css": "^3.0.3",
     "react": "^0.13.2",
     "react-bootstrap": "^0.21.0",

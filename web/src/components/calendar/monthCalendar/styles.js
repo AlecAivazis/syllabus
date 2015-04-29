@@ -1,12 +1,23 @@
+// local imports
+import colors from 'styles/colors';
+
 export let calendar_style = {
-    height: '90%',
     width: '100%',
+    height: '90%',
 };
 
 export let header_style = {
-    height: '20%',
+    height: '10%',
 };
 
 export let calendar_container_style = {
-
+    position: 'absolute',
+    top: '55px',
+    left: '20px',
+    right: '20px',
+    bottom: '20px',
+    background: colors.white,
+    overflow: 'hidden',
 };
+
+// end of file

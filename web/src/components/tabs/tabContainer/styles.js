@@ -38,7 +38,6 @@ export let menu_element_left_edge_style = {
 }
 
 export let table_container_style = {
-
 }
 
 // "inherit" from the non active case
@@ -86,7 +85,11 @@ export let header_style = {
 
 export let container_style = {
     padding: '20px',
-    height: '100%',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
 };
 
 // end of file

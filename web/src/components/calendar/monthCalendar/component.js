@@ -6,7 +6,7 @@ import React from 'react';
 import moment from 'moment';
 // local imports
 import MonthlyDay from '../monthlyDay/component';
-import {calendar_style, calendar_container_style} from './styles';
+import {calendar_style, calendar_container_style, header_style} from './styles';
 require('./weekStyle.styl');
 
 'use strict'
@@ -27,9 +27,9 @@ class MonthCalendar extends React.Component {
 
 
     render() {
-        console.log(this.refs.calendar);
         return (
             <div style={calendar_container_style}>
+                <div style={header_style}>hello</div>
                 <table ref="calendar" style={calendar_style}>
                     {this.getElements()}
                 </table>
