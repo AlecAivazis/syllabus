@@ -21,10 +21,20 @@ class Icon extends React.Component {
         if (this.props.size){
             iconName += ` ${icon}-${this.props.size}`;
         }
+        // build the style dynamically
+        let style = {};
+        // if they specified a color
+        if (this.props.color) {
+            style['color'] = this.props.color;
+        }
+        if (this.props.onClick) {
+            style['cursor'] = 'pointer';
+        }
+        
 
         // render the icon
         return (
-            <i className={iconName}>
+            <i className={iconName} style={style} onClick={this.props.onClick}>
             </i>
         )
     }
