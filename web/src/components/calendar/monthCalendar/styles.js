@@ -3,7 +3,7 @@ import colors from 'styles/colors';
 
 export let calendar_style = {
     width: '100%',
-    height: '90%',
+    height: '91.5%',
 };
 
 
