@@ -33,7 +33,7 @@ export let menu_element_left_edge_style = {
     backgroundImage: `url('${left_edge_image}')`,
     width: menu_element_edge_width,
     height: menu_element_height,
-    backgroundSize: 'stretch',
+    backgroundSize: 'cover',
     display: 'inline-block',
 }
 
@@ -46,7 +46,7 @@ export let menu_element_right_edge_style = {
     backgroundImage: `url('${right_edge_image}')`,
     width: menu_element_edge_width,
     height: menu_element_height,
-    backgroundSize: 'stretch',
+    backgroundSize: 'cover',
     display: 'inline-block',
 }
 
