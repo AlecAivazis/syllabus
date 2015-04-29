@@ -4,6 +4,7 @@
 import React from 'react';
 // local imports
 import {tab_style} from './styles';
+require('styles/clearfix.styl');
 
 'use strict'
 
@@ -13,9 +14,9 @@ class Tab extends React.Component {
     render() {
         // return the image
         return (
-            <article style={tab_style}>
+            <div style={tab_style} className="clearfix">
                 {this.props.children}
-            </article> 
+            </div> 
         )
     }
 }
