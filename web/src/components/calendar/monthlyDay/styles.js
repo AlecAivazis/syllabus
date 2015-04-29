@@ -9,6 +9,7 @@ export let day_style = {
     overflow: 'hidden',
     verticalAlign: 'top',
     padding: '1%',
+    width: '14.2%',
 };
 
 export let day_off_month_style = _.assign({}, day_style,{

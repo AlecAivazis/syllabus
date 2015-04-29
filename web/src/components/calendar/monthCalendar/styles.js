@@ -6,8 +6,12 @@ export let calendar_style = {
     height: '90%',
 };
 
-export let header_style = {
-    height: '10%',
+
+export let day_labels_style = {
+    height: '22px',
+    fontSize: '14px',
+    textTransform: 'capitalize',
+    paddingBottom: '10px',
 };
 
 export let calendar_container_style = {

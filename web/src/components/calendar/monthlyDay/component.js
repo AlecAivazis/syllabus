@@ -25,7 +25,6 @@ class MonthlyDay extends React.Component {
     }
 
     render() {
-        console.log(this.state.offMonth);
         let style;
         // figure out if the day is an off month and apply the right style
         if (this.props.offMonth){

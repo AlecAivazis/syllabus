@@ -6,7 +6,10 @@ import React from 'react';
 import moment from 'moment';
 // local imports
 import MonthlyDay from '../monthlyDay/component';
-import {calendar_style, calendar_container_style, header_style} from './styles';
+import CalendarHeader from '../calendarHeader/component';
+import {calendar_style, 
+        calendar_container_style, 
+        day_labels_style} from './styles';
 require('./weekStyle.styl');
 
 'use strict'
@@ -23,18 +26,44 @@ class MonthCalendar extends React.Component {
         };
         // bind the various functions
         this.getElements = this.getElements.bind(this);
+        this.getDayLabels = this.getDayLabels.bind(this);
+        this.nextMonth = this.nextMonth.bind(this);
+        this.previousMonth = this.previousMonth.bind(this);
     }
 
 
     render() {
+        // the title of the calendar
+        let title = this.state.currentDate.format('MMMM YYYY');
+        // render the component
         return (
             <div style={calendar_container_style}>
-                <div style={header_style}>hello</div>
+                <CalendarHeader title={title} previous={this.previousMonth} 
+                                              next={this.nextMonth} />
                 <table ref="calendar" style={calendar_style}>
-                    {this.getElements()}
+                    <thead>
+                        {this.getDayLabels()}
+                    </thead>
+                    <tbody>
+                        {this.getElements()}
+                    </tbody>
                 </table>
             </div>
         )
+    }
+
+
+    nextMonth() {
+        this.setState({
+            currentDate: this.state.currentDate.add('1', 'month')
+        });
+    }
+
+
+    previousMonth(){
+        this.setState({
+            currentDate: this.state.currentDate.subtract('1', 'month')
+        });
     }
 
 
@@ -47,23 +76,34 @@ class MonthCalendar extends React.Component {
         let end = this.state.currentDate.clone().endOf('month').endOf('week')
         // for each week in the range
         for (let week = start.clone(); week.isBefore(end) ; week.add(1, 'week')) {
+            // save the days that we need to add to the week element
             let days = [];
+            // for each day for the week
             for(let dayOfWeek = week.clone(); 
                     dayOfWeek.isBefore(week.clone().endOf('week')); 
                                                dayOfWeek.add(1,'days')){
                 // the day is an off month if it isn't the same month as today
-                let offMonth = dayOfWeek.format('M') != moment().format('M');
+                let offMonth = dayOfWeek.format('M') != this.state.currentDate.format('M');
                 // add a day element
                 days.push(
-                    <MonthlyDay day={dayOfWeek.format()} offMonth={offMonth}/>
+                    <MonthlyDay day={dayOfWeek.format()} offMonth={offMonth} key={dayOfWeek.format()}/>
                 )
             }
 
             // return the week as a table row
-            rows.push(<tr children={days} className="monthlyCalendarWeek" />);
+            rows.push(<tr children={days} className="monthlyCalendarWeek" key={week.format('W')}/>);
         }
         // return the list of weeks
         return rows;
+    }
+
+
+    getDayLabels(){
+        let count = 0;
+        return _.map(['sunday', 'monday', 'tuesday', 'wednesday',
+                'thursday', 'friday', 'saturday'], (day) => {
+                return <th style={day_labels_style} key={count++}>{day}</th>
+        });
     }
 
 }
