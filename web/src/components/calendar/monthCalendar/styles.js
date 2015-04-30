@@ -1,10 +1,10 @@
 // local imports
-import colors from 'styles/colors';
+import colors from 'styles/colors'
 
 export let calendar_style = {
     width: '100%',
     height: '91.5%',
-};
+}
 
 
 export let day_labels_style = {
@@ -15,7 +15,7 @@ export let day_labels_style = {
     color: colors.darkGrey,
     fontWeight: 'normal',
     borderBottom: `1px solid ${colors.blue}`,
-};
+}
 
 export let calendar_container_style = {
     position: 'absolute',
@@ -25,6 +25,6 @@ export let calendar_container_style = {
     bottom: '20px',
     background: colors.white,
     overflow: 'hidden',
-};
+}
 
 // end of file

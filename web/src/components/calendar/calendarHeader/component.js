@@ -29,6 +29,6 @@ CalendarHeader.propTypes = {
 };
 
 // export the component
-export default CalendarHeader;
+export default CalendarHeader
 
 // end of file

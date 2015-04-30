@@ -1,16 +1,16 @@
 // the root component for the front end application
 
-'use strict';
+'use strict'
 
 // react: https://github.com/facebook/react
-import React from 'react';
+import React from 'react'
 // react-router: https://github.com/rackt/react-router
-import {RouteHandler} from 'react-router';
+import {RouteHandler} from 'react-router'
 // normalize.css: http://necolas.github.io/normalize.css/
-require('normalize.css');
+require('normalize.css')
 // local imports
-import NavBar from '../components/navigation/navBar/component';
-require('styles/noise.css');
+import NavBar from '../components/navigation/navBar/component'
+require('styles/noise.css')
 import {backgroundColor} from 'styles/colors.js'
 
 
@@ -44,6 +44,6 @@ let mainContainerStyle = {
 
 
 // export the component
-export default SyllabusRoot;
+export default SyllabusRoot
 
 // end of file
