@@ -5,9 +5,7 @@ import React from 'react'
 // momentjs: https://github.com/moment/momentjs.com
 import moment from 'moment'
 // local imports
-import CalendarHeader from '../calendarHeader/component'
 import CalendarDay from '../calendarDay/component'
-import {calendar_container_style} from '../monthCalendar/styles'
 
 'use strict'
 
@@ -16,7 +14,7 @@ class WeeklyCalendar extends React.Component {
 
     constructor(props){
         // instantiate this
-        super(props)
+        super(props )
         // set initial state
         this.state = {
             currentDate: moment(props.defaultDate)
@@ -67,14 +65,14 @@ class WeeklyCalendar extends React.Component {
         // keep the elements in a list
         let elements = []
         // for every day in between the start and end of the week
-        for(let day = week.clone() ; day.isBefore(end) ; day.add(1,'days')){
+        for(let day = start.clone() ; day.isBefore(end) ; day.add(1,'days')){
             // add the appropriate component for the day
-            element.push(
-
+            elements.push(
+                <CalendarDay day={day.format()} key={day.format()} />
             )
         }
 
-        return <span>hello</span> 
+        return elements
     }
 
 

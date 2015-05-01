@@ -6,9 +6,8 @@ import React from 'react'
 import moment from 'moment'
 // local imports
 import MonthlyDay from '../monthlyDay/component'
-import CalendarHeader from '../calendarHeader/component'
-import {calendar_style, 
-        calendar_container_style, 
+import CalendarContainer from '../calendarContainer/component'
+import {calendar_style,
         day_labels_style} from './styles'
 require('./weekStyle.styl')
 
@@ -37,22 +36,16 @@ class MonthCalendar extends React.Component {
         let title = this.state.currentDate.format('MMMM YYYY')
         // render the component
         return (
-            <div style={calendar_container_style}>
-                <div style={{height:'100%', position: 'relative'}}>
-                    <CalendarHeader title={title} previous={this.previousMonth} 
-                                                  next={this.nextMonth} />
-                    <div style={{position: 'absolute', top: '55px', bottom: '0', height: 'auto', right: '0', left: '0'}}>
-                        <table ref="calendar" style={calendar_style}>
-                            <thead>
-                                {this.getDayLabels()}
-                            </thead>
-                            <tbody>
-                                {this.getElements()}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <CalendarContainer title={title} next={this.nextMonth} previous={this.previousMonth} >
+                <table ref="calendar" style={calendar_style}>
+                    <thead>
+                        {this.getDayLabels()}
+                    </thead>
+                    <tbody>
+                        {this.getElements()}
+                    </tbody>
+                </table>
+            </CalendarContainer>
         )
     }
 
