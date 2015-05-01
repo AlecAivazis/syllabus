@@ -9,8 +9,9 @@ import {Route} from 'react-router';
 // lodash: https://github.com/lodash/lodash
 import _ from 'lodash';
 // local imports
-import CalendarRoot from './views/calendar/index';
-import SyllabusRoot from './views/index';
+import CalendarRoot from './views/calendar/index'
+import GradebookRoot from './views/gradebook/index'
+import SyllabusRoot from './views/index'
 
 // the potential routes for each role (actual routes are defined in index.js)
 let all_routes = [
@@ -22,6 +23,15 @@ let all_routes = [
         allowed_roles: ['teacher', 'student'], 
         show_in_nav: true,
         icon: 'calendar',
+    },
+    {
+        name: 'gradebook',
+        route: 'gradebook',
+        path: '/gradebook',
+        handler: GradebookRoot,
+        allowed_roles: ['teacher'], 
+        show_in_nav: true,
+        icon: 'book',
     }
 ];
 
