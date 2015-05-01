@@ -1,11 +1,11 @@
 // the style for the calendar header
 
 export let header_style = {
-    height: '8.5%',
     textAlign: 'center',
-    lineHeight: '300%',
     fontSize: '22px',
     overflow: 'hidden',
+    height: '55px',
+    lineHeight: '55px',
 };
 
 // end of file
