@@ -1,4 +1,5 @@
-// a day for the syllabus monthly calendar
+// a component responsible for wrapping children around a container used 
+// in the container view by syllabus
 
 // react: https://github.com/facebook/react
 import React from 'react'

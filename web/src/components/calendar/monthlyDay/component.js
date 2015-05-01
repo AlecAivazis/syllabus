@@ -32,7 +32,7 @@ class MonthlyDay extends React.Component {
         } else {
             style = day_style;
         }
-        // render the icon
+        // render the day
         return (
             /* use eq.js for element queries */
             <td style={style} className="monthlyDay">

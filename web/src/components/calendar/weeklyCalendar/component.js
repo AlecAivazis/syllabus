@@ -5,7 +5,9 @@ import React from 'react'
 // momentjs: https://github.com/moment/momentjs.com
 import moment from 'moment'
 // local imports
+import CalendarContainer from '../calendarContainer/component'
 import CalendarDay from '../calendarDay/component'
+import {day_style, timeline_style} from './styles'
 
 'use strict'
 
@@ -21,7 +23,8 @@ class WeeklyCalendar extends React.Component {
         }
         // bind the various functions
         this.getElements = this.getElements.bind(this)
-        this.getDayLabels = this.getDayLabels.bind(this)
+        this.getTimeline = this.getTimeline.bind(this)
+        this.getTitle = this.getTitle.bind(this)
         this.nextWeek = this.nextWeek.bind(this)
         this.peviousWeek = this.peviousWeek.bind(this)
     }
@@ -32,15 +35,15 @@ class WeeklyCalendar extends React.Component {
         let title = this.state.currentDate.format('MMMM YYYY');
         // render the component
         return (
-            <div style={calendar_container_style}>
-                <CalendarHeader title={title} previous={this.peviousWeek} 
-                                              next={this.nextWeek} />
+            <CalendarContainer title={this.getTitle()} previous={this.peviousWeek} next={this.nextWeek} >
                 <article>
+                    {this.getTimeline()}
                     {this.getElements()}
                 </article>
-            </div>
+            </CalendarContainer>
         )
     }
+
 
     // focus the calendar on the next week
     nextWeek() {
@@ -49,12 +52,19 @@ class WeeklyCalendar extends React.Component {
         })
     }
 
+
     // focus the calendar on the previous week
     peviousWeek(){
         this.setState({
             currentDate: this.state.currentDate.subtract('1', 'week')
         })
     }
+
+
+    getTimeline() {
+        return <div style={timeline_style}>&nbsp;</div>
+    }
+
 
     // get the element that make up the calendar
     getElements() {
@@ -68,7 +78,7 @@ class WeeklyCalendar extends React.Component {
         for(let day = start.clone() ; day.isBefore(end) ; day.add(1,'days')){
             // add the appropriate component for the day
             elements.push(
-                <CalendarDay day={day.format()} key={day.format()} />
+                <CalendarDay day={day.format()} key={day.format()} style={day_style} show_title={true}/>
             )
         }
 
@@ -76,14 +86,33 @@ class WeeklyCalendar extends React.Component {
     }
 
 
-    getDayLabels(){
-        let count = 0;
-        return _.map(['sunday', 'monday', 'tuesday', 'wednesday',
-                'thursday', 'friday', 'saturday'], (day) => {
-                return <span className="weeklyCalendarHeader" key={count++}>{day}</span>
-        })
-    }
+    // return the title for the calendar
+    getTitle(){
+        // the start of the week to show
+        let start = this.state.currentDate.clone().startOf('week')
+        // the end of the week to show
+        let end = this.state.currentDate.clone().endOf('week')
+        let start_title, end_title
+        // if the start and end are not in the same year
+        if (start.format('YYYY') != end.format('YYYY')){
+            // show full dates on both side
+            start_title = start.format('MMM D')
+            end_title = end.format('MMM D, YYYY')
+        // otherwise the start and end time have the same year
+        // if the months are not the same
+        } else if (start.format('M') != end.format('M')) {
+            start_title = start.format('MMM D')
+            end_title = end.format('MMM D YYYY')
+        // otherwise the start and end time are in the same month and year
+        } else {
+            start_title = start.format('D')
+            end_title = end.format('D MMMM YYYY')
+        }
 
+        // return the title
+        return `${start_title} ${String.fromCharCode(8212)} ${end_title}`
+
+    }
 }
 
 
