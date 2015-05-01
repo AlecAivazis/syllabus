@@ -38,16 +38,20 @@ class MonthCalendar extends React.Component {
         // render the component
         return (
             <div style={calendar_container_style}>
-                <CalendarHeader title={title} previous={this.previousMonth} 
-                                              next={this.nextMonth} />
-                <table ref="calendar" style={calendar_style}>
-                    <thead>
-                        {this.getDayLabels()}
-                    </thead>
-                    <tbody>
-                        {this.getElements()}
-                    </tbody>
-                </table>
+                <div style={{height:'100%', position: 'relative'}}>
+                    <CalendarHeader title={title} previous={this.previousMonth} 
+                                                  next={this.nextMonth} />
+                    <div style={{position: 'absolute', top: '55px', bottom: '0', height: 'auto', right: '0', left: '0'}}>
+                        <table ref="calendar" style={calendar_style}>
+                            <thead>
+                                {this.getDayLabels()}
+                            </thead>
+                            <tbody>
+                                {this.getElements()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         )
     }
