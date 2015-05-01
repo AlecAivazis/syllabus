@@ -82,7 +82,6 @@ class DailyCalendar extends React.Component {
 }
 
 
-
 // prop types
 DailyCalendar.propTypes = {
     defaultDate: React.PropTypes.string
