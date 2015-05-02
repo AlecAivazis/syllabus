@@ -3,13 +3,14 @@
 // react: https://github.com/facebook/react
 import React from 'react'
 // local imports
+import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 
 'use strict'
 
 class GradebookRoot extends React.Component {
     render() {
         return (   
-            <span>hello</span>
+            <SidebarContainer />
         )
     }
 }
