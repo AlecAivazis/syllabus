@@ -6,6 +6,8 @@ export default {
     darkGrey: '#999999',
     blue: '#e4e9ee',
     red: '#f4e0e0',
+    sidebar_tier1: '#d1ccb2',
+    sidebar_tier2: '#d7d4c2',
 }
 
 // end of file
