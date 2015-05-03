@@ -2,6 +2,7 @@
 
 export let elemet_style = {
     padding: '15px',
+    cursor: 'pointer',
 }
 
 // the tier one sidebar is the base style with a different coloring
