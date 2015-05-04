@@ -11,7 +11,6 @@ import _ from 'lodash';
 // local imports
 import CalendarRoot from './views/calendar/index'
 import GradebookRoot from './views/gradebook/index'
-import ViewGradebook from './views/gradebook/viewGradebook/index'
 import SyllabusRoot from './views/index'
 
 // the potential routes for each role (actual routes are defined in index.js)
@@ -69,8 +68,7 @@ function get_routes_for_user(){
 export let route_elements = (
     <Route handler={SyllabusRoot}>
         <Route name="calendar" path="/" handler={CalendarRoot}/>
-        <Route name="gradebook" path="/gradebook" handler={GradebookRoot}>
-            <Route name="view_gradebook" path=":class_id" handler={ViewGradebook}/>
+        <Route name="gradebook" path="/gradebook/?:identifier?" handler={GradebookRoot}>
         </Route>
     </Route>
 )

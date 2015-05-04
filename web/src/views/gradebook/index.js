@@ -7,6 +7,8 @@ import {Link, RouteHandler} from 'react-router';
 // local imports
 import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 import SidebarElement from 'components/sidebar/sidebarElement/component'
+import Gradebook from 'components/gradebook/component'
+import {empty_gradebook_style} from './styles'
 
 'use strict'
 
@@ -17,12 +19,13 @@ class GradebookRoot extends React.Component {
         super()
         // bind various functions
         this.getSidebarElements = this.getSidebarElements.bind(this)
+        this.getGradebookElement = this.getGradebookElement.bind(this)
     }
 
     render() {
         return (   
             <SidebarContainer menuElements={this.getSidebarElements()} tier={2}>
-                <RouteHandler />
+                {this.getGradebookElement()}
             </SidebarContainer>
         )
     }
@@ -32,15 +35,39 @@ class GradebookRoot extends React.Component {
         // store the sidebar elements in a list
         let elements = []
         elements.push(
-            <Link to="view_gradebook" params={{class_id: 1}}>
+            <Link to="gradebook" params={{identifier: 1}}>
                 <SidebarElement>
-                    hello
+                    Class with id 1
                 </SidebarElement>
             </Link>
         )
         // return the elements
         return elements
     }
+
+    getGradebookElement() {
+        // grab the route from the context
+        let {router} = this.context
+        // save a reference to the specified identified
+        let identifier = router.getCurrentParams().identifier
+        // if they did not specify an identifier
+        if (!identifier){
+            // return a placeholder element
+            return (
+                <div style={empty_gradebook_style}>
+                    Please select a class to view its gradebook       
+                </div>
+            )
+        // otherwise the use specified an identifier for the gradebook
+        } else {
+            return <Gradebook />
+        }
+
+    }
+}
+
+GradebookRoot.contextTypes = {
+  router: React.PropTypes.func
 }
 
 // export the class

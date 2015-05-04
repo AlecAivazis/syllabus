@@ -22,7 +22,7 @@ class NavBar extends React.Component {
 
     render() {
         // normalize the stylesheet
-        let style = normalize(nav_style);
+        let style = normalize(nav_style)
 
         return (
             <nav style={style} className="noise-005">
@@ -33,7 +33,6 @@ class NavBar extends React.Component {
                             return <NavItem name={item.name} route={item.route} 
                                             key={item.name} icon={item.icon}/>
                         }
-                        
                     })}
                 </ul>
             </nav>

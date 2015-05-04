@@ -24,4 +24,8 @@ export let tier2_style = _.assign({}, container_style, {
     background: colors.sidebar_tier2,
 })
 
+export let sidebar_content_style = {
+    marginLeft: '240px'
+}
+
 // end of file

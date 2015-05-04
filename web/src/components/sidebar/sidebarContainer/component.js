@@ -7,7 +7,7 @@ import _ from 'lodash';
 // react-style-normalizer: https://github.com/radubrehar/react-style-normalizer
 import normalize from 'react-style-normalizer';
 // local imports
-import {tier1_style, tier2_style} from './styles'
+import {tier1_style, tier2_style, sidebar_content_style} from './styles'
 require('styles/noise.css')
 
 'use strict'
@@ -36,7 +36,7 @@ class SidebarContainer extends React.Component {
                         })   
                     })}
                 </ul>
-                <div>
+                <div style={sidebar_content_style}>
                     {this.props.children}
                 </div>
             </div>
