@@ -15,7 +15,7 @@ let menu_element_height = '35px';
 let menu_element_edge_width = '25px';
 
 export let menu_element_style = {
-    display: 'inline-block',
+    display: 'inline',
     height: menu_element_height,
     cursor: 'pointer',
     marginLeft: '-6%',
@@ -24,7 +24,9 @@ export let menu_element_style = {
     position: 'relative',
     fontSize: '12px',
     color: '#796804',
-    fontWeight: '550',
+    whiteSpace: 'nowrap',
+    fontFamily: '"HelveticaNeueBlack", "HelveticaNeue-Black", "Helvetica Neue Black", "HelveticaNeue", "Helvetica Neue", "TeXGyreHerosBold", "Arial Black", sans-serif',
+    fontWeight:600,
 };
 
 // "inherit" from the non active case

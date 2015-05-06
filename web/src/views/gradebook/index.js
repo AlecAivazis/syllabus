@@ -60,7 +60,7 @@ class GradebookRoot extends React.Component {
             )
         // otherwise the use specified an identifier for the gradebook
         } else {
-            return <Gradebook />
+            return <Gradebook identifier={identifier}/>
         }
 
     }

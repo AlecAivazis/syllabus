@@ -23,16 +23,13 @@ class Gradebook extends React.Component {
                 </div>
                 <div style={gradebook_body_style}>
                     <TabContainer>
-                        <Tab title="Table">
+                        <Tab title="Grades">
                             hello
                         </Tab>
                         <Tab title="Histogram">
                             hello
                         </Tab>
                         <Tab title="Performance">
-                            hello
-                        </Tab>
-                        <Tab title="Timeline">
                             hello
                         </Tab>
                     </TabContainer>
