@@ -67,7 +67,7 @@ class TabContainer extends React.Component {
 
         // create list elements for each tab child
         let index = 0;
-        let list_elements = _.map(this.props.children, (tab) => {
+        let list_elements = _.map(this.props.children, tab => {
             // increment the counter and use that as the element key
             let element_key = ++index;
             // define variables for the styles
@@ -89,6 +89,8 @@ class TabContainer extends React.Component {
                 center_style = menu_element_center_style;
             }
 
+            console.log(tab.props)
+
             // make sure each tab can select a panel
             return (
                 <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={element_style}> 
@@ -103,7 +105,7 @@ class TabContainer extends React.Component {
 
         // return the navigation element
         return (
-            <div style={header_style}  className="clearfix">
+            <div style={header_style} >
                 <ul ref="menu" style={list_container_style}>
                     {list_elements}
                 </ul>

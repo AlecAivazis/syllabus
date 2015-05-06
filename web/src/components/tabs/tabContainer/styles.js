@@ -18,10 +18,13 @@ export let menu_element_style = {
     display: 'inline-block',
     height: menu_element_height,
     cursor: 'pointer',
-    marginLeft: '-7.5%',
+    marginLeft: '-6%',
     lineHeight: menu_element_height,
     zIndex: 1,
     position: 'relative',
+    fontSize: '12px',
+    color: '#796804',
+    fontWeight: '550',
 };
 
 // "inherit" from the non active case
@@ -35,9 +38,6 @@ export let menu_element_left_edge_style = {
     height: menu_element_height,
     backgroundSize: 'cover',
     display: 'inline-block',
-}
-
-export let table_container_style = {
 }
 
 // "inherit" from the non active case
@@ -77,6 +77,7 @@ export let list_container_style = {
 
 export let menu_toolbar_style = {
     float: 'right',
+    display: 'none'
 };
 
 export let header_style = {
@@ -85,11 +86,7 @@ export let header_style = {
 
 export let container_style = {
     padding: '20px',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
+    height: '100%',
 };
 
 // end of file

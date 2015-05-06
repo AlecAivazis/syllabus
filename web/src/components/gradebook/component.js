@@ -3,17 +3,40 @@
 // react: https://github.com/facebook/react
 import React from 'react'
 // local imports
-import TabContainer from 'components/tabs/TabContainer/component'
+import TabContainer from 'components/tabs/tabContainer/component'
 import Tab from 'components/tabs/tab/component'
+import {header_style,
+        gradebook_container_style,
+        gradebook_body_style } from './styles'
 
 'use strict'
 
 class Gradebook extends React.Component {
 
     render() {
+
         return (
-            <div> 
-                Class 
+
+            <div style={gradebook_container_style}>
+                <div style={header_style}> 
+                    Class 
+                </div>
+                <div style={gradebook_body_style}>
+                    <TabContainer>
+                        <Tab title="Table">
+                            hello
+                        </Tab>
+                        <Tab title="Histogram">
+                            hello
+                        </Tab>
+                        <Tab title="Performance">
+                            hello
+                        </Tab>
+                        <Tab title="Timeline">
+                            hello
+                        </Tab>
+                    </TabContainer>
+                </div>
             </div>
         )
     }

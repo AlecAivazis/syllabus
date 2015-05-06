@@ -14,7 +14,7 @@ class Tab extends React.Component {
     render() {
         // return the image
         return (
-            <div style={tab_style} className="clearfix">
+            <div style={tab_style}>
                 {this.props.children}
             </div> 
         )
