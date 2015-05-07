@@ -1,0 +1,29 @@
+//- -*- Jade -*-
+//- -*- coding: utf-8 -*-
+//-
+//- alec aivazis
+//- (c) {project.span} all rights reserved
+//-
+
+extends base
+
+- load staticfiles
+- load compress
+
+append css
+    link(rel="stylesheet", href="{% static 'thirdparty/normalize.css/normalize.css' %}")
+    {% compress css %}
+    link(rel="stylesheet", type="text/stylus", href="{% static 'styles/default.styl' %}")
+    {% endcompress %}
+  
+
+append js
+    script(src="{% static 'thirdparty/jquery/dist/jquery.js' %}")
+    script(src="{% static 'thirdparty/underscore/underscore.js' %}")
+    {% compress js %}
+    script(src="{% static 'scripts/core.coffee' %}", type="text/coffeescript")
+    {% endcompress %}
+
+append content
+
+//- end of file
