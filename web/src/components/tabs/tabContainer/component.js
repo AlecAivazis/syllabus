@@ -89,8 +89,6 @@ class TabContainer extends React.Component {
                 center_style = menu_element_center_style;
             }
 
-            console.log(tab.props)
-
             // make sure each tab can select a panel
             return (
                 <li onClick={this.selectTab.bind(this, element_key)} key={element_key} style={element_style}> 

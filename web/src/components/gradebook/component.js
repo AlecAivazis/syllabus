@@ -9,6 +9,7 @@ import {header_style,
         gradebook_container_style,
         gradebook_body_style } from './styles'
 
+
 'use strict'
 
 class Gradebook extends React.Component {
@@ -24,13 +25,13 @@ class Gradebook extends React.Component {
                 <div style={gradebook_body_style}>
                     <TabContainer>
                         <Tab title="Grades">
-                            hello
+                            hello1
                         </Tab>
                         <Tab title="Histogram">
-                            hello
+                            hello2
                         </Tab>
                         <Tab title="Performance">
-                            hello
+                            hello3
                         </Tab>
                     </TabContainer>
                 </div>

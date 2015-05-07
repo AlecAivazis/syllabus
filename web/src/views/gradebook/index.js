@@ -9,6 +9,9 @@ import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 import SidebarElement from 'components/sidebar/sidebarElement/component'
 import Gradebook from 'components/gradebook/component'
 import {empty_gradebook_style} from './styles'
+// local flux imports
+import UserStore from 'stores/userStore'
+import UserActions from 'actions/userActions'
 
 'use strict'
 
@@ -20,7 +23,12 @@ class GradebookRoot extends React.Component {
         // bind various functions
         this.getSidebarElements = this.getSidebarElements.bind(this)
         this.getGradebookElement = this.getGradebookElement.bind(this)
+        this.getUserList = this.getUserList.bind(this)
+        this.state = {
+            users: []
+        }
     }
+
 
     render() {
         return (   
@@ -28,6 +36,25 @@ class GradebookRoot extends React.Component {
                 {this.getGradebookElement()}
             </SidebarContainer>
         )
+    }
+
+
+    componentDidMount(){
+        // when the user store updates we need to refetch the list of users
+        this.unsubscribe = UserStore.listen(this.getUserList)
+    }
+
+
+    componentWillUnmount(){
+        // unsubscribe from the listener
+        this.unsubscribe()
+    }
+
+
+    getUserList() {
+        this.setState({
+            users: UserStore.getUsers()
+        })
     }
 
 
@@ -45,6 +72,7 @@ class GradebookRoot extends React.Component {
         return elements
     }
 
+
     getGradebookElement() {
         // grab the route from the context
         let {router} = this.context
@@ -60,7 +88,7 @@ class GradebookRoot extends React.Component {
             )
         // otherwise the use specified an identifier for the gradebook
         } else {
-            return <Gradebook identifier={identifier}/>
+            return <Gradebook identifier={identifier} />
         }
 
     }
