@@ -1,8 +1,5 @@
 # django imports
 from django.db import models
-from django.exceptions import 
-# local imports
-from ..fields import *
 
 class Event(models.Model):
     """ 
