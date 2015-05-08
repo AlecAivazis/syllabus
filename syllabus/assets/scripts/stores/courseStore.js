@@ -2,6 +2,8 @@
 
 // reflux: https://github.com/spoike/refluxjs
 import Reflux from 'reflux'
+// lodash: https://github.com/lodash/lodash
+import _ from 'lodash'
 // local imports
 import courseActions from '../actions/courseActions'
 
@@ -27,6 +29,12 @@ let courseStore = Reflux.createStore({
         // once we're done loading, let the component know
         this.trigger(courses)
     },
+
+
+    getCourseById: function(course_id) {
+        // return the course with a matching id
+        return _.first(_.filter(courses, {id: course_id}))
+    }
 })
 
 // export the store

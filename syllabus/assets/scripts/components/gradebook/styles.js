@@ -9,4 +9,16 @@ export let gradebook_body_style = {
 
 }
 
+export let title_style = {
+    float: 'left',
+}
+
+export let toolbar_style = {
+    float: 'right',
+}
+
+export let header_style = {
+    marginBottom: '10px',
+}
+
 // end of file

@@ -7,20 +7,25 @@ import TabContainer from 'components/tabs/tabContainer/component'
 import Tab from 'components/tabs/tab/component'
 import {header_style,
         gradebook_container_style,
-        gradebook_body_style } from './styles'
-
+        gradebook_body_style,
+        title_style,
+        toolbar_style } from './styles'
+require('styles/clearfix')
 
 'use strict'
 
 class Gradebook extends React.Component {
 
     render() {
-
         return (
-
             <div style={gradebook_container_style}>
                 <div style={header_style}> 
-                    Class 
+                    <span style={title_style}>
+                        {this.props.course.name}
+                    </span>
+                    <span style={toolbar_style}>
+                        hello
+                    </span>
                 </div>
                 <div style={gradebook_body_style}>
                     <TabContainer>

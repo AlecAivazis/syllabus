@@ -95,11 +95,13 @@ class GradebookRoot extends React.Component {
                     Please select a class to view its gradebook       
                 </div>
             )
-        // otherwise the use specified an identifier for the gradebook
+        // otherwise the user specified an identifier for the gradebook
         } else {
-            return <Gradebook identifier={identifier} />
+            // figure out the course corresponding to the identifier
+            let course = CourseStore.getCourseById(parseInt(identifier))
+            // return the gradebook element for that course
+            return <Gradebook course={course}/>
         }
-
     }
 }
 
@@ -107,8 +109,8 @@ GradebookRoot.contextTypes = {
   router: React.PropTypes.func
 }
 
+
 // export the class
 export default GradebookRoot
-
 
 // end of file

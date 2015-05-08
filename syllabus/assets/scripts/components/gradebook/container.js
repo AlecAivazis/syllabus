@@ -37,7 +37,7 @@ class GradebookContainer extends React.Component {
         // when the user store updates we need to refetch the list of users
         this.unsubscribe = UserStore.listen(this.updateUserList)
         // load the users for the specified class
-        UserActions.loadUsersInClass(this.props.identifier)
+        UserActions.loadUsersInClass(this.props.course.id)
     }
 
 
@@ -50,7 +50,7 @@ class GradebookContainer extends React.Component {
     render() {
         return (
             <div>
-                <Gradebook users={this.state.users}/>
+                <Gradebook users={this.state.users} course={this.props.course}/>
             </div>
         )
     }
