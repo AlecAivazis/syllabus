@@ -7,7 +7,7 @@ import {Link, RouteHandler} from 'react-router';
 // local imports
 import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 import SidebarElement from 'components/sidebar/sidebarElement/component'
-import Gradebook from 'components/gradebook/component'
+import GradebookContainer from 'components/gradebook/container'
 import {empty_gradebook_style} from './styles'
 // local flux imports
 import UserStore from 'stores/userStore'
@@ -65,7 +65,7 @@ class GradebookRoot extends React.Component {
             )
         // otherwise the use specified an identifier for the gradebook
         } else {
-            return <Gradebook identifier={identifier} />
+            return <GradebookContainer identifier={identifier} />
         }
 
     }

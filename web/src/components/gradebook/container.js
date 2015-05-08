@@ -17,25 +17,25 @@ class GradebookContainer extends React.Component {
         // instantiate this
         super(props)
         // bind various functions
-        this.getUserList = this.getUserList.bind(this)
+        this.updateUserList = this.updateUserList.bind(this)
         
         // initial state
         this.state = {
-            users = []
+            users: []
         }
     }
 
 
-    getUserList(){
+    updateUserList(users){
         this.setState({
-            users: UserStore.getUsers()
+            users: users
         })
     }
 
 
     componentDidMount(){
         // when the user store updates we need to refetch the list of users
-        this.unsubscribe = UserStore.listen(this.getUserList)
+        this.unsubscribe = UserStore.listen(this.updateUserList)
         // load the users for the specified class
         UserActions.loadUsersInClass(this.props.identifier)
     }
@@ -48,14 +48,9 @@ class GradebookContainer extends React.Component {
 
 
     render() {
-
         return (
             <div>
-                <div>
-                    hello
-                    {this.state.users}
-                </div>
-                <Gradebook identifier={this.props.identifier} />
+                <Gradebook users={this.state.users}/>
             </div>
         )
     }
