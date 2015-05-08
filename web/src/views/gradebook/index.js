@@ -23,10 +23,6 @@ class GradebookRoot extends React.Component {
         // bind various functions
         this.getSidebarElements = this.getSidebarElements.bind(this)
         this.getGradebookElement = this.getGradebookElement.bind(this)
-        this.getUserList = this.getUserList.bind(this)
-        this.state = {
-            users: []
-        }
     }
 
 
@@ -36,25 +32,6 @@ class GradebookRoot extends React.Component {
                 {this.getGradebookElement()}
             </SidebarContainer>
         )
-    }
-
-
-    componentDidMount(){
-        // when the user store updates we need to refetch the list of users
-        this.unsubscribe = UserStore.listen(this.getUserList)
-    }
-
-
-    componentWillUnmount(){
-        // unsubscribe from the listener
-        this.unsubscribe()
-    }
-
-
-    getUserList() {
-        this.setState({
-            users: UserStore.getUsers()
-        })
     }
 
 

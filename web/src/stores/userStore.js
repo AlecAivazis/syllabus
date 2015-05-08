@@ -25,6 +25,7 @@ let UserStore = Reflux.createStore({
 
 
     loadUsersInClass: function(class_id) {
+        console.log("loading users")
         // once we're done loading, let the component know
         this.trigger()
     },
