@@ -68,8 +68,7 @@ function get_routes_for_user(){
 export let route_elements = (
     <Route handler={SyllabusRoot}>
         <Route name="calendar" path="/" handler={CalendarRoot}/>
-        <Route name="gradebook" path="/gradebook/?:identifier?" handler={GradebookRoot}>
-        </Route>
+        <Route name="gradebook" path="/gradebook/?:identifier?" handler={GradebookRoot}/>
     </Route>
 )
 

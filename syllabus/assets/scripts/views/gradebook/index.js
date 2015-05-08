@@ -7,11 +7,11 @@ import {Link, RouteHandler} from 'react-router';
 // local imports
 import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 import SidebarElement from 'components/sidebar/sidebarElement/component'
-import GradebookContainer from 'components/gradebook/container'
+import Gradebook from 'components/gradebook/container'
 import {empty_gradebook_style} from './styles'
 // local flux imports
-import UserStore from 'stores/userStore'
-import UserActions from 'actions/userActions'
+import CourseStore from 'stores/courseStore'
+import CourseActions from 'actions/courseActions'
 
 'use strict'
 
@@ -23,6 +23,11 @@ class GradebookRoot extends React.Component {
         // bind various functions
         this.getSidebarElements = this.getSidebarElements.bind(this)
         this.getGradebookElement = this.getGradebookElement.bind(this)
+        this.updateCourseList = this.updateCourseList.bind(this)
+        // initial state
+        this.state = {
+            courses: []
+        }
     }
 
 
@@ -35,16 +40,43 @@ class GradebookRoot extends React.Component {
     }
 
 
+    componentDidMount(){
+        // when the user store updates we need to refetch the list of users
+        this.unsubscribe = CourseStore.listen(this.updateCourseList)
+        // load the courses that are taught by the current user
+        CourseActions.loadCoursesTaughtBy(1)
+    }
+
+
+    componentWillUnmount(){
+        // unsubscribe from the listener
+        this.unsubscribe()
+    }
+
+
+    updateCourseList(courses){
+        // when the course store updates
+        this.setState({
+            // update the local list
+            courses: courses
+        })
+    }
+
+
     getSidebarElements(){
         // store the sidebar elements in a list
         let elements = []
-        elements.push(
-            <Link to="gradebook" params={{identifier: 1}}>
-                <SidebarElement>
-                    Class with id 1
-                </SidebarElement>
-            </Link>
-        )
+        // for each course in the list
+        this.state.courses.forEach( course => {
+            // add a link to the sidebar that points to the specific gradebook
+            elements.push(
+                <Link to="gradebook" params={{identifier: course.id}}>
+                    <SidebarElement>
+                        {course.name}
+                    </SidebarElement>
+                </Link> 
+            ) 
+        })
         // return the elements
         return elements
     }
@@ -65,7 +97,7 @@ class GradebookRoot extends React.Component {
             )
         // otherwise the use specified an identifier for the gradebook
         } else {
-            return <GradebookContainer identifier={identifier} />
+            return <Gradebook identifier={identifier} />
         }
 
     }
