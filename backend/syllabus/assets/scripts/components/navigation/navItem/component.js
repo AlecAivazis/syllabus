@@ -7,7 +7,7 @@ import normalize from 'react-style-normalizer';
 // react-router: https://github.com/rackt/react-router/blob/master/docs/api/components/Link.md
 import {Link} from 'react-router';
 // local imports
-import Icon from 'src/components/misc/icon';
+import Icon from 'components/misc/icon';
 import {list_element_style} from './styles'
 // make sure the necessary stylesheets are loaded
 require('styles/noise.css');

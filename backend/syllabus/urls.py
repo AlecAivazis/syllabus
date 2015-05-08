@@ -18,7 +18,7 @@ from .views import Home
 # define the primary url patterns
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', Home.as_view()),
+    url(r'', Home.as_view()),
     # add the static urls
 ) 
 

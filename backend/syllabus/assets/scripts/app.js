@@ -13,7 +13,7 @@ import {route_elements} from './routes';
 require('styles/default.styl')
  
 // run the application with the appropriate routes based on the user
-Router.run(route_elements, Handler => {
+Router.run(route_elements, Router.HistoryLocation, Handler => {
     React.render(<Handler />, document.body);
 });
 

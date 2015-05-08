@@ -17,19 +17,4 @@ class Home(TemplateView):
     template_name = 'index.jade'
 
 
-class ComponentView(TemplateView):
-    """
-    render the index template
-    """
-    template_name = 'component.jade'
-
-    def get_context_data(self, **kwargs):
-        # grab the parent context
-        context = super().get_context_data()
-        # add the rendered component to the context
-        context['component'] = render_component(self.component_path, translate=True)
-        # return the modified context
-        return context
-
-
 # end of file

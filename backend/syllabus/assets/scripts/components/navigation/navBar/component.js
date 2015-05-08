@@ -9,7 +9,7 @@ import normalize from 'react-style-normalizer';
 // local imports
 import NavItem from '../navItem/component';
 import NavBranding from '../navBranding/component';
-import nav_routes from 'src/routes';
+import nav_routes from 'routes';
 import {nav_style, list_style} from  './styles';
 
 // make sure the noise stylesheet is loaded
