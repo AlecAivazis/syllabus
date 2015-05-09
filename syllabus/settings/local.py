@@ -17,7 +17,7 @@ COMPRESS_ROOT = RESOURCES
 MEDIA_ROOT = os.path.join(RESOURCES, 'uploads')
 
 # add django_toolbar to the installed apps
-INSTALLED_APPS += ("debug_toolbar", )
+#INSTALLED_APPS += ("debug_toolbar", )
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

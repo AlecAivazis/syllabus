@@ -19,7 +19,6 @@ Markdown==2.4.1
 MarkupSafe==0.23
 optional-django==0.3.0
 paramiko==1.15.2
-psycopg2==2.6
 pycrypto==2.6.1
 pyjade==3.0.0
 pytz==2014.3
