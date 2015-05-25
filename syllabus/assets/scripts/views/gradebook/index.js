@@ -7,7 +7,7 @@ import {Link, RouteHandler} from 'react-router';
 // local imports
 import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 import SidebarElement from 'components/sidebar/sidebarElement/component'
-import Gradebook from 'components/gradebook/container'
+import Gradebook from 'components/gradebook/gradebook/container'
 import {empty_gradebook_style} from './styles'
 // local flux imports
 import CourseStore from 'stores/courseStore'

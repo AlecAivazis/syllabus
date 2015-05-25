@@ -7,6 +7,7 @@ import {OverlayTrigger, Popover} from 'react-bootstrap'
 // local imports
 import TabContainer from 'components/tabs/tabContainer/component'
 import Tab from 'components/tabs/tab/component'
+import GradingScaleControl from '../gradingScaleControl/component'
 import {header_style,
         gradebook_container_style,
         gradebook_body_style,
@@ -26,7 +27,13 @@ class Gradebook extends React.Component {
                         {this.props.course.name}
                     </span>
                     <span style={toolbar_style}>
-                        <OverlayTrigger trigger="click" placement="bottom" overlay={<Popover>hello</Popover>}>
+                        <OverlayTrigger trigger="click" placement="bottom" 
+                            overlay={
+                                <Popover>
+                                    <GradingScaleControl course={this.props.course} />
+                                </Popover>
+                            }
+                        >
                             <span> hello </span>
                         </OverlayTrigger>              
                     </span>
@@ -47,6 +54,11 @@ class Gradebook extends React.Component {
             </div>
         )
     }
+}
+
+
+Gradebook.propTypes = {
+    course: React.PropTypes.object.isRequired
 }
 
 

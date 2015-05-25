@@ -12,7 +12,14 @@ let courses = [
     {
         name: 'Phys 20',
         id: 1,
-        professor: 1
+        professor: 1,
+        gradingScale: new Map([
+            [90, 'A'],
+            [80, 'B'],
+            [70, 'C'],
+            [60, 'D'],
+            [ 0, 'F']
+        ])
     }
 ]
 
