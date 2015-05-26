@@ -12,7 +12,7 @@ Syllabus is broken down into the following core applications with their respecti
   * Contact*
 3. Authentication
   * Syllabus User
-  * UserGroup*
+  * User Group*
 4. Classroom
   * Academic Event*
   * Academic Event State*
@@ -20,8 +20,8 @@ Syllabus is broken down into the following core applications with their respecti
   * Course*
   * Enrollment
   * Grade*
-  * GradingCategory*
-  * GradingScale*
+  * Grading Category*
+  * Grading Scale*
   * Section*
   * Term*
   * Weight*
@@ -34,7 +34,7 @@ Syllabus is broken down into the following core applications with their respecti
 6. Metadata
   * MetaData
 7. Requirements
-  * AddCode
+  * Add Code
   * PreRequisite
   * Exemption
 8. Scheduling
