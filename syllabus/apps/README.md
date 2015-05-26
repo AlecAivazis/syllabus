@@ -1,19 +1,19 @@
 Syllabus is broken down into the following core applications with their respective schema:
 
-1. Academia
+* Academia
   - [x] College
   - [x] CourseProfile
   - [x] Department
   - [x] Interest
   - [x] Major
   - [x] University
-2. Address Book
-  - [ ] Address*
-  - [ ] Contact*
-3. Authentication
+* Address Book
+  - [ ] Address
+  - [ ] Contact
+* Authentication
   - [x] Syllabus User
   - [ ] User Group
-4. Classroom
+* Classroom
   - [ ] Academic Event
   - [ ] Academic Event State
   - [ ] Book
@@ -27,20 +27,20 @@ Syllabus is broken down into the following core applications with their respecti
   - [ ] Weight
   - [ ] Weight Category
   - [ ] Wishlist
-5. Messaging
+* Messaging
   - [ ] Message
   - [ ] Thread
   - [ ] Post
-6. Metadata
+* Metadata
   - [x] Metadata
-7. Requirements
+* Requirements
   - [x] Add Code
   - [x] PreRequisite
   - [x] Exemption
-8. Scheduling
+* Scheduling
   - [ ] Timeslot
   - [ ] Relative Time
-9. Tutoring
+* Tutoring
   - [ ] Tutor Profile
   - [ ] Tutor Appointment
   
