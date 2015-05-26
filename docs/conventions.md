@@ -11,5 +11,7 @@
 - Models
     - All external relationships must be included under "related fields:"
         related fields:
+
             \`{field_name}\` from {app}.{model}
+
         note: {app} optional if {model} is local
