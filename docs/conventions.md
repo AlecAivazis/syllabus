@@ -9,7 +9,7 @@
     - just a short description
 - Remainder is paragraphs.
 - Models
-    - All external relationships must be included under "related fields". eg: 
+    - All external relationships must be described in docstring under "related fields": 
         ```text
         related fields:
 
