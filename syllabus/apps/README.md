@@ -32,7 +32,7 @@ Syllabus is broken down into the following core applications with their respecti
   * Thread*
   * Post*
 6. Metadata
-  * MetaData
+  * Metadata
 7. Requirements
   * Add Code
   * PreRequisite
