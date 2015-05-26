@@ -43,6 +43,3 @@ Syllabus is broken down into the following core applications with their respecti
 * Tutoring
   - [ ] Tutor Profile
   - [ ] Tutor Appointment
-  
-  
-\* has yet to be implemented in current branch
