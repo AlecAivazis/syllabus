@@ -9,9 +9,6 @@ import SidebarContainer from 'components/sidebar/sidebarContainer/component'
 import SidebarElement from 'components/sidebar/sidebarElement/component'
 import Gradebook from 'components/gradebook/gradebook/container'
 import {empty_gradebook_style} from './styles'
-// local flux imports
-import CourseStore from 'stores/courseStore'
-import CourseActions from 'actions/courseActions'
 
 'use strict'
 
@@ -23,10 +20,14 @@ class GradebookRoot extends React.Component {
         // bind various functions
         this.getSidebarElements = this.getSidebarElements.bind(this)
         this.getGradebookElement = this.getGradebookElement.bind(this)
-        this.updateCourseList = this.updateCourseList.bind(this)
         // initial state
         this.state = {
-            courses: []
+            courses: [
+                {
+                    name: 'phys 20',
+                    id: 1
+                },
+            ]
         }
     }
 
@@ -37,29 +38,6 @@ class GradebookRoot extends React.Component {
                 {this.getGradebookElement()}
             </SidebarContainer>
         )
-    }
-
-
-    componentDidMount(){
-        // when the user store updates we need to refetch the list of users
-        this.unsubscribe = CourseStore.listen(this.updateCourseList)
-        // load the courses that are taught by the current user
-        CourseActions.loadCoursesTaughtBy(1)
-    }
-
-
-    componentWillUnmount(){
-        // unsubscribe from the listener
-        this.unsubscribe()
-    }
-
-
-    updateCourseList(courses){
-        // when the course store updates
-        this.setState({
-            // update the local list
-            courses: courses
-        })
     }
 
 
@@ -97,8 +75,7 @@ class GradebookRoot extends React.Component {
             )
         // otherwise the user specified an identifier for the gradebook
         } else {
-            // figure out the course corresponding to the identifier
-            let course = CourseStore.getCourseById(parseInt(identifier))
+            let course = this.state.courses[0]
             // return the gradebook element for that course
             return <Gradebook course={course}/>
         }
@@ -106,7 +83,7 @@ class GradebookRoot extends React.Component {
 }
 
 GradebookRoot.contextTypes = {
-  router: React.PropTypes.func
+    router: React.PropTypes.func
 }
 
 
