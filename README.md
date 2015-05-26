@@ -11,9 +11,9 @@
 
   `git clone https://github.com/aaivazis/syllabus.git && cd syllabus`
 
-2. Make a virtual environment for the project:
+2. Make a virtual environment for the project (path to python assumes homebrew installation):
 
-  `mkvirtualenv syllabus && workon syllabus`
+  `mkvirtualenv syllabus --python=/usr/local/bin/python3 && workon syllabus`
 
 3. Install dependencies:
 
