@@ -11,7 +11,7 @@ Syllabus is broken down into the following core applications with their respecti
   * Address*
   * Contact*
 3. Authentication
-  * SyllabusUser
+  * Syllabus User
   * UserGroup*
 4. Classroom
   * Academic Event*
@@ -25,10 +25,10 @@ Syllabus is broken down into the following core applications with their respecti
   * Section*
   * Term*
   * Weight*
-  * WeightCategory*
+  * Weight Category*
   * Wishlist*
 5. Messaging
-  * Announcement*
+  * Message*
   * Thread*
   * Post*
 6. Metadata
@@ -39,10 +39,10 @@ Syllabus is broken down into the following core applications with their respecti
   * Exemption
 8. Scheduling
   * Timeslot*
-  * RelativeTime*
+  * Relative Time*
 9. Tutoring*
-  * TutorProfile*
-  * TutorAppointment*
+  * Tutor Profile*
+  * Tutor Appointment*
   
   
 \* has yet to be implemented in current branch
