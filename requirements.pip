@@ -20,7 +20,7 @@ MarkupSafe==0.23
 optional-django==0.3.0
 paramiko==1.15.2
 pycrypto==2.6.1
-pyjade==3.0.0
+git+git://github.com/SyrusAkbary/pyjade
 pytz==2014.3
 react==0.12.1
 requests==2.7.0
