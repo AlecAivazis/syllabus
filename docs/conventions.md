@@ -14,4 +14,4 @@
 
             \`{field_name}\` from {app}.{model}
 
-        note: {app} optional if {model} is local
+        note: {app.} optional if {model} is local
