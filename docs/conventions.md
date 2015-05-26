@@ -10,8 +10,9 @@
 - Remainder is paragraphs.
 - Models
     - All external relationships must be included under "related fields:"
+        ```text
         related fields:
 
-            \`{field_name}\` from {app}.{model}
-
+            `{field_name}` from {app}.{model}
+        ```
         note: {app.} optional if {model} is local
