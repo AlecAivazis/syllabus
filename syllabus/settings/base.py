@@ -67,6 +67,7 @@ syllabus_apps = (
     'syllabus.apps.authentication',
     'syllabus.apps.academia',
     'syllabus.apps.classroom',
+    'syllabus.apps.grading',
     'syllabus.apps.metadata',
     'syllabus.apps.requirements',
 )
