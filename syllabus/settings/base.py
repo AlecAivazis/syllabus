@@ -71,6 +71,7 @@ syllabus_apps = (
     'syllabus.apps.metadata',
     'syllabus.apps.messaging',
     'syllabus.apps.requirements',
+    'syllabus.apps.scheduling'
 )
 
 INSTALLED_APPS = syllabus_apps + third_party_apps + django_apps
